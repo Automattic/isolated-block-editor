@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title><%= htmlWebpackPlugin.options.title %></title>
+		<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+		<meta charset="UTF-8">
+	</head>
+
+	<body>
+		<h1>Gutenberg attached to a plain textarea</h1>
+		<p>The textarea can be converted into a Gutenberg editor. Any existing content will be converted into blocks. Multiple editors can be added, with a seperate edit history for each.</p>
+
+		<div class="editors">
+			<div class="editor-container cloner">
+				<p>
+					<button onClick="toggleEditor( this );">Toggle Gutenberg</button>
+				</p>
+				<textarea rows="10"></textarea>
+			</div>
+			<div class="editor-container">
+				<p>
+					<button onClick="toggleEditor( this );">Toggle Gutenberg</button>
+				</p>
+				<textarea rows="10"></textarea>
+			</div>
+		</div>
+
+		<button class="add-another" onClick="addEditor()">Add another editor</button>
+	</body>
+
+	<script>
+		function toggleEditor( button ) {
+			const textarea = button.parentNode.parentNode.querySelector( 'textarea' );
+
+			if ( textarea.style.display === 'none' ) {
+				wp.detachEditor( textarea );
+			} else {
+				wp.attachEditor( textarea );
+			}
+		}
+
+		function addEditor() {
+			const editor = document.querySelector( '.cloner' );
+			const clone = editor.cloneNode( true );
+
+			clone.classList.remove( 'cloner' );
+
+			editor.parentNode.appendChild( clone );
+		}
+	</script>
+</html>
