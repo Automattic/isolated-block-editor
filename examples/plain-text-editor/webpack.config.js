@@ -33,7 +33,7 @@ const config = {
 	},
 	resolve: {
 		alias: {
-			'isolated-block-editor': path.resolve( __dirname, '..', '..' ),
+			'isolated-block-editor': path.resolve( __dirname, '..', '..', 'src' ),
 			path: require.resolve( 'path' ),
 		},
 		modules: [ path.resolve( __dirname, 'node_modules' ) ],
