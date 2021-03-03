@@ -14,7 +14,6 @@ import {
 	__unstableUseTypewriter as useTypewriter,
 	__unstableUseClipboardHandler as useClipboardHandler,
 	__unstableUseTypingObserver as useTypingObserver,
-	__unstableUseScrollMultiSelectionIntoView as useScrollMultiSelectionIntoView,
 	__experimentalBlockSettingsMenuFirstItem,
 } from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
@@ -28,7 +27,6 @@ import { Popover } from '@wordpress/components';
 const VisualEditor = () => {
 	const ref = useRef();
 
-	useScrollMultiSelectionIntoView( ref );
 	useBlockSelectionClearer( ref );
 	useTypewriter( ref );
 	useClipboardHandler( ref );

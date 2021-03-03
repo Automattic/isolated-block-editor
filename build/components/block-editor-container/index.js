@@ -1,0 +1,156 @@
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _classnames2 = _interopRequireDefault(require("classnames"));
+
+var _i18n = require("@wordpress/i18n");
+
+var _compose = require("@wordpress/compose");
+
+var _editor = require("@wordpress/editor");
+
+var _data = require("@wordpress/data");
+
+var _clickOutside = _interopRequireDefault(require("./click-outside"));
+
+var _blockEditorContents = _interopRequireDefault(require("../block-editor-contents"));
+
+var _hotSwapper = _interopRequireDefault(require("./hot-swapper"));
+
+require("./style.scss");
+
+import { createElement } from "@wordpress/element";
+
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
+
+/** @typedef {import('../../index').OnSave} OnSave */
+
+/** @typedef {import('../../index').OnError} OnError */
+
+/** @typedef {import('../../index').OnMore} OnMore */
+
+/** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
+
+/** @typedef {import('../../index').OnLoad} OnLoad */
+
+/**
+ * Set editing callback
+ * @callback OnSetEditing
+ * @param {boolean} isEditing
+ */
+var SIZE_LARGE = 720;
+var SIZE_MEDIUM = 480;
+/**
+ * Contains the block contents. Handles the hot-swapping of the redux stores, as well as applying the root CSS classes
+ *
+ * @param {object} props - Component props
+ * @param {object} props.children - Child components
+ * @param {boolean} props.isEditorReady - The editor is ready for editing
+ * @param {boolean} props.isEditing - This editor is being edited in
+ * @param {boolean} props.hasFixedToolbar - Has fixed toolbar
+ * @param {EditorMode} props.editorMode - 'text' or 'visual'
+ * @param {string} props.className - additional class names
+ * @param {BlockEditorSettings} props.settings - Settings
+ * @param {OnSave} props.onSave - Save callback
+ * @param {OnError} props.onError - Error callback
+ * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
+ * @param {OnSetEditing} props.setEditing - Set the mode to editing
+ * @param {OnLoad} props.onLoad - Load initial blocks
+ */
+
+function BlockEditorContainer(props) {
+  var children = props.children,
+      settings = props.settings,
+      onSave = props.onSave,
+      className = props.className,
+      onError = props.onError,
+      renderMoreMenu = props.renderMoreMenu,
+      onLoad = props.onLoad;
+  var isEditorReady = props.isEditorReady,
+      editorMode = props.editorMode,
+      isEditing = props.isEditing,
+      setEditing = props.setEditing,
+      hasFixedToolbar = props.hasFixedToolbar;
+
+  var _useResizeObserver = (0, _compose.useResizeObserver)(),
+      _useResizeObserver2 = (0, _slicedToArray2["default"])(_useResizeObserver, 2),
+      resizeListener = _useResizeObserver2[0],
+      width = _useResizeObserver2[1].width;
+
+  var classes = (0, _classnames2["default"])(className, (0, _defineProperty2["default"])({
+    'iso-editor': true,
+    'is-large': width >= SIZE_LARGE,
+    'is-medium': width >= SIZE_MEDIUM && width < SIZE_LARGE,
+    'is-small': width < SIZE_MEDIUM,
+    'iso-editor__loading': !isEditorReady,
+    'iso-editor__selected': isEditing,
+    // Match Gutenberg
+    'block-editor': true,
+    'edit-post-layout': true,
+    'has-fixed-toolbar': hasFixedToolbar
+  }, 'is-mode-' + editorMode, true));
+  return createElement("div", {
+    className: classes
+  }, createElement(_editor.ErrorBoundary, {
+    onError: onError
+  }, createElement(_hotSwapper["default"], null), resizeListener, createElement(_clickOutside["default"], {
+    onOutside: function onOutside() {
+      return setEditing(false);
+    },
+    onFocus: function onFocus() {
+      return !isEditing && setEditing(true);
+    }
+  }, createElement(_blockEditorContents["default"], {
+    onSave: onSave,
+    settings: settings,
+    renderMoreMenu: renderMoreMenu,
+    onLoad: onLoad
+  }, children))));
+}
+
+var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+  var _select = select('isolated/editor'),
+      isEditorReady = _select.isEditorReady,
+      getEditorMode = _select.getEditorMode,
+      isEditing = _select.isEditing,
+      isFeatureActive = _select.isFeatureActive;
+
+  return {
+    isEditorReady: isEditorReady(),
+    editorMode: getEditorMode(),
+    isEditing: isEditing(),
+    hasFixedToolbar: isFeatureActive('fixedToolbar')
+  };
+}), (0, _data.withDispatch)(function (dispatch) {
+  var _dispatch = dispatch('isolated/editor'),
+      setEditing = _dispatch.setEditing;
+
+  return {
+    setEditing: setEditing
+  };
+})])(BlockEditorContainer);
+
+exports["default"] = _default;
+//# sourceMappingURL=index.js.map
