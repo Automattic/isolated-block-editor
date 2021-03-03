@@ -26,7 +26,7 @@ And a full list of features:
 - Re-routing of WordPress API requests
 
 Examples:
-- [Plain text editor](examples/plain-text-editor/README.md) - replace any `textarea` on any page with a full Gutenberg editor
+- [Plain Text Editor](examples/plain-text-editor/README.md) - replace any `textarea` on any page with a full Gutenberg editor
 - [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
 - [Gutenberg Chrome Extension](examples/gutenberg-chrome/README.md) - a Chrome extension that allows Gutenberg to be used on any page
 - [Gutenberg Desktop](https://github.com/Automattic/gutenberg-desktop/) - a desktop editor that supports the loading and saving of HTML and Markdown files
@@ -57,6 +57,10 @@ plugins: [
 	new DependencyExtractionWebpackPlugin( { injectPolyfill: true } )
 ]
 ```
+
+Alternatively you can use the [`@wordpress/scripts`](https://developer.wordpress.org/block-editor/packages/packages-scripts/) build system, which automatically runs `DependencyExtractionWebpackPlugin`:
+
+`wp-scripts start`
 
 You can use the provided [`iso-gutenberg.php`](examples/wordpress-php/README.md) file to help when using the IsolatedBlockEditor on a WordPress site. It will load Gutenberg and set up your configuration.
 
