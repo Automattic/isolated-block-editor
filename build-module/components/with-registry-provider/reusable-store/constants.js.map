@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../src/components/with-registry-provider/reusable-store/constants.js"],"names":["STORE_KEY"],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA,OAAO,IAAMA,SAAS,GAAG,sBAAlB","sourcesContent":["/**\n * Constant for the store module (or reducer) key.\n *\n * @type {string}\n */\nexport const STORE_KEY = 'core/reusable-blocks';\n"],"file":"constants.js"}

@@ -1,0 +1,74 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _i18n = require("@wordpress/i18n");
+
+var _element = require("@wordpress/element");
+
+var _data = require("@wordpress/data");
+
+var _compose = require("@wordpress/compose");
+
+var _blocks = require("@wordpress/blocks");
+
+/**
+ * WordPress dependencies
+ */
+
+/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
+
+/** @typedef {import('../../store/editor/reducer').Pattern} Pattern */
+
+/**
+ * Update callback
+ * @callback OnUpdate
+ * @param {object[]} blocks - Editor content to save
+ */
+
+/**
+ * Sets up Gutenberg and the Isolated Block Editor
+ *
+ * An initial setup is performed, and is then reset each time the editor is focussed. This ensures we are applying the right
+ * settings for this particular editor.
+ *
+ * @param {object} props - Component props
+ * @param {BlockEditorSettings} props.settings - Settings
+ * @param {Pattern} props.currentPattern - Currently selected pattern
+ * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
+ */
+function PatternMonitor(props) {
+  var currentPattern = props.currentPattern,
+      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo; // Monitor the current pattern and update the editor content if it changes
+
+  (0, _element.useEffect)(function () {
+    if (currentPattern === null) {
+      return;
+    }
+
+    updateBlocksWithoutUndo((0, _blocks.parse)(currentPattern.content));
+  }, [currentPattern]);
+  return null;
+}
+
+var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+  var _select = select('isolated/editor'),
+      getCurrentPattern = _select.getCurrentPattern;
+
+  return {
+    currentPattern: getCurrentPattern()
+  };
+}), (0, _data.withDispatch)(function (dispatch) {
+  var _dispatch = dispatch('isolated/editor'),
+      updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
+
+  return {
+    updateBlocksWithoutUndo: updateBlocksWithoutUndo
+  };
+})])(PatternMonitor);
+
+exports["default"] = _default;
+//# sourceMappingURL=index.js.map
