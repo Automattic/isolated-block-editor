@@ -4,7 +4,8 @@
 	"description": "Put Gutenberg in your browser",
 	"scripts": {
 		"start": "NODE_ENV=development webpack --mode development --progress --config ./webpack.config.js --watch",
-		"build": "NODE_ENV=production webpack --mode production --progress --config ./webpack.config.js"
+		"build": "NODE_ENV=production webpack --mode production --progress --config ./webpack.config.js",
+		"release": "rm -rf release && mkdir -p release && cp -R manifest.json chrome-extension.png build background.js release"
 	},
 	"author": "Automattic",
 	"license": "ISC",

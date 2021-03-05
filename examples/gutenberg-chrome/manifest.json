@@ -16,7 +16,7 @@
 	"content_scripts": [
 		{
 			"js": [ "build/gutenberg-everywhere.js" ],
-			"css": [ "src/global.css", "build/gutenberg-everywhere.css" ],
+			"css": [ "build/global.css", "build/gutenberg-everywhere.css" ],
 			"matches": [ "<all_urls>" ]
 		}
 	]
