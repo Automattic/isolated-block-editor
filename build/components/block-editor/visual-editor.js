@@ -15,8 +15,6 @@ var _element = require("@wordpress/element");
 
 var _components = require("@wordpress/components");
 
-var _compose = require("@wordpress/compose");
-
 import { createElement } from "@wordpress/element";
 
 /**
@@ -34,14 +32,18 @@ import { createElement } from "@wordpress/element";
  */
 var VisualEditor = function VisualEditor() {
   var ref = (0, _element.useRef)();
-  var mergedRefs = (0, _compose.useMergeRefs)([ref, (0, _blockEditor.__unstableUseClipboardHandler)(), (0, _blockEditor.__unstableUseCanvasClickRedirect)(), (0, _blockEditor.__unstableUseTypewriter)(), (0, _blockEditor.__unstableUseBlockSelectionClearer)(), (0, _blockEditor.__unstableUseTypingObserver)()]);
+  (0, _blockEditor.__unstableUseBlockSelectionClearer)(ref);
+  (0, _blockEditor.__unstableUseTypewriter)(ref);
+  (0, _blockEditor.__unstableUseClipboardHandler)(ref);
+  (0, _blockEditor.__unstableUseTypingObserver)(ref);
+  (0, _blockEditor.__unstableUseCanvasClickRedirect)(ref);
   return createElement("div", {
     className: "edit-post-visual-editor"
   }, createElement(_components.Popover.Slot, {
     name: "block-toolbar"
   }), createElement("div", {
     className: "editor-styles-wrapper",
-    ref: mergedRefs
+    ref: ref
   }, createElement(_blockEditor.WritingFlow, null, createElement(_blockEditor.BlockList, null))));
 };
 

@@ -89,8 +89,8 @@ export default function applyDefaultSettings(settings) {
       allowedBlockTypes: true,
       __experimentalCanUserUseUnfilteredHTML: false,
       // Default to no patterns, reusable blocks
-      __experimentalBlockPatterns: false,
-      reusableBlocks: false,
+      __experimentalBlockPatterns: [],
+      reusableBlocks: [],
       // Default to fixed top toolbar
       fixedToolbar: true
     }, editor), {}, {
