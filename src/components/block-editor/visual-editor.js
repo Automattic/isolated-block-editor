@@ -18,7 +18,6 @@ import {
 } from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
-import { useMergeRefs } from '@wordpress/compose';
 
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
@@ -28,20 +27,17 @@ import { useMergeRefs } from '@wordpress/compose';
 const VisualEditor = () => {
 	const ref = useRef();
 
-	const mergedRefs = useMergeRefs( [
-		ref,
-		useClipboardHandler(),
-		useCanvasClickRedirect(),
-		useTypewriter(),
-		useBlockSelectionClearer(),
-		useTypingObserver(),
-	] );
+	useBlockSelectionClearer( ref );
+	useTypewriter( ref );
+	useClipboardHandler( ref );
+	useTypingObserver( ref );
+	useCanvasClickRedirect( ref );
 
 	return (
 		<div className="edit-post-visual-editor">
 			<Popover.Slot name="block-toolbar" />
 
-			<div className="editor-styles-wrapper" ref={ mergedRefs }>
+			<div className="editor-styles-wrapper" ref={ ref }>
 				<WritingFlow>
 					<BlockList />
 				</WritingFlow>
