@@ -11,6 +11,7 @@ import React from 'react';
 import { BlockList, WritingFlow, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __unstableUseCanvasClickRedirect as useCanvasClickRedirect, __experimentalBlockSettingsMenuFirstItem } from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
+import { useMergeRefs } from '@wordpress/compose';
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
@@ -19,18 +20,14 @@ import { Popover } from '@wordpress/components';
 
 var VisualEditor = function VisualEditor() {
   var ref = useRef();
-  useBlockSelectionClearer(ref);
-  useTypewriter(ref);
-  useClipboardHandler(ref);
-  useTypingObserver(ref);
-  useCanvasClickRedirect(ref);
+  var mergedRefs = useMergeRefs([ref, useClipboardHandler(), useCanvasClickRedirect(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
   return createElement("div", {
     className: "edit-post-visual-editor"
   }, createElement(Popover.Slot, {
     name: "block-toolbar"
   }), createElement("div", {
     className: "editor-styles-wrapper",
-    ref: ref
+    ref: mergedRefs
   }, createElement(WritingFlow, null, createElement(BlockList, null))));
 };
 

@@ -91,6 +91,7 @@ html {
 	animation: loading-fade 1.6s ease-in-out infinite;
 	margin-bottom: 57px;
 
+	> textarea,
 	> div {
 		display: none;
 	}
