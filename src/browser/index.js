@@ -8,7 +8,7 @@ import { render, unmountComponentAtNode } from '@wordpress/element';
  * Internal dependencies
  */
 
-import IsolatedBlockEditor from 'isolated-block-editor';
+import IsolatedBlockEditor from '../index';
 import './style.scss';
 
 /** @typedef {import('isolated-block-editor').BlockEditorSettings} BlockEditorSettings */
@@ -75,8 +75,7 @@ function attachEditor( textarea ) {
 			onLoad={ ( parser, rawHandler ) => onLoad( textarea.value, parser, rawHandler ) }
 			onSaveContent={ ( content ) => saveBlocks( content, textarea ) }
 			onError={ () => document.location.reload() }
-		>
-		</IsolatedBlockEditor>,
+		></IsolatedBlockEditor>,
 		editor
 	);
 }

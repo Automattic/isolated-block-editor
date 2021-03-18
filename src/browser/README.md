@@ -9,13 +9,3 @@ Multiple editor instances can be created.
 Gutenberg is bundled into a single file, and basic styling is provided. A text HTML page will be produced.
 
 <img src="plain-text-editor.png" width="600">
-
-## Building
-
-Build the editor with:
-
-`yarn build`
-
-A sample `index.html` file is provided which connects this up to a form.
-
-Files are output to the `build` directory.

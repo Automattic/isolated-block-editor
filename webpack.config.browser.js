@@ -3,13 +3,12 @@ const webpack = require( 'webpack' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const TerserJSPlugin = require( 'terser-webpack-plugin' );
 const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 
 const config = {
-	entry: './src/index.js',
+	entry: './src/browser/index.js',
 	output: {
-		filename: 'editor.build.js',
-		path: path.resolve( __dirname, 'build' ),
+		filename: 'iso-block-editor.min.js',
+		path: path.resolve( __dirname, 'build-browser' ),
 	},
 	module: {
 		rules: [
@@ -33,7 +32,6 @@ const config = {
 	},
 	resolve: {
 		alias: {
-			'isolated-block-editor': path.resolve( __dirname, '..', '..', 'src' ),
 			path: require.resolve( 'path' ),
 		},
 		modules: [ path.resolve( __dirname, 'node_modules' ) ],
@@ -47,11 +45,7 @@ const config = {
 			'process.env': { NODE_ENV: JSON.stringify( process.env.NODE_ENV || 'development' ) },
 		} ),
 		new MiniCssExtractPlugin( {
-			filename: 'editor.css',
-		} ),
-		new HtmlWebpackPlugin( {
-			title: 'Plain Text Editor',
-			template: './src/index.html',
+			filename: 'iso-block-editor.min.css',
 		} ),
 		new webpack.ProvidePlugin( {
 			process: 'process/browser',
