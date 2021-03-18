@@ -8,7 +8,8 @@
 		"start": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored --watch",
 		"es6": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored",
 		"cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored",
-		"build": "yarn es6 && yarn cjs"
+		"browser": "NODE_ENV=production webpack --mode production --progress --config ./webpack.config.browser.js",
+		"build": "yarn es6 && yarn cjs && yarn browser"
 	},
 	"sideEffects": [
 		"*.css",
@@ -87,6 +88,7 @@
 		"eslint-plugin-jsx-a11y": "^6.4.1",
 		"eslint-plugin-react": "^7.22.0",
 		"eslint-plugin-wpcalypso": "^5.0.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.4",
 		"precss": "^4.0.0"
 	}
 }

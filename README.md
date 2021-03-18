@@ -25,10 +25,15 @@ And a full list of features:
 - Menu for custom links
 - Re-routing of WordPress API requests
 
+The Isolated Block Editor is provided in three forms:
+- ES6 module
+- CommonJS module
+- Standalone JavaScript file, for inclusion on any browser page
+
 Examples:
-- [Plain Text Editor](examples/plain-text-editor/README.md) - replace any `textarea` on any page with a full Gutenberg editor
+- [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/src/browser/README.md) - standalone JS file that can replace any `textarea` on any page with a full Gutenberg editor
 - [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
-- [Gutenberg Chrome Extension](examples/gutenberg-chrome/README.md) - a Chrome extension that allows Gutenberg to be used on any page
+- [Gutenberg Chrome Extension](https://github.com/Automattic/gutenberg-everywhere-chrome/) - a Chrome extension that allows Gutenberg to be used on any page
 - [Gutenberg Desktop](https://github.com/Automattic/gutenberg-desktop/) - a desktop editor that supports the loading and saving of HTML and Markdown files
 - [P2](https://wordpress.com/p2/) - WordPress as a collaborative workspace (coming soon for self-hosted)
 - Editor Block - a block that allows an editor to be added to a page (coming soon)
@@ -63,6 +68,29 @@ Alternatively you can use the [`@wordpress/scripts`](https://developer.wordpress
 `wp-scripts start`
 
 You can use the provided [`iso-gutenberg.php`](examples/wordpress-php/README.md) file to help when using the IsolatedBlockEditor on a WordPress site. It will load Gutenberg and set up your configuration.
+
+## Standalone Module
+
+You can use the provided `iso-block-editor.min.js` and `iso-block-editor.min.css` files on any web page, regardless of whether it is on WordPress. It will provide two global functions which can turn a `textarea` into a block editor. Here's an example:
+
+```js
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="iso-block-editor.min.js"></script>
+
+<body>
+	<textarea id="editor" />
+
+	<script>
+		wp.attachEditor( document.getElementById( 'editor' ) );
+	</script>
+</body>
+
+```
+
+Note that you must load React before loading the editor.
+
+You can find an example in [`src/browser/index.html`](src/browser/index.html).
 
 ## Future
 
