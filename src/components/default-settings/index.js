@@ -40,6 +40,7 @@ export default function applyDefaultSettings( settings ) {
 				inserter: true,
 				inspector: false,
 				navigation: false,
+				documentInspector: false,
 				toc: false,
 				undo: true,
 
