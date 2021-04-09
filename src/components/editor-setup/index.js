@@ -36,13 +36,21 @@ import getEditorSettings from './editor-settings';
  * @param {boolean} props.topToolbar - Is the top toolbar enabled?
  */
 function EditorSetup( props ) {
-	const { currentSettings, updateSettings, setupEditor, isEditing, topToolbar } = props;
+	const { currentSettings, updateSettings, setupEditor, isEditing, topToolbar, setupCoreEditor } = props;
 
 	// This is the initial setup
 	useEffect( () => {
 		// Setup the Isolated Editor & Gutenberg
 		setupEditor( currentSettings );
+
+		// And Gutenberg
 		updateSettings( currentSettings );
+
+		// Set up the post entities with some dummy data, ensuring that anything that uses post entities can work
+		setupCoreEditor( {
+			id: 0,
+			type: 'post',
+		}, [] );
 	}, [] );
 
 	// Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change
@@ -59,7 +67,7 @@ function EditorSetup( props ) {
 }
 
 export default compose( [
-	withSelect( ( select, { settings }, registry ) => {
+	withSelect( ( select, { settings } ) => {
 		const { isEditing, isFeatureActive } = select( 'isolated/editor' );
 		const { getBlockTypes } = select( 'core/blocks' );
 		const blockTypes = getBlockTypes();
@@ -101,12 +109,13 @@ export default compose( [
 		};
 	} ),
 	withDispatch( ( dispatch ) => {
-		const { updateEditorSettings } = dispatch( 'core/editor' );
+		const { updateEditorSettings, setupEditorState: setupCoreEditor } = dispatch( 'core/editor' );
 		const { updateSettings } = dispatch( 'core/block-editor' );
 		const { setupEditor } = dispatch( 'isolated/editor' );
 
 		return {
 			setupEditor,
+			setupCoreEditor,
 			updateSettings: ( { editor } ) => {
 				updateSettings( editor );
 				updateEditorSettings( editor );
