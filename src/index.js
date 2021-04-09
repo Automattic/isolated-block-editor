@@ -32,8 +32,7 @@ import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
 import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
-import storeDecoratorPlugin from './store/plugins/store-decorator';
-import decoratedEditorStore from './store/core-editor';
+import DocumentSection from './components/document';
 
 // Export library components
 import EditorLoaded from './components/editor-loaded';
@@ -111,9 +110,6 @@ export function initializeEditor( allowApi = false ) {
 
 	// This allows the editor to swap stores dynamically
 	use( storeHotSwapPlugin, {} );
-
-	// This decorate core/editor with some custom selectors
-	use( storeDecoratorPlugin, decoratedEditorStore );
 
 	// This is needed for the media uploader
 	addFilter( 'editor.MediaUpload', 'isolated-block-editor/media-upload', () => MediaUpload );
@@ -205,6 +201,4 @@ function IsolatedBlockEditor( props ) {
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export {
-	EditorLoaded,
-};
+export { EditorLoaded, DocumentSection };
