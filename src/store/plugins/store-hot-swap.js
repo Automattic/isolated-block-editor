@@ -9,17 +9,19 @@
  * @param {object} pluginOptions
  */
 function storeHotSwapPlugin( registry, pluginOptions ) {
+	const hotStores = [ 'core/block-editor', 'core/editor' ];
+
 	// Switch select and dispatch
 	return {
 		dispatch( reducerKey ) {
-			if ( storeHotSwapPlugin.targetDispatch === null || reducerKey !== 'core/block-editor' ) {
+			if ( storeHotSwapPlugin.targetDispatch === null || hotStores.indexOf( reducerKey ) === -1 ) {
 				return registry.dispatch( reducerKey );
 			}
 
 			return storeHotSwapPlugin.targetDispatch( reducerKey );
 		},
 		select( reducerKey ) {
-			if ( storeHotSwapPlugin.targetSelect === null || reducerKey !== 'core/block-editor' ) {
+			if ( storeHotSwapPlugin.targetSelect === null || hotStores.indexOf( reducerKey ) === -1 ) {
 				return registry.select( reducerKey );
 			}
 
