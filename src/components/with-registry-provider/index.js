@@ -33,7 +33,7 @@ const withRegistryProvider = createHigherOrderComponent(
 		withRegistry( ( props ) => {
 			const { registry, settings, ...additionalProps } = props;
 			const defaultSettings = applyDefaultSettings( settings );
-			const { persistenceKey, preferencesKey, defaultPreferences } = defaultSettings.iso;
+			const { persistenceKey, preferencesKey, defaultPreferences, customStores = [] } = defaultSettings.iso;
 			const [ subRegistry, setSubRegistry ] = useState( null );
 
 			useEffect( () => {
@@ -65,6 +65,10 @@ const withRegistryProvider = createHigherOrderComponent(
 					persist: [ 'preferences' ],
 				} );
 
+				// Create any custom stores inside our registry
+				customStores.map( ( store ) => {
+					registries.push( newRegistry.registerStore( store.name, store.config ) );
+				} );
 				registries.push( store );
 				registries.push( editorStore );
 
