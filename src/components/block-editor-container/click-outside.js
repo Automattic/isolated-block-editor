@@ -17,16 +17,13 @@ const ClickOutsideWrapper = withFocusOutside(
 			const target = ev.relatedTarget || ev.target;
 			const { clearSelectedBlock } = this.props;
 
-			if ( target ) {
-				if ( target.classList.contains( 'media-modal' ) || target.classList.contains( 'iso-editor' ) ) {
-					return;
-				}
+			// Ignore clicks in the media modal - consider it inside the editor
+			if ( target && target.classList.contains( 'media-modal' ) ) {
+				return;
 			}
 
-			if ( ! target || target.closest( '.iso-editor' ) === null ) {
-				this.props.onOutside();
-				clearSelectedBlock();
-			}
+			this.props.onOutside();
+			clearSelectedBlock();
 		}
 
 		render() {
