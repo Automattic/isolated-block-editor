@@ -5,6 +5,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { withRegistry, createRegistry, RegistryProvider, plugins } from '@wordpress/data';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { storeConfig as blockEditorStoreConfig } from '@wordpress/block-editor';
+import { storeConfig as coreEditorStoreConfig } from '@wordpress/editor';
 
 /**
  * Internal dependencies
@@ -14,6 +15,7 @@ import applyMiddlewares from '../../store/middlewares';
 import applyBlockEditorMiddlewares from './middlewares';
 import reusableStore from './reusable-store';
 import applyDefaultSettings from '../default-settings';
+import decoratedEditor from '../../store/core-editor';
 
 // Keep track of the registries we create so we can release them after the editor instance is removed
 let registries = [];
@@ -60,8 +62,18 @@ const withRegistryProvider = createHigherOrderComponent(
 				);
 
 				// Create the core/block-editor store separatley as we need the persistence plugin to be active
-				const editorStore = newRegistry.registerStore( 'core/block-editor', {
+				const blockEditorStore = newRegistry.registerStore( 'core/block-editor', {
 					...blockEditorStoreConfig,
+					persist: [ 'preferences' ],
+				} );
+
+				// Duplicate the core/editor store so we can decorate it
+				const editorStore = newRegistry.registerStore( 'core/editor', {
+					...coreEditorStoreConfig,
+					selectors: {
+						...coreEditorStoreConfig.selectors,
+						...decoratedEditor( coreEditorStoreConfig.selectors, newRegistry.select ),
+					},
 					persist: [ 'preferences' ],
 				} );
 
@@ -69,17 +81,19 @@ const withRegistryProvider = createHigherOrderComponent(
 				customStores.map( ( store ) => {
 					registries.push( newRegistry.registerStore( store.name, store.config ) );
 				} );
+
 				registries.push( store );
+				registries.push( blockEditorStore );
 				registries.push( editorStore );
 
 				// This should be removed after the refactoring of the effects to controls.
 				applyMiddlewares( store );
 				setSubRegistry( newRegistry );
 
-				applyBlockEditorMiddlewares( editorStore );
+				applyBlockEditorMiddlewares( blockEditorStore );
 
 				return function cleanup() {
-					registries = registries.filter( ( item ) => item !== store && item !== editorStore );
+					registries = registries.filter( ( item ) => item !== store );
 				};
 			}, [ registry ] );
 
