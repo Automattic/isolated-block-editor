@@ -1,4 +1,17 @@
+/**
+ * WordPress dependencies
+ */
 import apiFetch from '@wordpress/api-fetch';
+
+function getPost() {
+  return {
+    body: {
+      id: 0,
+      type: 'post'
+    }
+  };
+} // Provide some basic API preloading. This oils the Gutenberg wheels and allows certain operations to happen without making an external request
+
 
 function registerApiHandlers(options) {
   var preload = {
@@ -41,7 +54,8 @@ function registerApiHandlers(options) {
           rest_base: 'posts'
         }
       }
-    }
+    },
+    '/wp/v2/posts/0?context=edit': getPost()
   };
   apiFetch.use(apiFetch.createPreloadingMiddleware(preload));
 }

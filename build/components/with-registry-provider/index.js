@@ -23,6 +23,8 @@ var _compose = require("@wordpress/compose");
 
 var _blockEditor = require("@wordpress/block-editor");
 
+var _editor = require("@wordpress/editor");
+
 var _store = _interopRequireDefault(require("../../store"));
 
 var _middlewares = _interopRequireDefault(require("../../store/middlewares"));
@@ -32,6 +34,8 @@ var _middlewares2 = _interopRequireDefault(require("./middlewares"));
 var _reusableStore = _interopRequireDefault(require("./reusable-store"));
 
 var _defaultSettings = _interopRequireDefault(require("../default-settings"));
+
+var _coreEditor = _interopRequireDefault(require("../../store/core-editor"));
 
 import { createElement } from "@wordpress/element";
 
@@ -60,7 +64,9 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
     var _defaultSettings$iso = defaultSettings.iso,
         persistenceKey = _defaultSettings$iso.persistenceKey,
         preferencesKey = _defaultSettings$iso.preferencesKey,
-        defaultPreferences = _defaultSettings$iso.defaultPreferences;
+        defaultPreferences = _defaultSettings$iso.defaultPreferences,
+        _defaultSettings$iso$ = _defaultSettings$iso.customStores,
+        customStores = _defaultSettings$iso$ === void 0 ? [] : _defaultSettings$iso$;
 
     var _useState = (0, _element.useState)(null),
         _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
@@ -83,18 +89,28 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
 
       var store = newRegistry.registerStore(STORE_NAME, (0, _store["default"])(preferencesKey, defaultPreferences)); // Create the core/block-editor store separatley as we need the persistence plugin to be active
 
-      var editorStore = newRegistry.registerStore('core/block-editor', _objectSpread(_objectSpread({}, _blockEditor.storeConfig), {}, {
+      var blockEditorStore = newRegistry.registerStore('core/block-editor', _objectSpread(_objectSpread({}, _blockEditor.storeConfig), {}, {
         persist: ['preferences']
-      }));
+      })); // Duplicate the core/editor store so we can decorate it
+
+      var editorStore = newRegistry.registerStore('core/editor', _objectSpread(_objectSpread({}, _editor.storeConfig), {}, {
+        selectors: _objectSpread(_objectSpread({}, _editor.storeConfig.selectors), (0, _coreEditor["default"])(_editor.storeConfig.selectors, newRegistry.select)),
+        persist: ['preferences']
+      })); // Create any custom stores inside our registry
+
+      customStores.map(function (store) {
+        registries.push(newRegistry.registerStore(store.name, store.config));
+      });
       registries.push(store);
+      registries.push(blockEditorStore);
       registries.push(editorStore); // This should be removed after the refactoring of the effects to controls.
 
       (0, _middlewares["default"])(store);
       setSubRegistry(newRegistry);
-      (0, _middlewares2["default"])(editorStore);
+      (0, _middlewares2["default"])(blockEditorStore);
       return function cleanup() {
         registries = registries.filter(function (item) {
-          return item !== store && item !== editorStore;
+          return item !== store;
         });
       };
     }, [registry]);

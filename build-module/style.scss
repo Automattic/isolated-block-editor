@@ -28,7 +28,7 @@ html {
 		-webkit-box-sizing: border-box;
 	}
 
-	p {
+	p:not(.components-form-token-field__help) {
 		font-size: inherit;
 		line-height: inherit;
 	}

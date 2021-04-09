@@ -36,7 +36,9 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
       editorMode = props.editorMode,
       renderMoreMenu = props.renderMoreMenu;
   var shortcut = 'x';
-  var inspector = settings.iso.toolbar.inspector;
+  var _settings$iso$toolbar = settings.iso.toolbar,
+      inspector = _settings$iso$toolbar.inspector,
+      documentInspector = _settings$iso$toolbar.documentInspector;
   var moreMenu = settings.iso.moreMenu;
 
   var _useDispatch = useDispatch('isolated/editor'),
@@ -79,7 +81,10 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     "aria-expanded": isInspecting,
     shortcut: shortcut,
     disabled: editorMode === 'text'
-  }), isInspecting && createElement(Inspector, null), moreMenu && createElement(MoreMenu, {
+  }), isInspecting && createElement(Inspector, {
+    documentInspector: documentInspector,
+    blockSelected: isBlockSelected
+  }), moreMenu && createElement(MoreMenu, {
     settings: settings,
     onClick: function onClick() {
       return setInspecting(false);

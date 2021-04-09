@@ -9,7 +9,8 @@
 		"es6": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored",
 		"cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored",
 		"browser": "NODE_ENV=production webpack --mode production --progress --config ./webpack.config.browser.js",
-		"build": "yarn es6 && yarn cjs && yarn browser"
+		"build": "yarn es6 && yarn cjs && yarn browser",
+		"clean": "rm -rf build build-module build-browser"
 	},
 	"sideEffects": [
 		"*.css",

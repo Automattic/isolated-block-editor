@@ -49,12 +49,19 @@ function EditorSetup(props) {
       updateSettings = props.updateSettings,
       setupEditor = props.setupEditor,
       isEditing = props.isEditing,
-      topToolbar = props.topToolbar; // This is the initial setup
+      topToolbar = props.topToolbar,
+      setupCoreEditor = props.setupCoreEditor; // This is the initial setup
 
   (0, _element.useEffect)(function () {
     // Setup the Isolated Editor & Gutenberg
-    setupEditor(currentSettings);
-    updateSettings(currentSettings);
+    setupEditor(currentSettings); // And Gutenberg
+
+    updateSettings(currentSettings); // Set up the post entities with some dummy data, ensuring that anything that uses post entities can work
+
+    setupCoreEditor({
+      id: 0,
+      type: 'post'
+    }, []);
   }, []); // Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change
 
   (0, _element.useEffect)(function () {
@@ -68,7 +75,7 @@ function EditorSetup(props) {
   return null;
 }
 
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref, registry) {
+var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref) {
   var settings = _ref.settings;
 
   var _select = select('isolated/editor'),
@@ -108,7 +115,8 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _r
   };
 }), (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('core/editor'),
-      updateEditorSettings = _dispatch.updateEditorSettings;
+      updateEditorSettings = _dispatch.updateEditorSettings,
+      setupCoreEditor = _dispatch.setupEditorState;
 
   var _dispatch2 = dispatch('core/block-editor'),
       _updateSettings = _dispatch2.updateSettings;
@@ -118,6 +126,7 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _r
 
   return {
     setupEditor: setupEditor,
+    setupCoreEditor: setupCoreEditor,
     updateSettings: function updateSettings(_ref2) {
       var editor = _ref2.editor;
 

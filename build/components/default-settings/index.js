@@ -32,7 +32,7 @@ function getMenu(current, defaultMenu) {
 
 
 function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
 
   var iso = settings.iso,
       editor = settings.editor;
@@ -43,6 +43,7 @@ function applyDefaultSettings(settings) {
       persistenceKey: (_iso$persistenceKey = iso === null || iso === void 0 ? void 0 : iso.persistenceKey) !== null && _iso$persistenceKey !== void 0 ? _iso$persistenceKey : null,
       // No disallowed embeds
       disallowEmbed: (_iso$disallowEmbed = iso === null || iso === void 0 ? void 0 : iso.disallowEmbed) !== null && _iso$disallowEmbed !== void 0 ? _iso$disallowEmbed : [],
+      customStores: (_iso$customStores = iso === null || iso === void 0 ? void 0 : iso.customStores) !== null && _iso$customStores !== void 0 ? _iso$customStores : [],
       // Default to all blocks
       blocks: {
         allowBlocks: (_iso$blocks$allowBloc = iso === null || iso === void 0 ? void 0 : (_iso$blocks = iso.blocks) === null || _iso$blocks === void 0 ? void 0 : _iso$blocks.allowBlocks) !== null && _iso$blocks$allowBloc !== void 0 ? _iso$blocks$allowBloc : [],
@@ -53,6 +54,7 @@ function applyDefaultSettings(settings) {
         inserter: true,
         inspector: false,
         navigation: false,
+        documentInspector: false,
         toc: false,
         undo: true
       }, (_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {}),

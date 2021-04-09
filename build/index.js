@@ -6,6 +6,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.initializeEditor = initializeEditor;
+exports.initializeIsoEditor = initializeIsoEditor;
+Object.defineProperty(exports, "DocumentSection", {
+  enumerable: true,
+  get: function get() {
+    return _document["default"];
+  }
+});
 Object.defineProperty(exports, "EditorLoaded", {
   enumerable: true,
   get: function get() {
@@ -62,9 +69,7 @@ var _apiFetch = _interopRequireDefault(require("./components/api-fetch"));
 
 var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-swap"));
 
-var _storeDecorator = _interopRequireDefault(require("./store/plugins/store-decorator"));
-
-var _coreEditor = _interopRequireDefault(require("./store/core-editor"));
+var _document = _interopRequireDefault(require("./components/document"));
 
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 
@@ -152,29 +157,30 @@ import { createElement } from "@wordpress/element";
  * @param {boolean} [allowApi] Allow API requests
  */
 function initializeEditor() {
-  var allowApi = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
   if (window.isoInitialised) {
     return;
-  } // This allows the editor to swap stores dynamically
+  } // Register all core blocks
 
 
-  (0, _data.use)(_storeHotSwap["default"], {}); // This decorate core/editor with some custom selectors
+  (0, _blockLibrary.registerCoreBlocks)();
+  window.isoInitialised = true;
+}
 
-  (0, _data.use)(_storeDecorator["default"], _coreEditor["default"]); // This is needed for the media uploader
+function initializeIsoEditor() {
+  if (window.isoInitialisedBlocks) {
+    return;
+  }
+
+  initializeEditor(); // This allows the editor to swap stores dynamically
+
+  (0, _data.use)(_storeHotSwap["default"], {}); // This is needed for the media uploader
 
   (0, _hooks.addFilter)('editor.MediaUpload', 'isolated-block-editor/media-upload', function () {
     return _mediaUtils.MediaUpload;
-  }); // Register all core blocks
+  });
+  (0, _apiFetch["default"])(); // Don't run this again
 
-  (0, _blockLibrary.registerCoreBlocks)(); // Inject our API fetch handlers
-
-  if (!allowApi) {
-    (0, _apiFetch["default"])();
-  } // Don't run this again
-
-
-  window.isoInitialised = true;
+  window.isoInitialisedBlocks = true;
 }
 /**
  * Save blocks callback
@@ -235,7 +241,7 @@ function IsolatedBlockEditor(props) {
       onSaveBlocks = props.onSaveBlocks,
       settings = props.settings,
       params = (0, _objectWithoutProperties2["default"])(props, ["children", "onSaveContent", "onSaveBlocks", "settings"]);
-  initializeEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
+  initializeIsoEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
   return createElement(_element.StrictMode, null, createElement("div", {
     className: "interface-interface-skeleton__content"
   }), createElement(_contentSaver["default"], {
