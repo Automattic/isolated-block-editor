@@ -35,8 +35,7 @@ import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
 import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
-import storeDecoratorPlugin from './store/plugins/store-decorator';
-import decoratedEditorStore from './store/core-editor'; // Export library components
+import DocumentSection from './components/document'; // Export library components
 
 import EditorLoaded from './components/editor-loaded'; // A fake edit-post store is needed
 
@@ -107,29 +106,29 @@ import './style.scss';
  */
 
 export function initializeEditor() {
-  var allowApi = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
   if (window.isoInitialised) {
     return;
-  } // This allows the editor to swap stores dynamically
+  } // Register all core blocks
 
 
-  use(storeHotSwapPlugin, {}); // This decorate core/editor with some custom selectors
+  registerCoreBlocks();
+  window.isoInitialised = true;
+}
+export function initializeIsoEditor() {
+  if (window.isoInitialisedBlocks) {
+    return;
+  }
 
-  use(storeDecoratorPlugin, decoratedEditorStore); // This is needed for the media uploader
+  initializeEditor(); // This allows the editor to swap stores dynamically
+
+  use(storeHotSwapPlugin, {}); // This is needed for the media uploader
 
   addFilter('editor.MediaUpload', 'isolated-block-editor/media-upload', function () {
     return MediaUpload;
-  }); // Register all core blocks
+  });
+  registerApiHandlers(); // Don't run this again
 
-  registerCoreBlocks(); // Inject our API fetch handlers
-
-  if (!allowApi) {
-    registerApiHandlers();
-  } // Don't run this again
-
-
-  window.isoInitialised = true;
+  window.isoInitialisedBlocks = true;
 }
 /**
  * Save blocks callback
@@ -190,7 +189,7 @@ function IsolatedBlockEditor(props) {
       settings = props.settings,
       params = _objectWithoutProperties(props, ["children", "onSaveContent", "onSaveBlocks", "settings"]);
 
-  initializeEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
+  initializeIsoEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
   return createElement(StrictMode, null, createElement("div", {
     className: "interface-interface-skeleton__content"
   }), createElement(ContentSaver, {
@@ -204,5 +203,5 @@ function IsolatedBlockEditor(props) {
 }
 
 export default withRegistryProvider(IsolatedBlockEditor);
-export { EditorLoaded };
+export { EditorLoaded, DocumentSection };
 //# sourceMappingURL=index.js.map

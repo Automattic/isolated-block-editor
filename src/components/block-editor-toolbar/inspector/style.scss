@@ -42,4 +42,30 @@
 		min-height: 650px;
 		width: $sidebar-width + 20;
 	}
+
+	ul {
+		margin: 0;
+	}
+
+	.components-panel__header {
+		margin-top: 1px;
+	}
+
+	ul li {
+		margin: 0;
+
+		.is-active {
+			box-shadow: inset 0 0 0 2px transparent, inset 0 -4px 0 0 #007cba;
+			box-shadow: inset 0 0 0 var( --wp-admin-border-width-focus ) transparent,
+				inset 0 -4px 0 0 var( --wp-admin-theme-color );
+			position: relative;
+			z-index: 1;
+
+			&:focus {
+				box-shadow: inset 0 0 0 2px #007cba, inset 0 -4px 0 0 #007cba;
+				box-shadow: inset 0 0 0 var( --wp-admin-border-width-focus ) var( --wp-admin-theme-color ),
+					inset 0 -4px 0 0 var( --wp-admin-theme-color );
+			}
+		}
+	}
 }

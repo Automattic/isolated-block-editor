@@ -32,8 +32,7 @@ import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
 import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
-import storeDecoratorPlugin from './store/plugins/store-decorator';
-import decoratedEditorStore from './store/core-editor';
+import DocumentSection from './components/document';
 
 // Export library components
 import EditorLoaded from './components/editor-loaded';
@@ -104,30 +103,34 @@ import './style.scss';
  * Initialize Gutenberg
  * @param {boolean} [allowApi] Allow API requests
  */
-export function initializeEditor( allowApi = false ) {
+export function initializeEditor() {
 	if ( window.isoInitialised ) {
 		return;
 	}
 
+	// Register all core blocks
+	registerCoreBlocks();
+
+	window.isoInitialised = true;
+}
+
+export function initializeIsoEditor() {
+	if ( window.isoInitialisedBlocks ) {
+		return;
+	}
+
+	initializeEditor();
+
 	// This allows the editor to swap stores dynamically
 	use( storeHotSwapPlugin, {} );
-
-	// This decorate core/editor with some custom selectors
-	use( storeDecoratorPlugin, decoratedEditorStore );
 
 	// This is needed for the media uploader
 	addFilter( 'editor.MediaUpload', 'isolated-block-editor/media-upload', () => MediaUpload );
 
-	// Register all core blocks
-	registerCoreBlocks();
-
-	// Inject our API fetch handlers
-	if ( ! allowApi ) {
-		registerApiHandlers();
-	}
+	registerApiHandlers();
 
 	// Don't run this again
-	window.isoInitialised = true;
+	window.isoInitialisedBlocks = true;
 }
 
 /**
@@ -182,7 +185,7 @@ export function initializeEditor( allowApi = false ) {
 function IsolatedBlockEditor( props ) {
 	const { children, onSaveContent, onSaveBlocks, settings, ...params } = props;
 
-	initializeEditor( settings?.iso?.allowApi );
+	initializeIsoEditor( settings?.iso?.allowApi );
 
 	return (
 		<StrictMode>
@@ -205,6 +208,4 @@ function IsolatedBlockEditor( props ) {
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export {
-	EditorLoaded,
-};
+export { EditorLoaded, DocumentSection };

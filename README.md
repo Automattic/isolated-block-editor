@@ -127,10 +127,11 @@ render(
 The `IsolatedBlockEditor` also exports the following support component:
 
 - `EditorLoaded` - Include this to be notified when the editor is loading and has loaded
+- `DocumentSection` - Wrap up a component to appear in the document tab of the inspector
 
 ```js
 
-import IsolatedBlockEditor, { EditorLoaded } from 'isolated-block-editor';
+import IsolatedBlockEditor, { EditorLoaded, DocumentSection } from 'isolated-block-editor';
 
 render(
 	<IsolatedBlockEditor
@@ -140,6 +141,7 @@ render(
 		onError={ () => document.location.reload() }
 	>
 		<EditorLoaded onLoaded={ () => {} } onLoading={ () => {} } />
+		<DocumentSection>Extra Information</DocumentSection>
 	</IsolatedBlockEditor>,
 	document.querySelector( '#editor' )
 );
@@ -157,6 +159,7 @@ The following function is also provided:
 - _iso.preferencesKey_ `[string|null]` - Preferences key. Default to null to disable
 - _iso.defaultPreferences_ {object} - Default preferences
 - _iso.persistenceKey_ `[string|null]` - Persistence key. Default to null to disable
+- _iso.customStores_ `[array]` - Array of store objects, in a form suitable for passing to Gutenberg's `createReduxStore`
 - _iso.blocks_ `[object]` - Block restrictions
 - _iso.blocks.allowBlocks_ `[string[]]` - list of block names to allow, defaults to none
 - _iso.blocks.disallowBlocks_ `[string[]]` - list of block names to disallow, defaults to none
@@ -167,6 +170,7 @@ The following function is also provided:
 - _iso.toolbar.navigation_ `[boolean]` - Enable or disable the toolbar navigation button, defaults to `false`
 - _iso.toolbar.toc_ `[boolean]` - Enable or disable the toolbar table of contents button, defaults to `false`
 - _iso.toolbar.undo_ `[boolean]` - Enable or disable the toolbar undo/redo buttons, defaults to `true`
+- _iso.toolbar.documentInspector_ `[string|null]` - Set to a string to show as a new tab in the inspector and filled with `DocumentSection`, otherwise defaults to no new tab
 - _iso.moreMenu_ `[Object]` - More menu settings
 - _iso.moreMenu.editor_ `[boolean]` - Enable or disable the editor sub menu (visual/code editing), defaults to `false`
 - _iso.moreMenu.fullscreen_ `[boolean]` - Enable or disable the fullscreen option, defaults to `false`

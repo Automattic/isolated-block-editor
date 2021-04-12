@@ -48,18 +48,14 @@ var ClickOutsideWrapper = (0, _withFocusOutside["default"])( /*#__PURE__*/functi
     key: "handleFocusOutside",
     value: function handleFocusOutside(ev) {
       var target = ev.relatedTarget || ev.target;
-      var clearSelectedBlock = this.props.clearSelectedBlock;
+      var clearSelectedBlock = this.props.clearSelectedBlock; // Ignore clicks in the media modal - consider it inside the editor
 
-      if (target) {
-        if (target.classList.contains('media-modal') || target.classList.contains('iso-editor')) {
-          return;
-        }
+      if (target && target.classList.contains('media-modal')) {
+        return;
       }
 
-      if (!target || target.closest('.iso-editor') === null) {
-        this.props.onOutside();
-        clearSelectedBlock();
-      }
+      this.props.onOutside();
+      clearSelectedBlock();
     }
   }, {
     key: "render",

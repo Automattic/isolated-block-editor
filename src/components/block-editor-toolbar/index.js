@@ -31,7 +31,7 @@ import './style.scss';
 const BlockEditorToolbar = ( props ) => {
 	const { settings, editorMode, renderMoreMenu } = props;
 	const shortcut = 'x';
-	const { inspector } = settings.iso.toolbar;
+	const { inspector, documentInspector } = settings.iso.toolbar;
 	const { moreMenu } = settings.iso;
 	const { setInspecting } = useDispatch( 'isolated/editor' );
 	const { isInspecting, isBlockSelected } = useSelect(
@@ -69,7 +69,9 @@ const BlockEditorToolbar = ( props ) => {
 						/>
 					) }
 
-					{ isInspecting && <Inspector /> }
+					{ isInspecting && (
+						<Inspector documentInspector={ documentInspector } blockSelected={ isBlockSelected } />
+					) }
 
 					{ moreMenu && (
 						<MoreMenu

@@ -2,35 +2,24 @@
  * WordPress dependencies
  */
 import { serialize } from '@wordpress/blocks';
-import { useSelect } from '@wordpress/data';
 /**
  * Override the default `core/editor` store with functions that return data from `core/block-editor` instead of the post in `core/editor`
  */
 
-export default {
-  'core/editor': function coreEditor(select, registry) {
-    return {
-      getEditedPostAttribute: function getEditedPostAttribute(attributeName) {
-        if (attributeName === 'content') {
-          return serialize(useSelect(function (select) {
-            return select('core/block-editor').getBlocks();
-          }));
-        }
+export default function (existingSelectors, newSelect) {
+  return {
+    getEditedPostAttribute: function getEditedPostAttribute(state, attributeName) {
+      if (attributeName === 'content') {
+        // Content is stored in core/block-editor, not in the post entity
+        return serialize(newSelect('core/block-editor').getBlocks());
+      } // Pass everything else through
 
-        if (attributeName === 'title') {
-          return '';
-        }
 
-        if (attributeName === 'type') {
-          return 'post';
-        }
-
-        return select.getEditedPostAttribute(attributeName);
-      },
-      getEditedPostContent: function getEditedPostContent() {
-        return serialize(registry.select('core/block-editor').getBlocks());
-      }
-    };
-  }
-};
+      return existingSelectors.getEditedPostAttribute(state, attributeName);
+    },
+    getEditedPostContent: function getEditedPostContent() {
+      return serialize(newSelect('core/block-editor').getBlocks());
+    }
+  };
+}
 //# sourceMappingURL=index.js.map

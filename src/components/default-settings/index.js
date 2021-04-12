@@ -32,6 +32,8 @@ export default function applyDefaultSettings( settings ) {
 			// No disallowed embeds
 			disallowEmbed: iso?.disallowEmbed ?? [],
 
+			customStores: iso?.customStores ?? [],
+
 			// Default to all blocks
 			blocks: { allowBlocks: iso?.blocks?.allowBlocks ?? [], disallowBlocks: iso?.blocks?.disallowBlocks ?? [] },
 
@@ -40,6 +42,7 @@ export default function applyDefaultSettings( settings ) {
 				inserter: true,
 				inspector: false,
 				navigation: false,
+				documentInspector: false,
 				toc: false,
 				undo: true,
 
