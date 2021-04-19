@@ -38,6 +38,8 @@ Examples:
 - [P2](https://wordpress.com/p2/) - WordPress as a collaborative workspace (coming soon for self-hosted)
 - Editor Block - a block that allows an editor to be added to a page (coming soon)
 
+Do you use this in your own project? Let us know!
+
 ## Why would I use this?
 
 Gutenberg already provides a playground which allows it to be used outside of WordPress. This is actually used as the basis for the Isolated Block Editor.
@@ -45,6 +47,8 @@ Gutenberg already provides a playground which allows it to be used outside of Wo
 However, it provides a limited set of features, and extending it further into a usable editor can take some effort. For example, it doesn't include any undo history.
 
 The Isolated Block Editor is a full editor that handles a lot of these complexities. It should not be considered a replacement for the Gutenberg playground, but more of an opinionated layer on top.
+
+This should be considered experimental, and subject to changes.
 
 ## Bundling and WordPress
 
