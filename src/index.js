@@ -5,7 +5,7 @@
 import '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
 import { StrictMode } from '@wordpress/element';
-import { SlotFillProvider, DropZoneProvider } from '@wordpress/components';
+import { SlotFillProvider } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { addFilter } from '@wordpress/hooks';
@@ -196,11 +196,9 @@ function IsolatedBlockEditor( props ) {
 			<PatternMonitor />
 
 			<SlotFillProvider>
-				<DropZoneProvider>
-					<BlockEditorContainer { ...params } settings={ settings }>
-						{ children }
-					</BlockEditorContainer>
-				</DropZoneProvider>
+				<BlockEditorContainer { ...params } settings={ settings }>
+					{ children }
+				</BlockEditorContainer>
 			</SlotFillProvider>
 		</StrictMode>
 	);
