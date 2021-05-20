@@ -14,7 +14,6 @@ import { ReusableBlocksMenuItems } from '@wordpress/reusable-blocks';
 
 import VisualEditor from './visual-editor';
 import TextEditor from './text-editor';
-import ConvertToGroupButtons from './convert-to-group-buttons';
 import FullscreenMode from './fullscreen-mode';
 import './style.scss';
 
@@ -43,7 +42,6 @@ function BlockEditor( props ) {
 	return (
 		<>
 			<FullscreenMode />
-			<ConvertToGroupButtons />
 			<EditorNotices />
 
 			{ isEditing && (
