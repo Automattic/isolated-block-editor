@@ -53,8 +53,7 @@ function getInitialContent( settings, content ) {
  * @param {object} props.children - Child components
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
- * @param {OnSelection} props.getEditorSelectionStart
- * @param {OnSelection} props.getEditorSelectionEnd
+ * @param {OnSelection} props.selection
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 function BlockEditorContents( props ) {
@@ -62,8 +61,7 @@ function BlockEditorContents( props ) {
 		blocks,
 		updateBlocksWithoutUndo,
 		updateBlocksWithUndo,
-		getEditorSelectionStart,
-		getEditorSelectionEnd,
+		selection,
 		isEditing,
 		editorMode,
 	} = props;
@@ -83,9 +81,8 @@ function BlockEditorContents( props ) {
 			value={ blocks || [] }
 			onInput={ updateBlocksWithoutUndo }
 			onChange={ updateBlocksWithUndo }
-			selectionStart={ getEditorSelectionStart() }
-			selectionEnd={ getEditorSelectionEnd() }
 			useSubRegistry
+			selection={ selection }
 			settings={ settings.editor }
 		>
 			<BlockEditorToolbar editorMode={ editorMode } settings={ settings } renderMoreMenu={ renderMoreMenu } />
@@ -102,16 +99,14 @@ export default compose( [
 	withSelect( ( select ) => {
 		const {
 			getBlocks,
-			getEditorSelectionStart,
-			getEditorSelectionEnd,
+			getEditorSelection,
 			getEditorMode,
 			isEditing,
 		} = select( 'isolated/editor' );
 
 		return {
 			blocks: getBlocks(),
-			getEditorSelectionEnd,
-			getEditorSelectionStart,
+			selection: getEditorSelection(),
 			isEditing: isEditing(),
 			editorMode: getEditorMode(),
 		};
