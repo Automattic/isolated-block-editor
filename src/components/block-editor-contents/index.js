@@ -11,7 +11,7 @@ import { parse, rawHandler } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import BlockEditorProvider from '../block-editor-provider';
+import { BlockEditorProvider } from '@wordpress/block-editor';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
@@ -81,7 +81,7 @@ function BlockEditorContents( props ) {
 			value={ blocks || [] }
 			onInput={ updateBlocksWithoutUndo }
 			onChange={ updateBlocksWithUndo }
-			useSubRegistry
+			useSubRegistry={ false }
 			selection={ selection }
 			settings={ settings.editor }
 		>
