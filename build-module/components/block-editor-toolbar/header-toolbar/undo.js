@@ -12,13 +12,10 @@ import { undo as undoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
 
 function EditorHistoryUndo(props, ref) {
-  var hasUndo = useSelect(function (select) {
-    return select('isolated/editor').hasEditorUndo();
-  }, []);
-
-  var _useDispatch = useDispatch('isolated/editor'),
-      undo = _useDispatch.undo;
-
+  const hasUndo = useSelect(select => select('isolated/editor').hasEditorUndo(), []);
+  const {
+    undo
+  } = useDispatch('isolated/editor');
   return createElement(Button, _extends({}, props, {
     ref: ref,
     icon: undoIcon,

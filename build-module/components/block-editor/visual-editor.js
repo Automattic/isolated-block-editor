@@ -18,9 +18,9 @@ import { useMergeRefs } from '@wordpress/compose';
  * The original is not exported, and contains code for post titles
  */
 
-var VisualEditor = function VisualEditor() {
-  var ref = useRef();
-  var mergedRefs = useMergeRefs([ref, useClipboardHandler(), useCanvasClickRedirect(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
+const VisualEditor = () => {
+  const ref = useRef();
+  const mergedRefs = useMergeRefs([ref, useClipboardHandler(), useCanvasClickRedirect(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
   return createElement("div", {
     className: "edit-post-visual-editor"
   }, createElement(Popover.Slot, {

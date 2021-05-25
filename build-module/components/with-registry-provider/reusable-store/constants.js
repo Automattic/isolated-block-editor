@@ -3,5 +3,5 @@
  *
  * @type {string}
  */
-export var STORE_KEY = 'core/reusable-blocks';
+export const STORE_KEY = 'core/reusable-blocks';
 //# sourceMappingURL=constants.js.map

@@ -14,16 +14,16 @@ import { MenuItem, withSpokenMessages } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { check } from '@wordpress/icons';
 
-function FeatureToggle(_ref) {
-  var onToggle = _ref.onToggle,
-      isActive = _ref.isActive,
-      label = _ref.label,
-      info = _ref.info,
-      messageActivated = _ref.messageActivated,
-      messageDeactivated = _ref.messageDeactivated,
-      speak = _ref.speak;
-
-  var speakMessage = function speakMessage() {
+function FeatureToggle({
+  onToggle,
+  isActive,
+  label,
+  info,
+  messageActivated,
+  messageDeactivated,
+  speak
+}) {
+  const speakMessage = () => {
     if (isActive) {
       speak(messageDeactivated || __('Feature deactivated'));
     } else {
@@ -40,17 +40,15 @@ function FeatureToggle(_ref) {
   }, label);
 }
 
-export default compose([withSelect(function (select, _ref2) {
-  var feature = _ref2.feature;
-  return {
-    isActive: select('isolated/editor').isFeatureActive(feature)
-  };
-}), withDispatch(function (dispatch, ownProps) {
-  return {
-    onToggle: function onToggle() {
-      dispatch('isolated/editor').toggleFeature(ownProps.feature);
-      ownProps.onClose();
-    }
-  };
-}), withSpokenMessages])(FeatureToggle);
+export default compose([withSelect((select, {
+  feature
+}) => ({
+  isActive: select('isolated/editor').isFeatureActive(feature)
+})), withDispatch((dispatch, ownProps) => ({
+  onToggle() {
+    dispatch('isolated/editor').toggleFeature(ownProps.feature);
+    ownProps.onClose();
+  }
+
+})), withSpokenMessages])(FeatureToggle);
 //# sourceMappingURL=index.js.map

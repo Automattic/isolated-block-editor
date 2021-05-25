@@ -29,17 +29,17 @@ import { check } from '@wordpress/icons';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 
-function EditorMenu(_ref) {
-  var onClose = _ref.onClose,
-      editorMode = _ref.editorMode,
-      onSetMode = _ref.onSetMode,
-      isCodeEditingEnabled = _ref.isCodeEditingEnabled,
-      settings = _ref.settings;
-
+function EditorMenu({
+  onClose,
+  editorMode,
+  onSetMode,
+  isCodeEditingEnabled,
+  settings
+}) {
   /**
    * @param {string} mode
    */
-  var setMode = function setMode(mode) {
+  const setMode = mode => {
     onSetMode(mode);
     onClose();
   };
@@ -53,36 +53,31 @@ function EditorMenu(_ref) {
   }, createElement(MenuItem, {
     icon: editorMode === 'visual' && check,
     isSelected: editorMode === 'visual',
-    onClick: function onClick() {
-      return setMode('visual');
-    },
+    onClick: () => setMode('visual'),
     role: "menuitemcheckbox"
   }, __('Visual editor')), createElement(MenuItem, {
     icon: editorMode === 'text' && check,
     isSelected: editorMode === 'text',
-    onClick: function onClick() {
-      return setMode('text');
-    },
+    onClick: () => setMode('text'),
     role: "menuitemcheckbox"
   }, __('Code editor')));
 }
 
-export default compose([withSelect(function (select) {
-  var _select = select('isolated/editor'),
-      getEditorMode = _select.getEditorMode;
-
-  var _select$getEditorSett = select('core/editor').getEditorSettings(),
-      codeEditingEnabled = _select$getEditorSett.codeEditingEnabled;
-
+export default compose([withSelect(select => {
+  const {
+    getEditorMode
+  } = select('isolated/editor');
+  const {
+    codeEditingEnabled
+  } = select('core/editor').getEditorSettings();
   return {
     editorMode: getEditorMode(),
     isCodeEditingEnabled: codeEditingEnabled
   };
-}), withDispatch(function (dispatch) {
-  return {
-    onSetMode: function onSetMode(mode) {
-      dispatch('isolated/editor').setEditorMode(mode);
-    }
-  };
-})])(EditorMenu);
+}), withDispatch(dispatch => ({
+  onSetMode(mode) {
+    dispatch('isolated/editor').setEditorMode(mode);
+  }
+
+}))])(EditorMenu);
 //# sourceMappingURL=editor-menu.js.map

@@ -3,26 +3,28 @@ import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
 
-function HotSwapper(_ref) {
-  var isEditing = _ref.isEditing,
-      hotSwap = _ref.hotSwap;
-  useEffect(function () {
+function HotSwapper({
+  isEditing,
+  hotSwap
+}) {
+  useEffect(() => {
     hotSwap(isEditing);
   }, [isEditing]);
   return null;
 }
 
-export default compose([withSelect(function (select) {
-  var _select = select('isolated/editor'),
-      isEditing = _select.isEditing;
-
+export default compose([withSelect(select => {
+  const {
+    isEditing
+  } = select('isolated/editor');
   return {
     isEditing: isEditing()
   };
-}), withDispatch(function (dispatch, ownProps, _ref2) {
-  var select = _ref2.select;
+}), withDispatch((dispatch, ownProps, {
+  select
+}) => {
   return {
-    hotSwap: function hotSwap(isEditing) {
+    hotSwap: isEditing => {
       storeHotSwapPlugin.resetEditor();
 
       if (isEditing) {

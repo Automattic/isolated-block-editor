@@ -9,22 +9,13 @@ export function getBlocks(state) {
   return state.blocks.present.blocks;
 }
 /**
- * Get end position
+ * Get selection
  * @param {object} state - Current state
  * @returns {object}
  */
 
-export function getEditorSelectionStart(state) {
-  return state.blocks.present.selectionStart;
-}
-/**
- * Get end position
- * @param {object} state - Current state
- * @returns {object}
- */
-
-export function getEditorSelectionEnd(state) {
-  return state.blocks.present.selectionEnd;
+export function getEditorSelection(state) {
+  return state.blocks.present.selection;
 }
 /**
  * Is undo possible?

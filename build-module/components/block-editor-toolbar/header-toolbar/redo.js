@@ -12,13 +12,10 @@ import { redo as redoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
 
 function EditorHistoryRedo(props, ref) {
-  var hasRedo = useSelect(function (select) {
-    return select('core/editor').hasEditorRedo();
-  }, []);
-
-  var _useDispatch = useDispatch('core/editor'),
-      redo = _useDispatch.redo;
-
+  const hasRedo = useSelect(select => select('core/editor').hasEditorRedo(), []);
+  const {
+    redo
+  } = useDispatch('core/editor');
   return createElement(Button, _extends({}, props, {
     ref: ref,
     icon: redoIcon,

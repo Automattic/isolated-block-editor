@@ -8,7 +8,7 @@ import { useEffect } from '@wordpress/element';
  */
 
 import './style.scss';
-var FULLSCREEN_MODE = 'is-fullscreen-mode';
+const FULLSCREEN_MODE = 'is-fullscreen-mode';
 
 function addFullscreen() {
   document.body.classList.add(FULLSCREEN_MODE);
@@ -21,14 +21,12 @@ function removeFullscreen() {
 }
 
 export default function FullscreenMode() {
-  var _useSelect = useSelect(function (select) {
-    return {
-      fullscreenMode: select('isolated/editor').isOptionActive('fullscreenMode')
-    };
-  }, []),
-      fullscreenMode = _useSelect.fullscreenMode;
-
-  useEffect(function () {
+  const {
+    fullscreenMode
+  } = useSelect(select => ({
+    fullscreenMode: select('isolated/editor').isOptionActive('fullscreenMode')
+  }), []);
+  useEffect(() => {
     // Also do it on html as .com adds a top margin there
     if (fullscreenMode) {
       addFullscreen();
@@ -36,7 +34,7 @@ export default function FullscreenMode() {
       removeFullscreen();
     }
 
-    return function () {
+    return () => {
       // Remove any class when closing the editor
       removeFullscreen();
     };

@@ -18,7 +18,7 @@ import './style.scss';
  * @type BlockEditorSettings
  */
 
-var settings = {
+const settings = {
   iso: {
     moreMenu: false
   }
@@ -40,7 +40,7 @@ function saveBlocks(content, textarea) {
  */
 
 
-function _onLoad(content, parser, rawHandler) {
+function onLoad(content, parser, rawHandler) {
   // Does the content contain blocks?
   if (content.indexOf('<!--') !== -1) {
     // Parse the blocks
@@ -65,7 +65,7 @@ function attachEditor(textarea) {
   } // Create a node after the textarea
 
 
-  var editor = document.createElement('div');
+  const editor = document.createElement('div');
   editor.classList.add('editor'); // Insert after the textarea, and hide it
 
   textarea.parentNode.insertBefore(editor, textarea.nextSibling);
@@ -73,15 +73,9 @@ function attachEditor(textarea) {
 
   render(createElement(IsolatedBlockEditor, {
     settings: settings,
-    onLoad: function onLoad(parser, rawHandler) {
-      return _onLoad(textarea.value, parser, rawHandler);
-    },
-    onSaveContent: function onSaveContent(content) {
-      return saveBlocks(content, textarea);
-    },
-    onError: function onError() {
-      return document.location.reload();
-    }
+    onLoad: (parser, rawHandler) => onLoad(textarea.value, parser, rawHandler),
+    onSaveContent: content => saveBlocks(content, textarea),
+    onError: () => document.location.reload()
   }), editor);
 }
 /**
@@ -94,7 +88,7 @@ function detachEditor(textarea) {
   /**
    * @type {HTMLElement}
    */
-  var editor = textarea.nextSibling;
+  const editor = textarea.nextSibling;
 
   if (editor && editor.classList.contains('editor')) {
     unmountComponentAtNode(editor);
@@ -105,7 +99,7 @@ function detachEditor(textarea) {
 
 
 window.wp = {
-  attachEditor: attachEditor,
-  detachEditor: detachEditor
+  attachEditor,
+  detachEditor
 };
 //# sourceMappingURL=index.js.map

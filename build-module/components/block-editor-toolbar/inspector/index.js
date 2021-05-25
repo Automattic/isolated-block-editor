@@ -1,4 +1,3 @@
-import _slicedToArray from "@babel/runtime/helpers/slicedToArray";
 import { createElement } from "@wordpress/element";
 
 /**
@@ -16,14 +15,11 @@ import Document from '../../document';
 import './style.scss';
 
 function Inspector(props) {
-  var documentInspector = props.documentInspector,
-      blockSelected = props.blockSelected;
-
-  var _useState = useState(blockSelected || !documentInspector ? 'block' : 'document'),
-      _useState2 = _slicedToArray(_useState, 2),
-      currentTab = _useState2[0],
-      setCurrentTab = _useState2[1];
-
+  const {
+    documentInspector,
+    blockSelected
+  } = props;
+  const [currentTab, setCurrentTab] = useState(blockSelected || !documentInspector ? 'block' : 'document');
   return createElement(Popover, {
     position: "bottom",
     className: "iso-inspector"

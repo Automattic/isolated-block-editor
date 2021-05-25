@@ -1,5 +1,3 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-import _slicedToArray from "@babel/runtime/helpers/slicedToArray";
 import { createElement } from "@wordpress/element";
 
 /**
@@ -40,8 +38,8 @@ import './style.scss';
  * @param {boolean} isEditing
  */
 
-var SIZE_LARGE = 720;
-var SIZE_MEDIUM = 480;
+const SIZE_LARGE = 720;
+const SIZE_MEDIUM = 480;
 /**
  * Contains the block contents. Handles the hot-swapping of the redux stores, as well as applying the root CSS classes
  *
@@ -61,25 +59,26 @@ var SIZE_MEDIUM = 480;
  */
 
 function BlockEditorContainer(props) {
-  var children = props.children,
-      settings = props.settings,
-      onSave = props.onSave,
-      className = props.className,
-      onError = props.onError,
-      renderMoreMenu = props.renderMoreMenu,
-      onLoad = props.onLoad;
-  var isEditorReady = props.isEditorReady,
-      editorMode = props.editorMode,
-      isEditing = props.isEditing,
-      setEditing = props.setEditing,
-      hasFixedToolbar = props.hasFixedToolbar;
-
-  var _useResizeObserver = useResizeObserver(),
-      _useResizeObserver2 = _slicedToArray(_useResizeObserver, 2),
-      resizeListener = _useResizeObserver2[0],
-      width = _useResizeObserver2[1].width;
-
-  var classes = classnames(className, _defineProperty({
+  const {
+    children,
+    settings,
+    onSave,
+    className,
+    onError,
+    renderMoreMenu,
+    onLoad
+  } = props;
+  const {
+    isEditorReady,
+    editorMode,
+    isEditing,
+    setEditing,
+    hasFixedToolbar
+  } = props;
+  const [resizeListener, {
+    width
+  }] = useResizeObserver();
+  const classes = classnames(className, {
     'iso-editor': true,
     'is-large': width >= SIZE_LARGE,
     'is-medium': width >= SIZE_MEDIUM && width < SIZE_LARGE,
@@ -89,19 +88,16 @@ function BlockEditorContainer(props) {
     // Match Gutenberg
     'block-editor': true,
     'edit-post-layout': true,
-    'has-fixed-toolbar': hasFixedToolbar
-  }, 'is-mode-' + editorMode, true));
+    'has-fixed-toolbar': hasFixedToolbar,
+    ['is-mode-' + editorMode]: true
+  });
   return createElement("div", {
     className: classes
   }, createElement(ErrorBoundary, {
     onError: onError
   }, createElement(HotSwapper, null), resizeListener, createElement(ClickOutsideWrapper, {
-    onOutside: function onOutside() {
-      return setEditing(false);
-    },
-    onFocus: function onFocus() {
-      return !isEditing && setEditing(true);
-    }
+    onOutside: () => setEditing(false),
+    onFocus: () => !isEditing && setEditing(true)
   }, createElement(BlockEditorContents, {
     onSave: onSave,
     settings: settings,
@@ -110,25 +106,25 @@ function BlockEditorContainer(props) {
   }, children))));
 }
 
-export default compose([withSelect(function (select) {
-  var _select = select('isolated/editor'),
-      isEditorReady = _select.isEditorReady,
-      getEditorMode = _select.getEditorMode,
-      isEditing = _select.isEditing,
-      isFeatureActive = _select.isFeatureActive;
-
+export default compose([withSelect(select => {
+  const {
+    isEditorReady,
+    getEditorMode,
+    isEditing,
+    isFeatureActive
+  } = select('isolated/editor');
   return {
     isEditorReady: isEditorReady(),
     editorMode: getEditorMode(),
     isEditing: isEditing(),
     hasFixedToolbar: isFeatureActive('fixedToolbar')
   };
-}), withDispatch(function (dispatch) {
-  var _dispatch = dispatch('isolated/editor'),
-      setEditing = _dispatch.setEditing;
-
+}), withDispatch(dispatch => {
+  const {
+    setEditing
+  } = dispatch('isolated/editor');
   return {
-    setEditing: setEditing
+    setEditing
   };
 })])(BlockEditorContainer);
 //# sourceMappingURL=index.js.map

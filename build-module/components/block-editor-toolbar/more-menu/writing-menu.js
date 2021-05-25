@@ -24,21 +24,20 @@ import OptionToggle from '../toggle-option';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 
-function WritingMenu(_ref) {
-  var onClose = _ref.onClose,
-      settings = _ref.settings;
-  var _settings$iso$moreMen = settings.iso.moreMenu,
-      preview = _settings$iso$moreMen.preview,
-      fullscreen = _settings$iso$moreMen.fullscreen,
-      topToolbar = _settings$iso$moreMen.topToolbar;
-
-  var _useSelect = useSelect(function (select) {
-    return {
-      isFullscreen: select('isolated/editor').isOptionActive('fullscreenMode')
-    };
-  }, []),
-      isFullscreen = _useSelect.isFullscreen; // Anything to show?
-
+function WritingMenu({
+  onClose,
+  settings
+}) {
+  const {
+    preview,
+    fullscreen,
+    topToolbar
+  } = settings.iso.moreMenu;
+  const {
+    isFullscreen
+  } = useSelect(select => ({
+    isFullscreen: select('isolated/editor').isOptionActive('fullscreenMode')
+  }), []); // Anything to show?
 
   if (!fullscreen && !preview && !topToolbar) {
     return null;

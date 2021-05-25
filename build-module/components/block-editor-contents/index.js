@@ -12,7 +12,7 @@ import { parse, rawHandler } from '@wordpress/blocks';
  * Internal dependencies
  */
 
-import BlockEditorProvider from '../block-editor-provider';
+import { BlockEditorProvider } from '@wordpress/block-editor';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
@@ -50,27 +50,29 @@ function getInitialContent(settings, content) {
  * @param {object} props.children - Child components
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
- * @param {OnSelection} props.getEditorSelectionStart
- * @param {OnSelection} props.getEditorSelectionEnd
+ * @param {OnSelection} props.selection
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 
 
 function BlockEditorContents(props) {
-  var blocks = props.blocks,
-      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo,
-      updateBlocksWithUndo = props.updateBlocksWithUndo,
-      getEditorSelectionStart = props.getEditorSelectionStart,
-      getEditorSelectionEnd = props.getEditorSelectionEnd,
-      isEditing = props.isEditing,
-      editorMode = props.editorMode;
-  var children = props.children,
-      settings = props.settings,
-      renderMoreMenu = props.renderMoreMenu,
-      onLoad = props.onLoad; // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
+  const {
+    blocks,
+    updateBlocksWithoutUndo,
+    updateBlocksWithUndo,
+    selection,
+    isEditing,
+    editorMode
+  } = props;
+  const {
+    children,
+    settings,
+    renderMoreMenu,
+    onLoad
+  } = props; // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 
-  useEffect(function () {
-    var initialContent = getInitialContent(settings, onLoad ? onLoad(parse, rawHandler) : []);
+  useEffect(() => {
+    const initialContent = getInitialContent(settings, onLoad ? onLoad(parse, rawHandler) : []);
 
     if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
       updateBlocksWithoutUndo(initialContent);
@@ -80,9 +82,8 @@ function BlockEditorContents(props) {
     value: blocks || [],
     onInput: updateBlocksWithoutUndo,
     onChange: updateBlocksWithUndo,
-    selectionStart: getEditorSelectionStart(),
-    selectionEnd: getEditorSelectionEnd(),
-    useSubRegistry: true,
+    useSubRegistry: false,
+    selection: selection,
     settings: settings.editor
   }, createElement(BlockEditorToolbar, {
     editorMode: editorMode,
@@ -94,29 +95,27 @@ function BlockEditorContents(props) {
   }, children), createElement(Popover.Slot, null));
 }
 
-export default compose([withSelect(function (select) {
-  var _select = select('isolated/editor'),
-      getBlocks = _select.getBlocks,
-      getEditorSelectionStart = _select.getEditorSelectionStart,
-      getEditorSelectionEnd = _select.getEditorSelectionEnd,
-      getEditorMode = _select.getEditorMode,
-      isEditing = _select.isEditing;
-
+export default compose([withSelect(select => {
+  const {
+    getBlocks,
+    getEditorSelection,
+    getEditorMode,
+    isEditing
+  } = select('isolated/editor');
   return {
     blocks: getBlocks(),
-    getEditorSelectionEnd: getEditorSelectionEnd,
-    getEditorSelectionStart: getEditorSelectionStart,
+    selection: getEditorSelection(),
     isEditing: isEditing(),
     editorMode: getEditorMode()
   };
-}), withDispatch(function (dispatch) {
-  var _dispatch = dispatch('isolated/editor'),
-      updateBlocksWithUndo = _dispatch.updateBlocksWithUndo,
-      updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
-
+}), withDispatch(dispatch => {
+  const {
+    updateBlocksWithUndo,
+    updateBlocksWithoutUndo
+  } = dispatch('isolated/editor');
   return {
-    updateBlocksWithUndo: updateBlocksWithUndo,
-    updateBlocksWithoutUndo: updateBlocksWithoutUndo
+    updateBlocksWithUndo,
+    updateBlocksWithoutUndo
   };
 })])(BlockEditorContents);
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,4 @@
 import _extends from "@babel/runtime/helpers/extends";
-import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
 import { createElement } from "@wordpress/element";
 
 /**
@@ -8,7 +7,7 @@ import { createElement } from "@wordpress/element";
 import '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
 import { StrictMode } from '@wordpress/element';
-import { SlotFillProvider, DropZoneProvider } from '@wordpress/components';
+import { SlotFillProvider } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { addFilter } from '@wordpress/hooks';
@@ -123,9 +122,7 @@ export function initializeIsoEditor() {
 
   use(storeHotSwapPlugin, {}); // This is needed for the media uploader
 
-  addFilter('editor.MediaUpload', 'isolated-block-editor/media-upload', function () {
-    return MediaUpload;
-  });
+  addFilter('editor.MediaUpload', 'isolated-block-editor/media-upload', () => MediaUpload);
   registerApiHandlers(); // Don't run this again
 
   window.isoInitialisedBlocks = true;
@@ -183,12 +180,13 @@ export function initializeIsoEditor() {
 function IsolatedBlockEditor(props) {
   var _settings$iso;
 
-  var children = props.children,
-      onSaveContent = props.onSaveContent,
-      onSaveBlocks = props.onSaveBlocks,
-      settings = props.settings,
-      params = _objectWithoutProperties(props, ["children", "onSaveContent", "onSaveBlocks", "settings"]);
-
+  const {
+    children,
+    onSaveContent,
+    onSaveBlocks,
+    settings,
+    ...params
+  } = props;
   initializeIsoEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
   return createElement(StrictMode, null, createElement("div", {
     className: "interface-interface-skeleton__content"
@@ -197,9 +195,9 @@ function IsolatedBlockEditor(props) {
     onSaveContent: onSaveContent
   }), createElement(EditorSetup, {
     settings: settings
-  }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(DropZoneProvider, null, createElement(BlockEditorContainer, _extends({}, params, {
+  }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(BlockEditorContainer, _extends({}, params, {
     settings: settings
-  }), children))));
+  }), children)));
 }
 
 export default withRegistryProvider(IsolatedBlockEditor);

@@ -16,23 +16,22 @@ import { serialize } from '@wordpress/blocks';
  */
 
 function ContentSaver(props) {
-  var onSaveBlocks = props.onSaveBlocks,
-      onSaveContent = props.onSaveContent;
-  var firstTime = useRef(true);
-
-  var _useDispatch = useDispatch('isolated/editor'),
-      setReady = _useDispatch.setReady;
-
-  var _useSelect = useSelect(function (select) {
-    return {
-      blocks: select('isolated/editor').getBlocks(),
-      ignoredContent: select('isolated/editor').getIgnoredContent()
-    };
-  }, []),
-      blocks = _useSelect.blocks,
-      ignoredContent = _useSelect.ignoredContent;
-
-  useEffect(function () {
+  const {
+    onSaveBlocks,
+    onSaveContent
+  } = props;
+  const firstTime = useRef(true);
+  const {
+    setReady
+  } = useDispatch('isolated/editor');
+  const {
+    blocks,
+    ignoredContent
+  } = useSelect(select => ({
+    blocks: select('isolated/editor').getBlocks(),
+    ignoredContent: select('isolated/editor').getIgnoredContent()
+  }), []);
+  useEffect(() => {
     if (!blocks) {
       setReady(true);
       return;

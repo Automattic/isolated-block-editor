@@ -1,15 +1,15 @@
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
 /** @typedef {import('./reducer').EditorMode} EditorMode */
-var actions = {
+const actions = {
   /**
    * Set whether the editor is ready for editing
    * @param {boolean} isReady
    */
-  setReady: function setReady(isReady) {
+  setReady(isReady) {
     return {
       type: 'SET_EDITOR_READY',
-      isReady: isReady
+      isReady
     };
   },
 
@@ -17,10 +17,10 @@ var actions = {
    * Set the current editor mode
    * @param {EditorMode} editorMode Editor mode
    */
-  setEditorMode: function setEditorMode(editorMode) {
+  setEditorMode(editorMode) {
     return {
       type: 'SET_EDITOR_MODE',
-      editorMode: editorMode
+      editorMode
     };
   },
 
@@ -28,10 +28,10 @@ var actions = {
    * Set up the editor
    * @param {BlockEditorSettings} settings
    */
-  setupEditor: function setupEditor(settings) {
+  setupEditor(settings) {
     return {
       type: 'SETUP_EDITOR',
-      settings: settings
+      settings
     };
   },
 
@@ -39,10 +39,10 @@ var actions = {
    * Set the current pattern name
    * @param {string} pattern Pattern name
    */
-  setCurrentPattern: function setCurrentPattern(pattern) {
+  setCurrentPattern(pattern) {
     return {
       type: 'SET_CURRENT_PATTERN',
-      pattern: pattern
+      pattern
     };
   },
 
@@ -50,10 +50,10 @@ var actions = {
    * Mark the block inserter as open or closed
    * @param {boolean} isOpen
    */
-  setIsInserterOpened: function setIsInserterOpened(isOpen) {
+  setIsInserterOpened(isOpen) {
     return {
       type: 'SET_INSERTER_OPEN',
-      isOpen: isOpen
+      isOpen
     };
   },
 
@@ -61,10 +61,10 @@ var actions = {
    * Mark this editor as in-use or not
    * @param {boolean} isEditing
    */
-  setEditing: function setEditing(isEditing) {
+  setEditing(isEditing) {
     return {
       type: 'SET_EDITING',
-      isEditing: isEditing
+      isEditing
     };
   },
 
@@ -72,12 +72,13 @@ var actions = {
    * Mark the block inserter as open or closed
    * @param {boolean} isOpen
    */
-  setInspecting: function setInspecting(isOpen) {
+  setInspecting(isOpen) {
     return {
       type: 'SET_INSPECTOR_OPEN',
-      isOpen: isOpen
+      isOpen
     };
   }
+
 };
 export default actions;
 //# sourceMappingURL=actions.js.map

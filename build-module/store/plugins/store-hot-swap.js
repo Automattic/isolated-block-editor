@@ -9,23 +9,25 @@
  * @param {object} pluginOptions
  */
 function storeHotSwapPlugin(registry, pluginOptions) {
-  var hotStores = ['core/block-editor', 'core/editor']; // Switch select and dispatch
+  const hotStores = ['core/block-editor', 'core/editor']; // Switch select and dispatch
 
   return {
-    dispatch: function dispatch(reducerKey) {
+    dispatch(reducerKey) {
       if (storeHotSwapPlugin.targetDispatch === null || hotStores.indexOf(reducerKey) === -1) {
         return registry.dispatch(reducerKey);
       }
 
       return storeHotSwapPlugin.targetDispatch(reducerKey);
     },
-    select: function select(reducerKey) {
+
+    select(reducerKey) {
       if (storeHotSwapPlugin.targetSelect === null || hotStores.indexOf(reducerKey) === -1) {
         return registry.select(reducerKey);
       }
 
       return storeHotSwapPlugin.targetSelect(reducerKey);
     }
+
   };
 }
 

@@ -1,9 +1,3 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 /** @typedef {import('../../index').EditorSettings} EditorSettings */
 
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
@@ -21,9 +15,7 @@ function getAllowedBlockTypes(blockSettings, allBlockTypes) {
   } // No allow blocks - return all blocks
 
 
-  return allBlockTypes.map(function (block) {
-    return block.name;
-  });
+  return allBlockTypes.map(block => block.name);
 }
 /**
  * Get all the disallowed block types, either from the settings, or all available blocks
@@ -53,14 +45,12 @@ function getDisallowedBlocks(blockSettings) {
 
 
 export default function getEditorSettings(editorSettings, isoSettings, allBlockTypes, hasFixedToolbar) {
-  var disallowBlocks = getDisallowedBlocks(isoSettings.blocks);
-  return _objectSpread(_objectSpread({}, editorSettings), {}, {
-    hasFixedToolbar: hasFixedToolbar,
-    allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(function (blockName) {
-      return disallowBlocks.indexOf(blockName) === -1;
-    }),
+  const disallowBlocks = getDisallowedBlocks(isoSettings.blocks);
+  return { ...editorSettings,
+    hasFixedToolbar,
+    allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(blockName => disallowBlocks.indexOf(blockName) === -1),
     // Enable or disable media uploads. We do this here as a logged out user doesn't have a user object, and so the standard Gutenberg `canUser` won't work
     mediaUpload: editorSettings.allowedMimeTypes.length === 0 ? null : editorSettings.mediaUpload
-  });
+  };
 }
 //# sourceMappingURL=editor-settings.js.map

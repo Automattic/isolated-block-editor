@@ -48,12 +48,13 @@ export function getCurrentPatternName(state) {
  */
 
 export function getCurrentPattern(state) {
-  var _state$editor = state.editor,
-      currentPattern = _state$editor.currentPattern,
-      patterns = _state$editor.patterns;
+  const {
+    currentPattern,
+    patterns
+  } = state.editor;
 
   if (currentPattern && patterns) {
-    for (var index = 0; index < patterns.length; index++) {
+    for (let index = 0; index < patterns.length; index++) {
       if (patterns[index]['name'] === currentPattern) {
         return patterns[index];
       }
@@ -78,20 +79,17 @@ export function getIgnoredContent(state) {
  */
 
 export function getNamedPattern(state, patternName) {
-  var _state$editor$pattern = state.editor.patterns,
-      patterns = _state$editor$pattern === void 0 ? [] : _state$editor$pattern;
-  var pattern = patterns.find(function (item) {
-    return item.name === patternName;
-  }); // Find the full name
+  const {
+    patterns = []
+  } = state.editor;
+  let pattern = patterns.find(item => item.name === patternName); // Find the full name
 
   if (pattern) {
     return pattern;
   } // Find the shortened name
 
 
-  pattern = patterns.find(function (item) {
-    return item.name.replace('p2/', '') === patternName;
-  });
+  pattern = patterns.find(item => item.name.replace('p2/', '') === patternName);
 
   if (pattern) {
     return pattern;

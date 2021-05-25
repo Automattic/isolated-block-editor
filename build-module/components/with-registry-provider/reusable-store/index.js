@@ -14,9 +14,9 @@ import * as selectors from './selectors';
  */
 
 export default {
-  actions: actions,
-  controls: controls,
-  reducer: reducer,
-  selectors: selectors
+  actions,
+  controls,
+  reducer,
+  selectors
 };
 //# sourceMappingURL=index.js.map

@@ -13,14 +13,13 @@ var _reduxUndo = _interopRequireDefault(require("redux-undo"));
 
 var _isShallowEqual = _interopRequireDefault(require("@wordpress/is-shallow-equal"));
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var DEFAULT_STATE = {
   editCount: 0,
-  selectionStart: null,
-  selectionEnd: null,
+  selection: null,
   blocks: null
 };
 
@@ -37,17 +36,16 @@ function getSelectedBlock(blocks, selection) {
 
 function isNewUndo(action, state) {
   var type = action.type,
-      selectionStart = action.selectionStart,
-      selectionEnd = action.selectionEnd; // Don't create a new undo when flagged as no undo
+      selection = action.selection; // Don't create a new undo when flagged as no undo
 
   if (type === 'UPDATE_BLOCKS_WITHOUT_UNDO') {
     return false;
   } // Not new if selection is same
 
 
-  if ((0, _isShallowEqual["default"])(selectionStart, state.selectionStart) && (0, _isShallowEqual["default"])(selectionEnd, state.selectionEnd)) {
-    var previousBlock = getSelectedBlock(state.blocks, selectionStart);
-    var currentBlock = getSelectedBlock(action.blocks, selectionStart); // Check if any attributes have changed in the selected block
+  if ((0, _isShallowEqual["default"])(selection, state.selection)) {
+    var previousBlock = getSelectedBlock(state.blocks, selection.selectionStart);
+    var currentBlock = getSelectedBlock(action.blocks, selection.selectionStart); // Check if any attributes have changed in the selected block
 
     if (previousBlock && currentBlock && (0, _isShallowEqual["default"])(previousBlock.attributes, currentBlock.attributes)) {
       // Nothing has changed - not a new undo level
@@ -68,9 +66,8 @@ var reducer = function reducer() {
     case 'UPDATE_BLOCKS_WITH_UNDO':
       return _objectSpread(_objectSpread({}, state), {}, {
         editCount: isNewUndo(action, state) ? state.editCount + 1 : state.editCount,
-        selectionStart: action.selectionStart,
-        selectionEnd: action.selectionEnd,
-        blocks: action.blocks
+        blocks: action.blocks,
+        selection: action.selection
       });
   }
 
