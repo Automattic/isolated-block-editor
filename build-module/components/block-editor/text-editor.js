@@ -1,4 +1,3 @@
-import _objectDestructuringEmpty from "@babel/runtime/helpers/objectDestructuringEmpty";
 import { createElement } from "@wordpress/element";
 
 /**
@@ -16,9 +15,7 @@ import PostTextEditor from './post-text-editor';
  * The original is not exported, and contains code for post titles
  */
 
-function TextEditor(_ref) {
-  _objectDestructuringEmpty(_ref);
-
+function TextEditor({}) {
   return createElement("div", {
     className: "edit-post-text-editor"
   }, createElement("div", {

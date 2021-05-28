@@ -1,9 +1,3 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 /**
  * WordPress dependencies
  */
@@ -28,8 +22,10 @@ function getMenu(current, defaultMenu) {
 export default function applyDefaultSettings(settings) {
   var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
 
-  var iso = settings.iso,
-      editor = settings.editor;
+  const {
+    iso,
+    editor
+  } = settings;
   return {
     iso: {
       // No preferences or persistence
@@ -44,34 +40,37 @@ export default function applyDefaultSettings(settings) {
         disallowBlocks: (_iso$blocks$disallowB = iso === null || iso === void 0 ? void 0 : (_iso$blocks2 = iso.blocks) === null || _iso$blocks2 === void 0 ? void 0 : _iso$blocks2.disallowBlocks) !== null && _iso$blocks$disallowB !== void 0 ? _iso$blocks$disallowB : []
       },
       // Inserter, undo, and inspector is on, everything else is off
-      toolbar: _objectSpread({
+      toolbar: {
         inserter: true,
         inspector: false,
         navigation: false,
         documentInspector: false,
         toc: false,
-        undo: true
-      }, (_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {}),
+        undo: true,
+        ...((_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {})
+      },
       // Nothing appears in the 'more menu'
-      moreMenu: getMenu(iso === null || iso === void 0 ? void 0 : iso.moreMenu, _objectSpread({
+      moreMenu: getMenu(iso === null || iso === void 0 ? void 0 : iso.moreMenu, {
         editor: false,
         fullscreen: false,
         preview: false,
-        topToolbar: false
-      }, (_iso$moreMenu = iso === null || iso === void 0 ? void 0 : iso.moreMenu) !== null && _iso$moreMenu !== void 0 ? _iso$moreMenu : {})),
+        topToolbar: false,
+        ...((_iso$moreMenu = iso === null || iso === void 0 ? void 0 : iso.moreMenu) !== null && _iso$moreMenu !== void 0 ? _iso$moreMenu : {})
+      }),
       // No link menu
       linkMenu: (_iso$linkMenu = iso === null || iso === void 0 ? void 0 : iso.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
       // Default to top toolbar
-      defaultPreferences: _objectSpread({
-        fixedToolbar: true
-      }, (_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {}),
+      defaultPreferences: {
+        fixedToolbar: true,
+        ...((_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
+      },
       allowApi: (_iso$allowApi = iso === null || iso === void 0 ? void 0 : iso.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
       // No default pattern
       currentPattern: (_iso$currentPattern = iso === null || iso === void 0 ? void 0 : iso.currentPattern) !== null && _iso$currentPattern !== void 0 ? _iso$currentPattern : null,
       // No patterns
       patterns: (_iso$patterns = iso === null || iso === void 0 ? void 0 : iso.patterns) !== null && _iso$patterns !== void 0 ? _iso$patterns : []
     },
-    editor: _objectSpread(_objectSpread({
+    editor: {
       alignWide: true,
       disableCustomColors: false,
       disableCustomFontSizes: false,
@@ -94,15 +93,13 @@ export default function applyDefaultSettings(settings) {
       __experimentalBlockPatterns: [],
       reusableBlocks: [],
       // Default to fixed top toolbar
-      fixedToolbar: true
-    }, editor), {}, {
+      fixedToolbar: true,
+      ...editor,
       availableLegacyWidgets: {},
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
-      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : function () {
-        return [];
-      }
-    })
+      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
+    }
   };
 }
 //# sourceMappingURL=index.js.map

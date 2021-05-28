@@ -25,8 +25,6 @@ var _visualEditor = _interopRequireDefault(require("./visual-editor"));
 
 var _textEditor = _interopRequireDefault(require("./text-editor"));
 
-var _convertToGroupButtons = _interopRequireDefault(require("./convert-to-group-buttons"));
-
 var _fullscreenMode = _interopRequireDefault(require("./fullscreen-mode"));
 
 require("./style.scss");
@@ -68,7 +66,7 @@ function BlockEditor(props) {
       children = props.children,
       undo = props.undo,
       redo = props.redo;
-  return createElement(Fragment, null, createElement(_fullscreenMode["default"], null), createElement(_convertToGroupButtons["default"], null), createElement(_editor.EditorNotices, null), isEditing && createElement(Fragment, null, createElement(_blockEditor.BlockEditorKeyboardShortcuts, null), createElement(_blockEditor.BlockEditorKeyboardShortcuts.Register, null)), createElement(_components.KeyboardShortcuts, {
+  return createElement(Fragment, null, createElement(_fullscreenMode["default"], null), createElement(_editor.EditorNotices, null), isEditing && createElement(Fragment, null, createElement(_blockEditor.BlockEditorKeyboardShortcuts, null), createElement(_blockEditor.BlockEditorKeyboardShortcuts.Register, null)), createElement(_components.KeyboardShortcuts, {
     bindGlobal: false,
     shortcuts: (_ref = {}, (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primary('z'), undo), (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primaryShift('z'), redo), _ref)
   }, editorMode === 'visual' && createElement(_visualEditor["default"], null), editorMode === 'text' && createElement(_textEditor["default"], null)), children);

@@ -4,11 +4,7 @@
 import { parse, synchronizeBlocksWithTemplate } from '@wordpress/blocks';
 /** @typedef {import('../../store/editor/reducer').Pattern} Pattern */
 
-var getPattern = function getPattern(patterns, currentPattern) {
-  return patterns && patterns.find(function (item) {
-    return item.name === currentPattern;
-  });
-};
+const getPattern = (patterns, currentPattern) => patterns && patterns.find(item => item.name === currentPattern);
 /**
  * Get the pattern to start an editor with.
  *
@@ -32,7 +28,7 @@ function getInitialEditorContent(patterns, currentPattern, template, initialCont
 
 
   if (currentPattern) {
-    var pattern = getPattern(patterns, currentPattern);
+    const pattern = getPattern(patterns, currentPattern);
 
     if (pattern) {
       return parse(pattern.content);

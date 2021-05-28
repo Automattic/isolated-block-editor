@@ -2,7 +2,6 @@ const path = require( 'path' );
 const webpack = require( 'webpack' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const TerserJSPlugin = require( 'terser-webpack-plugin' );
-const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
 
 const config = {
 	entry: './src/browser/index.js',
@@ -52,7 +51,7 @@ const config = {
 		} ),
 	],
 	optimization: {
-		minimizer: [ new TerserJSPlugin(), new OptimizeCSSAssetsPlugin( {} ) ],
+		minimizer: [ new TerserJSPlugin() ],
 	},
 };
 

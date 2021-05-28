@@ -8,7 +8,7 @@ import { serialize } from '@wordpress/blocks';
 
 export default function (existingSelectors, newSelect) {
   return {
-    getEditedPostAttribute: function getEditedPostAttribute(state, attributeName) {
+    getEditedPostAttribute: (state, attributeName) => {
       if (attributeName === 'content') {
         // Content is stored in core/block-editor, not in the post entity
         return serialize(newSelect('core/block-editor').getBlocks());
@@ -17,7 +17,7 @@ export default function (existingSelectors, newSelect) {
 
       return existingSelectors.getEditedPostAttribute(state, attributeName);
     },
-    getEditedPostContent: function getEditedPostContent() {
+    getEditedPostContent: () => {
       return serialize(newSelect('core/block-editor').getBlocks());
     }
   };

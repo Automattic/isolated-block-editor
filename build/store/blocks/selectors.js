@@ -4,8 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getBlocks = getBlocks;
-exports.getEditorSelectionStart = getEditorSelectionStart;
-exports.getEditorSelectionEnd = getEditorSelectionEnd;
+exports.getEditorSelection = getEditorSelection;
 exports.hasEditorUndo = hasEditorUndo;
 exports.hasEditorRedo = hasEditorRedo;
 
@@ -20,24 +19,14 @@ function getBlocks(state) {
   return state.blocks.present.blocks;
 }
 /**
- * Get end position
+ * Get selection
  * @param {object} state - Current state
  * @returns {object}
  */
 
 
-function getEditorSelectionStart(state) {
-  return state.blocks.present.selectionStart;
-}
-/**
- * Get end position
- * @param {object} state - Current state
- * @returns {object}
- */
-
-
-function getEditorSelectionEnd(state) {
-  return state.blocks.present.selectionEnd;
+function getEditorSelection(state) {
+  return state.blocks.present.selection;
 }
 /**
  * Is undo possible?

@@ -1,5 +1,3 @@
-import _toConsumableArray from "@babel/runtime/helpers/toConsumableArray";
-
 /**
  * External dependencies
  */
@@ -20,23 +18,19 @@ import effects from './effects';
  */
 
 function applyMiddlewares(store) {
-  var middlewares = [refx(effects), multi];
+  const middlewares = [refx(effects), multi];
 
-  var enhancedDispatch = function enhancedDispatch() {
+  let enhancedDispatch = () => {
     throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
   };
 
-  var chain = [];
-  var middlewareAPI = {
+  let chain = [];
+  const middlewareAPI = {
     getState: store.getState,
-    dispatch: function dispatch() {
-      return enhancedDispatch.apply(void 0, arguments);
-    }
+    dispatch: (...args) => enhancedDispatch(...args)
   };
-  chain = middlewares.map(function (middleware) {
-    return middleware(middlewareAPI);
-  });
-  enhancedDispatch = flowRight.apply(void 0, _toConsumableArray(chain))(store.dispatch);
+  chain = middlewares.map(middleware => middleware(middlewareAPI));
+  enhancedDispatch = flowRight(...chain)(store.dispatch);
   store.dispatch = enhancedDispatch;
   return store;
 }

@@ -29,10 +29,12 @@ import { parse } from '@wordpress/blocks';
  */
 
 function PatternMonitor(props) {
-  var currentPattern = props.currentPattern,
-      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo; // Monitor the current pattern and update the editor content if it changes
+  const {
+    currentPattern,
+    updateBlocksWithoutUndo
+  } = props; // Monitor the current pattern and update the editor content if it changes
 
-  useEffect(function () {
+  useEffect(() => {
     if (currentPattern === null) {
       return;
     }
@@ -42,19 +44,19 @@ function PatternMonitor(props) {
   return null;
 }
 
-export default compose([withSelect(function (select) {
-  var _select = select('isolated/editor'),
-      getCurrentPattern = _select.getCurrentPattern;
-
+export default compose([withSelect(select => {
+  const {
+    getCurrentPattern
+  } = select('isolated/editor');
   return {
     currentPattern: getCurrentPattern()
   };
-}), withDispatch(function (dispatch) {
-  var _dispatch = dispatch('isolated/editor'),
-      updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
-
+}), withDispatch(dispatch => {
+  const {
+    updateBlocksWithoutUndo
+  } = dispatch('isolated/editor');
   return {
-    updateBlocksWithoutUndo: updateBlocksWithoutUndo
+    updateBlocksWithoutUndo
   };
 })])(PatternMonitor);
 //# sourceMappingURL=index.js.map

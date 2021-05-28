@@ -30,6 +30,8 @@ The Isolated Block Editor is provided in three forms:
 - CommonJS module
 - Standalone JavaScript file, for inclusion on any browser page
 
+Requires: Gutenberg 10.6.0, tested up to Gutenberg 10.7.0 RC 1
+
 Examples:
 - [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/src/browser/README.md) - standalone JS file that can replace any `textarea` on any page with a full Gutenberg editor
 - [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress

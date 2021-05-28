@@ -1,4 +1,3 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
 import { createElement, Fragment } from "@wordpress/element";
 
 /**
@@ -16,7 +15,6 @@ import { ReusableBlocksMenuItems } from '@wordpress/reusable-blocks';
 
 import VisualEditor from './visual-editor';
 import TextEditor from './text-editor';
-import ConvertToGroupButtons from './convert-to-group-buttons';
 import FullscreenMode from './fullscreen-mode';
 import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
@@ -40,27 +38,30 @@ import './style.scss';
  */
 
 function BlockEditor(props) {
-  var _ref;
-
-  var isEditing = props.isEditing,
-      editorMode = props.editorMode,
-      children = props.children,
-      undo = props.undo,
-      redo = props.redo;
-  return createElement(Fragment, null, createElement(FullscreenMode, null), createElement(ConvertToGroupButtons, null), createElement(EditorNotices, null), isEditing && createElement(Fragment, null, createElement(BlockEditorKeyboardShortcuts, null), createElement(BlockEditorKeyboardShortcuts.Register, null)), createElement(KeyboardShortcuts, {
+  const {
+    isEditing,
+    editorMode,
+    children,
+    undo,
+    redo
+  } = props;
+  return createElement(Fragment, null, createElement(FullscreenMode, null), createElement(EditorNotices, null), isEditing && createElement(Fragment, null, createElement(BlockEditorKeyboardShortcuts, null), createElement(BlockEditorKeyboardShortcuts.Register, null)), createElement(KeyboardShortcuts, {
     bindGlobal: false,
-    shortcuts: (_ref = {}, _defineProperty(_ref, rawShortcut.primary('z'), undo), _defineProperty(_ref, rawShortcut.primaryShift('z'), redo), _ref)
+    shortcuts: {
+      [rawShortcut.primary('z')]: undo,
+      [rawShortcut.primaryShift('z')]: redo
+    }
   }, editorMode === 'visual' && createElement(VisualEditor, null), editorMode === 'text' && createElement(TextEditor, null)), children);
 }
 
-export default withDispatch(function (dispatch) {
-  var _dispatch = dispatch('isolated/editor'),
-      redo = _dispatch.redo,
-      undo = _dispatch.undo;
-
+export default withDispatch(dispatch => {
+  const {
+    redo,
+    undo
+  } = dispatch('isolated/editor');
   return {
-    redo: redo,
-    undo: undo
+    redo,
+    undo
   };
 })(BlockEditor);
 //# sourceMappingURL=index.js.map

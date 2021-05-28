@@ -31,29 +31,31 @@ import './style.scss';
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 
-var BlockEditorToolbar = function BlockEditorToolbar(props) {
-  var settings = props.settings,
-      editorMode = props.editorMode,
-      renderMoreMenu = props.renderMoreMenu;
-  var shortcut = 'x';
-  var _settings$iso$toolbar = settings.iso.toolbar,
-      inspector = _settings$iso$toolbar.inspector,
-      documentInspector = _settings$iso$toolbar.documentInspector;
-  var moreMenu = settings.iso.moreMenu;
-
-  var _useDispatch = useDispatch('isolated/editor'),
-      setInspecting = _useDispatch.setInspecting;
-
-  var _useSelect = useSelect(function (select) {
-    return {
-      isInspecting: select('isolated/editor').isInspecting(),
-      isBlockSelected: !!select('core/block-editor').getBlockSelectionStart()
-    };
-  }, []),
-      isInspecting = _useSelect.isInspecting,
-      isBlockSelected = _useSelect.isBlockSelected;
-
-  useEffect(function () {
+const BlockEditorToolbar = props => {
+  const {
+    settings,
+    editorMode,
+    renderMoreMenu
+  } = props;
+  const shortcut = 'x';
+  const {
+    inspector,
+    documentInspector
+  } = settings.iso.toolbar;
+  const {
+    moreMenu
+  } = settings.iso;
+  const {
+    setInspecting
+  } = useDispatch('isolated/editor');
+  const {
+    isInspecting,
+    isBlockSelected
+  } = useSelect(select => ({
+    isInspecting: select('isolated/editor').isInspecting(),
+    isBlockSelected: !!select('core/block-editor').getBlockSelectionStart()
+  }), []);
+  useEffect(() => {
     // Close the block inspector when no block is selected. Gutenberg gets a bit crashy otherwise
     if (isInspecting && !isBlockSelected) {
       setInspecting(false);
@@ -74,9 +76,7 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
   }, inspector && createElement(Button, {
     icon: cog,
     label: __('Settings'),
-    onClick: function onClick() {
-      return setInspecting(!isInspecting);
-    },
+    onClick: () => setInspecting(!isInspecting),
     isPressed: isInspecting,
     "aria-expanded": isInspecting,
     shortcut: shortcut,
@@ -86,9 +86,7 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     blockSelected: isBlockSelected
   }), moreMenu && createElement(MoreMenu, {
     settings: settings,
-    onClick: function onClick() {
-      return setInspecting(false);
-    },
+    onClick: () => setInspecting(false),
     renderMoreMenu: renderMoreMenu
   }))));
 };

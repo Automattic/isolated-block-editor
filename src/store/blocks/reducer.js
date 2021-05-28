@@ -7,8 +7,7 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
 
 const DEFAULT_STATE = {
 	editCount: 0,
-	selectionStart: null,
-	selectionEnd: null,
+	selection: null,
 	blocks: null,
 };
 
@@ -22,7 +21,7 @@ function getSelectedBlock( blocks, selection ) {
 
 // Gutenberg triggers a UPDATE_BLOCKS_WITH_UNDO one second after typing. Try and group this with the previous edits
 function isNewUndo( action, state ) {
-	const { type, selectionStart, selectionEnd } = action;
+	const { type, selection } = action;
 
 	// Don't create a new undo when flagged as no undo
 	if ( type === 'UPDATE_BLOCKS_WITHOUT_UNDO' ) {
@@ -30,9 +29,9 @@ function isNewUndo( action, state ) {
 	}
 
 	// Not new if selection is same
-	if ( isShallowEqual( selectionStart, state.selectionStart ) && isShallowEqual( selectionEnd, state.selectionEnd ) ) {
-		const previousBlock = getSelectedBlock( state.blocks, selectionStart );
-		const currentBlock = getSelectedBlock( action.blocks, selectionStart );
+	if ( isShallowEqual( selection, state.selection ) ) {
+		const previousBlock = getSelectedBlock( state.blocks, selection.selectionStart );
+		const currentBlock = getSelectedBlock( action.blocks, selection.selectionStart );
 
 		// Check if any attributes have changed in the selected block
 		if ( previousBlock && currentBlock && isShallowEqual( previousBlock.attributes, currentBlock.attributes ) ) {
@@ -52,9 +51,8 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				editCount: isNewUndo( action, state ) ? state.editCount + 1 : state.editCount,
-				selectionStart: action.selectionStart,
-				selectionEnd: action.selectionEnd,
 				blocks: action.blocks,
+				selection: action.selection,
 			};
 	}
 

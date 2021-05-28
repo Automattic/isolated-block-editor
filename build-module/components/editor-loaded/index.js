@@ -15,18 +15,16 @@ import { useSelect } from '@wordpress/data';
 * @param {OnLoad} [props.onLoading] - Callback to signal that the editor is loading
 */
 
-function EditorLoaded(_ref) {
-  var onLoaded = _ref.onLoaded,
-      onLoading = _ref.onLoading;
-
-  var _useSelect = useSelect(function (select) {
-    return {
-      isEditorReady: select('isolated/editor').isEditorReady()
-    };
-  }, []),
-      isEditorReady = _useSelect.isEditorReady;
-
-  useEffect(function () {
+function EditorLoaded({
+  onLoaded,
+  onLoading
+}) {
+  const {
+    isEditorReady
+  } = useSelect(select => ({
+    isEditorReady: select('isolated/editor').isEditorReady()
+  }), []);
+  useEffect(() => {
     if (isEditorReady) {
       onLoaded && onLoaded();
     } else {

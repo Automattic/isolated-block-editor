@@ -1,9 +1,3 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 /**
  * WordPress dependencies
  */
@@ -40,14 +34,16 @@ import getEditorSettings from './editor-settings';
  */
 
 function EditorSetup(props) {
-  var currentSettings = props.currentSettings,
-      updateSettings = props.updateSettings,
-      setupEditor = props.setupEditor,
-      isEditing = props.isEditing,
-      topToolbar = props.topToolbar,
-      setupCoreEditor = props.setupCoreEditor; // This is the initial setup
+  const {
+    currentSettings,
+    updateSettings,
+    setupEditor,
+    isEditing,
+    topToolbar,
+    setupCoreEditor
+  } = props; // This is the initial setup
 
-  useEffect(function () {
+  useEffect(() => {
     // Setup the Isolated Editor & Gutenberg
     setupEditor(currentSettings); // And Gutenberg
 
@@ -59,7 +55,7 @@ function EditorSetup(props) {
     }, []);
   }, []); // Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change
 
-  useEffect(function () {
+  useEffect(() => {
     if (!isEditing) {
       return;
     } // Setup Gutenberg for this editor, but only when focussed. This swaps allowed blocks and other capabilities
@@ -70,27 +66,27 @@ function EditorSetup(props) {
   return null;
 }
 
-export default compose([withSelect(function (select, _ref) {
-  var settings = _ref.settings;
-
-  var _select = select('isolated/editor'),
-      isEditing = _select.isEditing,
-      isFeatureActive = _select.isFeatureActive;
-
-  var _select2 = select('core/blocks'),
-      getBlockTypes = _select2.getBlockTypes;
-
-  var blockTypes = getBlockTypes();
-  var hasFixedToolbar = isFeatureActive('fixedToolbar');
-  var reusableBlocks = select('core').getEntityRecords('postType', 'wp_block');
+export default compose([withSelect((select, {
+  settings
+}) => {
+  const {
+    isEditing,
+    isFeatureActive
+  } = select('isolated/editor');
+  const {
+    getBlockTypes
+  } = select('core/blocks');
+  const blockTypes = getBlockTypes();
+  const hasFixedToolbar = isFeatureActive('fixedToolbar');
+  const reusableBlocks = select('core').getEntityRecords('postType', 'wp_block');
   return {
     isEditing: isEditing(),
     topToolbar: hasFixedToolbar,
-    currentSettings: useMemo(function () {
+    currentSettings: useMemo(() => {
       var _settings$editor;
 
-      return _objectSpread(_objectSpread({}, settings), {}, {
-        editor: _objectSpread(_objectSpread({}, getEditorSettings(settings.editor, settings.iso, blockTypes, hasFixedToolbar || ((_settings$editor = settings.editor) === null || _settings$editor === void 0 ? void 0 : _settings$editor.hasFixedToolbar) || false)), {}, {
+      return { ...settings,
+        editor: { ...getEditorSettings(settings.editor, settings.iso, blockTypes, hasFixedToolbar || ((_settings$editor = settings.editor) === null || _settings$editor === void 0 ? void 0 : _settings$editor.hasFixedToolbar) || false),
           // Reusable blocks
           __experimentalReusableBlocks: [],
           __experimentalFetchReusableBlocks: false // ...( settings.editor?.__experimentalReusableBlocks === false
@@ -104,29 +100,28 @@ export default compose([withSelect(function (select, _ref) {
           // 				.__experimentalFetchReusableBlocks,
           // 	  } ),
 
-        })
-      });
+        }
+      };
     }, [settings, blockTypes, hasFixedToolbar, reusableBlocks])
   };
-}), withDispatch(function (dispatch) {
-  var _dispatch = dispatch('core/editor'),
-      updateEditorSettings = _dispatch.updateEditorSettings,
-      setupCoreEditor = _dispatch.setupEditorState;
-
-  var _dispatch2 = dispatch('core/block-editor'),
-      _updateSettings = _dispatch2.updateSettings;
-
-  var _dispatch3 = dispatch('isolated/editor'),
-      setupEditor = _dispatch3.setupEditor;
-
+}), withDispatch(dispatch => {
+  const {
+    updateEditorSettings,
+    setupEditorState: setupCoreEditor
+  } = dispatch('core/editor');
+  const {
+    updateSettings
+  } = dispatch('core/block-editor');
+  const {
+    setupEditor
+  } = dispatch('isolated/editor');
   return {
-    setupEditor: setupEditor,
-    setupCoreEditor: setupCoreEditor,
-    updateSettings: function updateSettings(_ref2) {
-      var editor = _ref2.editor;
-
-      _updateSettings(editor);
-
+    setupEditor,
+    setupCoreEditor,
+    updateSettings: ({
+      editor
+    }) => {
+      updateSettings(editor);
       updateEditorSettings(editor);
     }
   };

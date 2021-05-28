@@ -1,19 +1,9 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 /**
  * WordPress dependencies
  */
 import { serialize, parse, createBlock, synchronizeBlocksWithTemplate } from '@wordpress/blocks';
 
-var getPattern = function getPattern(patterns, currentPattern) {
-  return patterns && patterns.find(function (item) {
-    return item.name === currentPattern;
-  });
-};
+const getPattern = (patterns, currentPattern) => patterns && patterns.find(item => item.name === currentPattern);
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 
 /**
@@ -47,7 +37,7 @@ var getPattern = function getPattern(patterns, currentPattern) {
 /** @type EditorState */
 
 
-var DEFAULT_STATE = {
+const DEFAULT_STATE = {
   // Editor state
   editorMode: 'visual',
   isInserterOpened: false,
@@ -95,10 +85,10 @@ var DEFAULT_STATE = {
  */
 
 function getIgnoredContent(patterns, currentPattern, gutenbergTemplate) {
-  var ignored = [serialize(createBlock('core/paragraph')), serialize(createBlock('core/paragraph', {
+  const ignored = [serialize(createBlock('core/paragraph')), serialize(createBlock('core/paragraph', {
     className: ''
   }))];
-  var found = getPattern(patterns, currentPattern); // If we're using a starter pattern then add the empty pattern to our ignored content list
+  const found = getPattern(patterns, currentPattern); // If we're using a starter pattern then add the empty pattern to our ignored content list
 
   if (found) {
     // We parse and then serialize so it will better match the formatting from Gutenberg when saving content
@@ -113,60 +103,60 @@ function getIgnoredContent(patterns, currentPattern, gutenbergTemplate) {
   return ignored;
 }
 
-var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
+const reducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case 'SETUP_EDITOR':
       {
-        var _action$settings$iso = action.settings.iso,
-            currentPattern = _action$settings$iso.currentPattern,
-            patterns = _action$settings$iso.patterns;
-        return _objectSpread(_objectSpread({}, state), {}, {
-          patterns: patterns,
-          currentPattern: currentPattern,
+        const {
+          currentPattern,
+          patterns
+        } = action.settings.iso;
+        return { ...state,
+          patterns,
+          currentPattern,
           ignoredContent: getIgnoredContent(patterns, currentPattern, action.settings.editor.template),
           gutenbergTemplate: action.settings.editor.template,
-          settings: _objectSpread(_objectSpread({}, state.settings), action.settings.iso)
-        });
+          settings: { ...state.settings,
+            ...action.settings.iso
+          }
+        };
       }
 
     case 'SET_CURRENT_PATTERN':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return { ...state,
         currentPattern: action.pattern,
         ignoredContent: getIgnoredContent(state.patterns, action.pattern, state.gutenbergTemplate),
         isInspecting: false
-      });
+      };
 
     case 'SET_EDITOR_MODE':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return { ...state,
         editorMode: action.editorMode,
         isInspecting: false
-      });
+      };
 
     case 'SET_INSERTER_OPEN':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return { ...state,
         isInserterOpened: action.isOpen,
         isInspecting: false
-      });
+      };
 
     case 'SET_INSPECTOR_OPEN':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return { ...state,
         isInspecting: action.isOpen,
         isInserterOpened: false
-      });
+      };
 
     case 'SET_EDITING':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return { ...state,
         isEditing: action.isEditing,
         isInspecting: false
-      });
+      };
 
     case 'SET_EDITOR_READY':
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return { ...state,
         isReady: action.isReady
-      });
+      };
   }
 
   return state;

@@ -14,7 +14,7 @@ function getPost() {
 
 
 function registerApiHandlers(options) {
-  var preload = {
+  const preload = {
     OPTIONS: {
       // Reusable blocks
       '/wp/v2/blocks': {

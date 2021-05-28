@@ -17,11 +17,11 @@ var _element = require("@wordpress/element");
 
 var _blocks = require("@wordpress/blocks");
 
-var _blockEditorProvider = _interopRequireDefault(require("../block-editor-provider"));
+var _blockEditor = require("@wordpress/block-editor");
 
 var _blockEditorToolbar = _interopRequireDefault(require("../block-editor-toolbar"));
 
-var _blockEditor = _interopRequireDefault(require("../block-editor"));
+var _blockEditor2 = _interopRequireDefault(require("../block-editor"));
 
 var _editorContent = _interopRequireDefault(require("./editor-content"));
 
@@ -68,8 +68,7 @@ function getInitialContent(settings, content) {
  * @param {object} props.children - Child components
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
- * @param {OnSelection} props.getEditorSelectionStart
- * @param {OnSelection} props.getEditorSelectionEnd
+ * @param {OnSelection} props.selection
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 
@@ -78,8 +77,7 @@ function BlockEditorContents(props) {
   var blocks = props.blocks,
       updateBlocksWithoutUndo = props.updateBlocksWithoutUndo,
       updateBlocksWithUndo = props.updateBlocksWithUndo,
-      getEditorSelectionStart = props.getEditorSelectionStart,
-      getEditorSelectionEnd = props.getEditorSelectionEnd,
+      selection = props.selection,
       isEditing = props.isEditing,
       editorMode = props.editorMode;
   var children = props.children,
@@ -94,19 +92,18 @@ function BlockEditorContents(props) {
       updateBlocksWithoutUndo(initialContent);
     }
   }, []);
-  return createElement(_blockEditorProvider["default"], {
+  return createElement(_blockEditor.BlockEditorProvider, {
     value: blocks || [],
     onInput: updateBlocksWithoutUndo,
     onChange: updateBlocksWithUndo,
-    selectionStart: getEditorSelectionStart(),
-    selectionEnd: getEditorSelectionEnd(),
-    useSubRegistry: true,
+    useSubRegistry: false,
+    selection: selection,
     settings: settings.editor
   }, createElement(_blockEditorToolbar["default"], {
     editorMode: editorMode,
     settings: settings,
     renderMoreMenu: renderMoreMenu
-  }), createElement(_blockEditor["default"], {
+  }), createElement(_blockEditor2["default"], {
     isEditing: isEditing,
     editorMode: editorMode
   }, children), createElement(_components.Popover.Slot, null));
@@ -115,15 +112,13 @@ function BlockEditorContents(props) {
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
       getBlocks = _select.getBlocks,
-      getEditorSelectionStart = _select.getEditorSelectionStart,
-      getEditorSelectionEnd = _select.getEditorSelectionEnd,
+      getEditorSelection = _select.getEditorSelection,
       getEditorMode = _select.getEditorMode,
       isEditing = _select.isEditing;
 
   return {
     blocks: getBlocks(),
-    getEditorSelectionEnd: getEditorSelectionEnd,
-    getEditorSelectionStart: getEditorSelectionStart,
+    selection: getEditorSelection(),
     isEditing: isEditing(),
     editorMode: getEditorMode()
   };

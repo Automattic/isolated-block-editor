@@ -249,9 +249,9 @@ function IsolatedBlockEditor(props) {
     onSaveContent: onSaveContent
   }), createElement(_editorSetup["default"], {
     settings: settings
-  }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_components.DropZoneProvider, null, createElement(_blockEditorContainer["default"], (0, _extends2["default"])({}, params, {
+  }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], (0, _extends2["default"])({}, params, {
     settings: settings
-  }), children))));
+  }), children)));
 }
 
 var _default = (0, _withRegistryProvider["default"])(IsolatedBlockEditor);
