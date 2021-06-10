@@ -98,6 +98,12 @@ Note that you must load React before loading the editor.
 
 You can find an example in [`src/browser/index.html`](src/browser/index.html).
 
+## Using
+
+The module is currently only available on Github and can be added with:
+
+`npm install "github:automattic/isolated-block-editor#1.2.0" --save` (where `1.2.0` is the version you want to use)
+
 ## Future
 
 The code here deals with two kinds of problems:
