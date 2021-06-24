@@ -17,19 +17,15 @@ var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
-var _compose = require("@wordpress/compose");
-
-var _data = require("@wordpress/data");
-
 var _element = require("@wordpress/element");
 
-var _withFocusOutside = _interopRequireDefault(require("./with-focus-outside.js"));
+var _components = require("@wordpress/components");
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-var ClickOutsideWrapper = (0, _withFocusOutside["default"])( /*#__PURE__*/function (_Component) {
+var ClickOutsideWrapper = (0, _components.withFocusOutside)( /*#__PURE__*/function (_Component) {
   (0, _inherits2["default"])(_class, _Component);
 
   var _super = _createSuper(_class);
@@ -47,15 +43,13 @@ var ClickOutsideWrapper = (0, _withFocusOutside["default"])( /*#__PURE__*/functi
   }, {
     key: "handleFocusOutside",
     value: function handleFocusOutside(ev) {
-      var target = ev.relatedTarget || ev.target;
-      var clearSelectedBlock = this.props.clearSelectedBlock; // Ignore clicks in the media modal - consider it inside the editor
+      var target = ev.relatedTarget || ev.target; // Ignore clicks in the media modal - consider it inside the editor
 
       if (target && target.classList.contains('media-modal')) {
         return;
       }
 
       this.props.onOutside();
-      clearSelectedBlock();
     }
   }, {
     key: "render",
@@ -65,15 +59,6 @@ var ClickOutsideWrapper = (0, _withFocusOutside["default"])( /*#__PURE__*/functi
   }]);
   return _class;
 }(_element.Component));
-
-var _default = (0, _compose.compose)([(0, _data.withDispatch)(function (dispatch) {
-  var _dispatch = dispatch('core/block-editor'),
-      clearSelectedBlock = _dispatch.clearSelectedBlock;
-
-  return {
-    clearSelectedBlock: clearSelectedBlock
-  };
-})])(ClickOutsideWrapper);
-
+var _default = ClickOutsideWrapper;
 exports["default"] = _default;
 //# sourceMappingURL=click-outside.js.map

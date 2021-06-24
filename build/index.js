@@ -77,21 +77,8 @@ require("./store/edit-post");
 
 require("./style.scss");
 
+var _excluded = ["children", "onSaveContent", "onSaveBlocks", "settings"];
 import { createElement } from "@wordpress/element";
-
-/**
- * WordPress dependencies
- */
-
-/* eslint-disable no-restricted-syntax */
-
-/* eslint-enable no-restricted-syntax */
-
-/**
- * Internal dependencies
- */
-// Export library components
-// A fake edit-post store is needed
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 
@@ -240,7 +227,7 @@ function IsolatedBlockEditor(props) {
       onSaveContent = props.onSaveContent,
       onSaveBlocks = props.onSaveBlocks,
       settings = props.settings,
-      params = (0, _objectWithoutProperties2["default"])(props, ["children", "onSaveContent", "onSaveBlocks", "settings"]);
+      params = (0, _objectWithoutProperties2["default"])(props, _excluded);
   initializeIsoEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
   return createElement(_element.StrictMode, null, createElement("div", {
     className: "interface-interface-skeleton__content"

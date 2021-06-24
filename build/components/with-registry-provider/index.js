@@ -37,6 +37,7 @@ var _defaultSettings = _interopRequireDefault(require("../default-settings"));
 
 var _coreEditor = _interopRequireDefault(require("../../store/core-editor"));
 
+var _excluded = ["registry", "settings"];
 import { createElement } from "@wordpress/element";
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -59,7 +60,7 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
   return (0, _data.withRegistry)(function (props) {
     var registry = props.registry,
         settings = props.settings,
-        additionalProps = (0, _objectWithoutProperties2["default"])(props, ["registry", "settings"]);
+        additionalProps = (0, _objectWithoutProperties2["default"])(props, _excluded);
     var defaultSettings = (0, _defaultSettings["default"])(settings);
     var _defaultSettings$iso = defaultSettings.iso,
         persistenceKey = _defaultSettings$iso.persistenceKey,
