@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { Component } from '@wordpress/element';
-import { withFocusOutside } from '@wordpress/components';
+import withFocusOutside from './with-focus-outside.js';
 const ClickOutsideWrapper = withFocusOutside(class extends Component {
   handleFocus(ev) {
     this.props.onFocus();
