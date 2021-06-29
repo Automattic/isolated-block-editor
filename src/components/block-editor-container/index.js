@@ -21,7 +21,6 @@ import HotSwapper from './hot-swapper';
 import './style.scss';
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-/** @typedef {import('../../index').OnSave} OnSave */
 /** @typedef {import('../../index').OnError} OnError */
 /** @typedef {import('../../index').OnMore} OnMore */
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
@@ -47,14 +46,13 @@ const SIZE_MEDIUM = 480;
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {OnSave} props.onSave - Save callback
  * @param {OnError} props.onError - Error callback
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 function BlockEditorContainer( props ) {
-	const { children, settings, onSave, className, onError, renderMoreMenu, onLoad } = props;
+	const { children, settings, className, onError, renderMoreMenu, onLoad } = props;
 	const { isEditorReady, editorMode, isEditing, setEditing, hasFixedToolbar } = props;
 	const [ resizeListener, { width } ] = useResizeObserver();
 	const classes = classnames( className, {
@@ -86,7 +84,6 @@ function BlockEditorContainer( props ) {
 					onFocus={ () => ! isEditing && setEditing( true ) }
 				>
 					<BlockEditorContents
-						onSave={ onSave }
 						settings={ settings }
 						renderMoreMenu={ renderMoreMenu }
 						onLoad={ onLoad }

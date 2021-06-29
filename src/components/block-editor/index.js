@@ -6,7 +6,6 @@ import { KeyboardShortcuts } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { BlockEditorKeyboardShortcuts } from '@wordpress/block-editor';
 import { EditorNotices } from '@wordpress/editor';
-import { ReusableBlocksMenuItems } from '@wordpress/reusable-blocks';
 
 /**
  * Internal dependencies

@@ -22,7 +22,7 @@ import OptionToggle from '../toggle-option';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 function WritingMenu( { onClose, settings } ) {
-	const { preview, fullscreen, topToolbar } = settings.iso.moreMenu;
+	const { preview, fullscreen, topToolbar } = settings?.iso?.moreMenu || {};
 	const { isFullscreen } = useSelect(
 		( select ) => ( {
 			isFullscreen: select( 'isolated/editor' ).isOptionActive( 'fullscreenMode' ),

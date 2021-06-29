@@ -49,6 +49,7 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 		initialState: {
 			preferences:
 				preferencesKey && localStorage.getItem( preferencesKey )
+					// @ts-ignore
 					? JSON.parse( localStorage.getItem( preferencesKey ) )
 					: defaultPreferences,
 		},

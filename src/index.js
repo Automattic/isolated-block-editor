@@ -47,43 +47,45 @@ import './style.scss';
 /**
  * Toolbar settings
  * @typedef ToolbarSettings
- * @property {boolean} inserter - Enable or disable the toolbar block inserter
- * @property {boolean} inspector - Enable or disable the toolbar block inspector
- * @property {boolean} navigation - Enable or disable the toolbar navigation button
- * @property {boolean} toc - Enable or disable the toolbar table of contents button
- * @property {boolean} undo - Enable or disable the toolbar undo/redo buttons
+ * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
+ * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
+ * @property {boolean} [navigation] - Enable or disable the toolbar navigation button
+ * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
+ * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
+ * @property {boolean} [documentInspector] - Enable or disable the document inspector
  */
 
 /**
  * More menu settings
  * @typedef MoreMenuSettings
- * @property {boolean} editor - Enable or disable the editor sub menu (visual/code editing)
- * @property {boolean} fullscreen - Enable or disable the fullscreen option
- * @property {boolean} preview - Enable or disable the preview option
- * @property {boolean} topToolbar - Enable or disable the 'top toolbar' option
+ * @property {boolean} [editor] - Enable or disable the editor sub menu (visual/code editing)
+ * @property {boolean} [fullscreen] - Enable or disable the fullscreen option
+ * @property {boolean} [preview] - Enable or disable the preview option
+ * @property {boolean} [topToolbar] - Enable or disable the 'top toolbar' option
  */
 
 /**
  * Isolated Editor Settings
  * @typedef IsoSettings
- * @property {string|null} preferencesKey - Preferences key. Set to null to disable
- * @property {string|null} persistenceKey - Persistence key. Set to null to disable
- * @property {{allowBlocks: string[], disallowBlocks: string[]}} blocks - Block restrictions
- * @property {string[]} disallowEmbed - List of embed names to remove
- * @property {ToolbarSettings} toolbar - Toolbar settings
- * @property {MoreMenuSettings|false} moreMenu - More menu settings, or false to disable
- * @property {{title: string, url: string}[]} linkMenu - Link menu settings
- * @property {string} currentPattern - The pattern to start with
- * @property {Pattern[]} patterns - List of patterns
- * @property {object} defaultPreferences - Default preferences if nothing in localStorage
- * @property {boolean} allowApi - Allow API requests
+ * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
+ * @property {string|null} [persistenceKey] - Persistence key. Set to null to disable
+ * @property {{allowBlocks: string[], disallowBlocks: string[]}} [blocks] - Block restrictions
+ * @property {string[]} [disallowEmbed] - List of embed names to remove
+ * @property {object[]} [customStores] - Array of custom stores
+ * @property {ToolbarSettings} [toolbar] - Toolbar settings
+ * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
+ * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
+ * @property {string|null} [currentPattern] - The pattern to start with
+ * @property {Pattern[]} [patterns] - List of patterns
+ * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
+ * @property {boolean} [allowApi] - Allow API requests
  */
 
 /**
  * Block Editor Settings
  * @typedef BlockEditorSettings
- * @property {IsoSettings} iso - Isolated editor settings
- * @property {EditorSettings} editor - Gutenberg editor settings
+ * @property {IsoSettings} [iso] - Isolated editor settings
+ * @property {EditorSettings} [editor] - Gutenberg editor settings
  */
 
 /**
@@ -101,7 +103,6 @@ import './style.scss';
 
 /**
  * Initialize Gutenberg
- * @param {boolean} [allowApi] Allow API requests
  */
 export function initializeEditor() {
 	if ( window.isoInitialised ) {
@@ -141,7 +142,7 @@ export function initializeIsoEditor() {
  */
 
 /**
- * Save blocks callback
+ * Save HTML content callback
  * @callback OnSaveContent
  * @param {string} content - Serialized content
  */
@@ -185,7 +186,7 @@ export function initializeIsoEditor() {
 function IsolatedBlockEditor( props ) {
 	const { children, onSaveContent, onSaveBlocks, settings, ...params } = props;
 
-	initializeIsoEditor( settings?.iso?.allowApi );
+	initializeIsoEditor();
 
 	return (
 		<StrictMode>
