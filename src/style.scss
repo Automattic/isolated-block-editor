@@ -5,12 +5,6 @@
 @import '@wordpress/base-styles/_breakpoints';
 @import '@wordpress/base-styles/_animations';
 @import '@wordpress/base-styles/_z-index';
-@import '~@wordpress/block-editor/src/style';
-@import '~@wordpress/block-library/src/style';
-@import '~@wordpress/block-library/src/editor';
-@import '~@wordpress/block-library/src/theme';
-@import '~@wordpress/format-library/src/style';
-@import "~@wordpress/components/src/style.scss";
 
 // Stop Gutenberg preventing mobile scrolling
 html {

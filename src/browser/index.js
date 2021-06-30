@@ -8,8 +8,8 @@ import { render, unmountComponentAtNode } from '@wordpress/element';
  * Internal dependencies
  */
 
-import IsolatedBlockEditor from '../index';
 import './style.scss';
+import IsolatedBlockEditor from '../index';
 
 /** @typedef {import('../index').BlockEditorSettings} BlockEditorSettings */
 
