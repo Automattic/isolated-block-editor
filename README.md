@@ -33,7 +33,7 @@ The Isolated Block Editor is provided in three forms:
 Requires: Gutenberg 10.6.0, tested up to Gutenberg 10.9.0 RC 1
 
 Examples:
-- [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/src/browser/README.md) - standalone JS file that can replace any `textarea` on any page with a full Gutenberg editor
+- [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor
 - [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
 - [Gutenberg Chrome Extension](https://github.com/Automattic/gutenberg-everywhere-chrome/) - a Chrome extension that allows Gutenberg to be used on any page
 - [Gutenberg Desktop](https://github.com/Automattic/gutenberg-desktop/) - a desktop editor that supports the loading and saving of HTML and Markdown files
@@ -77,12 +77,14 @@ You can use the provided [`iso-gutenberg.php`](examples/wordpress-php/README.md)
 
 ## Standalone Module
 
-You can use the provided `iso-block-editor.min.js` and `iso-block-editor.min.css` files on any web page, regardless of whether it is on WordPress. It will provide two global functions which can turn a `textarea` into a block editor. Here's an example:
+You can use the provided `isolated-block-editor.js`, `core.css`, and `isolated-block-editor.css` files on any web page, regardless of whether it is on WordPress. It will provide two global functions which can turn a `textarea` into a block editor. Here's an example:
 
 ```js
 <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-<script src="iso-block-editor.min.js"></script>
+<script src="isolated-block-editor.js"></script>
+<link rel="stylesheet" href="core.css" />
+<link rel="stylesheet" href="isolated-block-editor.css" />
 
 <body>
 	<textarea id="editor" />
@@ -97,6 +99,32 @@ You can use the provided `iso-block-editor.min.js` and `iso-block-editor.min.css
 Note that you must load React before loading the editor.
 
 You can find an example in [`src/browser/index.html`](src/browser/index.html).
+
+## CSS
+
+If you are using on a WordPress site then WordPress will load the core Gutenberg CSS as part of the [`iso-gutenberg.php`](examples/wordpress-php/README.md) script.
+
+If you are not using on a WordPress site then you will need to load the core CSS yourself. You can either do this by including the following modules and importing directly:
+
+- `@wordpress/components`
+- `@wordpress/block-editor`
+- `@wordpress/block-library`
+- `@wordpress/format-library`
+
+```scss
+@import '@wordpress/components/build-style/style.css';
+@import '@wordpress/block-editor/build-style/style.css';
+@import '@wordpress/block-library/build-style/style.css';
+@import '@wordpress/block-library/build-style/editor.css';
+@import '@wordpress/block-library/build-style/theme.css';
+@import '@wordpress/format-library/build-style/style.css';
+```
+
+Alternatively you can directly import the bundled `build-browser/core.css` CSS:
+
+```js
+import 'isolated-block-editor/build-browser/core.css';
+```
 
 ## Using
 

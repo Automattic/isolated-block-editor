@@ -18,9 +18,9 @@
 	},
 	"scripts": {
 		"start": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored --watch",
-		"build:es6": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored",
-		"build:cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored",
-		"build:browser": "BUILD_ENV=es6 NODE_ENV=production webpack --mode production --progress --config ./webpack.config.browser.js",
+		"build:es6": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js','src/browser/*' --copy-files --no-copy-ignored && rm -rf build-module/browser",
+		"build:cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js','src/browser/*' --copy-files --no-copy-ignored  && rm -rf build/browser",
+		"build:browser": "BUILD_ENV=es6 NODE_ENV=production webpack --mode production --progress --config ./webpack.config.browser.js && rm build-browser/core.js",
 		"build:types": "tsc --build",
 		"build": "yarn build:es6 && yarn build:cjs && yarn build:browser && yarn build:types",
 		"clean": "rm -rf build build-module build-browser build-types dist",

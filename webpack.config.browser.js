@@ -4,9 +4,12 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const TerserJSPlugin = require( 'terser-webpack-plugin' );
 
 const config = {
-	entry: './src/browser/index.js',
+	entry: {
+		[ 'isolated-block-editor' ]: './src/browser/index.js',
+		core: './src/browser/core.js',
+	},
 	output: {
-		filename: 'iso-block-editor.min.js',
+		filename: '[name].js',
 		path: path.resolve( __dirname, 'build-browser' ),
 	},
 	module: {
@@ -37,7 +40,7 @@ const config = {
 			'process.env': { NODE_ENV: JSON.stringify( process.env.NODE_ENV || 'development' ) },
 		} ),
 		new MiniCssExtractPlugin( {
-			filename: 'iso-block-editor.min.css',
+			filename: '[name].css',
 		} ),
 	],
 	optimization: {
