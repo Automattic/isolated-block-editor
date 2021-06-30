@@ -1,9 +1,9 @@
-@import "@wordpress/base-styles/_animations";
-@import "@wordpress/base-styles/_z-index";
-@import "@wordpress/base-styles/_mixins";
-@import "@wordpress/base-styles/_breakpoints";
-@import "@wordpress/base-styles/_colors";
-@import "@wordpress/base-styles/_variables";
+@import '@wordpress/base-styles/_animations';
+@import '@wordpress/base-styles/_z-index';
+@import '@wordpress/base-styles/_mixins';
+@import '@wordpress/base-styles/_breakpoints';
+@import '@wordpress/base-styles/_colors';
+@import '@wordpress/base-styles/_variables';
 
 .edit-post-header-toolbar {
 	display: inline-flex;
@@ -44,8 +44,8 @@
 			background: $gray-900;
 		}
 
-		&:focus:not(:disabled) {
-			box-shadow: 0 0 0 $border-width-focus var(--wp-admin-theme-color), inset 0 0 0 $border-width $white;
+		&:focus:not( :disabled ) {
+			box-shadow: 0 0 0 $border-width-focus var( --wp-admin-theme-color ), inset 0 0 0 $border-width $white;
 			outline: 1px solid transparent;
 		}
 
@@ -76,4 +76,11 @@
 
 .edit-post-header-toolbar__block-toolbar .block-editor-block-toolbar {
 	overflow-y: hidden;
+}
+
+.block-editor-block-mover .block-editor-block-mover-button {
+	height: 24px;
+	width: 42px;
+	padding-right: 11px !important;
+	padding-left: 6px !important;
 }
