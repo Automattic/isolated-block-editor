@@ -28,12 +28,6 @@ const config = {
 			},
 		],
 	},
-	resolve: {
-		alias: {
-			path: require.resolve( 'path' ),
-		},
-		modules: [ path.resolve( __dirname, 'node_modules' ) ],
-	},
 	externals: {
 		react: 'React',
 		'react-dom': 'ReactDOM',
@@ -44,9 +38,6 @@ const config = {
 		} ),
 		new MiniCssExtractPlugin( {
 			filename: 'iso-block-editor.min.css',
-		} ),
-		new webpack.ProvidePlugin( {
-			process: 'process/browser',
 		} ),
 	],
 	optimization: {
