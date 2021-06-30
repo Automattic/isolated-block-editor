@@ -34,6 +34,9 @@ import getEditorSettings from './editor-settings';
  */
 
 function EditorSetup(props) {
+  var _currentSettings$edit;
+
+  // @ts-ignore
   const {
     currentSettings,
     updateSettings,
@@ -62,7 +65,7 @@ function EditorSetup(props) {
 
 
     updateSettings(currentSettings);
-  }, [isEditing, topToolbar, currentSettings.editor.reusableBlocks]);
+  }, [isEditing, topToolbar, currentSettings === null || currentSettings === void 0 ? void 0 : (_currentSettings$edit = currentSettings.editor) === null || _currentSettings$edit === void 0 ? void 0 : _currentSettings$edit.reusableBlocks]);
   return null;
 }
 

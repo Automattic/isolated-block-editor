@@ -32,6 +32,8 @@ import './style.scss';
  */
 
 const BlockEditorToolbar = props => {
+  var _settings$iso;
+
   const {
     settings,
     editorMode,
@@ -41,10 +43,10 @@ const BlockEditorToolbar = props => {
   const {
     inspector,
     documentInspector
-  } = settings.iso.toolbar;
+  } = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {};
   const {
     moreMenu
-  } = settings.iso;
+  } = settings.iso || {};
   const {
     setInspecting
   } = useDispatch('isolated/editor');

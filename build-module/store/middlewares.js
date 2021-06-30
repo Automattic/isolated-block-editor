@@ -22,6 +22,7 @@ function applyMiddlewares(store) {
 
   const middlewareAPI = {
     getState: store.getState,
+    // @ts-ignore */}
     dispatch: (...args) => enhancedDispatch(...args)
   };
   enhancedDispatch = refx({ ...preferenceEffects

@@ -45,8 +45,6 @@ import { createElement } from "@wordpress/element";
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
-/** @typedef {import('../../index').OnSave} OnSave */
-
 /** @typedef {import('../../index').OnError} OnError */
 
 /** @typedef {import('../../index').OnMore} OnMore */
@@ -73,7 +71,6 @@ var SIZE_MEDIUM = 480;
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {OnSave} props.onSave - Save callback
  * @param {OnError} props.onError - Error callback
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
@@ -83,7 +80,6 @@ var SIZE_MEDIUM = 480;
 function BlockEditorContainer(props) {
   var children = props.children,
       settings = props.settings,
-      onSave = props.onSave,
       className = props.className,
       onError = props.onError,
       renderMoreMenu = props.renderMoreMenu,
@@ -123,7 +119,6 @@ function BlockEditorContainer(props) {
       return !isEditing && setEditing(true);
     }
   }, createElement(_blockEditorContents["default"], {
-    onSave: onSave,
     settings: settings,
     renderMoreMenu: renderMoreMenu,
     onLoad: onLoad

@@ -66,7 +66,8 @@ const controls = {
     });
     registry.dispatch('core/block-editor').replaceBlocks(clientIds, newBlock);
 
-    registry.dispatch(reusableBlocksStore).__experimentalSetEditingReusableBlock(newBlock.clientId, true);
+    registry // @ts-ignore */}
+    .dispatch(reusableBlocksStore).__experimentalSetEditingReusableBlock(newBlock.clientId, true);
   }),
   DELETE_REUSABLE_BLOCK: createRegistryControl(registry => async function ({
     id

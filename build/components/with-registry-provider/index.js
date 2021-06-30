@@ -62,12 +62,13 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
         settings = props.settings,
         additionalProps = (0, _objectWithoutProperties2["default"])(props, _excluded);
     var defaultSettings = (0, _defaultSettings["default"])(settings);
-    var _defaultSettings$iso = defaultSettings.iso,
-        persistenceKey = _defaultSettings$iso.persistenceKey,
-        preferencesKey = _defaultSettings$iso.preferencesKey,
-        defaultPreferences = _defaultSettings$iso.defaultPreferences,
-        _defaultSettings$iso$ = _defaultSettings$iso.customStores,
-        customStores = _defaultSettings$iso$ === void 0 ? [] : _defaultSettings$iso$;
+
+    var _ref = defaultSettings.iso || {},
+        persistenceKey = _ref.persistenceKey,
+        preferencesKey = _ref.preferencesKey,
+        defaultPreferences = _ref.defaultPreferences,
+        _ref$customStores = _ref.customStores,
+        customStores = _ref$customStores === void 0 ? [] : _ref$customStores;
 
     var _useState = (0, _element.useState)(null),
         _useState2 = (0, _slicedToArray2["default"])(_useState, 2),

@@ -19,8 +19,8 @@ function LinkMenu({
   settings
 }) {
   const {
-    linkMenu
-  } = settings.iso;
+    linkMenu = []
+  } = settings.iso || {};
 
   if (linkMenu.length === 0) {
     return null;

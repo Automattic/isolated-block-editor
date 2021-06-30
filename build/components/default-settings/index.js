@@ -51,11 +51,17 @@ function applyDefaultSettings(settings) {
       },
       // Inserter, undo, and inspector is on, everything else is off
       toolbar: _objectSpread({
+        // @ts-ignore */}
         inserter: true,
+        // @ts-ignore */}
         inspector: false,
+        // @ts-ignore */}
         navigation: false,
+        // @ts-ignore */}
         documentInspector: false,
+        // @ts-ignore */}
         toc: false,
+        // @ts-ignore */}
         undo: true
       }, (_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {}),
       // Nothing appears in the 'more menu'
@@ -87,6 +93,7 @@ function applyDefaultSettings(settings) {
       isRTL: false,
       autosaveInterval: 60,
       maxUploadFileSize: 0,
+      // @ts-ignore */}
       allowedMimeTypes: [],
       styles: {
         css: "body { font-family: 'Noto Serif' }"
@@ -94,18 +101,23 @@ function applyDefaultSettings(settings) {
       imageSizes: [],
       richEditingEnabled: true,
       codeEditingEnabled: false,
+      // @ts-ignore */}
       allowedBlockTypes: true,
       __experimentalCanUserUseUnfilteredHTML: false,
       // Default to no patterns, reusable blocks
       __experimentalBlockPatterns: [],
+      // @ts-ignore */}
       reusableBlocks: [],
       // Default to fixed top toolbar
       fixedToolbar: true
     }, editor), {}, {
+      // @ts-ignore */}
       availableLegacyWidgets: {},
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
-      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : function () {
+      // @ts-ignore */}
+      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions // @ts-ignore */}
+      ? editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : function () {
         return [];
       }
     })

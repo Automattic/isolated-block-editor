@@ -27,6 +27,7 @@ function applyMiddlewares(store) {
   let chain = [];
   const middlewareAPI = {
     getState: store.getState,
+    // @ts-ignore
     dispatch: (...args) => enhancedDispatch(...args)
   };
   chain = middlewares.map(middleware => middleware(middlewareAPI));

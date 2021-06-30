@@ -57,7 +57,8 @@ function storeConfig(preferencesKey, defaultPreferences) {
     selectors: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, blockSelectors), editorSelectors), preferenceSelectors), optionSelectors),
     persist: ['preferences'],
     initialState: {
-      preferences: preferencesKey && localStorage.getItem(preferencesKey) ? JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
+      preferences: preferencesKey && localStorage.getItem(preferencesKey) // @ts-ignore
+      ? JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
     }
   };
 }

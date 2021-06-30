@@ -76,6 +76,7 @@ function HeaderToolbar(props) {
     onClick: () => {
       if (isInserterOpened) {
         // Focusing the inserter button closes the inserter popover
+        // @ts-ignore
         inserterButton.current.focus();
       } else {
         setIsInserterOpened(true);

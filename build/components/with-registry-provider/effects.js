@@ -196,6 +196,7 @@ var _default = {
     return resetBlocks(updatedBlockList);
   },
   MARK_AUTOMATIC_CHANGE: function MARK_AUTOMATIC_CHANGE(action, store) {
+    // @ts-ignore */}
     var _window = window,
         setTimeout = _window.setTimeout,
         _window$requestIdleCa = _window.requestIdleCallback,

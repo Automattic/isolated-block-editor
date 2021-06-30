@@ -28,11 +28,13 @@ function WritingMenu({
   onClose,
   settings
 }) {
+  var _settings$iso;
+
   const {
     preview,
     fullscreen,
     topToolbar
-  } = settings.iso.moreMenu;
+  } = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) || {};
   const {
     isFullscreen
   } = useSelect(select => ({

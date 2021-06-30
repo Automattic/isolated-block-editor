@@ -35,7 +35,7 @@ export function isEditorReady(state) {
 /**
  * Get current pattern name
  * @param {{editor: EditorState}} state - Current state
- * @returns {string}
+ * @returns {string|null}
  */
 
 export function getCurrentPatternName(state) {
@@ -44,7 +44,7 @@ export function getCurrentPatternName(state) {
 /**
  * Get current pattern
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern}
+ * @returns {Pattern|null}
  */
 
 export function getCurrentPattern(state) {
@@ -75,7 +75,7 @@ export function getIgnoredContent(state) {
 /**
  * Get the pattern for a given name
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern}
+ * @returns {Pattern|null}
  */
 
 export function getNamedPattern(state, patternName) {

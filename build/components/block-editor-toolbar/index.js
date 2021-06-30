@@ -50,14 +50,19 @@ import { createElement } from "@wordpress/element";
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 var BlockEditorToolbar = function BlockEditorToolbar(props) {
+  var _settings$iso;
+
   var settings = props.settings,
       editorMode = props.editorMode,
       renderMoreMenu = props.renderMoreMenu;
   var shortcut = 'x';
-  var _settings$iso$toolbar = settings.iso.toolbar,
-      inspector = _settings$iso$toolbar.inspector,
-      documentInspector = _settings$iso$toolbar.documentInspector;
-  var moreMenu = settings.iso.moreMenu;
+
+  var _ref = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {},
+      inspector = _ref.inspector,
+      documentInspector = _ref.documentInspector;
+
+  var _ref2 = settings.iso || {},
+      moreMenu = _ref2.moreMenu;
 
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       setInspecting = _useDispatch.setInspecting;

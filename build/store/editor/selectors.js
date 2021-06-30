@@ -54,7 +54,7 @@ function isEditorReady(state) {
 /**
  * Get current pattern name
  * @param {{editor: EditorState}} state - Current state
- * @returns {string}
+ * @returns {string|null}
  */
 
 
@@ -64,7 +64,7 @@ function getCurrentPatternName(state) {
 /**
  * Get current pattern
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern}
+ * @returns {Pattern|null}
  */
 
 
@@ -96,7 +96,7 @@ function getIgnoredContent(state) {
 /**
  * Get the pattern for a given name
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern}
+ * @returns {Pattern|null}
  */
 
 
