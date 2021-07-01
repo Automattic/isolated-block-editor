@@ -35,7 +35,11 @@ function EditorMenu( { onClose, editorMode, onSetMode, isCodeEditingEnabled, set
 		onClose();
 	};
 
-	if ( ! isCodeEditingEnabled || ! settings.iso.moreMenu.editor ) {
+	if ( ! isCodeEditingEnabled ) {
+		return null;
+	}
+
+	if ( settings?.iso?.moreMenu === false || ! settings?.iso?.moreMenu?.editor ) {
 		return null;
 	}
 

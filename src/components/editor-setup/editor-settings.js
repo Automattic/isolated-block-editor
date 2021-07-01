@@ -42,11 +42,13 @@ function getDisallowedBlocks( blockSettings ) {
  * @returns {EditorSettings}
  */
 export default function getEditorSettings( editorSettings, isoSettings, allBlockTypes, hasFixedToolbar ) {
+	// @ts-ignore
 	const disallowBlocks = getDisallowedBlocks( isoSettings.blocks );
 
 	return {
 		...editorSettings,
 		hasFixedToolbar,
+		// @ts-ignore
 		allowedBlockTypes: getAllowedBlockTypes( isoSettings.blocks, allBlockTypes ).filter(
 			( blockName ) => disallowBlocks.indexOf( blockName ) === -1
 		),

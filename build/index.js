@@ -43,18 +43,6 @@ var _data = require("@wordpress/data");
 
 require("@wordpress/format-library");
 
-require("@wordpress/components/build-style/style.css");
-
-require("@wordpress/block-editor/build-style/style.css");
-
-require("@wordpress/block-library/build-style/style.css");
-
-require("@wordpress/block-library/build-style/editor.css");
-
-require("@wordpress/block-library/build-style/theme.css");
-
-require("@wordpress/format-library/build-style/style.css");
-
 var _blockEditorContainer = _interopRequireDefault(require("./components/block-editor-container"));
 
 var _withRegistryProvider = _interopRequireDefault(require("./components/with-registry-provider"));
@@ -87,43 +75,45 @@ import { createElement } from "@wordpress/element";
 /**
  * Toolbar settings
  * @typedef ToolbarSettings
- * @property {boolean} inserter - Enable or disable the toolbar block inserter
- * @property {boolean} inspector - Enable or disable the toolbar block inspector
- * @property {boolean} navigation - Enable or disable the toolbar navigation button
- * @property {boolean} toc - Enable or disable the toolbar table of contents button
- * @property {boolean} undo - Enable or disable the toolbar undo/redo buttons
+ * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
+ * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
+ * @property {boolean} [navigation] - Enable or disable the toolbar navigation button
+ * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
+ * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
+ * @property {boolean} [documentInspector] - Enable or disable the document inspector
  */
 
 /**
  * More menu settings
  * @typedef MoreMenuSettings
- * @property {boolean} editor - Enable or disable the editor sub menu (visual/code editing)
- * @property {boolean} fullscreen - Enable or disable the fullscreen option
- * @property {boolean} preview - Enable or disable the preview option
- * @property {boolean} topToolbar - Enable or disable the 'top toolbar' option
+ * @property {boolean} [editor] - Enable or disable the editor sub menu (visual/code editing)
+ * @property {boolean} [fullscreen] - Enable or disable the fullscreen option
+ * @property {boolean} [preview] - Enable or disable the preview option
+ * @property {boolean} [topToolbar] - Enable or disable the 'top toolbar' option
  */
 
 /**
  * Isolated Editor Settings
  * @typedef IsoSettings
- * @property {string|null} preferencesKey - Preferences key. Set to null to disable
- * @property {string|null} persistenceKey - Persistence key. Set to null to disable
- * @property {{allowBlocks: string[], disallowBlocks: string[]}} blocks - Block restrictions
- * @property {string[]} disallowEmbed - List of embed names to remove
- * @property {ToolbarSettings} toolbar - Toolbar settings
- * @property {MoreMenuSettings|false} moreMenu - More menu settings, or false to disable
- * @property {{title: string, url: string}[]} linkMenu - Link menu settings
- * @property {string} currentPattern - The pattern to start with
- * @property {Pattern[]} patterns - List of patterns
- * @property {object} defaultPreferences - Default preferences if nothing in localStorage
- * @property {boolean} allowApi - Allow API requests
+ * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
+ * @property {string|null} [persistenceKey] - Persistence key. Set to null to disable
+ * @property {{allowBlocks: string[], disallowBlocks: string[]}} [blocks] - Block restrictions
+ * @property {string[]} [disallowEmbed] - List of embed names to remove
+ * @property {object[]} [customStores] - Array of custom stores
+ * @property {ToolbarSettings} [toolbar] - Toolbar settings
+ * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
+ * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
+ * @property {string|null} [currentPattern] - The pattern to start with
+ * @property {Pattern[]} [patterns] - List of patterns
+ * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
+ * @property {boolean} [allowApi] - Allow API requests
  */
 
 /**
  * Block Editor Settings
  * @typedef BlockEditorSettings
- * @property {IsoSettings} iso - Isolated editor settings
- * @property {EditorSettings} editor - Gutenberg editor settings
+ * @property {IsoSettings} [iso] - Isolated editor settings
+ * @property {EditorSettings} [editor] - Gutenberg editor settings
  */
 
 /**
@@ -141,7 +131,6 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Initialize Gutenberg
- * @param {boolean} [allowApi] Allow API requests
  */
 function initializeEditor() {
   if (window.isoInitialised) {
@@ -177,7 +166,7 @@ function initializeIsoEditor() {
  */
 
 /**
- * Save blocks callback
+ * Save HTML content callback
  * @callback OnSaveContent
  * @param {string} content - Serialized content
  */
@@ -221,14 +210,12 @@ function initializeIsoEditor() {
 
 
 function IsolatedBlockEditor(props) {
-  var _settings$iso;
-
   var children = props.children,
       onSaveContent = props.onSaveContent,
       onSaveBlocks = props.onSaveBlocks,
       settings = props.settings,
       params = (0, _objectWithoutProperties2["default"])(props, _excluded);
-  initializeIsoEditor(settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.allowApi);
+  initializeIsoEditor();
   return createElement(_element.StrictMode, null, createElement("div", {
     className: "interface-interface-skeleton__content"
   }), createElement(_contentSaver["default"], {

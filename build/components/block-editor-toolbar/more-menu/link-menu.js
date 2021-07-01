@@ -25,7 +25,10 @@ import { createElement } from "@wordpress/element";
  */
 function LinkMenu(_ref) {
   var settings = _ref.settings;
-  var linkMenu = settings.iso.linkMenu;
+
+  var _ref2 = settings.iso || {},
+      _ref2$linkMenu = _ref2.linkMenu,
+      linkMenu = _ref2$linkMenu === void 0 ? [] : _ref2$linkMenu;
 
   if (linkMenu.length === 0) {
     return null;
@@ -33,9 +36,9 @@ function LinkMenu(_ref) {
 
   return createElement(_components.MenuGroup, {
     label: (0, _i18n.__)('Links')
-  }, linkMenu.map(function (_ref2) {
-    var title = _ref2.title,
-        url = _ref2.url;
+  }, linkMenu.map(function (_ref3) {
+    var title = _ref3.title,
+        url = _ref3.url;
     return createElement(_components.MenuItem, {
       key: title
     }, createElement(_components.ExternalLink, {

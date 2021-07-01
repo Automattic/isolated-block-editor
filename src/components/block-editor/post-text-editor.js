@@ -13,8 +13,8 @@ import { withInstanceId, compose } from '@wordpress/compose';
 import { parse, serialize } from '@wordpress/blocks';
 
 export class PostTextEditor extends Component {
-	constructor() {
-		super( ...arguments );
+	constructor( props ) {
+		super( props );
 
 		this.edit = this.edit.bind( this );
 		this.stopEditing = this.stopEditing.bind( this );
@@ -45,6 +45,7 @@ export class PostTextEditor extends Component {
 	 * @param {Event} event Change event.
 	 */
 	edit( event ) {
+		// @ts-ignore */}
 		const value = event.target.value;
 		this.props.onChange( value );
 		this.setState( { value, isDirty: true } );
@@ -77,6 +78,7 @@ export class PostTextEditor extends Component {
 					autoComplete="off"
 					dir="auto"
 					value={ value }
+					// @ts-ignore */}
 					onChange={ this.edit }
 					onBlur={ this.stopEditing }
 					className="editor-post-text-editor"

@@ -22,8 +22,6 @@ import HotSwapper from './hot-swapper';
 import './style.scss';
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
-/** @typedef {import('../../index').OnSave} OnSave */
-
 /** @typedef {import('../../index').OnError} OnError */
 
 /** @typedef {import('../../index').OnMore} OnMore */
@@ -51,7 +49,6 @@ const SIZE_MEDIUM = 480;
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {OnSave} props.onSave - Save callback
  * @param {OnError} props.onError - Error callback
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
@@ -62,7 +59,6 @@ function BlockEditorContainer(props) {
   const {
     children,
     settings,
-    onSave,
     className,
     onError,
     renderMoreMenu,
@@ -99,7 +95,6 @@ function BlockEditorContainer(props) {
     onOutside: () => setEditing(false),
     onFocus: () => !isEditing && setEditing(true)
   }, createElement(BlockEditorContents, {
-    onSave: onSave,
     settings: settings,
     renderMoreMenu: renderMoreMenu,
     onLoad: onLoad

@@ -14,7 +14,7 @@ import { MenuItem, ExternalLink } from '@wordpress/components';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 function LinkMenu( { settings } ) {
-	const { linkMenu } = settings.iso;
+	const { linkMenu = [] } = settings.iso || {};
 
 	if ( linkMenu.length === 0 ) {
 		return null;

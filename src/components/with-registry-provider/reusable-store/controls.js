@@ -73,6 +73,7 @@ const controls = {
 				} );
 				registry.dispatch( 'core/block-editor' ).replaceBlocks( clientIds, newBlock );
 				registry
+				  // @ts-ignore */}
 					.dispatch( reusableBlocksStore )
 					.__experimentalSetEditingReusableBlock( newBlock.clientId, true );
 			}

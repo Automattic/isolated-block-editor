@@ -17,13 +17,13 @@ var _blocks = require("@wordpress/blocks");
 
 /** @typedef {import('../../index').OnSaveBlocks} OnSaveBlocks */
 
-/** @typedef {import('../../index').OnSaveSerialized} OnSaveSerialized */
+/** @typedef {import('../../index').OnSaveContent} OnSaveContent */
 
 /**
  * Content saver
  * @param {object} props - Component props
- * @param {OnSaveBlocks} props.onSaveBlocks - Save blocks callback
- * @param {OnSaveSerialized} props.onSaveContent - Save content callback
+ * @param {OnSaveBlocks} [props.onSaveBlocks] - Save blocks callback
+ * @param {OnSaveContent} [props.onSaveContent] - Save content callback
  */
 function ContentSaver(props) {
   var onSaveBlocks = props.onSaveBlocks,

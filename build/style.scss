@@ -1,9 +1,10 @@
-@import "@wordpress/base-styles/_colors";
-@import "@wordpress/base-styles/_variables";
-@import "@wordpress/base-styles/_mixins";
-@import "@wordpress/base-styles/_breakpoints";
-@import "@wordpress/base-styles/_animations";
-@import "@wordpress/base-styles/_z-index";
+
+@import '@wordpress/base-styles/_colors';
+@import '@wordpress/base-styles/_variables';
+@import '@wordpress/base-styles/_mixins';
+@import '@wordpress/base-styles/_breakpoints';
+@import '@wordpress/base-styles/_animations';
+@import '@wordpress/base-styles/_z-index';
 
 // Stop Gutenberg preventing mobile scrolling
 html {
@@ -13,7 +14,8 @@ html {
 .components-modal__frame,
 .iso-editor {
 	// Set the font for the rest of the editor
-	&, select {
+	&,
+	select {
 		font-family: $default-font;
 		font-size: $default-font-size;
 		line-height: $default-line-height;
@@ -22,13 +24,16 @@ html {
 
 	// Change the box model for inputs.
 	// In the block editor this is inherited from wp-admin.
-	input, select, textarea, button {
+	input,
+	select,
+	textarea,
+	button {
 		box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 	}
 
-	p:not(.components-form-token-field__help) {
+	p:not( .components-form-token-field__help ) {
 		font-size: inherit;
 		line-height: inherit;
 	}

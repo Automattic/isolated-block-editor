@@ -1,5 +1,6 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * External dependencies

@@ -19,8 +19,6 @@ var _blockEditor = require("@wordpress/block-editor");
 
 var _editor = require("@wordpress/editor");
 
-var _reusableBlocks = require("@wordpress/reusable-blocks");
-
 var _visualEditor = _interopRequireDefault(require("./visual-editor"));
 
 var _textEditor = _interopRequireDefault(require("./text-editor"));

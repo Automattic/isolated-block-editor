@@ -60,12 +60,14 @@ const DEFAULT_STATE = {
 			disallowBlocks: [],
 		},
 		disallowEmbed: [],
+		customStores: [],
 		toolbar: {
 			inserter: true,
 			toc: false,
 			undo: true,
 			inspector: true,
 			navigation: false,
+			documentInspector: false,
 		},
 		moreMenu: {
 			editor: false,
@@ -75,6 +77,7 @@ const DEFAULT_STATE = {
 		},
 		linkMenu: [],
 		currentPattern: null,
+		patterns: [],
 		defaultPreferences: {},
 		allowApi: false,
 	},

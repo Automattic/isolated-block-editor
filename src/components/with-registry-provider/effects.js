@@ -222,6 +222,7 @@ export default {
 		return resetBlocks( updatedBlockList );
 	},
 	MARK_AUTOMATIC_CHANGE( action, store ) {
+		// @ts-ignore */}
 		const { setTimeout, requestIdleCallback = ( callback ) => setTimeout( callback, 100 ) } = window;
 
 		requestIdleCallback( () => {

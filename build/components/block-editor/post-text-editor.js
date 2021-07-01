@@ -42,11 +42,11 @@ var PostTextEditor = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(PostTextEditor);
 
-  function PostTextEditor() {
+  function PostTextEditor(props) {
     var _this;
 
     (0, _classCallCheck2["default"])(this, PostTextEditor);
-    _this = _super.apply(this, arguments);
+    _this = _super.call(this, props);
     _this.edit = _this.edit.bind((0, _assertThisInitialized2["default"])(_this));
     _this.stopEditing = _this.stopEditing.bind((0, _assertThisInitialized2["default"])(_this));
     _this.state = {};
@@ -68,6 +68,7 @@ var PostTextEditor = /*#__PURE__*/function (_Component) {
      * @param {Event} event Change event.
      */
     function edit(event) {
+      // @ts-ignore */}
       var value = event.target.value;
       this.props.onChange(value);
       this.setState({
@@ -102,7 +103,8 @@ var PostTextEditor = /*#__PURE__*/function (_Component) {
       }, (0, _i18n.__)('Type text or HTML')), createElement(_reactAutosizeTextarea["default"], {
         autoComplete: "off",
         dir: "auto",
-        value: value,
+        value: value // @ts-ignore */}
+        ,
         onChange: this.edit,
         onBlur: this.stopEditing,
         className: "editor-post-text-editor",

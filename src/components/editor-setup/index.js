@@ -36,6 +36,7 @@ import getEditorSettings from './editor-settings';
  * @param {boolean} props.topToolbar - Is the top toolbar enabled?
  */
 function EditorSetup( props ) {
+	// @ts-ignore
 	const { currentSettings, updateSettings, setupEditor, isEditing, topToolbar, setupCoreEditor } = props;
 
 	// This is the initial setup
@@ -61,7 +62,7 @@ function EditorSetup( props ) {
 
 		// Setup Gutenberg for this editor, but only when focussed. This swaps allowed blocks and other capabilities
 		updateSettings( currentSettings );
-	}, [ isEditing, topToolbar, currentSettings.editor.reusableBlocks ] );
+	}, [ isEditing, topToolbar, currentSettings?.editor?.reusableBlocks ] );
 
 	return null;
 }

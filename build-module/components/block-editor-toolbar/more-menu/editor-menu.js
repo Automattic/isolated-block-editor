@@ -36,6 +36,8 @@ function EditorMenu({
   isCodeEditingEnabled,
   settings
 }) {
+  var _settings$iso, _settings$iso2, _settings$iso2$moreMe;
+
   /**
    * @param {string} mode
    */
@@ -44,7 +46,11 @@ function EditorMenu({
     onClose();
   };
 
-  if (!isCodeEditingEnabled || !settings.iso.moreMenu.editor) {
+  if (!isCodeEditingEnabled) {
+    return null;
+  }
+
+  if ((settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) === false || !(settings !== null && settings !== void 0 && (_settings$iso2 = settings.iso) !== null && _settings$iso2 !== void 0 && (_settings$iso2$moreMe = _settings$iso2.moreMenu) !== null && _settings$iso2$moreMe !== void 0 && _settings$iso2$moreMe.editor)) {
     return null;
   }
 

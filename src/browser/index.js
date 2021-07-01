@@ -8,10 +8,10 @@ import { render, unmountComponentAtNode } from '@wordpress/element';
  * Internal dependencies
  */
 
-import IsolatedBlockEditor from '../index';
 import './style.scss';
+import IsolatedBlockEditor from '../index';
 
-/** @typedef {import('isolated-block-editor').BlockEditorSettings} BlockEditorSettings */
+/** @typedef {import('../index').BlockEditorSettings} BlockEditorSettings */
 
 /**
  * These are the Gutenberg and IsolatedBlockEditor settings. Everything not set uses the defaults.
@@ -65,6 +65,7 @@ function attachEditor( textarea ) {
 	editor.classList.add( 'editor' );
 
 	// Insert after the textarea, and hide it
+	// @ts-ignore
 	textarea.parentNode.insertBefore( editor, textarea.nextSibling );
 	textarea.style.display = 'none';
 
@@ -88,11 +89,15 @@ function detachEditor( textarea ) {
 	/**
 	 * @type {HTMLElement}
 	 */
+	// @ts-ignore
 	const editor = textarea.nextSibling;
 
 	if ( editor && editor.classList.contains( 'editor' ) ) {
 		unmountComponentAtNode( editor );
+
+		// @ts-ignore
 		textarea.style.display = null;
+		// @ts-ignore
 		editor.parentNode.removeChild( editor );
 	}
 }

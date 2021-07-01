@@ -45,6 +45,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * @param {boolean} props.topToolbar - Is the top toolbar enabled?
  */
 function EditorSetup(props) {
+  var _currentSettings$edit;
+
+  // @ts-ignore
   var currentSettings = props.currentSettings,
       updateSettings = props.updateSettings,
       setupEditor = props.setupEditor,
@@ -71,7 +74,7 @@ function EditorSetup(props) {
 
 
     updateSettings(currentSettings);
-  }, [isEditing, topToolbar, currentSettings.editor.reusableBlocks]);
+  }, [isEditing, topToolbar, currentSettings === null || currentSettings === void 0 ? void 0 : (_currentSettings$edit = currentSettings.editor) === null || _currentSettings$edit === void 0 ? void 0 : _currentSettings$edit.reusableBlocks]);
   return null;
 }
 

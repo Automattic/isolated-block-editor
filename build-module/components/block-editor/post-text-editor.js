@@ -14,8 +14,8 @@ import { withSelect, withDispatch } from '@wordpress/data';
 import { withInstanceId, compose } from '@wordpress/compose';
 import { parse, serialize } from '@wordpress/blocks';
 export class PostTextEditor extends Component {
-  constructor() {
-    super(...arguments);
+  constructor(props) {
+    super(props);
     this.edit = this.edit.bind(this);
     this.stopEditing = this.stopEditing.bind(this);
     this.state = {};
@@ -45,6 +45,7 @@ export class PostTextEditor extends Component {
 
 
   edit(event) {
+    // @ts-ignore */}
     const value = event.target.value;
     this.props.onChange(value);
     this.setState({
@@ -81,7 +82,8 @@ export class PostTextEditor extends Component {
     }, __('Type text or HTML')), createElement(Textarea, {
       autoComplete: "off",
       dir: "auto",
-      value: value,
+      value: value // @ts-ignore */}
+      ,
       onChange: this.edit,
       onBlur: this.stopEditing,
       className: "editor-post-text-editor",

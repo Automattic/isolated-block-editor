@@ -43,7 +43,7 @@ const withRegistryProvider = createHigherOrderComponent(WrappedComponent => with
     preferencesKey,
     defaultPreferences,
     customStores = []
-  } = defaultSettings.iso;
+  } = defaultSettings.iso || {};
   const [subRegistry, setSubRegistry] = useState(null);
   useEffect(() => {
     // Create a new registry for this editor. We have the STORE_NAME for storing blocks and other data

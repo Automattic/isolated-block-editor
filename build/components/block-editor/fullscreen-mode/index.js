@@ -21,12 +21,14 @@ require("./style.scss");
 var FULLSCREEN_MODE = 'is-fullscreen-mode';
 
 function addFullscreen() {
-  document.body.classList.add(FULLSCREEN_MODE);
+  document.body.classList.add(FULLSCREEN_MODE); // @ts-ignore
+
   document.querySelector('html').classList.add(FULLSCREEN_MODE);
 }
 
 function removeFullscreen() {
-  document.body.classList.remove(FULLSCREEN_MODE);
+  document.body.classList.remove(FULLSCREEN_MODE); // @ts-ignore
+
   document.querySelector('html').classList.remove(FULLSCREEN_MODE);
 }
 

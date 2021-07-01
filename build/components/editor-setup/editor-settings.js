@@ -62,9 +62,11 @@ function getDisallowedBlocks(blockSettings) {
 
 
 function getEditorSettings(editorSettings, isoSettings, allBlockTypes, hasFixedToolbar) {
+  // @ts-ignore
   var disallowBlocks = getDisallowedBlocks(isoSettings.blocks);
   return _objectSpread(_objectSpread({}, editorSettings), {}, {
     hasFixedToolbar: hasFixedToolbar,
+    // @ts-ignore
     allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(function (blockName) {
       return disallowBlocks.indexOf(blockName) === -1;
     }),

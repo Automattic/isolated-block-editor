@@ -39,7 +39,8 @@ function storeConfig(preferencesKey, defaultPreferences) {
     },
     persist: ['preferences'],
     initialState: {
-      preferences: preferencesKey && localStorage.getItem(preferencesKey) ? JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
+      preferences: preferencesKey && localStorage.getItem(preferencesKey) // @ts-ignore
+      ? JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
     }
   };
 }

@@ -45,9 +45,11 @@ function getDisallowedBlocks(blockSettings) {
 
 
 export default function getEditorSettings(editorSettings, isoSettings, allBlockTypes, hasFixedToolbar) {
+  // @ts-ignore
   const disallowBlocks = getDisallowedBlocks(isoSettings.blocks);
   return { ...editorSettings,
     hasFixedToolbar,
+    // @ts-ignore
     allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(blockName => disallowBlocks.indexOf(blockName) === -1),
     // Enable or disable media uploads. We do this here as a logged out user doesn't have a user object, and so the standard Gutenberg `canUser` won't work
     mediaUpload: editorSettings.allowedMimeTypes.length === 0 ? null : editorSettings.mediaUpload
