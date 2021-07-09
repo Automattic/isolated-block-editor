@@ -111,12 +111,12 @@
 		"eslint-plugin-react": "^7.24.0",
 		"eslint-plugin-wpcalypso": "^5.0.0",
 		"mini-css-extract-plugin": "^1.6.2",
+		"prettier": "npm:wp-prettier@2.2.1-beta-1",
 		"release-it": "^14.10.0",
 		"sass-loader": "^12.1.0",
 		"typescript": "^4.3.4",
 		"webpack": "^5.41.0",
-		"webpack-cli": "^4.7.2",
-		"wp-prettier": "npm:wp-prettier@2.2.1-beta-1"
+		"webpack-cli": "^4.7.2"
 	},
 	"release-it": {
 		"github": {
