@@ -35,3 +35,12 @@ export function hasEditorUndo( state ) {
 export function hasEditorRedo( state ) {
 	return state.blocks.future.length > 0 && getEditorMode( state ) === 'visual';
 }
+
+/**
+ * Get current edit count
+ * @param {object} state - Current state
+ * @returns {number}
+ */
+export function getEditCount( state ) {
+	return state.blocks.present.editCount;
+}
