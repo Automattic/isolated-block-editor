@@ -1,16 +1,10 @@
 /**
- * External dependencies
- */
-import { createDocument } from 'asblocks/src/lib/yjs-doc';
-import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/sync/algorithms/yjs';
-
-/**
  * WordPress dependencies
  */
 import { Popover } from '@wordpress/components';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { parse, rawHandler } from '@wordpress/blocks';
 
 /**
@@ -20,6 +14,7 @@ import { BlockEditorProvider } from '@wordpress/block-editor';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
+import useYjs from './use-yjs';
 
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
@@ -46,44 +41,6 @@ function getInitialContent( settings, content ) {
 	);
 }
 
-let nextDocId = 1;
-
-function initYDoc( blocks, blocksUpdater ) {
-	const id = nextDocId++;
-	const doc = createDocument( {
-		identity: id,
-		applyDataChanges: updatePostDoc,
-		getData: postDocToObject,
-		sendMessage: ( message ) => window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( message ) ),
-	} );
-
-	window.localStorage.setItem(
-		'isoEditorClients',
-		( parseInt( window.localStorage.getItem( 'isoEditorClients' ) || '0' ) + 1 ).toString()
-	);
-	doc.id = id;
-
-	window.addEventListener( 'storage', ( event ) => {
-		if ( event.storageArea !== localStorage ) return;
-		if ( event.key === 'isoEditorYjsMessage' && event.newValue ) {
-			doc.receiveMessage( JSON.parse( event.newValue ) );
-		}
-	} );
-
-	doc.onRemoteDataChange( ( changes ) => {
-		console.log( `remotechange received by ${ id }` );
-		blocksUpdater( changes.blocks );
-	} );
-
-	if ( window.localStorage.getItem( 'isoEditorClients' ) ) {
-		doc.startSharing( { title: '', blocks } );
-	} else {
-		doc.connect();
-	}
-
-	return doc;
-}
-
 /**
  * The editor itself, including toolbar
  *
@@ -103,6 +60,8 @@ function BlockEditorContents( props ) {
 	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, selection, isEditing, editorMode } = props;
 	const { children, settings, renderMoreMenu, onLoad } = props;
 
+	const [ applyChangesToYjs ] = useYjs( { initialBlocks: blocks, blockUpdater: updateBlocksWithoutUndo } );
+
 	// Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 	useEffect( () => {
 		const initialContent = getInitialContent( settings, onLoad ? onLoad( parse, rawHandler ) : [] );
@@ -112,19 +71,13 @@ function BlockEditorContents( props ) {
 		}
 	}, [] );
 
-	const ydoc = useRef();
-
-	useEffect( () => {
-		ydoc.current = initYDoc( blocks, ( blocks ) => updateBlocksWithoutUndo( blocks ) );
-	}, [] );
-
 	return (
 		<BlockEditorProvider
 			value={ blocks || [] }
 			onInput={ updateBlocksWithoutUndo }
 			onChange={ ( blocks, options ) => {
 				updateBlocksWithUndo( blocks, options );
-				ydoc.current.applyDataChanges( { blocks } );
+				applyChangesToYjs( blocks );
 			} }
 			useSubRegistry={ false }
 			selection={ selection }
