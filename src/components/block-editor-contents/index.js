@@ -1,11 +1,16 @@
 /**
+ * External dependencies
+ */
+import { createDocument } from 'asblocks/src/lib/yjs-doc';
+import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/sync/algorithms/yjs';
+
+/**
  * WordPress dependencies
  */
-
 import { Popover } from '@wordpress/components';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { parse, rawHandler } from '@wordpress/blocks';
 
 /**
@@ -41,6 +46,44 @@ function getInitialContent( settings, content ) {
 	);
 }
 
+let nextDocId = 1;
+
+function initYDoc( blocks, blocksUpdater ) {
+	const id = nextDocId++;
+	const doc = createDocument( {
+		identity: id,
+		applyDataChanges: updatePostDoc,
+		getData: postDocToObject,
+		sendMessage: ( message ) => window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( message ) ),
+	} );
+
+	window.localStorage.setItem(
+		'isoEditorClients',
+		( parseInt( window.localStorage.getItem( 'isoEditorClients' ) || '0' ) + 1 ).toString()
+	);
+	doc.id = id;
+
+	window.addEventListener( 'storage', ( event ) => {
+		if ( event.storageArea !== localStorage ) return;
+		if ( event.key === 'isoEditorYjsMessage' && event.newValue ) {
+			doc.receiveMessage( JSON.parse( event.newValue ) );
+		}
+	} );
+
+	doc.onRemoteDataChange( ( changes ) => {
+		console.log( `remotechange received by ${ id }` );
+		blocksUpdater( changes.blocks );
+	} );
+
+	if ( window.localStorage.getItem( 'isoEditorClients' ) ) {
+		doc.startSharing( { title: '', blocks } );
+	} else {
+		doc.connect();
+	}
+
+	return doc;
+}
+
 /**
  * The editor itself, including toolbar
  *
@@ -57,14 +100,7 @@ function getInitialContent( settings, content ) {
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 function BlockEditorContents( props ) {
-	const {
-		blocks,
-		updateBlocksWithoutUndo,
-		updateBlocksWithUndo,
-		selection,
-		isEditing,
-		editorMode,
-	} = props;
+	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, selection, isEditing, editorMode } = props;
 	const { children, settings, renderMoreMenu, onLoad } = props;
 
 	// Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
@@ -76,11 +112,20 @@ function BlockEditorContents( props ) {
 		}
 	}, [] );
 
+	const ydoc = useRef();
+
+	useEffect( () => {
+		ydoc.current = initYDoc( blocks, ( blocks ) => updateBlocksWithoutUndo( blocks ) );
+	}, [] );
+
 	return (
 		<BlockEditorProvider
 			value={ blocks || [] }
 			onInput={ updateBlocksWithoutUndo }
-			onChange={ updateBlocksWithUndo }
+			onChange={ ( blocks, options ) => {
+				updateBlocksWithUndo( blocks, options );
+				ydoc.current.applyDataChanges( { blocks } );
+			} }
 			useSubRegistry={ false }
 			selection={ selection }
 			settings={ settings.editor }
@@ -97,12 +142,7 @@ function BlockEditorContents( props ) {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const {
-			getBlocks,
-			getEditorSelection,
-			getEditorMode,
-			isEditing,
-		} = select( 'isolated/editor' );
+		const { getBlocks, getEditorSelection, getEditorMode, isEditing } = select( 'isolated/editor' );
 
 		return {
 			blocks: getBlocks(),

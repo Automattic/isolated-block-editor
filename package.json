@@ -81,6 +81,7 @@
 		"@wordpress/viewport": "^3.1.2",
 		"@wordpress/warning": "^2.1.1",
 		"@wordpress/wordcount": "^3.1.1",
+		"asblocks": "git+https://github.com/youknowriad/asblocks",
 		"classnames": "^2.3.1",
 		"react": "17.0.2",
 		"react-autosize-textarea": "^7.1.0",
