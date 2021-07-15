@@ -60,7 +60,7 @@ function BlockEditorContents( props ) {
 	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, selection, isEditing, editorMode } = props;
 	const { children, settings, renderMoreMenu, onLoad } = props;
 
-	const [ applyChangesToYjs ] = useYjs( { initialBlocks: blocks, blockUpdater: updateBlocksWithoutUndo } );
+	const [ applyChangesToYjs ] = useYjs( { initialBlocks: blocks, onRemoteDataChange: updateBlocksWithoutUndo } );
 
 	// Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 	useEffect( () => {

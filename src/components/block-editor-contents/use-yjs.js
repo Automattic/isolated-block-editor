@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import { noop } from 'lodash';
 import { createDocument } from 'asblocks/src/lib/yjs-doc';
 import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/sync/algorithms/yjs';
 
@@ -33,7 +34,7 @@ window.fakeTransport = {
 	},
 };
 
-function initYDoc( blocksUpdater ) {
+function initYDoc( { initialBlocks, onRemoteDataChange } ) {
 	const doc = createDocument( {
 		identity: uuidv4(),
 		applyDataChanges: updatePostDoc,
@@ -48,35 +49,44 @@ function initYDoc( blocksUpdater ) {
 		}
 	} );
 
-	window.addEventListener( 'beforeunload', () => window.fakeTransport.disconnect() );
-
 	doc.onRemoteDataChange( ( changes ) => {
 		console.log( 'remote change received', changes );
-		blocksUpdater( changes.blocks );
+		onRemoteDataChange( changes.blocks );
 	} );
 
-	return doc;
+	return window.fakeTransport.connect().then( ( { isFirstInChannel } ) => {
+		if ( isFirstInChannel ) {
+			doc.startSharing( { title: '', initialBlocks } );
+		} else {
+			doc.connect();
+		}
+
+		const disconnect = () => {
+			window.fakeTransport.disconnect();
+			doc.disconnect();
+		};
+
+		window.addEventListener( 'beforeunload', () => disconnect() );
+
+		return { doc, disconnect };
+	} );
 }
 
-export default function useYjs( { initialBlocks, blockUpdater } ) {
+export default function useYjs( { initialBlocks, onRemoteDataChange } ) {
 	const ydoc = useRef();
-	const applyChangesToYjs = ( blocks ) => ydoc.current?.applyDataChanges?.( { blocks } );
 
 	useEffect( () => {
-		window.fakeTransport.connect().then( ( { isFirstInChannel } ) => {
-			ydoc.current = initYDoc( blockUpdater );
+		let onUnmount = noop;
 
-			if ( isFirstInChannel ) {
-				ydoc.current.startSharing( { title: '', initialBlocks } );
-			} else {
-				ydoc.current.connect();
-			}
+		initYDoc( { initialBlocks, onRemoteDataChange } ).then( ( { doc, disconnect } ) => {
+			ydoc.current = doc;
+			onUnmount = disconnect;
 		} );
 
-		return () => {
-			window.fakeTransport.disconnect();
-		};
+		return onUnmount;
 	}, [] );
+
+	const applyChangesToYjs = ( blocks ) => ydoc.current?.applyDataChanges?.( { blocks } );
 
 	return [ applyChangesToYjs ];
 }
