@@ -77,6 +77,7 @@ import './style.scss';
  * @typedef BlockEditorSettings
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
+ * @property {CollaborationSettings} [collab] - Real time collaboration settings
  */
 
 /**
@@ -90,6 +91,12 @@ import './style.scss';
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
+ */
+
+/**
+ * Real time collaboration settings
+ * @typedef CollaborationSettings
+ * @property {string} channelId
  */
 
 /**

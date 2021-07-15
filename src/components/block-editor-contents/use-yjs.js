@@ -11,12 +11,15 @@ import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/s
  */
 import { useEffect, useRef } from '@wordpress/element';
 
+/** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
+/** @typedef {import('.').onUpdate} OnUpdate */
+
 window.fakeTransport = {
 	sendMessage: ( message ) => {
 		console.log( 'sendMessage', message );
 		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( message ) );
 	},
-	connect: () => {
+	connect: ( channelId ) => {
 		window.localStorage.setItem(
 			'isoEditorClients',
 			( parseInt( window.localStorage.getItem( 'isoEditorClients' ) || '0' ) + 1 ).toString()
@@ -34,7 +37,13 @@ window.fakeTransport = {
 	},
 };
 
-function initYDoc( { initialBlocks, onRemoteDataChange } ) {
+/**
+ * @param {object} opts - Hook options
+ * @param {object[]} opts.initialBlocks
+ * @param {OnUpdate} opts.onRemoteDataChange
+ * @param {string} [opts.channelId]
+ */
+function initYDoc( { initialBlocks, onRemoteDataChange, channelId } ) {
 	const doc = createDocument( {
 		identity: uuidv4(),
 		applyDataChanges: updatePostDoc,
@@ -54,7 +63,7 @@ function initYDoc( { initialBlocks, onRemoteDataChange } ) {
 		onRemoteDataChange( changes.blocks );
 	} );
 
-	return window.fakeTransport.connect().then( ( { isFirstInChannel } ) => {
+	return window.fakeTransport.connect( channelId ).then( ( { isFirstInChannel } ) => {
 		if ( isFirstInChannel ) {
 			doc.startSharing( { title: '', initialBlocks } );
 		} else {
@@ -72,16 +81,24 @@ function initYDoc( { initialBlocks, onRemoteDataChange } ) {
 	} );
 }
 
-export default function useYjs( { initialBlocks, onRemoteDataChange } ) {
+/**
+ * @param {object} opts - Hook options
+ * @param {object[]} opts.initialBlocks
+ * @param {OnUpdate} opts.onRemoteDataChange
+ * @param {CollaborationSettings} [opts.settings]
+ */
+export default function useYjs( { initialBlocks, onRemoteDataChange, settings } ) {
 	const ydoc = useRef();
 
 	useEffect( () => {
 		let onUnmount = noop;
 
-		initYDoc( { initialBlocks, onRemoteDataChange } ).then( ( { doc, disconnect } ) => {
-			ydoc.current = doc;
-			onUnmount = disconnect;
-		} );
+		initYDoc( { initialBlocks, onRemoteDataChange, channelId: settings?.channelId } ).then(
+			( { doc, disconnect } ) => {
+				ydoc.current = doc;
+				onUnmount = disconnect;
+			}
+		);
 
 		return onUnmount;
 	}, [] );
