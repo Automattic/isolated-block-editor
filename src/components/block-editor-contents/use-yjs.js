@@ -12,7 +12,7 @@ import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/s
 import { useEffect, useRef } from '@wordpress/element';
 
 /** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
-/** @typedef {import('.').onUpdate} OnUpdate */
+/** @typedef {import('.').OnUpdate} OnUpdate */
 
 window.fakeTransport = {
 	sendMessage: ( message ) => {
@@ -91,6 +91,10 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 	const ydoc = useRef();
 
 	useEffect( () => {
+		if ( ! settings?.enabled ) {
+			return;
+		}
+
 		let onUnmount = noop;
 
 		initYDoc( { initialBlocks, onRemoteDataChange, channelId: settings?.channelId } ).then(

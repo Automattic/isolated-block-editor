@@ -96,7 +96,8 @@ import './style.scss';
 /**
  * Real time collaboration settings
  * @typedef CollaborationSettings
- * @property {string} channelId
+ * @property {boolean} [enabled]
+ * @property {string} [channelId]
  */
 
 /**
