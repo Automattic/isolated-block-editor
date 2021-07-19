@@ -98,6 +98,15 @@ import './style.scss';
  * @typedef CollaborationSettings
  * @property {boolean} [enabled]
  * @property {string} [channelId]
+ * @property {CollaborationTransport} [transport]
+ */
+
+/**
+ * Transport module for real time collaboration
+ * @typedef CollaborationTransport
+ * @property {(message: object) => void} sendMessage
+ * @property {(channelId?: string) => Promise<{isFirstInChannel: boolean}>} connect
+ * @property {() => Promise<void>} disconnect
  */
 
 /**

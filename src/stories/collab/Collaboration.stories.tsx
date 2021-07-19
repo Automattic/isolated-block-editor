@@ -1,4 +1,5 @@
-import IsolatedBlockEditor, { BlockEditorSettings } from '../index';
+import IsolatedBlockEditor, { BlockEditorSettings } from '../../index';
+import mockTransport from './mock-transport';
 
 import type { Story } from '@storybook/react';
 
@@ -28,6 +29,8 @@ Default.args = {
 		},
 		collab: {
 			enabled: true,
+			channelId: 'storybook-collab-editor',
+			transport: mockTransport,
 		},
 	},
 };

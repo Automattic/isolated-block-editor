@@ -16,39 +16,23 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 /** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
 /** @typedef {import('.').OnUpdate} OnUpdate */
 
-window.fakeTransport = {
-	sendMessage: ( message ) => {
-		debug( 'sendMessage', message );
-		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( message ) );
-	},
-	connect: ( channelId ) => {
-		window.localStorage.setItem(
-			'isoEditorClients',
-			( parseInt( window.localStorage.getItem( 'isoEditorClients' ) || '0' ) + 1 ).toString()
-		);
-		const isFirstInChannel = window.localStorage.getItem( 'isoEditorClients' ) === '1';
-		return Promise.resolve( { event: 'connected', isFirstInChannel } );
-	},
-	disconnect: () => {
-		const clientCount = Math.max( 0, parseInt( window.localStorage.getItem( 'isoEditorClients' ) || '0' ) - 1 );
-		return Promise.resolve( window.localStorage.setItem( 'isoEditorClients', clientCount.toString() ) );
-	},
-};
-
 /**
  * @param {object} opts - Hook options
  * @param {object[]} opts.initialBlocks
  * @param {OnUpdate} opts.onRemoteDataChange
  * @param {string} [opts.channelId]
  */
-function initYDoc( { initialBlocks, onRemoteDataChange, channelId } ) {
+function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } ) {
 	debug( 'initYDoc' );
 
 	const doc = createDocument( {
 		identity: uuidv4(),
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
-		sendMessage: window.fakeTransport.sendMessage,
+		sendMessage: ( ...args ) => {
+			debug( 'sendMessage', ...args );
+			transport.sendMessage( ...args );
+		},
 	} );
 
 	window.addEventListener( 'storage', ( event ) => {
@@ -63,8 +47,8 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId } ) {
 		onRemoteDataChange( changes.blocks );
 	} );
 
-	return window.fakeTransport.connect( channelId ).then( ( { isFirstInChannel } ) => {
-		debug( 'connected' );
+	return transport.connect( channelId ).then( ( { isFirstInChannel } ) => {
+		debug( `connected (channelId: ${ channelId })` );
 
 		if ( isFirstInChannel ) {
 			doc.startSharing( { title: '', initialBlocks } );
@@ -73,7 +57,7 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId } ) {
 		}
 
 		const disconnect = () => {
-			window.fakeTransport.disconnect();
+			transport.disconnect();
 			doc.disconnect();
 		};
 
@@ -99,15 +83,18 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 
 		let onUnmount = noop;
 
-		initYDoc( { initialBlocks, onRemoteDataChange, channelId: settings?.channelId } ).then(
-			( { doc, disconnect } ) => {
-				ydoc.current = doc;
-				onUnmount = () => {
-					debug( 'unmount' );
-					disconnect();
-				};
-			}
-		);
+		initYDoc( {
+			initialBlocks,
+			onRemoteDataChange,
+			channelId: settings?.channelId,
+			transport: settings?.transport,
+		} ).then( ( { doc, disconnect } ) => {
+			ydoc.current = doc;
+			onUnmount = () => {
+				debug( 'unmount' );
+				disconnect();
+			};
+		} );
 
 		return () => onUnmount();
 	}, [] );
