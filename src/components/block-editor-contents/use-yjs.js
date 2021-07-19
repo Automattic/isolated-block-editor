@@ -14,6 +14,7 @@ import { useEffect, useRef } from '@wordpress/element';
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
+/** @typedef {import('../..').CollaborationTransport} CollaborationTransport */
 /** @typedef {import('.').OnUpdate} OnUpdate */
 
 /**
@@ -21,6 +22,7 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
  * @param {object[]} opts.initialBlocks
  * @param {OnUpdate} opts.onRemoteDataChange
  * @param {string} [opts.channelId]
+ * @param {CollaborationTransport} opts.transport
  */
 function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } ) {
 	debug( 'initYDoc' );
@@ -29,9 +31,9 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } )
 		identity: uuidv4(),
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
-		sendMessage: ( ...args ) => {
-			debug( 'sendMessage', ...args );
-			transport.sendMessage( ...args );
+		sendMessage: ( message ) => {
+			debug( 'sendMessage', message );
+			transport.sendMessage( message );
 		},
 	} );
 
@@ -81,13 +83,18 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 			return;
 		}
 
+		if ( ! settings.transport ) {
+			console.error( `Collaborative editor is disabled because a transport module wasn't provided.` );
+			return;
+		}
+
 		let onUnmount = noop;
 
 		initYDoc( {
 			initialBlocks,
 			onRemoteDataChange,
-			channelId: settings?.channelId,
-			transport: settings?.transport,
+			channelId: settings.channelId,
+			transport: settings.transport,
 		} ).then( ( { doc, disconnect } ) => {
 			ydoc.current = doc;
 			onUnmount = () => {
@@ -99,6 +106,8 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 		return () => onUnmount();
 	}, [] );
 
+	// noop when collab is disabled (i.e. ydoc isn't initialized)
+	// @ts-ignore: Don't know how to fix :(
 	const applyChangesToYjs = ( blocks ) => ydoc.current?.applyDataChanges?.( { blocks } );
 
 	return [ applyChangesToYjs ];
