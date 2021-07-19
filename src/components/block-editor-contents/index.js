@@ -30,6 +30,7 @@ import useYjs from './use-yjs';
  * Update callback
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
+ * @param {object} [options]
  */
 
 function getInitialContent( settings, content ) {
