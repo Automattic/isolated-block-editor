@@ -37,19 +37,12 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } )
 		},
 	} );
 
-	window.addEventListener( 'storage', ( event ) => {
-		if ( event.storageArea !== localStorage ) return;
-		if ( event.key === 'isoEditorYjsMessage' && event.newValue ) {
-			doc.receiveMessage( JSON.parse( event.newValue ) );
-		}
-	} );
-
 	doc.onRemoteDataChange( ( changes ) => {
 		debug( 'remote change received', changes );
 		onRemoteDataChange( changes.blocks );
 	} );
 
-	return transport.connect( channelId ).then( ( { isFirstInChannel } ) => {
+	return transport.connect( { channelId, onReceiveMessage: doc.receiveMessage } ).then( ( { isFirstInChannel } ) => {
 		debug( `connected (channelId: ${ channelId })` );
 
 		if ( isFirstInChannel ) {
