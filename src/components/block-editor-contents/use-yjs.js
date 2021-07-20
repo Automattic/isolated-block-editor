@@ -46,6 +46,7 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } )
 		debug( `connected (channelId: ${ channelId })` );
 
 		if ( isFirstInChannel ) {
+			debug( 'first in channel' );
 			doc.startSharing( { title: '', initialBlocks } );
 		} else {
 			doc.connect();
