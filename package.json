@@ -124,7 +124,9 @@
 			"assets": [
 				"dist/isolated-block-editor.zip"
 			]
-		},
-		"npm": false
+		}
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
