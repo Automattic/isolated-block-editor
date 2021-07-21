@@ -104,7 +104,8 @@ import './style.scss';
 /**
  * Transport module for real time collaboration
  * @typedef CollaborationTransport
- * @property {(message: object) => void} sendMessage
+ * @property {(message: object) => void} sendDocMessage
+ * @property {(start: object, end: object) => void} sendSelection
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
  * @property {() => Promise<void>} disconnect
  *

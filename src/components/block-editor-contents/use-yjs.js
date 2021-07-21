@@ -9,6 +9,7 @@ import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/s
 /**
  * WordPress dependencies
  */
+import { useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
@@ -19,12 +20,17 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.initialBlocks
- * @param {OnUpdate} opts.onRemoteDataChange
- * @param {string} [opts.channelId]
- * @param {CollaborationTransport} opts.transport
+ * @param {object[]} opts.blocks
+ * @param {OnUpdate} opts.onRemoteDataChange Function to update editor blocks in redux state.
+ * @param {string} [opts.channelId] Optional channel id to pass to the transport.
+ * @param {CollaborationTransport} opts.transport Transport module.
+ * @param {() => Selection} opts.getSelection
+ *
+ * @typedef Selection
+ * @property {object} selectionStart
+ * @property {object} selectionEnd
  */
-function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } ) {
+async function initYDoc( { blocks, onRemoteDataChange, channelId, transport, getSelection } ) {
 	debug( 'initYDoc' );
 
 	const doc = createDocument( {
@@ -32,22 +38,40 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } )
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
 		sendMessage: ( message ) => {
-			debug( 'sendMessage', message );
-			transport.sendMessage( message );
+			debug( 'sendDocMessage', message );
+			transport.sendDocMessage( message );
+
+			const { selectionStart, selectionEnd } = getSelection() || {};
+			debug( 'sendSelection', selectionStart, selectionEnd );
+			transport.sendSelection( selectionStart, selectionEnd );
 		},
 	} );
 
+	const onReceiveMessage = ( data ) => {
+		debug( 'remote change received by transport', data );
+
+		switch ( data.type ) {
+			case 'doc': {
+				doc.receiveMessage( data.message );
+				break;
+			}
+			case 'selection': {
+				// setPeerSelection(data.identity, data.selection);
+			}
+		}
+	};
+
 	doc.onRemoteDataChange( ( changes ) => {
-		debug( 'remote change received', changes );
+		debug( 'remote change received by ydoc', changes );
 		onRemoteDataChange( changes.blocks );
 	} );
 
-	return transport.connect( { channelId, onReceiveMessage: doc.receiveMessage } ).then( ( { isFirstInChannel } ) => {
+	return transport.connect( { channelId, onReceiveMessage } ).then( ( { isFirstInChannel } ) => {
 		debug( `connected (channelId: ${ channelId })` );
 
 		if ( isFirstInChannel ) {
 			debug( 'first in channel' );
-			doc.startSharing( { title: '', initialBlocks } );
+			doc.startSharing( { title: '', blocks } );
 		} else {
 			doc.connect();
 		}
@@ -65,12 +89,16 @@ function initYDoc( { initialBlocks, onRemoteDataChange, channelId, transport } )
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.initialBlocks
+ * @param {object[]} opts.blocks
  * @param {OnUpdate} opts.onRemoteDataChange
  * @param {CollaborationSettings} [opts.settings]
  */
-export default function useYjs( { initialBlocks, onRemoteDataChange, settings } ) {
+export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 	const ydoc = useRef();
+
+	const getSelection = useSelect( ( select ) => {
+		return select( 'isolated/editor' ).getEditorSelection;
+	}, [] );
 
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
@@ -85,10 +113,11 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 		let onUnmount = noop;
 
 		initYDoc( {
-			initialBlocks,
+			blocks,
 			onRemoteDataChange,
 			channelId: settings.channelId,
 			transport: settings.transport,
+			getSelection,
 		} ).then( ( { doc, disconnect } ) => {
 			ydoc.current = doc;
 			onUnmount = () => {

@@ -62,7 +62,7 @@ function BlockEditorContents( props ) {
 	const { children, settings, renderMoreMenu, onLoad } = props;
 
 	const [ applyChangesToYjs ] = useYjs( {
-		initialBlocks: blocks,
+		blocks: blocks,
 		onRemoteDataChange: updateBlocksWithoutUndo,
 		settings: settings.collab,
 	} );

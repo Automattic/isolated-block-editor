@@ -2,8 +2,11 @@ const listeners = [];
 
 /** @type {import("../../components/block-editor-contents/use-yjs").CollaborationTransport} */
 const mockTransport = {
-	sendMessage: ( message ) => {
-		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( message ) );
+	sendDocMessage: ( message ) => {
+		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( { type: 'doc', message } ) );
+	},
+	sendSelection: ( start, end ) => {
+		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( { type: 'selection', start, end } ) );
 	},
 	connect: ( { channelId, onReceiveMessage } ) => {
 		listeners.push( {
