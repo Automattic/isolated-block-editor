@@ -9,13 +9,16 @@ import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/s
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
+
+import { registerFormatCollabCaret } from '../formats/collab-caret';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
 /** @typedef {import('../..').CollaborationTransport} CollaborationTransport */
+/** @typedef {import('../..').CollaborationPeers} CollaborationPeers */
 /** @typedef {import('.').OnUpdate} OnUpdate */
 
 /**
@@ -25,25 +28,46 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
  * @param {string} [opts.channelId] Optional channel id to pass to the transport.
  * @param {CollaborationTransport} opts.transport Transport module.
  * @param {() => Selection} opts.getSelection
+ * @param {(peers: CollaborationPeers) => void} opts.setAvailablePeers
+ * @param {(peer: string, selection: Selection) => void} opts.setPeerSelection
  *
  * @typedef Selection
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( { blocks, onRemoteDataChange, channelId, transport, getSelection } ) {
-	debug( 'initYDoc' );
+async function initYDoc( {
+	blocks,
+	onRemoteDataChange,
+	channelId,
+	transport,
+	getSelection,
+	setPeerSelection,
+	setAvailablePeers,
+} ) {
+	/** @type string */
+	const identity = uuidv4();
+
+	debug( `initYDoc (identity: ${ identity })` );
 
 	const doc = createDocument( {
-		identity: uuidv4(),
+		identity,
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
+		/** @param {object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
-			transport.sendDocMessage( message );
+			transport.sendDocMessage( { type: 'doc', identity, message } );
 
 			const { selectionStart, selectionEnd } = getSelection() || {};
 			debug( 'sendSelection', selectionStart, selectionEnd );
-			transport.sendSelection( selectionStart, selectionEnd );
+			transport.sendSelection( {
+				type: 'selection',
+				identity,
+				selection: {
+					start: selectionStart,
+					end: selectionEnd,
+				},
+			} );
 		},
 	} );
 
@@ -56,7 +80,8 @@ async function initYDoc( { blocks, onRemoteDataChange, channelId, transport, get
 				break;
 			}
 			case 'selection': {
-				// setPeerSelection(data.identity, data.selection);
+				setPeerSelection( data.identity, data.selection );
+				break;
 			}
 		}
 	};
@@ -66,25 +91,35 @@ async function initYDoc( { blocks, onRemoteDataChange, channelId, transport, get
 		onRemoteDataChange( changes.blocks );
 	} );
 
-	return transport.connect( { channelId, onReceiveMessage } ).then( ( { isFirstInChannel } ) => {
-		debug( `connected (channelId: ${ channelId })` );
+	return transport
+		.connect( {
+			identity,
+			onReceiveMessage,
+			setAvailablePeers: ( peers ) => {
+				debug( 'setAvailablePeers', peers );
+				setAvailablePeers( peers );
+			},
+			channelId,
+		} )
+		.then( ( { isFirstInChannel } ) => {
+			debug( `connected (channelId: ${ channelId })` );
 
-		if ( isFirstInChannel ) {
-			debug( 'first in channel' );
-			doc.startSharing( { title: '', blocks } );
-		} else {
-			doc.connect();
-		}
+			if ( isFirstInChannel ) {
+				debug( 'first in channel' );
+				doc.startSharing( { title: '', blocks } );
+			} else {
+				doc.connect();
+			}
 
-		const disconnect = () => {
-			transport.disconnect();
-			doc.disconnect();
-		};
+			const disconnect = () => {
+				transport.disconnect();
+				doc.disconnect();
+			};
 
-		window.addEventListener( 'beforeunload', () => disconnect() );
+			window.addEventListener( 'beforeunload', () => disconnect() );
 
-		return { doc, disconnect };
-	} );
+			return { doc, disconnect };
+		} );
 }
 
 /**
@@ -100,6 +135,8 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 		return select( 'isolated/editor' ).getEditorSelection;
 	}, [] );
 
+	const { setAvailablePeers, setPeerSelection } = useDispatch( 'isolated/editor' );
+
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
 			return;
@@ -110,6 +147,9 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 			return;
 		}
 
+		debug( 'registered collab caret format' );
+		registerFormatCollabCaret();
+
 		let onUnmount = noop;
 
 		initYDoc( {
@@ -118,6 +158,8 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 			channelId: settings.channelId,
 			transport: settings.transport,
 			getSelection,
+			setPeerSelection,
+			setAvailablePeers,
 		} ).then( ( { doc, disconnect } ) => {
 			ydoc.current = doc;
 			onUnmount = () => {

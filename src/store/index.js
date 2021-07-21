@@ -16,10 +16,13 @@ import preferencesReducer from './preferences/reducer';
 import preferenceActions from './preferences/actions';
 import optionsReducer from './options/reducer';
 import optionActions from './options/actions';
+import peersReducer from './peers/reducer';
+import peersActions from './peers/actions';
 import * as blockSelectors from './blocks/selectors';
 import * as editorSelectors from './editor/selectors';
 import * as preferenceSelectors from './preferences/selectors';
 import * as optionSelectors from './options/selectors';
+import * as peersSelectors from './peers/selectors';
 
 function storeConfig( preferencesKey, defaultPreferences ) {
 	return {
@@ -28,6 +31,7 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			editor: editorReducer,
 			preferences: preferencesReducer,
 			options: optionsReducer,
+			peers: peersReducer,
 		} ),
 
 		actions: {
@@ -35,6 +39,7 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			...editorActions,
 			...optionActions,
 			...preferenceActions,
+			...peersActions,
 		},
 
 		selectors: {
@@ -42,6 +47,7 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			...editorSelectors,
 			...preferenceSelectors,
 			...optionSelectors,
+			...peersSelectors,
 		},
 
 		persist: [ 'preferences' ],
@@ -49,8 +55,8 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 		initialState: {
 			preferences:
 				preferencesKey && localStorage.getItem( preferencesKey )
-					// @ts-ignore
-					? JSON.parse( localStorage.getItem( preferencesKey ) )
+					? // @ts-ignore
+					  JSON.parse( localStorage.getItem( preferencesKey ) )
 					: defaultPreferences,
 		},
 	};

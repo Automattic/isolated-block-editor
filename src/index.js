@@ -104,14 +104,33 @@ import './style.scss';
 /**
  * Transport module for real time collaboration
  * @typedef CollaborationTransport
- * @property {(message: object) => void} sendDocMessage
- * @property {(start: object, end: object) => void} sendSelection
+ * @property {(data: CollaborationTransportDocMessage) => void} sendDocMessage
+ * @property {(data: CollaborationTransportSelectionMessage) => void} sendSelection
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
  * @property {() => Promise<void>} disconnect
  *
  * @typedef CollaborationTransportConnectOpts
- * @property {string} [channelId]
+ * @property {string} identity
  * @property {(message: object) => void} onReceiveMessage
+ * @property {(peers: CollaborationPeers) => void} setAvailablePeers
+ * @property {string} [channelId]
+ *
+ * @typedef CollaborationTransportDocMessage
+ * @property {string} identity
+ * @property {'doc'} type
+ * @property {object} message
+ *
+ * @typedef CollaborationTransportSelectionMessage
+ * @property {string} identity
+ * @property {'selection'} type
+ * @property {EditorSelection} selection
+ *
+ * @typedef CollaborationPeers
+ * @type {Object.<string, EditorSelection>}
+ *
+ * @typedef EditorSelection
+ * @property {object} start
+ * @property {object} end
  */
 
 /**
