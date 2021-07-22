@@ -23,8 +23,8 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.blocks
- * @param {OnUpdate} opts.onRemoteDataChange Function to update editor blocks in redux state.
+ * @param {object[]} opts.initialBlocks - Initial array of blocks used to initialize the Yjs doc.
+ * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {() => Selection} opts.getSelection
  * @param {(peers: CollaborationPeers) => void} opts.setAvailablePeers
@@ -34,7 +34,14 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, setPeerSelection, setAvailablePeers } ) {
+async function initYDoc( {
+	initialBlocks,
+	onRemoteDataChange,
+	settings,
+	getSelection,
+	setPeerSelection,
+	setAvailablePeers,
+} ) {
 	const { channelId, transport } = settings;
 
 	/** @type string */
@@ -99,7 +106,7 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 
 			if ( isFirstInChannel ) {
 				debug( 'first in channel' );
-				doc.startSharing( { title: '', blocks } );
+				doc.startSharing( { title: '', blocks: initialBlocks } );
 			} else {
 				doc.connect();
 			}
@@ -117,11 +124,11 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.blocks
+ * @param {object[]} opts.initialBlocks - Initial array of blocks used to initialize the Yjs doc.
  * @param {OnUpdate} opts.onRemoteDataChange
  * @param {CollaborationSettings} [opts.settings]
  */
-export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
+export default function useYjs( { initialBlocks, onRemoteDataChange, settings } ) {
 	const ydoc = useRef();
 
 	const getSelection = useSelect( ( select ) => {
@@ -146,7 +153,7 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 		let onUnmount = noop;
 
 		initYDoc( {
-			blocks,
+			initialBlocks,
 			onRemoteDataChange,
 			settings,
 			getSelection,
