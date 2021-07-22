@@ -3,10 +3,7 @@ const disconnectHandlers = [];
 
 /** @type {import("../../components/block-editor-contents/use-yjs").CollaborationTransport} */
 const mockTransport = {
-	sendDocMessage: ( data ) => {
-		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( data ) );
-	},
-	sendSelection: ( data ) => {
+	sendMessage: ( data ) => {
 		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( data ) );
 	},
 	connect: ( { identity, onReceiveMessage, setAvailablePeers, channelId } ) => {

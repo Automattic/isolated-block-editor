@@ -1,6 +1,17 @@
+/**
+ * External dependencies
+ */
 import memoize from 'memize';
 import classnames from 'classnames';
+
+/**
+ * WordPress dependencies
+ */
 import { applyFormat, registerFormatType } from '@wordpress/rich-text';
+
+/**
+ * Internal dependencies
+ */
 import './style.css';
 
 const FORMAT_NAME = 'isolated/collab-caret';

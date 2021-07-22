@@ -56,11 +56,11 @@ async function initYDoc( {
 		/** @param {object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
-			transport.sendDocMessage( { type: 'doc', identity, message } );
+			transport.sendMessage( { type: 'doc', identity, message } );
 
 			const { selectionStart, selectionEnd } = getSelection() || {};
 			debug( 'sendSelection', selectionStart, selectionEnd );
-			transport.sendSelection( {
+			transport.sendMessage( {
 				type: 'selection',
 				identity,
 				selection: {
