@@ -36,6 +36,7 @@ export function applyCarets( record, carets = [] ) {
 						'is-collapsed': isCollapsed,
 						'is-shifted': isShifted,
 					} ),
+					title: id,
 				},
 			},
 			start,
