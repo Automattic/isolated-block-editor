@@ -97,8 +97,9 @@ import './style.scss';
  * Real time collaboration settings
  * @typedef CollaborationSettings
  * @property {boolean} [enabled]
- * @property {string} [channelId]
- * @property {CollaborationTransport} [transport]
+ * @property {string} [channelId] Optional channel id to pass to transport.connect().
+ * @property {string} [identity] If unspecified, a random uuid will be generated.
+ * @property {CollaborationTransport} transport Required if collab is enabled.
  */
 
 /**

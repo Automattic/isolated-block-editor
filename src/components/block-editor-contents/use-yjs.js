@@ -25,8 +25,7 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
  * @param {object} opts - Hook options
  * @param {object[]} opts.blocks
  * @param {OnUpdate} opts.onRemoteDataChange Function to update editor blocks in redux state.
- * @param {string} [opts.channelId] Optional channel id to pass to the transport.
- * @param {CollaborationTransport} opts.transport Transport module.
+ * @param {CollaborationSettings} opts.settings
  * @param {() => Selection} opts.getSelection
  * @param {(peers: CollaborationPeers) => void} opts.setAvailablePeers
  * @param {(peer: string, selection: Selection) => void} opts.setPeerSelection
@@ -35,17 +34,11 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( {
-	blocks,
-	onRemoteDataChange,
-	channelId,
-	transport,
-	getSelection,
-	setPeerSelection,
-	setAvailablePeers,
-} ) {
+async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, setPeerSelection, setAvailablePeers } ) {
+	const { channelId, transport } = settings;
+
 	/** @type string */
-	const identity = uuidv4();
+	const identity = settings.identity || uuidv4();
 
 	debug( `initYDoc (identity: ${ identity })` );
 
@@ -155,8 +148,7 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 		initYDoc( {
 			blocks,
 			onRemoteDataChange,
-			channelId: settings.channelId,
-			transport: settings.transport,
+			settings,
 			getSelection,
 			setPeerSelection,
 			setAvailablePeers,

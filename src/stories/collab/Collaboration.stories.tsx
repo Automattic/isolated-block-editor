@@ -1,6 +1,7 @@
 import IsolatedBlockEditor, { BlockEditorSettings } from '../../index';
 import mockTransport from './mock-transport';
 
+import { sample } from 'lodash';
 import type { Story } from '@storybook/react';
 
 export default {
@@ -12,23 +13,41 @@ type Props = {
 	settings: BlockEditorSettings;
 };
 
+const identity = sample( [ 'Pink', 'Yellow', 'Blue' ] ) + ' ' + sample( [ 'Panda', 'Zeebra', 'Unicorn' ] );
+
 const Template: Story< Props > = ( args ) => {
 	return (
 		<>
-			<p>Open this page in another window to test real time collaborative editing.</p>
 			<IsolatedBlockEditor { ...args } />
-			<p>
-				This local demo depends on shared Local Storage (instead of network) to pass messages across tabs. It
-				will not work:
-			</p>
-			<ul>
-				<li>across browsers</li>
-				<li>across private browsing windows</li>
-				<li>
-					in Safari, until the fix to <a href="https://bugs.webkit.org/show_bug.cgi?id=225344">this bug</a>{ ' ' }
-					has shipped
-				</li>
-			</ul>
+
+			{ args.settings.collab?.enabled && (
+				<>
+					<p>My identity: { identity }</p>
+
+					<hr />
+
+					<h2>How to test</h2>
+					<p>Open this page in another window to test real time collaborative editing.</p>
+
+					<p>
+						To view logging messages, open DevTools console and enter{ ' ' }
+						<code>localStorage.debug = 'iso-editor:*'</code>.
+					</p>
+
+					<p>
+						This local demo depends on shared Local Storage (instead of network) to pass messages across
+						tabs. It will not work:
+					</p>
+					<ul>
+						<li>across browsers</li>
+						<li>across private browsing windows</li>
+						<li>
+							in Safari, until the fix to{ ' ' }
+							<a href="https://bugs.webkit.org/show_bug.cgi?id=225344">this bug</a> has shipped
+						</li>
+					</ul>
+				</>
+			) }
 		</>
 	);
 };
@@ -43,6 +62,7 @@ Default.args = {
 			enabled: true,
 			channelId: 'storybook-collab-editor',
 			transport: mockTransport,
+			identity,
 		},
 	},
 };
