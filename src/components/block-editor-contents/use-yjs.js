@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { noop } from 'lodash';
+import { noop, sample } from 'lodash';
 import { createDocument } from 'asblocks/src/lib/yjs-doc';
 import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/sync/algorithms/yjs';
 
@@ -19,18 +19,23 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 /** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
 /** @typedef {import('../..').CollaborationTransport} CollaborationTransport */
 /** @typedef {import('../..').CollaborationPeers} CollaborationPeers */
+/** @typedef {import('../..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
+/** @typedef {import('../..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
+/** @typedef {import('../..').EditorSelection} EditorSelection */
 /** @typedef {import('.').OnUpdate} OnUpdate */
+
+const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
 
 /**
  * @param {object} opts - Hook options
  * @param {object[]} opts.initialBlocks - Initial array of blocks used to initialize the Yjs doc.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
- * @param {() => Selection} opts.getSelection
+ * @param {() => IsoEditorSelection} opts.getSelection
  * @param {(peers: CollaborationPeers) => void} opts.setAvailablePeers
- * @param {(peer: string, selection: Selection) => void} opts.setPeerSelection
+ * @param {(peer: string, selection: EditorSelection, color: string) => void} opts.setPeerSelection
  *
- * @typedef Selection
+ * @typedef IsoEditorSelection
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
@@ -42,10 +47,11 @@ async function initYDoc( {
 	setPeerSelection,
 	setAvailablePeers,
 } ) {
-	const { channelId, transport } = settings;
+	const { channelId, transport, caretColor } = settings;
 
 	/** @type string */
 	const identity = settings.identity || uuidv4();
+	const color = caretColor || sample( defaultColors );
 
 	debug( `initYDoc (identity: ${ identity })` );
 
@@ -67,10 +73,12 @@ async function initYDoc( {
 					start: selectionStart,
 					end: selectionEnd,
 				},
+				color,
 			} );
 		},
 	} );
 
+	/** @param {CollaborationTransportDocMessage|CollaborationTransportSelectionMessage} data */
 	const onReceiveMessage = ( data ) => {
 		debug( 'remote change received by transport', data );
 
@@ -80,7 +88,7 @@ async function initYDoc( {
 				break;
 			}
 			case 'selection': {
-				setPeerSelection( data.identity, data.selection );
+				setPeerSelection( data.identity, data.selection, data.color );
 				break;
 			}
 		}

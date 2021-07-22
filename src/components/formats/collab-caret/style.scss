@@ -1,5 +1,3 @@
-$caretColor: #2e3d48;
-
 mark.iso-editor-collab-caret {
 	position: relative;
 	background: #eee;
@@ -17,7 +15,7 @@ mark.iso-editor-collab-caret::before {
 	content: '';
 	font-size: 1em;
 	width: 2px;
-	background: $caretColor;
+	background: var( --iso-editor-collab-caret-color );
 }
 
 mark.iso-editor-collab-caret.is-shifted::before {
@@ -41,7 +39,7 @@ mark.iso-editor-collab-caret::after {
 	font-size: 10px;
 	line-height: 1;
 	white-space: nowrap;
-	background: $caretColor;
+	background: var( --iso-editor-collab-caret-color );
 
 	// Ensure that bold/italic isn't inherited from the editor selection
 	font-style: normal;

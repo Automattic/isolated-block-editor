@@ -5,11 +5,12 @@ function setAvailablePeers( peers ) {
 	};
 }
 
-function setPeerSelection( peer, selection ) {
+function setPeerSelection( peer, selection, color ) {
 	return {
 		type: 'SET_PEER_SELECTION',
 		peer,
 		selection,
+		color,
 	};
 }
 

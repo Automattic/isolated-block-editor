@@ -99,6 +99,7 @@ import './style.scss';
  * @property {boolean} [enabled]
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
  * @property {string} [identity] If unspecified, a random uuid will be generated.
+ * @property {string} [caretColor] If unspecified, a random color will be selected.
  * @property {CollaborationTransport} transport Required if collab is enabled.
  */
 
@@ -124,6 +125,7 @@ import './style.scss';
  * @property {string} identity
  * @property {'selection'} type
  * @property {EditorSelection} selection
+ * @property {string} color Color of the peer indicator caret.
  *
  * @typedef CollaborationPeers
  * @type {Object.<string, EditorSelection>}
