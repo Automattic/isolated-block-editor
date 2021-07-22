@@ -1,39 +1,39 @@
-mark.asblocks-caret {
+mark.iso-editor-collab-caret {
 	position: relative;
 	background: #eee;
 }
 
-mark.asblocks-caret.is-collapsed {
+mark.iso-editor-collab-caret.is-collapsed {
 	background: none;
 }
 
-mark.asblocks-caret::before {
+mark.iso-editor-collab-caret::before {
 	left: -1px;
 	top: 0;
 	bottom: 0;
 	position: absolute;
-	content: "";
+	content: '';
 	font-size: 1em;
 	width: 2px;
 	background: #2e3d48;
 }
 
-mark.asblocks-caret.is-shifted::before {
+mark.iso-editor-collab-caret.is-shifted::before {
 	left: auto;
 	right: -1px;
 }
 
-mark.asblocks-caret::after {
+mark.iso-editor-collab-caret::after {
 	position: absolute;
 	top: -8px;
 	left: -4px;
 	width: 8px;
 	height: 8px;
-	content: "";
+	content: '';
 	background-color: #2e3d48;
 }
 
-mark.asblocks-caret.is-shifted::after {
+mark.iso-editor-collab-caret.is-shifted::after {
 	left: auto;
 	right: -4px;
 }

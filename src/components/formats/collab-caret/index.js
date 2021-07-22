@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { applyFormat, registerFormatType } from '@wordpress/rich-text';
 import './style.css';
 
-const FORMAT_NAME = 'asblocks/caret';
+const FORMAT_NAME = 'isolated/collab-caret';
 
 /**
  * Applies given carets to the given record.
@@ -31,7 +31,7 @@ export function applyCarets( record, carets = [] ) {
 			{
 				type: FORMAT_NAME,
 				attributes: {
-					id: 'asblocks-caret-' + id,
+					id: 'iso-editor-collab-caret-' + id,
 					class: classnames( {
 						'is-collapsed': isCollapsed,
 						'is-shifted': isShifted,
@@ -64,9 +64,9 @@ const getCarets = memoize( ( peers, richTextIdentifier, blockClientId ) => {
 } );
 
 export const settings = {
-	title: 'AsBlocks caret',
+	title: 'Collaboration peer caret',
 	tagName: 'mark',
-	className: 'asblocks-caret',
+	className: 'iso-editor-collab-caret',
 	attributes: {
 		id: 'id',
 		className: 'class',
