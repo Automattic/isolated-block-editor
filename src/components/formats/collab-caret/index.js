@@ -12,7 +12,7 @@ import { applyFormat, registerFormatType } from '@wordpress/rich-text';
 /**
  * Internal dependencies
  */
-import './style.css';
+import './style.scss';
 
 const FORMAT_NAME = 'isolated/collab-caret';
 

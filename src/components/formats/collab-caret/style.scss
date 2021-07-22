@@ -1,3 +1,5 @@
+$caretColor: #2e3d48;
+
 mark.iso-editor-collab-caret {
 	position: relative;
 	background: #eee;
@@ -15,7 +17,7 @@ mark.iso-editor-collab-caret::before {
 	content: '';
 	font-size: 1em;
 	width: 2px;
-	background: #2e3d48;
+	background: $caretColor;
 }
 
 mark.iso-editor-collab-caret.is-shifted::before {
@@ -25,12 +27,25 @@ mark.iso-editor-collab-caret.is-shifted::before {
 
 mark.iso-editor-collab-caret::after {
 	position: absolute;
-	top: -8px;
+	top: -14px;
 	left: -4px;
-	width: 8px;
+	overflow: hidden;
+	min-width: 8px;
+	max-width: 140px;
+	text-overflow: ellipsis;
 	height: 8px;
-	content: '';
-	background-color: #2e3d48;
+	padding: 2px 4px 4px;
+	content: attr( title ); // identity
+	color: white;
+	vertical-align: top;
+	font-size: 10px;
+	line-height: 1;
+	white-space: nowrap;
+	background: $caretColor;
+
+	// Ensure that bold/italic isn't inherited from the editor selection
+	font-style: normal;
+	font-weight: normal;
 }
 
 mark.iso-editor-collab-caret.is-shifted::after {

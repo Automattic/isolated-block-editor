@@ -13,7 +13,7 @@ type Props = {
 	settings: BlockEditorSettings;
 };
 
-const identity = sample( [ 'Pink', 'Yellow', 'Blue' ] ) + ' ' + sample( [ 'Panda', 'Zeebra', 'Unicorn' ] );
+const identity = sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) + ' ' + sample( [ 'Panda', 'Zeebra', 'Unicorn' ] );
 
 const Template: Story< Props > = ( args ) => {
 	return (
