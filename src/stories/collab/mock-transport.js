@@ -11,19 +11,23 @@ const mockTransport = {
 			{
 				event: 'storage',
 				listener: window.addEventListener( 'storage', ( event ) => {
-					if ( event.storageArea !== localStorage ) return;
-					if ( event.key === 'isoEditorYjsMessage' && event.newValue ) {
-						onReceiveMessage( JSON.parse( event.newValue ) );
-					}
+					window.setTimeout( () => {
+						if ( event.storageArea !== localStorage ) return;
+						if ( event.key === 'isoEditorYjsMessage' && event.newValue ) {
+							onReceiveMessage( JSON.parse( event.newValue ) );
+						}
+					}, 0 );
 				} ),
 			},
 			{
 				event: 'storage',
 				listener: window.addEventListener( 'storage', ( event ) => {
-					if ( event.storageArea !== localStorage ) return;
-					if ( event.key === 'isoEditorYjsPeers' && event.newValue ) {
-						setAvailablePeers( JSON.parse( event.newValue ) );
-					}
+					window.setTimeout( () => {
+						if ( event.storageArea !== localStorage ) return;
+						if ( event.key === 'isoEditorYjsPeers' && event.newValue ) {
+							setAvailablePeers( JSON.parse( event.newValue ) );
+						}
+					}, 0 );
 				} ),
 			}
 		);
