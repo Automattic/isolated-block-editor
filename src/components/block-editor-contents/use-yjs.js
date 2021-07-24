@@ -29,7 +29,7 @@ const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.initialBlocks - Initial array of blocks used to initialize the Yjs doc.
+ * @param {object[]} opts.blocks
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {() => IsoEditorSelection} opts.getSelection
@@ -40,14 +40,7 @@ const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( {
-	initialBlocks,
-	onRemoteDataChange,
-	settings,
-	getSelection,
-	setPeerSelection,
-	setAvailablePeers,
-} ) {
+async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, setPeerSelection, setAvailablePeers } ) {
 	const { channelId, transport, caretColor } = settings;
 
 	/** @type string */
@@ -115,7 +108,7 @@ async function initYDoc( {
 
 			if ( isFirstInChannel ) {
 				debug( 'first in channel' );
-				doc.startSharing( { title: '', blocks: initialBlocks } );
+				doc.startSharing( { title: '', blocks } );
 			} else {
 				doc.connect();
 			}
@@ -133,11 +126,11 @@ async function initYDoc( {
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.initialBlocks - Initial array of blocks used to initialize the Yjs doc.
+ * @param {object[]} opts.blocks
  * @param {OnUpdate} opts.onRemoteDataChange
  * @param {CollaborationSettings} [opts.settings]
  */
-export default function useYjs( { initialBlocks, onRemoteDataChange, settings } ) {
+export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 	const ydoc = useRef();
 	const applyChangesToYjs = useRef( noop );
 
@@ -163,7 +156,7 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 		let onUnmount = noop;
 
 		initYDoc( {
-			initialBlocks,
+			blocks,
 			onRemoteDataChange,
 			settings,
 			getSelection,
@@ -180,13 +173,15 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 		applyChangesToYjs.current = debounce( ( blocks ) => {
 			debug( 'local changes applied to ydoc' );
 
-	// noop when collab is disabled (i.e. ydoc isn't initialized)
-	// @ts-ignore: Don't know how to fix :(
+			// noop when collab is disabled (i.e. ydoc isn't initialized)
+			// @ts-ignore: Don't know how to fix :(
 			ydoc.current.applyDataChanges?.( { blocks } );
 		}, DEBOUNCE_WAIT_MS );
 
 		return () => onUnmount();
 	}, [] );
 
-	return [ applyChangesToYjs.current ];
+	useEffect( () => {
+		applyChangesToYjs.current( blocks );
+	}, [ blocks ] );
 }

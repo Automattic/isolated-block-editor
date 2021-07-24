@@ -61,9 +61,9 @@ function BlockEditorContents( props ) {
 	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, selection, isEditing, editorMode } = props;
 	const { children, settings, renderMoreMenu, onLoad } = props;
 
-	const [ applyChangesToYjs ] = useYjs( {
-		initialBlocks: blocks,
-		onRemoteDataChange: updateBlocksWithoutUndo,
+	useYjs( {
+		blocks,
+		onRemoteDataChange: updateBlocksWithUndo,
 		settings: settings.collab,
 	} );
 
@@ -79,14 +79,8 @@ function BlockEditorContents( props ) {
 	return (
 		<BlockEditorProvider
 			value={ blocks || [] }
-			onInput={ ( newBlocks, options ) => {
-				updateBlocksWithoutUndo( newBlocks, options );
-				applyChangesToYjs( newBlocks );
-			} }
-			onChange={ ( newBlocks, options ) => {
-				updateBlocksWithUndo( newBlocks, options );
-				applyChangesToYjs( newBlocks );
-			} }
+			onInput={ updateBlocksWithoutUndo }
+			onChange={ updateBlocksWithUndo }
 			useSubRegistry={ false }
 			selection={ selection }
 			settings={ settings.editor }

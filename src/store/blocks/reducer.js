@@ -28,6 +28,10 @@ function isNewUndo( action, state ) {
 		return false;
 	}
 
+	if ( ! selection ) {
+		return true;
+	}
+
 	// Not new if selection is same
 	if ( isShallowEqual( selection, state.selection ) ) {
 		const previousBlock = getSelectedBlock( state.blocks, selection.selectionStart );
