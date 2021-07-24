@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { noop, sample } from 'lodash';
+import { debounce, noop, sample } from 'lodash';
 import { createDocument } from 'asblocks/src/lib/yjs-doc';
 import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/sync/algorithms/yjs';
 
@@ -24,6 +24,7 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 /** @typedef {import('../..').EditorSelection} EditorSelection */
 /** @typedef {import('.').OnUpdate} OnUpdate */
 
+const DEBOUNCE_WAIT_MS = 800;
 const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
 
 /**
@@ -138,6 +139,7 @@ async function initYDoc( {
  */
 export default function useYjs( { initialBlocks, onRemoteDataChange, settings } ) {
 	const ydoc = useRef();
+	const applyChangesToYjs = useRef( noop );
 
 	const getSelection = useSelect( ( select ) => {
 		return select( 'isolated/editor' ).getEditorSelection;
@@ -175,12 +177,16 @@ export default function useYjs( { initialBlocks, onRemoteDataChange, settings } 
 			};
 		} );
 
-		return () => onUnmount();
-	}, [] );
+		applyChangesToYjs.current = debounce( ( blocks ) => {
+			debug( 'local changes applied to ydoc' );
 
 	// noop when collab is disabled (i.e. ydoc isn't initialized)
 	// @ts-ignore: Don't know how to fix :(
-	const applyChangesToYjs = ( blocks ) => ydoc.current?.applyDataChanges?.( { blocks } );
+			ydoc.current.applyDataChanges?.( { blocks } );
+		}, DEBOUNCE_WAIT_MS );
 
-	return [ applyChangesToYjs ];
+		return () => onUnmount();
+	}, [] );
+
+	return [ applyChangesToYjs.current ];
 }

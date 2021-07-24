@@ -79,10 +79,13 @@ function BlockEditorContents( props ) {
 	return (
 		<BlockEditorProvider
 			value={ blocks || [] }
-			onInput={ updateBlocksWithoutUndo }
-			onChange={ ( blocks, options ) => {
-				updateBlocksWithUndo( blocks, options );
-				applyChangesToYjs( blocks );
+			onInput={ ( newBlocks, options ) => {
+				updateBlocksWithoutUndo( newBlocks, options );
+				applyChangesToYjs( newBlocks );
+			} }
+			onChange={ ( newBlocks, options ) => {
+				updateBlocksWithUndo( newBlocks, options );
+				applyChangesToYjs( newBlocks );
 			} }
 			useSubRegistry={ false }
 			selection={ selection }
