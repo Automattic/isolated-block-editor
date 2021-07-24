@@ -1,7 +1,7 @@
 import IsolatedBlockEditor, { BlockEditorSettings } from '../../index';
 import mockTransport from './mock-transport';
 
-import { sample } from 'lodash';
+import { random, sample } from 'lodash';
 import type { Story } from '@storybook/react';
 
 export default {
@@ -13,7 +13,11 @@ type Props = {
 	settings: BlockEditorSettings;
 };
 
-const identity = sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) + ' ' + sample( [ 'Panda', 'Zeebra', 'Unicorn' ] );
+const identity = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample( [
+	'Panda',
+	'Zeebra',
+	'Unicorn',
+] ) } ${ random( 1, 9 ) }`;
 
 const Template: Story< Props > = ( args ) => {
 	return (
