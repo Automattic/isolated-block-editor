@@ -26,26 +26,32 @@ function HeaderToolbar( props ) {
 	const inserterButton = useRef();
 	const { setIsInserterOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
-	const { hasFixedToolbar, isInserterEnabled, isTextModeEnabled, previewDeviceType, isInserterOpened } = useSelect(
-		( select ) => {
-			const { hasInserterItems, getBlockRootClientId, getBlockSelectionEnd } = select( 'core/block-editor' );
+	const {
+		hasFixedToolbar,
+		hasPeers,
+		isInserterEnabled,
+		isTextModeEnabled,
+		previewDeviceType,
+		isInserterOpened,
+	} = useSelect( ( select ) => {
+		const { hasInserterItems, getBlockRootClientId, getBlockSelectionEnd } = select( 'core/block-editor' );
 
-			return {
-				hasFixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
-				// This setting (richEditingEnabled) should not live in the block editor's setting.
-				isInserterEnabled:
-					select( 'isolated/editor' ).getEditorMode() === 'visual' &&
-					select( 'core/editor' ).getEditorSettings().richEditingEnabled &&
-					hasInserterItems( getBlockRootClientId( getBlockSelectionEnd() ) ),
-				isTextModeEnabled: select( 'isolated/editor' ).getEditorMode() === 'text',
-				previewDeviceType: 'Desktop',
-				isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
-			};
-		},
-		[]
-	);
+		return {
+			hasFixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
+			hasPeers: select( 'isolated/editor' ).hasPeers(),
+			// This setting (richEditingEnabled) should not live in the block editor's setting.
+			isInserterEnabled:
+				select( 'isolated/editor' ).getEditorMode() === 'visual' &&
+				select( 'core/editor' ).getEditorSettings().richEditingEnabled &&
+				hasInserterItems( getBlockRootClientId( getBlockSelectionEnd() ) ),
+			isTextModeEnabled: select( 'isolated/editor' ).getEditorMode() === 'text',
+			previewDeviceType: 'Desktop',
+			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
+		};
+	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { inserter, toc, navigation, undo } = props.settings.iso.toolbar;
+	const { inserter, toc, navigation, undo: undoSetting } = props.settings.iso.toolbar;
+	const undo = undoSetting && ! hasPeers;
 	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
 		? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */

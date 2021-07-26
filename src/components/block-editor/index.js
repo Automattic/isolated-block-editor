@@ -66,11 +66,26 @@ function BlockEditor( props ) {
 	);
 }
 
-export default withDispatch( ( dispatch ) => {
+export default withDispatch( ( dispatch, _ownProps, { select } ) => {
+	const hasPeers = select( 'isolated/editor' ).hasPeers;
 	const { redo, undo } = dispatch( 'isolated/editor' );
 
+	const maybeUndo = ( actionCreator ) => () => {
+		if ( hasPeers() ) {
+			const noticeId = 'isolated/undo-disabled';
+			dispatch( 'core/notices' ).removeNotice( noticeId );
+			return dispatch( 'core/notices' ).createNotice(
+				'warning',
+				'Undo/redo is disabled while editing with other users.',
+				{ id: noticeId }
+			);
+		} else {
+			return actionCreator();
+		}
+	};
+
 	return {
-		redo,
-		undo,
+		redo: maybeUndo( redo ),
+		undo: maybeUndo( undo ),
 	};
 } )( BlockEditor );
