@@ -131,7 +131,6 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
  * @param {CollaborationSettings} [opts.settings]
  */
 export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
-	const ydoc = useRef();
 	const applyChangesToYjs = useRef( noop );
 
 	const getSelection = useSelect( ( select ) => {
@@ -163,20 +162,17 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 			setPeerSelection,
 			setAvailablePeers,
 		} ).then( ( { doc, disconnect } ) => {
-			ydoc.current = doc;
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
 			};
+
+			applyChangesToYjs.current = debounce( ( blocks ) => {
+				debug( 'local changes applied to ydoc' );
+
+				doc.applyDataChanges( { blocks } );
+			}, DEBOUNCE_WAIT_MS );
 		} );
-
-		applyChangesToYjs.current = debounce( ( blocks ) => {
-			debug( 'local changes applied to ydoc' );
-
-			// noop when collab is disabled (i.e. ydoc isn't initialized)
-			// @ts-ignore: Don't know how to fix :(
-			ydoc.current.applyDataChanges?.( { blocks } );
-		}, DEBOUNCE_WAIT_MS );
 
 		return () => onUnmount();
 	}, [] );
