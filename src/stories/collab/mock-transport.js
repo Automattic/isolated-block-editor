@@ -25,7 +25,8 @@ const mockTransport = {
 					window.setTimeout( () => {
 						if ( event.storageArea !== localStorage ) return;
 						if ( event.key === 'isoEditorYjsPeers' && event.newValue ) {
-							setAvailablePeers( JSON.parse( event.newValue ) );
+							const peersExceptMe = JSON.parse( event.newValue ).filter( ( id ) => id !== identity );
+							setAvailablePeers( peersExceptMe );
 						}
 					}, 0 );
 				} ),
