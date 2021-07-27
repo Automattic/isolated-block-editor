@@ -1,7 +1,7 @@
 const listeners = [];
 const disconnectHandlers = [];
 
-/** @type {import("../../components/block-editor-contents/use-yjs").CollaborationTransport} */
+/** @type {import("../../src/components/block-editor-contents/use-yjs").CollaborationTransport} */
 const mockTransport = {
 	sendMessage: ( data ) => {
 		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( data ) );
