@@ -39,7 +39,8 @@
 			"./node_modules/@types"
 		],
 		"rootDir": "src",
-		"declarationDir": "build-types"
+		"declarationDir": "build-types",
+		"skipLibCheck": true,
 	},
 	"include": [
 		"src/**/*"
