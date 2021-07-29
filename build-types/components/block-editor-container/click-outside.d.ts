@@ -1,3 +1,3 @@
 export default ClickOutsideWrapper;
-declare const ClickOutsideWrapper: any;
+declare const ClickOutsideWrapper: import("react").ComponentType<any>;
 //# sourceMappingURL=click-outside.d.ts.map

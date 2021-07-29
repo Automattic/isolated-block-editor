@@ -92,6 +92,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         getEditorSelection(state: any): any;
         hasEditorUndo(state: any): boolean;
         hasEditorRedo(state: any): boolean;
+        getEditCount(state: any): number;
     };
     persist: string[];
     initialState: {

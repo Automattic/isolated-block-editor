@@ -23,6 +23,8 @@ var _headerToolbar = _interopRequireDefault(require("./header-toolbar"));
 
 var _inspector = _interopRequireDefault(require("./inspector"));
 
+var _slot = _interopRequireDefault(require("./slot"));
+
 require("./style.scss");
 
 import { createElement } from "@wordpress/element";
@@ -94,7 +96,7 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     settings: settings
   })), createElement("div", {
     className: "edit-post-header__settings"
-  }, inspector && createElement(_components.Button, {
+  }, createElement(_slot["default"].Slot, null), inspector && createElement(_components.Button, {
     icon: _icons.cog,
     label: (0, _i18n.__)('Settings'),
     onClick: function onClick() {

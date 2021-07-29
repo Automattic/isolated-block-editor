@@ -22,4 +22,10 @@ export function hasEditorUndo(state: object): boolean;
  * @returns {boolean}
  */
 export function hasEditorRedo(state: object): boolean;
+/**
+ * Get current edit count
+ * @param {object} state - Current state
+ * @returns {number}
+ */
+export function getEditCount(state: object): number;
 //# sourceMappingURL=selectors.d.ts.map

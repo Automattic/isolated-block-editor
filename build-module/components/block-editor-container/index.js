@@ -76,9 +76,9 @@ function BlockEditorContainer(props) {
   }] = useResizeObserver();
   const classes = classnames(className, {
     'iso-editor': true,
-    'is-large': width >= SIZE_LARGE,
-    'is-medium': width >= SIZE_MEDIUM && width < SIZE_LARGE,
-    'is-small': width < SIZE_MEDIUM,
+    'is-large': width ? width >= SIZE_LARGE : false,
+    'is-medium': width ? width >= SIZE_MEDIUM && width < SIZE_LARGE : true,
+    'is-small': width ? width < SIZE_MEDIUM : false,
     'iso-editor__loading': !isEditorReady,
     'iso-editor__selected': isEditing,
     // Match Gutenberg
