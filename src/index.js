@@ -98,8 +98,8 @@ import './style.scss';
  * @typedef CollaborationSettings
  * @property {boolean} [enabled]
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
- * @property {string} username The name displayed to peers. Required if collab is enabled.
- * @property {string} [caretColor] If unspecified, a random color will be selected.
+ * @property {string} username Name displayed to peers. Required if collab is enabled.
+ * @property {string} [caretColor] Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
  * @property {CollaborationTransport} transport Required if collab is enabled.
  */
 
@@ -113,9 +113,15 @@ import './style.scss';
  * @typedef CollaborationTransportConnectOpts
  * @property {string} identity
  * @property {string} username
+ * @property {string} caretColor Color of the caret indicator displayed to peers.
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
- * @property {(peers: string[]) => void} setAvailablePeers Callback to run when peers change.
+ * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]
+ *
+ * @typedef AvailablePeer
+ * @property {string} id
+ * @property {string} name
+ * @property {string} color
  *
  * @typedef CollaborationTransportDocMessage
  * @property {string} identity
@@ -126,7 +132,6 @@ import './style.scss';
  * @property {string} identity
  * @property {'selection'} type
  * @property {EditorSelection} selection
- * @property {string} color Color of the peer indicator caret.
  *
  * @typedef EditorSelection
  * @property {object} start

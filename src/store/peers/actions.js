@@ -1,5 +1,5 @@
 /**
- * @param {string[]} peers Peer ids.
+ * @param {import('../../').AvailablePeer[]} peers
  */
 export function setAvailablePeers( peers ) {
 	return {
@@ -9,16 +9,14 @@ export function setAvailablePeers( peers ) {
 }
 
 /**
- * @param {string} peer Peer id.
+ * @param {string} peerId
  * @param {import('../..').EditorSelection} selection
- * @param {string} color Hex values prefixed by #.
  */
-export function setPeerSelection( peer, selection, color ) {
+export function setPeerSelection( peerId, selection ) {
 	return {
 		type: 'SET_PEER_SELECTION',
-		peer,
+		peerId,
 		selection,
-		color,
 	};
 }
 

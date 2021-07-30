@@ -40,11 +40,11 @@ const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '
  * @property {object} selectionEnd
  */
 async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, setPeerSelection, setAvailablePeers } ) {
-	const { channelId, transport, caretColor } = settings;
+	const { channelId, transport } = settings;
 
 	/** @type string */
 	const identity = uuidv4();
-	const color = caretColor || sample( defaultColors );
+	const caretColor = settings.caretColor || sample( defaultColors );
 
 	debug( `initYDoc (identity: ${ identity })` );
 
@@ -66,7 +66,6 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 					start: selectionStart,
 					end: selectionEnd,
 				},
-				color,
 			} );
 		},
 	} );
@@ -81,7 +80,7 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 				break;
 			}
 			case 'selection': {
-				setPeerSelection( data.identity, data.selection, data.color );
+				setPeerSelection( data.identity, data.selection );
 				break;
 			}
 		}
@@ -96,6 +95,7 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 		.connect( {
 			identity,
 			username: settings.username,
+			caretColor,
 			onReceiveMessage,
 			setAvailablePeers: ( peers ) => {
 				debug( 'setAvailablePeers', peers );

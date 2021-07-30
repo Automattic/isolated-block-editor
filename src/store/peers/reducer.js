@@ -1,22 +1,21 @@
 const reducer = ( state = {}, action ) => {
 	switch ( action.type ) {
 		case 'SET_PEER_SELECTION': {
-			if ( ! state[ action.peer ] ) {
+			if ( ! state[ action.peerId ] ) {
 				return state;
 			}
 			return {
 				...state,
-				[ action.peer ]: {
-					...state[ action.peer ],
+				[ action.peerId ]: {
+					...state[ action.peerId ],
 					...action.selection,
-					color: action.color,
 				},
 			};
 		}
 
 		case 'SET_AVAILABLE_PEERS': {
-			return action.peers.reduce( ( acc, { id, name } ) => {
-				acc[ id ] = state[ id ] || { name };
+			return action.peers.reduce( ( acc, { id, name, color } ) => {
+				acc[ id ] = state[ id ] || { name, color };
 				return acc;
 			}, {} );
 		}
