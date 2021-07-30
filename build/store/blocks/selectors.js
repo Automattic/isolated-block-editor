@@ -7,6 +7,7 @@ exports.getBlocks = getBlocks;
 exports.getEditorSelection = getEditorSelection;
 exports.hasEditorUndo = hasEditorUndo;
 exports.hasEditorRedo = hasEditorRedo;
+exports.getEditCount = getEditCount;
 
 var _selectors = require("../editor/selectors");
 
@@ -47,5 +48,15 @@ function hasEditorUndo(state) {
 
 function hasEditorRedo(state) {
   return state.blocks.future.length > 0 && (0, _selectors.getEditorMode)(state) === 'visual';
+}
+/**
+ * Get current edit count
+ * @param {object} state - Current state
+ * @returns {number}
+ */
+
+
+function getEditCount(state) {
+  return state.blocks.present.editCount;
 }
 //# sourceMappingURL=selectors.js.map

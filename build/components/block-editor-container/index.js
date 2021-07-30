@@ -97,9 +97,9 @@ function BlockEditorContainer(props) {
 
   var classes = (0, _classnames2["default"])(className, (0, _defineProperty2["default"])({
     'iso-editor': true,
-    'is-large': width >= SIZE_LARGE,
-    'is-medium': width >= SIZE_MEDIUM && width < SIZE_LARGE,
-    'is-small': width < SIZE_MEDIUM,
+    'is-large': width ? width >= SIZE_LARGE : false,
+    'is-medium': width ? width >= SIZE_MEDIUM && width < SIZE_LARGE : true,
+    'is-small': width ? width < SIZE_MEDIUM : false,
     'iso-editor__loading': !isEditorReady,
     'iso-editor__selected': isEditing,
     // Match Gutenberg

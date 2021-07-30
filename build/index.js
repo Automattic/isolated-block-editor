@@ -13,6 +13,12 @@ Object.defineProperty(exports, "DocumentSection", {
     return _document["default"];
   }
 });
+Object.defineProperty(exports, "ToolbarSlot", {
+  enumerable: true,
+  get: function get() {
+    return _slot["default"];
+  }
+});
 Object.defineProperty(exports, "EditorLoaded", {
   enumerable: true,
   get: function get() {
@@ -58,6 +64,8 @@ var _apiFetch = _interopRequireDefault(require("./components/api-fetch"));
 var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-swap"));
 
 var _document = _interopRequireDefault(require("./components/document"));
+
+var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
 
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 

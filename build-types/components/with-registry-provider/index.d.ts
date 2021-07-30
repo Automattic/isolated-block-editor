@@ -7,5 +7,5 @@ export default withRegistryProvider;
  *
  * The key `persistenceKey` from the settings is used as the `localStorage` key to save Gutenberg preferences
  */
-declare const withRegistryProvider: any;
+declare const withRegistryProvider: import("@wordpress/compose/build-types/utils/create-higher-order-component").HigherOrderComponent<any, any>;
 //# sourceMappingURL=index.d.ts.map
