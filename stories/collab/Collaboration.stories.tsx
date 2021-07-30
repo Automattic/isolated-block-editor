@@ -13,7 +13,7 @@ type Props = {
 	settings: BlockEditorSettings;
 };
 
-const identity = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample( [
+const username = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample( [
 	'Panda',
 	'Zeebra',
 	'Unicorn',
@@ -26,7 +26,7 @@ const Template: Story< Props > = ( args ) => {
 
 			{ args.settings.collab?.enabled && (
 				<>
-					<p>My identity: { identity }</p>
+					<p>My name: { username }</p>
 
 					<hr />
 
@@ -66,7 +66,7 @@ Default.args = {
 			enabled: true,
 			channelId: 'storybook-collab-editor',
 			transport: mockTransport,
-			identity,
+			username,
 		},
 	},
 };

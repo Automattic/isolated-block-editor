@@ -1,5 +1,5 @@
 /**
- * @param {string[]} peers
+ * @param {string[]} peers Peer ids.
  */
 export function setAvailablePeers( peers ) {
 	return {
@@ -9,9 +9,9 @@ export function setAvailablePeers( peers ) {
 }
 
 /**
- * @param {string} peer
+ * @param {string} peer Peer id.
  * @param {import('../..').EditorSelection} selection
- * @param {string} color
+ * @param {string} color Hex values prefixed by #.
  */
 export function setPeerSelection( peer, selection, color ) {
 	return {

@@ -98,7 +98,7 @@ import './style.scss';
  * @typedef CollaborationSettings
  * @property {boolean} [enabled]
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
- * @property {string} [identity] If unspecified, a random uuid will be generated.
+ * @property {string} username The name displayed to peers. Required if collab is enabled.
  * @property {string} [caretColor] If unspecified, a random color will be selected.
  * @property {CollaborationTransport} transport Required if collab is enabled.
  */
@@ -112,6 +112,7 @@ import './style.scss';
  *
  * @typedef CollaborationTransportConnectOpts
  * @property {string} identity
+ * @property {string} username
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: string[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]

@@ -6,7 +6,7 @@ const mockTransport = {
 	sendMessage: ( data ) => {
 		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( data ) );
 	},
-	connect: ( { identity, onReceiveMessage, setAvailablePeers, channelId } ) => {
+	connect: ( { identity, username, onReceiveMessage, setAvailablePeers, channelId } ) => {
 		listeners.push(
 			{
 				event: 'storage',
@@ -25,7 +25,7 @@ const mockTransport = {
 					window.setTimeout( () => {
 						if ( event.storageArea !== localStorage ) return;
 						if ( event.key === 'isoEditorYjsPeers' && event.newValue ) {
-							const peersExceptMe = JSON.parse( event.newValue ).filter( ( id ) => id !== identity );
+							const peersExceptMe = JSON.parse( event.newValue ).filter( ( { id } ) => id !== identity );
 							setAvailablePeers( peersExceptMe );
 						}
 					}, 0 );
@@ -37,13 +37,16 @@ const mockTransport = {
 		const isFirstInChannel = peers.length === 0;
 		setAvailablePeers( peers ); // everyone except me
 
-		window.localStorage.setItem( 'isoEditorYjsPeers', JSON.stringify( [ ...peers, identity ] ) );
+		window.localStorage.setItem(
+			'isoEditorYjsPeers',
+			JSON.stringify( [ ...peers, { id: identity, name: username } ] )
+		);
 
 		disconnectHandlers.push( () => {
 			const peers = JSON.parse( window.localStorage.getItem( 'isoEditorYjsPeers' ) || '[]' );
 			window.localStorage.setItem(
 				'isoEditorYjsPeers',
-				JSON.stringify( peers.filter( ( id ) => id !== identity ) )
+				JSON.stringify( peers.filter( ( { id } ) => id !== identity ) )
 			);
 		} );
 

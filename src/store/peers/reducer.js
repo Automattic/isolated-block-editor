@@ -7,6 +7,7 @@ const reducer = ( state = {}, action ) => {
 			return {
 				...state,
 				[ action.peer ]: {
+					...state[ action.peer ],
 					...action.selection,
 					color: action.color,
 				},
@@ -14,8 +15,8 @@ const reducer = ( state = {}, action ) => {
 		}
 
 		case 'SET_AVAILABLE_PEERS': {
-			return action.peers.reduce( ( acc, peer ) => {
-				acc[ peer ] = state[ peer ] || {};
+			return action.peers.reduce( ( acc, { id, name } ) => {
+				acc[ id ] = state[ id ] || { name };
 				return acc;
 			}, {} );
 		}

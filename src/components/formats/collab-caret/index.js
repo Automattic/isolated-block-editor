@@ -25,7 +25,7 @@ const FORMAT_NAME = 'isolated/collab-caret';
  */
 export function applyCarets( record, carets = [] ) {
 	carets.forEach( ( caret ) => {
-		let { start, end, id, color } = caret;
+		let { start, end, id, color, label } = caret;
 		const isCollapsed = start === end;
 		const isShifted = isCollapsed && end >= record.text.length;
 
@@ -47,7 +47,7 @@ export function applyCarets( record, carets = [] ) {
 						'is-collapsed': isCollapsed,
 						'is-shifted': isShifted,
 					} ),
-					title: id,
+					title: label,
 					style: `--iso-editor-collab-caret-color: ${ color || '#2e3d48' }`,
 				},
 			},
@@ -70,6 +70,7 @@ const getCarets = memoize( ( peers, richTextIdentifier, blockClientId ) => {
 		} )
 		.map( ( [ id, peer ] ) => ( {
 			id,
+			label: peer.name,
 			start: peer.start.offset,
 			end: peer.end.offset,
 			color: peer.color,
