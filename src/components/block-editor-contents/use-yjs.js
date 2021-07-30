@@ -18,7 +18,6 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /** @typedef {import('../..').CollaborationSettings} CollaborationSettings */
 /** @typedef {import('../..').CollaborationTransport} CollaborationTransport */
-/** @typedef {import('../..').CollaborationPeers} CollaborationPeers */
 /** @typedef {import('../..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
 /** @typedef {import('../..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
 /** @typedef {import('../..').EditorSelection} EditorSelection */
@@ -33,8 +32,8 @@ const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {() => IsoEditorSelection} opts.getSelection
- * @param {(peers: CollaborationPeers) => void} opts.setAvailablePeers
- * @param {(peer: string, selection: EditorSelection, color: string) => void} opts.setPeerSelection
+ * @param {import('../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
+ * @param {import('../../store/peers/actions').setPeerSelection} opts.setPeerSelection
  *
  * @typedef IsoEditorSelection
  * @property {object} selectionStart

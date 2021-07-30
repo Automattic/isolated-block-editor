@@ -113,7 +113,7 @@ import './style.scss';
  * @typedef CollaborationTransportConnectOpts
  * @property {string} identity
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
- * @property {(peers: CollaborationPeers) => void} setAvailablePeers Callback to run when peers change.
+ * @property {(peers: string[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]
  *
  * @typedef CollaborationTransportDocMessage
@@ -126,9 +126,6 @@ import './style.scss';
  * @property {'selection'} type
  * @property {EditorSelection} selection
  * @property {string} color Color of the peer indicator caret.
- *
- * @typedef CollaborationPeers
- * @type {Object.<string, EditorSelection>}
  *
  * @typedef EditorSelection
  * @property {object} start
