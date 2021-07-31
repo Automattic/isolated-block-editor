@@ -44,7 +44,6 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 
 	/** @type string */
 	const identity = uuidv4();
-	const caretColor = settings.caretColor || sample( defaultColors );
 
 	debug( `initYDoc (identity: ${ identity })` );
 
@@ -93,9 +92,11 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 
 	return transport
 		.connect( {
-			identity,
-			username: settings.username,
-			caretColor,
+			user: {
+				identity,
+				name: settings.username,
+				color: settings.caretColor || sample( defaultColors ),
+			},
 			onReceiveMessage,
 			setAvailablePeers: ( peers ) => {
 				debug( 'setAvailablePeers', peers );

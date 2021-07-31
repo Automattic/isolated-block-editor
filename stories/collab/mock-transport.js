@@ -6,7 +6,7 @@ const mockTransport = {
 	sendMessage: ( data ) => {
 		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( data ) );
 	},
-	connect: ( { identity, username, caretColor, onReceiveMessage, setAvailablePeers, channelId } ) => {
+	connect: ( { user: { identity, name, color }, onReceiveMessage, setAvailablePeers, channelId } ) => {
 		listeners.push(
 			{
 				event: 'storage',
@@ -39,7 +39,7 @@ const mockTransport = {
 
 		window.localStorage.setItem(
 			'isoEditorYjsPeers',
-			JSON.stringify( [ ...peers, { id: identity, name: username, color: caretColor } ] )
+			JSON.stringify( [ ...peers, { id: identity, name, color } ] )
 		);
 
 		disconnectHandlers.push( () => {

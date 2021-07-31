@@ -111,9 +111,10 @@ import './style.scss';
  * @property {() => Promise<void>} disconnect
  *
  * @typedef CollaborationTransportConnectOpts
- * @property {string} identity
- * @property {string} username
- * @property {string} caretColor Color of the caret indicator displayed to peers.
+ * @property {object} user
+ * @property {string} user.identity
+ * @property {string} user.name
+ * @property {string} user.color Color of the caret indicator displayed to peers.
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]
