@@ -24,7 +24,8 @@ import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
 import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
-import DocumentSection from './components/document'; // Export library components
+import DocumentSection from './components/document';
+import ToolbarSlot from './components/block-editor-toolbar/slot'; // Export library components
 
 import EditorLoaded from './components/editor-loaded'; // A fake edit-post store is needed
 
@@ -190,5 +191,5 @@ function IsolatedBlockEditor(props) {
 }
 
 export default withRegistryProvider(IsolatedBlockEditor);
-export { EditorLoaded, DocumentSection };
+export { EditorLoaded, DocumentSection, ToolbarSlot };
 //# sourceMappingURL=index.js.map

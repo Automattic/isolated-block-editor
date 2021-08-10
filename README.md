@@ -168,10 +168,11 @@ The `IsolatedBlockEditor` also exports the following support component:
 
 - `EditorLoaded` - Include this to be notified when the editor is loading and has loaded
 - `DocumentSection` - Wrap up a component to appear in the document tab of the inspector
+- `ToolbarSlot` - Insert content into the toolbar
 
 ```js
 
-import IsolatedBlockEditor, { EditorLoaded, DocumentSection } from 'isolated-block-editor';
+import IsolatedBlockEditor, { EditorLoaded, DocumentSection, ToolbarSlot } from 'isolated-block-editor';
 
 render(
 	<IsolatedBlockEditor
@@ -182,6 +183,10 @@ render(
 	>
 		<EditorLoaded onLoaded={ () => {} } onLoading={ () => {} } />
 		<DocumentSection>Extra Information</DocumentSection>
+
+		<ToolbarSlot>
+			<button>Beep!</button>
+		</ToolbarSlot>
 	</IsolatedBlockEditor>,
 	document.querySelector( '#editor' )
 );

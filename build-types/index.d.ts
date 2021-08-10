@@ -57,7 +57,7 @@
  */
 export function initializeEditor(): void;
 export function initializeIsoEditor(): void;
-declare var _default: any;
+declare var _default: import("react").ComponentType<any>;
 export default _default;
 export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
 export type Pattern = import('./store/editor/reducer').Pattern;
@@ -218,5 +218,6 @@ export type OnLoad = (parse: OnParse, rawHandler: OnParse) => object[];
 export type OnError = () => any;
 import EditorLoaded from "./components/editor-loaded";
 import DocumentSection from "./components/document";
-export { EditorLoaded, DocumentSection };
+import ToolbarSlot from "./components/block-editor-toolbar/slot";
+export { EditorLoaded, DocumentSection, ToolbarSlot };
 //# sourceMappingURL=index.d.ts.map
