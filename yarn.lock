@@ -5433,7 +5433,7 @@ arrify@^2.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-2.0.1.tgz#c9655e9331e0abcd588d2a7cad7e9956f66701fa"
   integrity sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
 
-"asblocks@git+https://github.com/youknowriad/asblocks":
+"asblocks@git+https://github.com/youknowriad/asblocks#48f351f9be9a1041dca0e99b033d119d9f797ddf":
   version "1.2.0"
   resolved "git+https://github.com/youknowriad/asblocks#48f351f9be9a1041dca0e99b033d119d9f797ddf"
   dependencies:
