@@ -3,8 +3,8 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { debounce, noop, sample } from 'lodash';
-import { createDocument } from 'asblocks/src/lib/yjs-doc';
-import { postDocToObject, updatePostDoc } from 'asblocks/src/components/editor/sync/algorithms/yjs';
+import { createDocument } from './yjs-doc';
+import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 
 /**
  * WordPress dependencies
