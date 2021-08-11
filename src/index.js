@@ -115,7 +115,7 @@ import './style.scss';
  * @property {object} user
  * @property {string} user.identity
  * @property {string} user.name
- * @property {string} user.color Color of the caret indicator displayed to peers.
+ * @property {string} [user.color] Color of the caret indicator displayed to peers.
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]
