@@ -31,7 +31,7 @@ const Template: Story< Props > = ( args ) => {
 					<hr />
 
 					<h2>How to test</h2>
-					<p>Open this page in another window to test real time collaborative editing.</p>
+					<p>Open this page in another window to test real-time collaborative editing.</p>
 
 					<p>
 						To view logging messages, open DevTools console and enter{ ' ' }

@@ -78,7 +78,7 @@ import './style.scss';
  * @typedef BlockEditorSettings
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
- * @property {CollaborationSettings} [collab] - Real time collaboration settings
+ * @property {CollaborationSettings} [collab] - Real-time collaboration settings
  */
 
 /**
@@ -95,7 +95,7 @@ import './style.scss';
  */
 
 /**
- * Real time collaboration settings
+ * Real-time collaboration settings
  * @typedef CollaborationSettings
  * @property {boolean} [enabled]
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
@@ -105,7 +105,7 @@ import './style.scss';
  */
 
 /**
- * Transport module for real time collaboration
+ * Transport module for real-time collaboration
  * @typedef CollaborationTransport
  * @property {(data: CollaborationTransportDocMessage|CollaborationTransportSelectionMessage) => void} sendMessage
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
