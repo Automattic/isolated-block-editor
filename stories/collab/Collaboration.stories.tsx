@@ -61,6 +61,9 @@ Default.args = {
 	settings: {
 		iso: {
 			moreMenu: false,
+			toolbar: {
+				inspector: true,
+			},
 		},
 		collab: {
 			enabled: true,
