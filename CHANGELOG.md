@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2021-07-29
+
 ### Added
 
 - Support for real-time collaborative editing (experimental)
+
+## [2.2.0]
+
+Skipped due to mishandling of release.
 
 ## [2.1.0] - 2021-07-29
 
