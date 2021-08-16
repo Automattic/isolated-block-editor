@@ -40,6 +40,10 @@ function isNewUndo(action, state) {
 
   if (type === 'UPDATE_BLOCKS_WITHOUT_UNDO') {
     return false;
+  }
+
+  if (!selection) {
+    return true;
   } // Not new if selection is same
 
 

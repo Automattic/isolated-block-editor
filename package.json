@@ -19,12 +19,13 @@
 	"scripts": {
 		"start": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored --watch",
 		"build:es6": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js','src/browser/*' --copy-files --no-copy-ignored && rm -rf build-module/browser",
-		"build:cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js','src/browser/*' --copy-files --no-copy-ignored  && rm -rf build/browser",
+		"build:cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js','src/browser/*' --copy-files --no-copy-ignored && rm -rf build/browser",
 		"build:browser": "BUILD_ENV=es6 NODE_ENV=production webpack --mode production --progress --config ./webpack.config.browser.js && rm build-browser/core.js",
 		"build:types": "tsc --build",
 		"build": "yarn build:es6 && yarn build:cjs && yarn build:browser && yarn build:types",
 		"clean": "rm -rf build build-module build-browser build-types dist",
-		"dist": "yarn build && rm -rf dist && mkdir dist && zip build-browser.zip -r build-browser && mv build-browser.zip dist/isolated-block-editor.zip && release-it"
+		"dist": "yarn build && rm -rf dist && mkdir dist && zip build-browser.zip -r build-browser && mv build-browser.zip dist/isolated-block-editor.zip && release-it",
+		"storybook": "start-storybook -p 6006"
 	},
 	"sideEffects": [
 		"*.css",
@@ -82,12 +83,14 @@
 		"@wordpress/warning": "^2.2.1",
 		"@wordpress/wordcount": "^3.2.1",
 		"classnames": "^2.3.1",
+		"debug": "^4.3.2",
 		"react": "17.0.2",
 		"react-autosize-textarea": "^7.1.0",
 		"react-dom": "17.0.2",
 		"reakit-utils": "^0.15.1",
 		"redux-undo": "^1.0.1",
-		"refx": "^3.1.1"
+		"refx": "^3.1.1",
+		"yjs": "^13.5.12"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.14.8",
@@ -95,6 +98,13 @@
 		"@babel/plugin-transform-runtime": "^7.14.5",
 		"@babel/preset-env": "^7.14.8",
 		"@babel/preset-react": "^7.14.5",
+		"@storybook/addon-actions": "^6.3.6",
+		"@storybook/addon-essentials": "^6.3.6",
+		"@storybook/addon-links": "^6.3.6",
+		"@storybook/builder-webpack5": "^6.3.6",
+		"@storybook/manager-webpack5": "^6.3.6",
+		"@storybook/preset-scss": "^1.0.3",
+		"@storybook/react": "^6.3.6",
 		"@wordpress/babel-preset-default": "^6.3.1",
 		"@wordpress/prettier-config": "^1.1.0",
 		"@wordpress/scripts": "^17.1.0",
@@ -111,12 +121,12 @@
 		"eslint-plugin-react": "^7.24.0",
 		"eslint-plugin-wpcalypso": "^5.0.0",
 		"mini-css-extract-plugin": "^2.1.0",
+		"prettier": "npm:wp-prettier@2.2.1-beta-1",
 		"release-it": "^14.10.1",
 		"sass-loader": "^12.1.0",
 		"typescript": "^4.3.5",
 		"webpack": "^5.47.0",
-		"webpack-cli": "^4.7.2",
-		"wp-prettier": "npm:wp-prettier@2.2.1-beta-1"
+		"webpack-cli": "^4.7.2"
 	},
 	"release-it": {
 		"github": {

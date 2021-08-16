@@ -1,7 +1,6 @@
 /**
  * WordPress dependencies
  */
-
 import { Popover } from '@wordpress/components';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
@@ -15,6 +14,7 @@ import { BlockEditorProvider } from '@wordpress/block-editor';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
+import useYjs from './use-yjs';
 
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
@@ -30,6 +30,7 @@ import getInitialEditorContent from './editor-content';
  * Update callback
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
+ * @param {object} [options]
  */
 
 function getInitialContent( settings, content ) {
@@ -57,15 +58,14 @@ function getInitialContent( settings, content ) {
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 function BlockEditorContents( props ) {
-	const {
-		blocks,
-		updateBlocksWithoutUndo,
-		updateBlocksWithUndo,
-		selection,
-		isEditing,
-		editorMode,
-	} = props;
+	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, selection, isEditing, editorMode } = props;
 	const { children, settings, renderMoreMenu, onLoad } = props;
+
+	useYjs( {
+		blocks,
+		onRemoteDataChange: updateBlocksWithUndo,
+		settings: settings.collab,
+	} );
 
 	// Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 	useEffect( () => {
@@ -97,12 +97,7 @@ function BlockEditorContents( props ) {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const {
-			getBlocks,
-			getEditorSelection,
-			getEditorMode,
-			isEditing,
-		} = select( 'isolated/editor' );
+		const { getBlocks, getEditorSelection, getEditorMode, isEditing } = select( 'isolated/editor' );
 
 		return {
 			blocks: getBlocks(),

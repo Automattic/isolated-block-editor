@@ -54,6 +54,7 @@ function HeaderToolbar(props) {
 
     return {
       hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
+      hasPeers: select('isolated/editor').hasPeers(),
       // This setting (richEditingEnabled) should not live in the block editor's setting.
       isInserterEnabled: select('isolated/editor').getEditorMode() === 'visual' && select('core/editor').getEditorSettings().richEditingEnabled && hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
       isTextModeEnabled: select('isolated/editor').getEditorMode() === 'text',
@@ -62,6 +63,7 @@ function HeaderToolbar(props) {
     };
   }, []),
       hasFixedToolbar = _useSelect.hasFixedToolbar,
+      hasPeers = _useSelect.hasPeers,
       isInserterEnabled = _useSelect.isInserterEnabled,
       isTextModeEnabled = _useSelect.isTextModeEnabled,
       previewDeviceType = _useSelect.previewDeviceType,
@@ -72,7 +74,8 @@ function HeaderToolbar(props) {
       inserter = _props$settings$iso$t.inserter,
       toc = _props$settings$iso$t.toc,
       navigation = _props$settings$iso$t.navigation,
-      undo = _props$settings$iso$t.undo;
+      undoSetting = _props$settings$iso$t.undo;
+  var undo = undoSetting && !hasPeers;
   var displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
   var toolbarAriaLabel = displayBlockToolbar ?
   /* translators: accessibility text for the editor toolbar when Top Toolbar is on */

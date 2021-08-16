@@ -224,6 +224,12 @@ The following function is also provided:
 - _iso.linkMenu_ `[array]` - Link menu settings. Array of `title` and `url`, defaults to none
 - _iso.currentPattern_ `[string]` - The pattern to start with, defaults to none
 - _iso.allowApi_ `[boolean]` - Allow API requests, defaults to `false`
+- _collab.enabled_ `[boolean]` - Enable real-time collaborative editing, defaults to `false`
+- _collab.channelId_ `[string]` - Optional channel id to pass to `transport.connect()`.
+- _collab.username_ `string` - Name displayed to peers. Required if collab is enabled.
+- _collab.caretColor_ `[string]` - Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
+- _collab.transport_ `CollaborationTransport` - Transport module to handle messaging between peers. See the [`useYjs` readme](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/block-editor-contents/use-yjs) for how this should be implemented.
+
 - _editor_ `[object]` - Gutenberg settings object
 
 A settings object that contains all settings for the IsolatedBlockEditor, as well as for Gutenberg. Any settings not provided will use defaults.
