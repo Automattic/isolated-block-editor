@@ -29,6 +29,10 @@ var _reducer4 = _interopRequireDefault(require("./options/reducer"));
 
 var _actions4 = _interopRequireDefault(require("./options/actions"));
 
+var _reducer5 = _interopRequireDefault(require("./peers/reducer"));
+
+var _actions5 = _interopRequireDefault(require("./peers/actions"));
+
 var blockSelectors = _interopRequireWildcard(require("./blocks/selectors"));
 
 var editorSelectors = _interopRequireWildcard(require("./editor/selectors"));
@@ -36,6 +40,8 @@ var editorSelectors = _interopRequireWildcard(require("./editor/selectors"));
 var preferenceSelectors = _interopRequireWildcard(require("./preferences/selectors"));
 
 var optionSelectors = _interopRequireWildcard(require("./options/selectors"));
+
+var peersSelectors = _interopRequireWildcard(require("./peers/selectors"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -51,14 +57,15 @@ function storeConfig(preferencesKey, defaultPreferences) {
       blocks: _reducer["default"],
       editor: _reducer2["default"],
       preferences: _reducer3["default"],
-      options: _reducer4["default"]
+      options: _reducer4["default"],
+      peers: _reducer5["default"]
     }),
-    actions: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _actions["default"]), _actions2["default"]), _actions4["default"]), _actions3["default"]),
-    selectors: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, blockSelectors), editorSelectors), preferenceSelectors), optionSelectors),
+    actions: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _actions["default"]), _actions2["default"]), _actions4["default"]), _actions3["default"]), _actions5["default"]),
+    selectors: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, blockSelectors), editorSelectors), preferenceSelectors), optionSelectors), peersSelectors),
     persist: ['preferences'],
     initialState: {
-      preferences: preferencesKey && localStorage.getItem(preferencesKey) // @ts-ignore
-      ? JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
+      preferences: preferencesKey && localStorage.getItem(preferencesKey) ? // @ts-ignore
+      JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
     }
   };
 }

@@ -24,7 +24,8 @@ export default function applyDefaultSettings(settings) {
 
   const {
     iso,
-    editor
+    editor,
+    collab
   } = settings;
   return {
     iso: {
@@ -109,9 +110,10 @@ export default function applyDefaultSettings(settings) {
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
       // @ts-ignore */}
-      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions // @ts-ignore */}
-      ? editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
-    }
+      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? // @ts-ignore */}
+      editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
+    },
+    collab
   };
 }
 //# sourceMappingURL=index.js.map

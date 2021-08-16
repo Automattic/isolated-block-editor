@@ -14,10 +14,13 @@ import preferencesReducer from './preferences/reducer';
 import preferenceActions from './preferences/actions';
 import optionsReducer from './options/reducer';
 import optionActions from './options/actions';
+import peersReducer from './peers/reducer';
+import peersActions from './peers/actions';
 import * as blockSelectors from './blocks/selectors';
 import * as editorSelectors from './editor/selectors';
 import * as preferenceSelectors from './preferences/selectors';
 import * as optionSelectors from './options/selectors';
+import * as peersSelectors from './peers/selectors';
 
 function storeConfig(preferencesKey, defaultPreferences) {
   return {
@@ -25,22 +28,25 @@ function storeConfig(preferencesKey, defaultPreferences) {
       blocks: blocksReducer,
       editor: editorReducer,
       preferences: preferencesReducer,
-      options: optionsReducer
+      options: optionsReducer,
+      peers: peersReducer
     }),
     actions: { ...blockActions,
       ...editorActions,
       ...optionActions,
-      ...preferenceActions
+      ...preferenceActions,
+      ...peersActions
     },
     selectors: { ...blockSelectors,
       ...editorSelectors,
       ...preferenceSelectors,
-      ...optionSelectors
+      ...optionSelectors,
+      ...peersSelectors
     },
     persist: ['preferences'],
     initialState: {
-      preferences: preferencesKey && localStorage.getItem(preferencesKey) // @ts-ignore
-      ? JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
+      preferences: preferencesKey && localStorage.getItem(preferencesKey) ? // @ts-ignore
+      JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
     }
   };
 }
