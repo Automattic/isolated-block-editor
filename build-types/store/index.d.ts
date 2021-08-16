@@ -2,6 +2,8 @@ export default storeConfig;
 declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
     reducer: any;
     actions: {
+        setAvailablePeers: typeof import("./peers/actions").setAvailablePeers;
+        setPeerSelection: typeof import("./peers/actions").setPeerSelection;
         toggleFeature(feature: string): {
             type: string;
             feature: string;
@@ -44,6 +46,11 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         updateBlocksWithoutUndo(blocks: any[], options?: any): any;
     };
     selectors: {
+        /**
+         * WordPress dependencies
+         */
+        getPeers(state: any): any;
+        hasPeers(state: any): boolean;
         /**
          * WordPress dependencies
          */
