@@ -67,11 +67,28 @@ Default.args = {
 		},
 		collab: {
 			enabled: true,
-			channelId: 'storybook-collab-editor',
-			transport: mockTransport,
+			channelId: 'default',
+			transport: mockTransport( 'default' ),
 			username,
 		},
 	},
+};
+
+export const WithOnLoad = Template.bind( {} );
+WithOnLoad.args = {
+	...Default.args,
+	settings: {
+		...Default.args.settings,
+		collab: {
+			...Default.args.settings.collab,
+			channelId: 'withonload',
+			transport: mockTransport( 'withonload' ),
+		},
+	},
+	onLoad: ( parse ) =>
+		parse( `<!-- wp:paragraph -->
+			<p>This initial content was loaded in an <code>onLoad</code> handler.</p>
+			<!-- /wp:paragraph -->` ),
 };
 
 export const CollabDisabled = Template.bind( {} );
