@@ -50,7 +50,7 @@ var DEBOUNCE_WAIT_MS = 800;
 var defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.blocks
+ * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {() => IsoEditorSelection} opts.getSelection
@@ -75,13 +75,13 @@ function initYDoc(_x) {
 
 function _initYDoc() {
   _initYDoc = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(_ref) {
-    var blocks, onRemoteDataChange, settings, getSelection, setPeerSelection, _setAvailablePeers, channelId, transport, identity, doc, onReceiveMessage;
+    var getBlocks, onRemoteDataChange, settings, getSelection, setPeerSelection, _setAvailablePeers, channelId, transport, identity, doc, onReceiveMessage;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            blocks = _ref.blocks, onRemoteDataChange = _ref.onRemoteDataChange, settings = _ref.settings, getSelection = _ref.getSelection, setPeerSelection = _ref.setPeerSelection, _setAvailablePeers = _ref.setAvailablePeers;
+            getBlocks = _ref.getBlocks, onRemoteDataChange = _ref.onRemoteDataChange, settings = _ref.settings, getSelection = _ref.getSelection, setPeerSelection = _ref.setPeerSelection, _setAvailablePeers = _ref.setAvailablePeers;
             channelId = settings.channelId, transport = settings.transport;
             /** @type string */
 
@@ -158,10 +158,16 @@ function _initYDoc() {
               debug("connected (channelId: ".concat(channelId, ")"));
 
               if (isFirstInChannel) {
-                debug('first in channel');
+                debug('first in channel'); // Fetching the blocks from redux now, after the transport has successfully connected,
+                // ensures that we don't initialize the Yjs doc with stale blocks.
+                // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
+
+                // Fetching the blocks from redux now, after the transport has successfully connected,
+                // ensures that we don't initialize the Yjs doc with stale blocks.
+                // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
                 doc.startSharing({
                   title: '',
-                  blocks: blocks
+                  blocks: getBlocks()
                 });
               } else {
                 doc.connect();
@@ -196,9 +202,15 @@ function useYjs(_ref2) {
       onRemoteDataChange = _ref2.onRemoteDataChange,
       settings = _ref2.settings;
   var applyChangesToYjs = (0, _element.useRef)(_lodash.noop);
-  var getSelection = (0, _data.useSelect)(function (select) {
-    return select('isolated/editor').getEditorSelection;
-  }, []);
+
+  var _useSelect = (0, _data.useSelect)(function (select) {
+    return {
+      getSelection: select('isolated/editor').getEditorSelection,
+      getBlocks: select('isolated/editor').getBlocks
+    };
+  }, []),
+      getBlocks = _useSelect.getBlocks,
+      getSelection = _useSelect.getSelection;
 
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       setAvailablePeers = _useDispatch.setAvailablePeers,
@@ -218,9 +230,9 @@ function useYjs(_ref2) {
     (0, _collabCaret.registerFormatCollabCaret)();
     var onUnmount = _lodash.noop;
     initYDoc({
-      blocks: blocks,
       onRemoteDataChange: onRemoteDataChange,
       settings: settings,
+      getBlocks: getBlocks,
       getSelection: getSelection,
       setPeerSelection: setPeerSelection,
       setAvailablePeers: setAvailablePeers

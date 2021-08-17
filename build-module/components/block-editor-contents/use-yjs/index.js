@@ -31,7 +31,7 @@ const DEBOUNCE_WAIT_MS = 800;
 const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.blocks
+ * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {() => IsoEditorSelection} opts.getSelection
@@ -44,7 +44,7 @@ const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#
  */
 
 async function initYDoc({
-  blocks,
+  getBlocks,
   onRemoteDataChange,
   settings,
   getSelection,
@@ -129,10 +129,13 @@ async function initYDoc({
     debug(`connected (channelId: ${channelId})`);
 
     if (isFirstInChannel) {
-      debug('first in channel');
+      debug('first in channel'); // Fetching the blocks from redux now, after the transport has successfully connected,
+      // ensures that we don't initialize the Yjs doc with stale blocks.
+      // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
+
       doc.startSharing({
         title: '',
-        blocks
+        blocks: getBlocks()
       });
     } else {
       doc.connect();
@@ -164,8 +167,14 @@ export default function useYjs({
   settings
 }) {
   const applyChangesToYjs = useRef(noop);
-  const getSelection = useSelect(select => {
-    return select('isolated/editor').getEditorSelection;
+  const {
+    getBlocks,
+    getSelection
+  } = useSelect(select => {
+    return {
+      getSelection: select('isolated/editor').getEditorSelection,
+      getBlocks: select('isolated/editor').getBlocks
+    };
   }, []);
   const {
     setAvailablePeers,
@@ -185,9 +194,9 @@ export default function useYjs({
     registerFormatCollabCaret();
     let onUnmount = noop;
     initYDoc({
-      blocks,
       onRemoteDataChange,
       settings,
+      getBlocks,
       getSelection,
       setPeerSelection,
       setAvailablePeers
