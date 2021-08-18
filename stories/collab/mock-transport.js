@@ -1,10 +1,10 @@
 const listeners = [];
 const disconnectHandlers = [];
 
-/** @type {import("../../src/components/block-editor-contents/use-yjs").CollaborationTransport} */
-const mockTransport = {
+/** @return {import("../../src/components/block-editor-contents/use-yjs").CollaborationTransport} */
+const mockTransport = ( channelId ) => ( {
 	sendMessage: ( data ) => {
-		window.localStorage.setItem( 'isoEditorYjsMessage', JSON.stringify( data ) );
+		window.localStorage.setItem( `isoEditorYjsMessage-${ channelId }`, JSON.stringify( data ) );
 	},
 	connect: ( { user: { identity, name, color }, onReceiveMessage, setAvailablePeers, channelId } ) => {
 		listeners.push(
@@ -13,7 +13,7 @@ const mockTransport = {
 				listener: window.addEventListener( 'storage', ( event ) => {
 					window.setTimeout( () => {
 						if ( event.storageArea !== localStorage ) return;
-						if ( event.key === 'isoEditorYjsMessage' && event.newValue ) {
+						if ( event.key === `isoEditorYjsMessage-${ channelId }` && event.newValue ) {
 							onReceiveMessage( JSON.parse( event.newValue ) );
 						}
 					}, 0 );
@@ -24,7 +24,7 @@ const mockTransport = {
 				listener: window.addEventListener( 'storage', ( event ) => {
 					window.setTimeout( () => {
 						if ( event.storageArea !== localStorage ) return;
-						if ( event.key === 'isoEditorYjsPeers' && event.newValue ) {
+						if ( event.key === `isoEditorYjsPeers-${ channelId }` && event.newValue ) {
 							const peersExceptMe = JSON.parse( event.newValue ).filter( ( { id } ) => id !== identity );
 							setAvailablePeers( peersExceptMe );
 						}
@@ -33,24 +33,28 @@ const mockTransport = {
 			}
 		);
 
-		const peers = JSON.parse( window.localStorage.getItem( 'isoEditorYjsPeers' ) || '[]' );
+		const peers = JSON.parse( window.localStorage.getItem( `isoEditorYjsPeers-${ channelId }` ) || '[]' );
 		const isFirstInChannel = peers.length === 0;
 		setAvailablePeers( peers ); // everyone except me
 
 		window.localStorage.setItem(
-			'isoEditorYjsPeers',
+			`isoEditorYjsPeers-${ channelId }`,
 			JSON.stringify( [ ...peers, { id: identity, name, color } ] )
 		);
 
 		disconnectHandlers.push( () => {
-			const peers = JSON.parse( window.localStorage.getItem( 'isoEditorYjsPeers' ) || '[]' );
+			const peers = JSON.parse( window.localStorage.getItem( `isoEditorYjsPeers-${ channelId }` ) || '[]' );
 			window.localStorage.setItem(
-				'isoEditorYjsPeers',
+				`isoEditorYjsPeers-${ channelId }`,
 				JSON.stringify( peers.filter( ( { id } ) => id !== identity ) )
 			);
 		} );
 
-		return Promise.resolve( { isFirstInChannel } );
+		return new Promise( ( resolve ) => {
+			window.setTimeout( () => {
+				resolve( { isFirstInChannel } );
+			}, 1000 );
+		} );
 	},
 	disconnect: () => {
 		listeners.forEach( ( { event, listener } ) => window.removeEventListener( event, listener ) );
@@ -58,6 +62,6 @@ const mockTransport = {
 
 		return Promise.resolve();
 	},
-};
+} );
 
 export default mockTransport;

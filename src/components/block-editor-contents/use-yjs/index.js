@@ -28,7 +28,7 @@ const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.blocks
+ * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {() => IsoEditorSelection} opts.getSelection
@@ -39,7 +39,14 @@ const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, setPeerSelection, setAvailablePeers } ) {
+async function initYDoc( {
+	getBlocks,
+	onRemoteDataChange,
+	settings,
+	getSelection,
+	setPeerSelection,
+	setAvailablePeers,
+} ) {
 	const { channelId, transport } = settings;
 
 	/** @type string */
@@ -109,7 +116,11 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 
 			if ( isFirstInChannel ) {
 				debug( 'first in channel' );
-				doc.startSharing( { title: '', blocks } );
+
+				// Fetching the blocks from redux now, after the transport has successfully connected,
+				// ensures that we don't initialize the Yjs doc with stale blocks.
+				// (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
+				doc.startSharing( { title: '', blocks: getBlocks() } );
 			} else {
 				doc.connect();
 			}
@@ -134,8 +145,11 @@ async function initYDoc( { blocks, onRemoteDataChange, settings, getSelection, s
 export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 	const applyChangesToYjs = useRef( noop );
 
-	const getSelection = useSelect( ( select ) => {
-		return select( 'isolated/editor' ).getEditorSelection;
+	const { getBlocks, getSelection } = useSelect( ( select ) => {
+		return {
+			getSelection: select( 'isolated/editor' ).getEditorSelection,
+			getBlocks: select( 'isolated/editor' ).getBlocks,
+		};
 	}, [] );
 
 	const { setAvailablePeers, setPeerSelection } = useDispatch( 'isolated/editor' );
@@ -156,9 +170,9 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 		let onUnmount = noop;
 
 		initYDoc( {
-			blocks,
 			onRemoteDataChange,
 			settings,
+			getBlocks,
 			getSelection,
 			setPeerSelection,
 			setAvailablePeers,
