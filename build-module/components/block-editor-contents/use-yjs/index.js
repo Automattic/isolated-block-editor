@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { debounce, noop, sample } from 'lodash';
+import { noop, sample } from 'lodash';
 import { createDocument } from './yjs-doc';
 import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 /**
@@ -27,7 +27,6 @@ const debug = require('debug')('iso-editor:collab');
 /** @typedef {import('..').OnUpdate} OnUpdate */
 
 
-const DEBOUNCE_WAIT_MS = 800;
 const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
  * @param {object} opts - Hook options
@@ -209,12 +208,16 @@ export default function useYjs({
         disconnect();
       };
 
-      applyChangesToYjs.current = debounce(blocks => {
+      applyChangesToYjs.current = blocks => {
+        if (doc.getState() !== 'on') {
+          return;
+        }
+
         debug('local changes applied to ydoc');
         doc.applyDataChanges({
           blocks
         });
-      }, DEBOUNCE_WAIT_MS);
+      };
     });
     return () => onUnmount();
   }, []);

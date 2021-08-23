@@ -46,7 +46,6 @@ var debug = require('debug')('iso-editor:collab');
 /** @typedef {import('..').OnUpdate} OnUpdate */
 
 
-var DEBOUNCE_WAIT_MS = 800;
 var defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
  * @param {object} opts - Hook options
@@ -245,12 +244,16 @@ function useYjs(_ref2) {
         disconnect();
       };
 
-      applyChangesToYjs.current = (0, _lodash.debounce)(function (blocks) {
+      applyChangesToYjs.current = function (blocks) {
+        if (doc.getState() !== 'on') {
+          return;
+        }
+
         debug('local changes applied to ydoc');
         doc.applyDataChanges({
           blocks: blocks
         });
-      }, DEBOUNCE_WAIT_MS);
+      };
     });
     return function () {
       return onUnmount();
