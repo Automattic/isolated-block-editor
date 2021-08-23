@@ -27,7 +27,7 @@ mark.iso-editor-collab-caret.is-shifted::before {
 mark.iso-editor-collab-caret::after {
 	position: absolute;
 	top: -14px;
-	left: -4px;
+	right: -4px;
 	overflow: hidden;
 	min-width: 8px;
 	max-width: 140px;
@@ -45,9 +45,4 @@ mark.iso-editor-collab-caret::after {
 	// Ensure that bold/italic isn't inherited from the editor selection
 	font-style: normal;
 	font-weight: normal;
-}
-
-mark.iso-editor-collab-caret.is-shifted::after {
-	left: auto;
-	right: -4px;
 }

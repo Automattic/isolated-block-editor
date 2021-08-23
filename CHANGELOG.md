@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix handling of initial content from `onLoad` when collaborative editing is enabled
+- Improved reliability of collaborative editing when multiple peers are typing simultaneously
 
 ## [2.3.0] - 2021-07-29
 
