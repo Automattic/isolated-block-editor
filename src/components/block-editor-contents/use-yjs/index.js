@@ -15,8 +15,8 @@ import { useEffect, useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { registerFormatCollabCaret } from './formats/collab-caret';
-import { addFilterCollabBlockSelection } from './filters/block-selection';
+import { addCollabFilters } from './filters';
+import { registerCollabFormats } from './formats';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
@@ -167,11 +167,11 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 			return;
 		}
 
-		debug( 'registered collab caret format' );
-		registerFormatCollabCaret();
+		debug( 'registered collab formats' );
+		registerCollabFormats();
 
-		debug( 'added collab block selection filter' );
-		addFilterCollabBlockSelection();
+		debug( 'added collab filters' );
+		addCollabFilters();
 
 		let onUnmount = noop;
 
