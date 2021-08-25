@@ -12,7 +12,7 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 
-import { registerFormatCollabCaret } from '../../formats/collab-caret';
+import { registerFormatCollabCaret } from './formats/collab-caret';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
