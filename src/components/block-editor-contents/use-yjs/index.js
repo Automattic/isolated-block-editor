@@ -12,7 +12,11 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 
+/**
+ * Internal dependencies
+ */
 import { registerFormatCollabCaret } from './formats/collab-caret';
+import { addFilterCollabBlockSelection } from './filters/block-selection';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
@@ -165,6 +169,9 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 
 		debug( 'registered collab caret format' );
 		registerFormatCollabCaret();
+
+		debug( 'added collab block selection filter' );
+		addFilterCollabBlockSelection();
 
 		let onUnmount = noop;
 
