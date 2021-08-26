@@ -5,7 +5,7 @@ import useYjs from './use-yjs';
 
 function CollaborativeEditing( { settings } ) {
 	useYjs( {
-		settings: settings.collab,
+		settings,
 	} );
 
 	return null;

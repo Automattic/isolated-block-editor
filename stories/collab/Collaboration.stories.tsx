@@ -1,4 +1,4 @@
-import IsolatedBlockEditor, { BlockEditorSettings, CollaborativeEditing } from '../../src/index';
+import IsolatedBlockEditor, { BlockEditorSettings, CollaborationSettings, CollaborativeEditing } from '../../src/index';
 import mockTransport from './mock-transport';
 
 import { random, sample } from 'lodash';
@@ -11,6 +11,7 @@ export default {
 
 type Props = {
 	settings: BlockEditorSettings;
+	collabSettings: CollaborationSettings;
 };
 
 const username = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample( [
@@ -19,14 +20,14 @@ const username = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample
 	'Unicorn',
 ] ) } ${ random( 1, 9 ) }`;
 
-const Template: Story< Props > = ( args ) => {
+const Template: Story< Props > = ( { collabSettings, ...isoEditorProps } ) => {
 	return (
 		<>
-			<IsolatedBlockEditor { ...args }>
-				<CollaborativeEditing settings={ args.settings } />
+			<IsolatedBlockEditor { ...isoEditorProps }>
+				<CollaborativeEditing settings={ collabSettings } />
 			</IsolatedBlockEditor>
 
-			{ args.settings.collab?.enabled && (
+			{ collabSettings?.enabled && (
 				<>
 					<p>My name: { username }</p>
 
@@ -67,25 +68,22 @@ Default.args = {
 				inspector: true,
 			},
 		},
-		collab: {
-			enabled: true,
-			channelId: 'default',
-			transport: mockTransport( 'default' ),
-			username,
-		},
+	},
+	collabSettings: {
+		enabled: true,
+		channelId: 'default',
+		transport: mockTransport( 'default' ),
+		username,
 	},
 };
 
 export const WithOnLoad = Template.bind( {} );
 WithOnLoad.args = {
 	...Default.args,
-	settings: {
-		...Default.args.settings,
-		collab: {
-			...Default.args.settings.collab,
-			channelId: 'withonload',
-			transport: mockTransport( 'withonload' ),
-		},
+	collabSettings: {
+		...Default.args.collabSettings,
+		channelId: 'withonload',
+		transport: mockTransport( 'withonload' ),
 	},
 	onLoad: ( parse ) =>
 		parse( `<!-- wp:paragraph -->
@@ -96,8 +94,7 @@ WithOnLoad.args = {
 export const CollabDisabled = Template.bind( {} );
 CollabDisabled.args = {
 	...Default.args,
-	settings: {
-		...Default.args.settings,
-		collab: undefined,
+	collabSettings: {
+		enabled: false,
 	},
 };
