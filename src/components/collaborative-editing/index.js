@@ -6,7 +6,7 @@ import useYjs from './use-yjs';
 /**
  * Real-time collaboration settings
  * @typedef CollaborationSettings
- * @property {boolean} [enabled]
+ * @property {boolean} enabled
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
  * @property {string} username Name displayed to peers. Required if collab is enabled.
  * @property {string} [caretColor] Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
@@ -49,6 +49,10 @@ import useYjs from './use-yjs';
  * @property {object} end
  */
 
+/**
+ * @param {object} props
+ * @param {CollaborationSettings} props.settings
+ */
 function CollaborativeEditing( { settings } ) {
 	useYjs( {
 		settings,
