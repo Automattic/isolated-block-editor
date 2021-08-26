@@ -25,7 +25,7 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 /** @typedef {import('../../..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
 /** @typedef {import('../../..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
 /** @typedef {import('../../..').EditorSelection} EditorSelection */
-/** @typedef {import('..').OnUpdate} OnUpdate */
+/** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
 
 const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
 
@@ -141,21 +141,20 @@ async function initYDoc( {
 
 /**
  * @param {object} opts - Hook options
- * @param {object[]} opts.blocks
- * @param {OnUpdate} opts.onRemoteDataChange
  * @param {CollaborationSettings} [opts.settings]
  */
-export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
+export default function useYjs( { settings } ) {
 	const applyChangesToYjs = useRef( noop );
 
-	const { getBlocks, getSelection } = useSelect( ( select ) => {
+	const { blocks, getBlocks, getSelection } = useSelect( ( select ) => {
 		return {
-			getSelection: select( 'isolated/editor' ).getEditorSelection,
+			blocks: select( 'isolated/editor' ).getBlocks(),
 			getBlocks: select( 'isolated/editor' ).getBlocks,
+			getSelection: select( 'isolated/editor' ).getEditorSelection,
 		};
 	}, [] );
 
-	const { setAvailablePeers, setPeerSelection } = useDispatch( 'isolated/editor' );
+	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
 
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
@@ -176,7 +175,7 @@ export default function useYjs( { blocks, onRemoteDataChange, settings } ) {
 		let onUnmount = noop;
 
 		initYDoc( {
-			onRemoteDataChange,
+			onRemoteDataChange: updateBlocksWithUndo,
 			settings,
 			getBlocks,
 			getSelection,

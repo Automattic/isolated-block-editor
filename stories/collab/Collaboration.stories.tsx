@@ -1,4 +1,4 @@
-import IsolatedBlockEditor, { BlockEditorSettings } from '../../src/index';
+import IsolatedBlockEditor, { BlockEditorSettings, CollaborativeEditing } from '../../src/index';
 import mockTransport from './mock-transport';
 
 import { random, sample } from 'lodash';
@@ -22,7 +22,9 @@ const username = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample
 const Template: Story< Props > = ( args ) => {
 	return (
 		<>
-			<IsolatedBlockEditor { ...args } />
+			<IsolatedBlockEditor { ...args }>
+				<CollaborativeEditing settings={ args.settings } />
+			</IsolatedBlockEditor>
 
 			{ args.settings.collab?.enabled && (
 				<>
