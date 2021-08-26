@@ -23,7 +23,9 @@ var _data = require("@wordpress/data");
 
 var _element = require("@wordpress/element");
 
-var _collabCaret = require("../../formats/collab-caret");
+var _filters = require("./filters");
+
+var _formats = require("./formats");
 
 /**
  * External dependencies
@@ -31,6 +33,10 @@ var _collabCaret = require("../../formats/collab-caret");
 
 /**
  * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
  */
 var debug = require('debug')('iso-editor:collab');
 /** @typedef {import('../../..').CollaborationSettings} CollaborationSettings */
@@ -225,8 +231,10 @@ function useYjs(_ref2) {
       return;
     }
 
-    debug('registered collab caret format');
-    (0, _collabCaret.registerFormatCollabCaret)();
+    debug('registered collab formats');
+    (0, _formats.registerCollabFormats)();
+    debug('added collab filters');
+    (0, _filters.addCollabFilters)();
     var onUnmount = _lodash.noop;
     initYDoc({
       onRemoteDataChange: onRemoteDataChange,
