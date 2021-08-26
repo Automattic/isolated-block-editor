@@ -11,7 +11,12 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
-import { registerFormatCollabCaret } from '../../formats/collab-caret';
+/**
+ * Internal dependencies
+ */
+
+import { addCollabFilters } from './filters';
+import { registerCollabFormats } from './formats';
 
 const debug = require('debug')('iso-editor:collab');
 /** @typedef {import('../../..').CollaborationSettings} CollaborationSettings */
@@ -189,8 +194,10 @@ export default function useYjs({
       return;
     }
 
-    debug('registered collab caret format');
-    registerFormatCollabCaret();
+    debug('registered collab formats');
+    registerCollabFormats();
+    debug('added collab filters');
+    addCollabFilters();
     let onUnmount = noop;
     initYDoc({
       onRemoteDataChange,
