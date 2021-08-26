@@ -1,5 +1,6 @@
-import IsolatedBlockEditor, { BlockEditorSettings, CollaborationSettings, CollaborativeEditing } from '../../src/index';
+import IsolatedBlockEditor, { BlockEditorSettings, CollaborativeEditing } from '../../src/index';
 import mockTransport from './mock-transport';
+import type { CollaborationSettings } from '../../src/components/collaborative-editing';
 
 import { random, sample } from 'lodash';
 import type { Story } from '@storybook/react';

@@ -20,11 +20,11 @@ import { registerCollabFormats } from './formats';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
-/** @typedef {import('../../..').CollaborationSettings} CollaborationSettings */
-/** @typedef {import('../../..').CollaborationTransport} CollaborationTransport */
-/** @typedef {import('../../..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
-/** @typedef {import('../../..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
-/** @typedef {import('../../..').EditorSelection} EditorSelection */
+/** @typedef {import('..').CollaborationSettings} CollaborationSettings */
+/** @typedef {import('..').CollaborationTransport} CollaborationTransport */
+/** @typedef {import('..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
+/** @typedef {import('..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
+/** @typedef {import('..').EditorSelection} EditorSelection */
 /** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
 
 const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
