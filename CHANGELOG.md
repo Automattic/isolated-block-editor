@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Show outline around blocks that are currently being modified by peers when collaborative editing.
+
 ### Fixed
 
 - Fix handling of initial content from `onLoad` when collaborative editing is enabled
