@@ -24,8 +24,7 @@ export default function applyDefaultSettings(settings) {
 
   const {
     iso,
-    editor,
-    collab
+    editor
   } = settings;
   return {
     iso: {
@@ -112,8 +111,7 @@ export default function applyDefaultSettings(settings) {
       // @ts-ignore */}
       __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? // @ts-ignore */}
       editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
-    },
-    collab
+    }
   };
 }
 //# sourceMappingURL=index.js.map

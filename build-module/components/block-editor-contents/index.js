@@ -16,7 +16,6 @@ import { BlockEditorProvider } from '@wordpress/block-editor';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
-import useYjs from './use-yjs';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
@@ -71,12 +70,7 @@ function BlockEditorContents(props) {
     settings,
     renderMoreMenu,
     onLoad
-  } = props;
-  useYjs({
-    blocks,
-    onRemoteDataChange: updateBlocksWithUndo,
-    settings: settings.collab
-  }); // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
+  } = props; // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 
   useEffect(() => {
     const initialContent = getInitialContent(settings, onLoad ? onLoad(parse, rawHandler) : []);
