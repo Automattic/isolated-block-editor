@@ -164,15 +164,16 @@ render(
 );
 ```
 
-The `IsolatedBlockEditor` also exports the following support component:
+The `IsolatedBlockEditor` also exports the following support components:
 
 - `EditorLoaded` - Include this to be notified when the editor is loading and has loaded
 - `DocumentSection` - Wrap up a component to appear in the document tab of the inspector
 - `ToolbarSlot` - Insert content into the toolbar
+- [`CollaborativeEditing`](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/collaborative-editing) - Enable real-time collaborative editing
 
 ```js
 
-import IsolatedBlockEditor, { EditorLoaded, DocumentSection, ToolbarSlot } from 'isolated-block-editor';
+import IsolatedBlockEditor, { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing } from 'isolated-block-editor';
 
 render(
 	<IsolatedBlockEditor
@@ -183,6 +184,7 @@ render(
 	>
 		<EditorLoaded onLoaded={ () => {} } onLoading={ () => {} } />
 		<DocumentSection>Extra Information</DocumentSection>
+		<CollaborativeEditing settings={ collabSettings } />
 
 		<ToolbarSlot>
 			<button>Beep!</button>
@@ -224,11 +226,6 @@ The following function is also provided:
 - _iso.linkMenu_ `[array]` - Link menu settings. Array of `title` and `url`, defaults to none
 - _iso.currentPattern_ `[string]` - The pattern to start with, defaults to none
 - _iso.allowApi_ `[boolean]` - Allow API requests, defaults to `false`
-- _collab.enabled_ `[boolean]` - Enable real-time collaborative editing, defaults to `false`
-- _collab.channelId_ `[string]` - Optional channel id to pass to `transport.connect()`.
-- _collab.username_ `string` - Name displayed to peers. Required if collab is enabled.
-- _collab.caretColor_ `[string]` - Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
-- _collab.transport_ `CollaborationTransport` - Transport module to handle messaging between peers. See the [`useYjs` readme](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/block-editor-contents/use-yjs) for how this should be implemented.
 
 - _editor_ `[object]` - Gutenberg settings object
 
