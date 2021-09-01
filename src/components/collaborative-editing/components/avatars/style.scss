@@ -1,0 +1,69 @@
+$avatarSize: 20px;
+
+.iso-editor-collab-avatars {
+	display: flex;
+	align-items: center;
+	margin: 0 8px;
+}
+
+.iso-editor-collab-avatars__avatar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: $avatarSize;
+	height: $avatarSize;
+	border-radius: 50%;
+	border-width: 2px;
+	border-style: solid;
+
+	& + & {
+		margin-left: -4px;
+		box-shadow: 0 0 0 2px #fff;
+	}
+}
+
+.iso-editor-collab-avatars__popover {
+	.components-popover__content {
+		width: max-content;
+		max-width: 80vw;
+		padding: 4px 8px;
+		transform: translateY( 8px );
+	}
+}
+
+.iso-editor-collab-avatars__image {
+	width: inherit;
+	height: inherit;
+	border-radius: inherit;
+}
+
+.iso-editor-collab-avatars__name-initial {
+	color: #fff;
+	cursor: default;
+}
+
+.iso-editor-collab-avatars__overflow {
+	margin-left: 4px;
+	height: 100%;
+	cursor: default;
+}
+
+.iso-editor-collab-avatars__overflow-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.iso-editor-collab-avatars__overflow-list-item {
+	margin: 0;
+	line-height: 1;
+
+	& + & {
+		margin-top: 6px;
+	}
+}
+
+.iso-editor-collab-avatars__overflow-more {
+	margin: 6px 0 0;
+	line-height: 1;
+}
