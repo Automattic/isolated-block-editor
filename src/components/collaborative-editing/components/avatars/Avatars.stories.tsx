@@ -15,7 +15,7 @@ const generateRandomPeers = ( count ) => {
 		? [ ...Array( count ) ].map( ( peer, index ) => ( {
 				id: index.toString(),
 				name: `Peery Collabson ${ index }`,
-				avatarUrl: `https://i.pravatar.cc/40?cacheBust=${ Math.random() }`,
+				avatarUrl: `https://i.pravatar.cc/64?cacheBust=${ Math.random() }`,
 				color: sample( defaultColors ) as string,
 		  } ) )
 		: [];
