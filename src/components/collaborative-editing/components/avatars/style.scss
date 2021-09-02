@@ -1,3 +1,6 @@
+@import '@wordpress/base-styles/_colors';
+@import '@wordpress/base-styles/_variables';
+
 $avatarSize: 20px;
 
 .iso-editor-collab-avatars {
@@ -18,16 +21,28 @@ $avatarSize: 20px;
 
 	& + & {
 		margin-left: -4px;
-		box-shadow: 0 0 0 2px #fff;
+		box-shadow: 0 0 0 2px $white;
 	}
 }
 
 .iso-editor-collab-avatars__popover {
+	// Mostly mimic styles for the core Tooltip component.
+	// (We could've simply used core Tooltip if the delay was shorter
+	// and it accepted multi-line text.)
 	.components-popover__content {
-		width: max-content;
-		max-width: 80vw;
-		padding: 4px 8px;
 		transform: translateY( 8px );
+		background: $gray-900;
+		border-radius: $radius-block-ui;
+		border-width: 0;
+		color: $white;
+		white-space: nowrap;
+		line-height: 1.4;
+		font-size: 12px;
+		box-shadow: none;
+
+		> div {
+			padding: $grid-unit-05 $grid-unit-10;
+		}
 	}
 }
 
@@ -38,7 +53,7 @@ $avatarSize: 20px;
 }
 
 .iso-editor-collab-avatars__name-initial {
-	color: #fff;
+	color: $white;
 	cursor: default;
 }
 
