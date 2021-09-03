@@ -110,7 +110,15 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
 				doc.connect();
 			}
 
-			const onSelectionChange = ( start, end ) => {
+			const applyChangesToYjs = ( blocks ) => {
+				if ( doc.getState() !== 'on' ) {
+					return;
+				}
+				debug( 'local changes applied to ydoc' );
+				doc.applyDataChanges( { blocks } );
+			};
+
+			const sendSelection = ( start, end ) => {
 				debug( 'sendSelection', start, end );
 				transport.sendMessage( {
 					type: 'selection',
@@ -129,7 +137,7 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
 
 			window.addEventListener( 'beforeunload', () => disconnect() );
 
-			return { doc, onSelectionChange, disconnect };
+			return { applyChangesToYjs, sendSelection, disconnect };
 		} );
 }
 
@@ -138,8 +146,8 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
  * @param {CollaborationSettings} [opts.settings]
  */
 export default function useYjs( { settings } ) {
-	const applyChangesToYjs = useRef( noop );
-	const sendSelection = useRef( noop );
+	const onBlocksChange = useRef( noop );
+	const onSelectionChange = useRef( noop );
 
 	const { blocks, getBlocks, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
@@ -176,31 +184,24 @@ export default function useYjs( { settings } ) {
 			getBlocks,
 			setPeerSelection,
 			setAvailablePeers,
-		} ).then( ( { doc, onSelectionChange, disconnect } ) => {
+		} ).then( ( { applyChangesToYjs, sendSelection, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
 			};
 
-			applyChangesToYjs.current = ( blocks ) => {
-				if ( doc.getState() !== 'on' ) {
-					return;
-				}
-				debug( 'local changes applied to ydoc' );
-				doc.applyDataChanges( { blocks } );
-			};
-
-			sendSelection.current = onSelectionChange;
+			onBlocksChange.current = applyChangesToYjs;
+			onSelectionChange.current = sendSelection;
 		} );
 
 		return () => onUnmount();
 	}, [] );
 
 	useEffect( () => {
-		applyChangesToYjs.current( blocks );
+		onBlocksChange.current( blocks );
 	}, [ blocks ] );
 
 	useEffect( () => {
-		sendSelection.current( selectionStart, selectionEnd );
+		onSelectionChange.current( selectionStart, selectionEnd );
 	}, [ selectionStart, selectionEnd ] );
 }
