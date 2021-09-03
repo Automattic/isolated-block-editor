@@ -34,7 +34,6 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
  * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
- * @param {() => IsoEditorSelection} opts.getSelection
  * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
  * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
  *
@@ -42,14 +41,7 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( {
-	getBlocks,
-	onRemoteDataChange,
-	settings,
-	getSelection,
-	setPeerSelection,
-	setAvailablePeers,
-} ) {
+async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelection, setAvailablePeers } ) {
 	const { channelId, transport } = settings;
 
 	/** @type string */
@@ -65,17 +57,6 @@ async function initYDoc( {
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
 			transport.sendMessage( { type: 'doc', identity, message } );
-
-			const { selectionStart, selectionEnd } = getSelection() || {};
-			debug( 'sendSelection', selectionStart, selectionEnd );
-			transport.sendMessage( {
-				type: 'selection',
-				identity,
-				selection: {
-					start: selectionStart,
-					end: selectionEnd,
-				},
-			} );
 		},
 	} );
 
@@ -129,6 +110,18 @@ async function initYDoc( {
 				doc.connect();
 			}
 
+			const onSelectionChange = ( start, end ) => {
+				debug( 'sendSelection', start, end );
+				transport.sendMessage( {
+					type: 'selection',
+					identity,
+					selection: {
+						start,
+						end,
+					},
+				} );
+			};
+
 			const disconnect = () => {
 				transport.disconnect();
 				doc.disconnect();
@@ -136,7 +129,7 @@ async function initYDoc( {
 
 			window.addEventListener( 'beforeunload', () => disconnect() );
 
-			return { doc, disconnect };
+			return { doc, onSelectionChange, disconnect };
 		} );
 }
 
@@ -146,12 +139,14 @@ async function initYDoc( {
  */
 export default function useYjs( { settings } ) {
 	const applyChangesToYjs = useRef( noop );
+	const sendSelection = useRef( noop );
 
-	const { blocks, getBlocks, getSelection } = useSelect( ( select ) => {
+	const { blocks, getBlocks, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
 			blocks: select( 'isolated/editor' ).getBlocks(),
 			getBlocks: select( 'isolated/editor' ).getBlocks,
-			getSelection: select( 'isolated/editor' ).getEditorSelection,
+			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
+			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );
 
@@ -179,10 +174,9 @@ export default function useYjs( { settings } ) {
 			onRemoteDataChange: updateBlocksWithUndo,
 			settings,
 			getBlocks,
-			getSelection,
 			setPeerSelection,
 			setAvailablePeers,
-		} ).then( ( { doc, disconnect } ) => {
+		} ).then( ( { doc, onSelectionChange, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
@@ -195,6 +189,8 @@ export default function useYjs( { settings } ) {
 				debug( 'local changes applied to ydoc' );
 				doc.applyDataChanges( { blocks } );
 			};
+
+			sendSelection.current = onSelectionChange;
 		} );
 
 		return () => onUnmount();
@@ -203,4 +199,8 @@ export default function useYjs( { settings } ) {
 	useEffect( () => {
 		applyChangesToYjs.current( blocks );
 	}, [ blocks ] );
+
+	useEffect( () => {
+		sendSelection.current( selectionStart, selectionEnd );
+	}, [ selectionStart, selectionEnd ] );
 }
