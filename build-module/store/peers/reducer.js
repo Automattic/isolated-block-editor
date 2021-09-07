@@ -18,11 +18,13 @@ const reducer = (state = {}, action) => {
         return action.peers.reduce((acc, {
           id,
           name,
-          color
+          color,
+          avatarUrl
         }) => {
           acc[id] = state[id] || {
             name,
-            color
+            color,
+            avatarUrl
           };
           return acc;
         }, {});

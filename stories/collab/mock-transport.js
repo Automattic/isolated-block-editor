@@ -6,7 +6,7 @@ const mockTransport = ( channelId ) => ( {
 	sendMessage: ( data ) => {
 		window.localStorage.setItem( `isoEditorYjsMessage-${ channelId }`, JSON.stringify( data ) );
 	},
-	connect: ( { user: { identity, name, color }, onReceiveMessage, setAvailablePeers, channelId } ) => {
+	connect: ( { user: { identity, name, color, avatarUrl }, onReceiveMessage, setAvailablePeers, channelId } ) => {
 		listeners.push(
 			{
 				event: 'storage',
@@ -39,7 +39,7 @@ const mockTransport = ( channelId ) => ( {
 
 		window.localStorage.setItem(
 			`isoEditorYjsPeers-${ channelId }`,
-			JSON.stringify( [ ...peers, { id: identity, name, color } ] )
+			JSON.stringify( [ ...peers, { id: identity, name, color, avatarUrl } ] )
 		);
 
 		disconnectHandlers.push( () => {

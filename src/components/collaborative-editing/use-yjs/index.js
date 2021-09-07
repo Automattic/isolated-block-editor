@@ -27,7 +27,7 @@ const debug = require( 'debug' )( 'iso-editor:collab' );
 /** @typedef {import('..').EditorSelection} EditorSelection */
 /** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
 
-const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
+export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
 
 /**
  * @param {object} opts - Hook options
@@ -106,6 +106,7 @@ async function initYDoc( {
 				identity,
 				name: settings.username,
 				color: settings.caretColor || sample( defaultColors ),
+				avatarUrl: settings.avatarUrl,
 			},
 			onReceiveMessage,
 			setAvailablePeers: ( peers ) => {

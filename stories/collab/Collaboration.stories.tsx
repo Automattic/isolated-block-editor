@@ -75,6 +75,7 @@ Default.args = {
 		channelId: 'default',
 		transport: mockTransport( 'default' ),
 		username,
+		avatarUrl: `https://i.pravatar.cc/64?cacheBust=${ Math.random() }`,
 	},
 };
 

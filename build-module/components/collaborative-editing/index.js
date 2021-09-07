@@ -1,7 +1,11 @@
+import { createElement } from "@wordpress/element";
+
 /**
  * Internal dependencies
  */
+import { ToolbarSlot } from '../..';
 import useYjs from './use-yjs';
+import CollaborativeEditingAvatars from './components/avatars';
 /**
  * Real-time collaboration settings
  * @typedef CollaborationSettings
@@ -9,6 +13,7 @@ import useYjs from './use-yjs';
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
  * @property {string} username Name displayed to peers. Required if collab is enabled.
  * @property {string} [caretColor] Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
+ * @property {string} [avatarUrl] Url of the avatar image diplayed to peers.
  * @property {CollaborationTransport} transport Required if collab is enabled.
  */
 
@@ -23,6 +28,7 @@ import useYjs from './use-yjs';
  * @property {object} user
  * @property {string} user.identity
  * @property {string} user.name
+ * @property {string} [user.avatarUrl]
  * @property {string} [user.color] Color of the caret indicator displayed to peers.
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
@@ -32,6 +38,7 @@ import useYjs from './use-yjs';
  * @property {string} id
  * @property {string} name
  * @property {string} color
+ * @property {string} [avatarUrl]
  *
  * @typedef CollaborationTransportDocMessage
  * @property {string} identity
@@ -59,7 +66,7 @@ function CollaborativeEditing({
   useYjs({
     settings
   });
-  return null;
+  return createElement(ToolbarSlot, null, createElement(CollaborativeEditingAvatars, null));
 }
 
 export default CollaborativeEditing;

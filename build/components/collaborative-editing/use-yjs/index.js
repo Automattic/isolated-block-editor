@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = useYjs;
+exports.defaultColors = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -66,6 +67,8 @@ var defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
+
+exports.defaultColors = defaultColors;
 
 function initYDoc(_x) {
   return _initYDoc.apply(this, arguments);
@@ -147,7 +150,8 @@ function _initYDoc() {
               user: {
                 identity: identity,
                 name: settings.username,
-                color: settings.caretColor || (0, _lodash.sample)(defaultColors)
+                color: settings.caretColor || (0, _lodash.sample)(defaultColors),
+                avatarUrl: settings.avatarUrl
               },
               onReceiveMessage: onReceiveMessage,
               setAvailablePeers: function setAvailablePeers(peers) {

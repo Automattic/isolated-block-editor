@@ -8,6 +8,7 @@
 - _settings.channelId_ `[string]` - Optional channel id to pass to `transport.connect()`.
 - _settings.username_ `string` - Name displayed to peers. Required if collab is enabled.
 - _settings.caretColor_ `[string]` - Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
+- _settings.avatarUrl_ `[string]` - Presence avatar displayed to peers. If unspecified, the first character of the username will be shown.
 - _settings.transport_ `CollaborationTransport` - Transport module to handle messaging between peers. See the section below for how this should be implemented.
  
 ## Implementing a transport module
