@@ -17,6 +17,10 @@ export type CollaborationSettings = {
      */
     caretColor?: string | undefined;
     /**
+     * Url of the avatar image diplayed to peers.
+     */
+    avatarUrl?: string | undefined;
+    /**
      * Required if collab is enabled.
      */
     transport: CollaborationTransport;
@@ -38,6 +42,7 @@ export type CollaborationTransportConnectOpts = {
     user: {
         identity: string;
         name: string;
+        avatarUrl?: string | undefined;
         color?: string | undefined;
     };
     /**
@@ -57,6 +62,7 @@ export type AvailablePeer = {
     id: string;
     name: string;
     color: string;
+    avatarUrl?: string | undefined;
 };
 /**
  * Transport module for real-time collaboration
@@ -88,6 +94,7 @@ export type EditorSelection = {
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
  * @property {string} username Name displayed to peers. Required if collab is enabled.
  * @property {string} [caretColor] Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
+ * @property {string} [avatarUrl] Url of the avatar image diplayed to peers.
  * @property {CollaborationTransport} transport Required if collab is enabled.
  */
 /**
@@ -101,6 +108,7 @@ export type EditorSelection = {
  * @property {object} user
  * @property {string} user.identity
  * @property {string} user.name
+ * @property {string} [user.avatarUrl]
  * @property {string} [user.color] Color of the caret indicator displayed to peers.
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
@@ -110,6 +118,7 @@ export type EditorSelection = {
  * @property {string} id
  * @property {string} name
  * @property {string} color
+ * @property {string} [avatarUrl]
  *
  * @typedef CollaborationTransportDocMessage
  * @property {string} identity
@@ -131,5 +140,5 @@ export type EditorSelection = {
  */
 declare function CollaborativeEditing({ settings }: {
     settings: CollaborationSettings;
-}): null;
+}): JSX.Element;
 //# sourceMappingURL=index.d.ts.map

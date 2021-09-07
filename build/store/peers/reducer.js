@@ -32,10 +32,12 @@ var reducer = function reducer() {
         return action.peers.reduce(function (acc, _ref) {
           var id = _ref.id,
               name = _ref.name,
-              color = _ref.color;
+              color = _ref.color,
+              avatarUrl = _ref.avatarUrl;
           acc[id] = state[id] || {
             name: name,
-            color: color
+            color: color,
+            avatarUrl: avatarUrl
           };
           return acc;
         }, {});
