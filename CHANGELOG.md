@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix handling of initial content from `onLoad` when collaborative editing is enabled
 - Improved reliability of collaborative editing when multiple peers are typing simultaneously
+- Fix blur event when clicking in some UI components in the block inspector
 
 ## [2.3.0] - 2021-07-29
 
