@@ -19,6 +19,12 @@ Object.defineProperty(exports, "ToolbarSlot", {
     return _slot["default"];
   }
 });
+Object.defineProperty(exports, "CollaborativeEditing", {
+  enumerable: true,
+  get: function get() {
+    return _collaborativeEditing["default"];
+  }
+});
 Object.defineProperty(exports, "EditorLoaded", {
   enumerable: true,
   get: function get() {
@@ -66,6 +72,8 @@ var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-sw
 var _document = _interopRequireDefault(require("./components/document"));
 
 var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
+
+var _collaborativeEditing = _interopRequireDefault(require("./components/collaborative-editing"));
 
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 
@@ -122,7 +130,6 @@ import { createElement } from "@wordpress/element";
  * @typedef BlockEditorSettings
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
- * @property {CollaborationSettings} [collab] - Real-time collaboration settings
  */
 
 /**
@@ -136,52 +143,6 @@ import { createElement } from "@wordpress/element";
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
- */
-
-/**
- * Real-time collaboration settings
- * @typedef CollaborationSettings
- * @property {boolean} [enabled]
- * @property {string} [channelId] Optional channel id to pass to transport.connect().
- * @property {string} username Name displayed to peers. Required if collab is enabled.
- * @property {string} [caretColor] Color of the caret indicator displayed to peers. If unspecified, a random color will be selected.
- * @property {CollaborationTransport} transport Required if collab is enabled.
- */
-
-/**
- * Transport module for real-time collaboration
- * @typedef CollaborationTransport
- * @property {(message: CollaborationTransportDocMessage|CollaborationTransportSelectionMessage) => void} sendMessage
- * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
- * @property {() => Promise<void>} disconnect
- *
- * @typedef CollaborationTransportConnectOpts
- * @property {object} user
- * @property {string} user.identity
- * @property {string} user.name
- * @property {string} [user.color] Color of the caret indicator displayed to peers.
- * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
- * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
- * @property {string} [channelId]
- *
- * @typedef AvailablePeer
- * @property {string} id
- * @property {string} name
- * @property {string} color
- *
- * @typedef CollaborationTransportDocMessage
- * @property {string} identity
- * @property {'doc'} type
- * @property {object} message
- *
- * @typedef CollaborationTransportSelectionMessage
- * @property {string} identity
- * @property {'selection'} type
- * @property {EditorSelection} selection
- *
- * @typedef EditorSelection
- * @property {object} start
- * @property {object} end
  */
 
 /**

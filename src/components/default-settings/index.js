@@ -21,7 +21,7 @@ function getMenu( current, defaultMenu ) {
  * @returns {BlockEditorSettings}
  **/
 export default function applyDefaultSettings( settings ) {
-	const { iso, editor, collab } = settings;
+	const { iso, editor } = settings;
 
 	return {
 		iso: {
@@ -125,6 +125,5 @@ export default function applyDefaultSettings( settings ) {
 				  editor?.__experimentalFetchLinkSuggestions
 				: () => [],
 		},
-		collab,
 	};
 }

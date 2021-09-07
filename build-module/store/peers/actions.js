@@ -1,5 +1,5 @@
 /**
- * @param {import('../../').AvailablePeer[]} peers
+ * @param {import('../../components/collaborative-editing').AvailablePeer[]} peers
  */
 export function setAvailablePeers(peers) {
   return {
@@ -9,7 +9,7 @@ export function setAvailablePeers(peers) {
 }
 /**
  * @param {string} peerId
- * @param {import('../..').EditorSelection} selection
+ * @param {import('../../components/collaborative-editing').EditorSelection} selection
  */
 
 export function setPeerSelection(peerId, selection) {

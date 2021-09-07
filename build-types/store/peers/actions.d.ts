@@ -1,18 +1,18 @@
 /**
- * @param {import('../../').AvailablePeer[]} peers
+ * @param {import('../../components/collaborative-editing').AvailablePeer[]} peers
  */
-export function setAvailablePeers(peers: import('../../').AvailablePeer[]): {
+export function setAvailablePeers(peers: import('../../components/collaborative-editing').AvailablePeer[]): {
     type: string;
-    peers: import("../../").AvailablePeer[];
+    peers: import("../../components/collaborative-editing").AvailablePeer[];
 };
 /**
  * @param {string} peerId
- * @param {import('../..').EditorSelection} selection
+ * @param {import('../../components/collaborative-editing').EditorSelection} selection
  */
-export function setPeerSelection(peerId: string, selection: import('../..').EditorSelection): {
+export function setPeerSelection(peerId: string, selection: import('../../components/collaborative-editing').EditorSelection): {
     type: string;
     peerId: string;
-    selection: import("../../").EditorSelection;
+    selection: import("../../components/collaborative-editing").EditorSelection;
 };
 declare namespace _default {
     export { setAvailablePeers };

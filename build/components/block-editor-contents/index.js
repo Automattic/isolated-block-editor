@@ -25,8 +25,6 @@ var _blockEditor2 = _interopRequireDefault(require("../block-editor"));
 
 var _editorContent = _interopRequireDefault(require("./editor-content"));
 
-var _useYjs = _interopRequireDefault(require("./use-yjs"));
-
 import { createElement } from "@wordpress/element";
 
 /**
@@ -86,12 +84,7 @@ function BlockEditorContents(props) {
   var children = props.children,
       settings = props.settings,
       renderMoreMenu = props.renderMoreMenu,
-      onLoad = props.onLoad;
-  (0, _useYjs["default"])({
-    blocks: blocks,
-    onRemoteDataChange: updateBlocksWithUndo,
-    settings: settings.collab
-  }); // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
+      onLoad = props.onLoad; // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 
   (0, _element.useEffect)(function () {
     var initialContent = getInitialContent(settings, onLoad ? onLoad(_blocks.parse, _blocks.rawHandler) : []);

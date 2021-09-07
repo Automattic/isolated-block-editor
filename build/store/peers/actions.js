@@ -8,7 +8,7 @@ exports.setPeerSelection = setPeerSelection;
 exports["default"] = void 0;
 
 /**
- * @param {import('../../').AvailablePeer[]} peers
+ * @param {import('../../components/collaborative-editing').AvailablePeer[]} peers
  */
 function setAvailablePeers(peers) {
   return {
@@ -18,7 +18,7 @@ function setAvailablePeers(peers) {
 }
 /**
  * @param {string} peerId
- * @param {import('../..').EditorSelection} selection
+ * @param {import('../../components/collaborative-editing').EditorSelection} selection
  */
 
 

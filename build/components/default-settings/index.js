@@ -35,8 +35,7 @@ function applyDefaultSettings(settings) {
   var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
 
   var iso = settings.iso,
-      editor = settings.editor,
-      collab = settings.collab;
+      editor = settings.editor;
   return {
     iso: {
       // No preferences or persistence
@@ -121,8 +120,7 @@ function applyDefaultSettings(settings) {
       editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : function () {
         return [];
       }
-    }),
-    collab: collab
+    })
   };
 }
 //# sourceMappingURL=index.js.map
