@@ -134,6 +134,11 @@ export default {
 
     if (canRestoreTextSelection) {
       const newAttributeKey = findKey(updatedAttributes, v => typeof v === 'string' && v.indexOf(START_OF_SELECTED_AREA) !== -1);
+
+      if (newAttributeKey === undefined) {
+        return;
+      }
+
       const convertedHtml = updatedAttributes[newAttributeKey];
       const {
         multiline: multilineTag,

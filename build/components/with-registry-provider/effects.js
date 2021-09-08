@@ -153,6 +153,11 @@ var _default = {
       var newAttributeKey = (0, _lodash.findKey)(updatedAttributes, function (v) {
         return typeof v === 'string' && v.indexOf(START_OF_SELECTED_AREA) !== -1;
       });
+
+      if (newAttributeKey === undefined) {
+        return;
+      }
+
       var convertedHtml = updatedAttributes[newAttributeKey];
       var _blockAType$attribute = blockAType.attributes[newAttributeKey],
           _multilineTag = _blockAType$attribute.multiline,

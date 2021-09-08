@@ -39,13 +39,31 @@ var ClickOutsideWrapper = (0, _withFocusOutside["default"])( /*#__PURE__*/functi
     key: "handleFocus",
     value: function handleFocus(ev) {
       this.props.onFocus();
+    } // Clicks in the media modal or popup components are considered in the editor
+
+  }, {
+    key: "isInspectorElement",
+    value: function isInspectorElement(element) {
+      if (element.closest('.components-color-picker')) {
+        return true;
+      }
+
+      if (element.closest('.block-editor-block-inspector')) {
+        return true;
+      }
+
+      if (element.classList.contains('media-modal')) {
+        return true;
+      }
+
+      return false;
     }
   }, {
     key: "handleFocusOutside",
     value: function handleFocusOutside(ev) {
-      var target = ev.relatedTarget || ev.target; // Ignore clicks in the media modal - consider it inside the editor
+      var target = ev.relatedTarget || ev.target;
 
-      if (target && target.classList.contains('media-modal')) {
+      if (target && this.isInspectorElement(target)) {
         return;
       }
 
