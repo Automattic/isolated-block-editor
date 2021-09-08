@@ -34,7 +34,6 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
  * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
- * @param {() => IsoEditorSelection} opts.getSelection
  * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
  * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
  *
@@ -42,14 +41,7 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( {
-	getBlocks,
-	onRemoteDataChange,
-	settings,
-	getSelection,
-	setPeerSelection,
-	setAvailablePeers,
-} ) {
+async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelection, setAvailablePeers } ) {
 	const { channelId, transport } = settings;
 
 	/** @type string */
@@ -65,17 +57,6 @@ async function initYDoc( {
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
 			transport.sendMessage( { type: 'doc', identity, message } );
-
-			const { selectionStart, selectionEnd } = getSelection() || {};
-			debug( 'sendSelection', selectionStart, selectionEnd );
-			transport.sendMessage( {
-				type: 'selection',
-				identity,
-				selection: {
-					start: selectionStart,
-					end: selectionEnd,
-				},
-			} );
 		},
 	} );
 
@@ -129,6 +110,26 @@ async function initYDoc( {
 				doc.connect();
 			}
 
+			const applyChangesToYjs = ( blocks ) => {
+				if ( doc.getState() !== 'on' ) {
+					return;
+				}
+				debug( 'local changes applied to ydoc' );
+				doc.applyDataChanges( { blocks } );
+			};
+
+			const sendSelection = ( start, end ) => {
+				debug( 'sendSelection', start, end );
+				transport.sendMessage( {
+					type: 'selection',
+					identity,
+					selection: {
+						start,
+						end,
+					},
+				} );
+			};
+
 			const disconnect = () => {
 				transport.disconnect();
 				doc.disconnect();
@@ -136,7 +137,7 @@ async function initYDoc( {
 
 			window.addEventListener( 'beforeunload', () => disconnect() );
 
-			return { doc, disconnect };
+			return { applyChangesToYjs, sendSelection, disconnect };
 		} );
 }
 
@@ -145,13 +146,15 @@ async function initYDoc( {
  * @param {CollaborationSettings} [opts.settings]
  */
 export default function useYjs( { settings } ) {
-	const applyChangesToYjs = useRef( noop );
+	const onBlocksChange = useRef( noop );
+	const onSelectionChange = useRef( noop );
 
-	const { blocks, getBlocks, getSelection } = useSelect( ( select ) => {
+	const { blocks, getBlocks, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
 			blocks: select( 'isolated/editor' ).getBlocks(),
 			getBlocks: select( 'isolated/editor' ).getBlocks,
-			getSelection: select( 'isolated/editor' ).getEditorSelection,
+			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
+			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );
 
@@ -179,28 +182,26 @@ export default function useYjs( { settings } ) {
 			onRemoteDataChange: updateBlocksWithUndo,
 			settings,
 			getBlocks,
-			getSelection,
 			setPeerSelection,
 			setAvailablePeers,
-		} ).then( ( { doc, disconnect } ) => {
+		} ).then( ( { applyChangesToYjs, sendSelection, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
 			};
 
-			applyChangesToYjs.current = ( blocks ) => {
-				if ( doc.getState() !== 'on' ) {
-					return;
-				}
-				debug( 'local changes applied to ydoc' );
-				doc.applyDataChanges( { blocks } );
-			};
+			onBlocksChange.current = applyChangesToYjs;
+			onSelectionChange.current = sendSelection;
 		} );
 
 		return () => onUnmount();
 	}, [] );
 
 	useEffect( () => {
-		applyChangesToYjs.current( blocks );
+		onBlocksChange.current( blocks );
 	}, [ blocks ] );
+
+	useEffect( () => {
+		onSelectionChange.current( selectionStart, selectionEnd );
+	}, [ selectionStart, selectionEnd ] );
 }

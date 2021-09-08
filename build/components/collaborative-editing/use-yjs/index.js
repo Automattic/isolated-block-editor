@@ -59,7 +59,6 @@ var defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B
  * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
- * @param {() => IsoEditorSelection} opts.getSelection
  * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
  * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
  *
@@ -81,13 +80,13 @@ function initYDoc(_x) {
 
 function _initYDoc() {
   _initYDoc = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(_ref) {
-    var getBlocks, onRemoteDataChange, settings, getSelection, setPeerSelection, _setAvailablePeers, channelId, transport, identity, doc, onReceiveMessage;
+    var getBlocks, onRemoteDataChange, settings, setPeerSelection, _setAvailablePeers, channelId, transport, identity, doc, onReceiveMessage;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            getBlocks = _ref.getBlocks, onRemoteDataChange = _ref.onRemoteDataChange, settings = _ref.settings, getSelection = _ref.getSelection, setPeerSelection = _ref.setPeerSelection, _setAvailablePeers = _ref.setAvailablePeers;
+            getBlocks = _ref.getBlocks, onRemoteDataChange = _ref.onRemoteDataChange, settings = _ref.settings, setPeerSelection = _ref.setPeerSelection, _setAvailablePeers = _ref.setAvailablePeers;
             channelId = settings.channelId, transport = settings.transport;
             /** @type string */
 
@@ -105,20 +104,6 @@ function _initYDoc() {
                   type: 'doc',
                   identity: identity,
                   message: message
-                });
-
-                var _ref4 = getSelection() || {},
-                    selectionStart = _ref4.selectionStart,
-                    selectionEnd = _ref4.selectionEnd;
-
-                debug('sendSelection', selectionStart, selectionEnd);
-                transport.sendMessage({
-                  type: 'selection',
-                  identity: identity,
-                  selection: {
-                    start: selectionStart,
-                    end: selectionEnd
-                  }
                 });
               }
             });
@@ -160,8 +145,8 @@ function _initYDoc() {
                 _setAvailablePeers(peers);
               },
               channelId: channelId
-            }).then(function (_ref5) {
-              var isFirstInChannel = _ref5.isFirstInChannel;
+            }).then(function (_ref4) {
+              var isFirstInChannel = _ref4.isFirstInChannel;
               debug("connected (channelId: ".concat(channelId, ")"));
 
               if (isFirstInChannel) {
@@ -180,6 +165,29 @@ function _initYDoc() {
                 doc.connect();
               }
 
+              var applyChangesToYjs = function applyChangesToYjs(blocks) {
+                if (doc.getState() !== 'on') {
+                  return;
+                }
+
+                debug('local changes applied to ydoc');
+                doc.applyDataChanges({
+                  blocks: blocks
+                });
+              };
+
+              var sendSelection = function sendSelection(start, end) {
+                debug('sendSelection', start, end);
+                transport.sendMessage({
+                  type: 'selection',
+                  identity: identity,
+                  selection: {
+                    start: start,
+                    end: end
+                  }
+                });
+              };
+
               var disconnect = function disconnect() {
                 transport.disconnect();
                 doc.disconnect();
@@ -189,7 +197,8 @@ function _initYDoc() {
                 return disconnect();
               });
               return {
-                doc: doc,
+                applyChangesToYjs: applyChangesToYjs,
+                sendSelection: sendSelection,
                 disconnect: disconnect
               };
             }));
@@ -206,18 +215,21 @@ function _initYDoc() {
 
 function useYjs(_ref2) {
   var settings = _ref2.settings;
-  var applyChangesToYjs = (0, _element.useRef)(_lodash.noop);
+  var onBlocksChange = (0, _element.useRef)(_lodash.noop);
+  var onSelectionChange = (0, _element.useRef)(_lodash.noop);
 
   var _useSelect = (0, _data.useSelect)(function (select) {
     return {
       blocks: select('isolated/editor').getBlocks(),
       getBlocks: select('isolated/editor').getBlocks,
-      getSelection: select('isolated/editor').getEditorSelection
+      selectionStart: select('core/block-editor').getSelectionStart(),
+      selectionEnd: select('core/block-editor').getSelectionEnd()
     };
   }, []),
       blocks = _useSelect.blocks,
       getBlocks = _useSelect.getBlocks,
-      getSelection = _useSelect.getSelection;
+      selectionStart = _useSelect.selectionStart,
+      selectionEnd = _useSelect.selectionEnd;
 
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       setAvailablePeers = _useDispatch.setAvailablePeers,
@@ -243,11 +255,11 @@ function useYjs(_ref2) {
       onRemoteDataChange: updateBlocksWithUndo,
       settings: settings,
       getBlocks: getBlocks,
-      getSelection: getSelection,
       setPeerSelection: setPeerSelection,
       setAvailablePeers: setAvailablePeers
     }).then(function (_ref3) {
-      var doc = _ref3.doc,
+      var applyChangesToYjs = _ref3.applyChangesToYjs,
+          sendSelection = _ref3.sendSelection,
           disconnect = _ref3.disconnect;
 
       onUnmount = function onUnmount() {
@@ -255,23 +267,18 @@ function useYjs(_ref2) {
         disconnect();
       };
 
-      applyChangesToYjs.current = function (blocks) {
-        if (doc.getState() !== 'on') {
-          return;
-        }
-
-        debug('local changes applied to ydoc');
-        doc.applyDataChanges({
-          blocks: blocks
-        });
-      };
+      onBlocksChange.current = applyChangesToYjs;
+      onSelectionChange.current = sendSelection;
     });
     return function () {
       return onUnmount();
     };
   }, []);
   (0, _element.useEffect)(function () {
-    applyChangesToYjs.current(blocks);
+    onBlocksChange.current(blocks);
   }, [blocks]);
+  (0, _element.useEffect)(function () {
+    onSelectionChange.current(selectionStart, selectionEnd);
+  }, [selectionStart, selectionEnd]);
 }
 //# sourceMappingURL=index.js.map
