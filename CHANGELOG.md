@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2021-09-08
+
 ### Breaking changes
 
 - Change collaborative editing features to be enabled via a top-level named export [<CollaborativeEditing>](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/collaborative-editing) to avoid unnecessary bundle bloat.
@@ -21,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix handling of initial content from `onLoad` when collaborative editing is enabled
 - Improved reliability of collaborative editing when multiple peers are typing simultaneously
 - Fix blur event when clicking in some UI components in the block inspector
+
+### Changed
+- Updated all @wordpress packages to latest
 
 ## [2.3.0] - 2021-07-29
 
