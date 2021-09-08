@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Show outline around blocks that are currently being modified by peers when collaborative editing.
 - Presence avatars for collaborative editing peers.
+- Update peer caret position indicators more frequently while collaborative editing.
 
 ### Fixed
 
