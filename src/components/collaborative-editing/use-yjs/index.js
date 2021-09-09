@@ -17,6 +17,7 @@ import { useEffect, useRef } from '@wordpress/element';
  */
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
+import { calculateNewPosition } from './algorithms/relative-position';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
@@ -149,16 +150,53 @@ export default function useYjs( { settings } ) {
 	const onBlocksChange = useRef( noop );
 	const onSelectionChange = useRef( noop );
 
-	const { blocks, getBlocks, selectionStart, selectionEnd } = useSelect( ( select ) => {
+	const { blocks, getBlocks, getBlock, getSelection, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
 			blocks: select( 'isolated/editor' ).getBlocks(),
 			getBlocks: select( 'isolated/editor' ).getBlocks,
+			getBlock: select( 'core/block-editor' ).getBlock,
+			getSelection: () => ( {
+				start: select( 'core/block-editor' ).getSelectionStart(),
+				end: select( 'core/block-editor' ).getSelectionEnd(),
+			} ),
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );
 
 	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
+	const { selectionChange } = useDispatch( 'core/block-editor' );
+
+	const onRemoteDataChange = ( blocks ) => {
+		const { start, end } = getSelection();
+
+		// Note that the attribute key from a WPBlockSelection (start.attributeKey) does not necessarily
+		// match an actual attribute key on the block. This can happen when the `identifier` prop is
+		// not specified on the RichText component.
+		const oldText = start?.attributeKey ? getBlock( start.clientId ).attributes[ start.attributeKey ] : undefined;
+
+		// TODO: Once we can use @wordpress/data v6.1.0, the rest of this function should be wrapped
+		// in a `batch()` transaction so the caret adjustment can be fully synchronous.
+		// https://github.com/WordPress/gutenberg/blob/trunk/packages/data/CHANGELOG.md#610-2021-09-09
+
+		updateBlocksWithUndo( blocks );
+
+		// If possible, try to intelligently infer my new caret position after it might have been
+		// affected by an incoming peer edit.
+		if ( oldText !== undefined && getBlock( start.clientId ) ) {
+			const newText = getBlock( start.clientId ).attributes[ start.attributeKey ];
+			const newStartOffset = calculateNewPosition( oldText, newText, start.offset );
+			const newEndOffset =
+				end.offset !== start.offset ? calculateNewPosition( oldText, newText, end.offset ) : newStartOffset;
+
+			if ( start.offset !== newStartOffset || end.offset !== newEndOffset ) {
+				debug(
+					`smart shifted caret position from ${ start.offset },${ end.offset } to ${ newStartOffset },${ newEndOffset }`
+				);
+				selectionChange( start.clientId, start.attributeKey, newStartOffset, newEndOffset );
+			}
+		}
+	};
 
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
@@ -179,7 +217,7 @@ export default function useYjs( { settings } ) {
 		let onUnmount = noop;
 
 		initYDoc( {
-			onRemoteDataChange: updateBlocksWithUndo,
+			onRemoteDataChange,
 			settings,
 			getBlocks,
 			setPeerSelection,
