@@ -10,13 +10,16 @@ const ClickOutsideWrapper = withFocusOutside(class extends Component {
 
 
   isInspectorElement(element) {
+    // Inside a colour picker popover
     if (element.closest('.components-color-picker')) {
       return true;
-    }
+    } // Inside the inspector
 
-    if (element.closest('.block-editor-block-inspector')) {
+
+    if (element.closest('.block-editor-block-inspector') || element.closest('.iso-inspector')) {
       return true;
-    }
+    } // In the media modal
+
 
     if (element.classList.contains('media-modal')) {
       return true;
