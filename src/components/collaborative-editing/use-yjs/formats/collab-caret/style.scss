@@ -34,6 +34,7 @@ mark.iso-editor-collab-caret::after {
 	text-overflow: ellipsis;
 	min-height: 8px;
 	padding: 2px 4px 3px;
+	border-radius: 2px;
 	content: attr( title ); // identity
 	color: white;
 	vertical-align: top;
