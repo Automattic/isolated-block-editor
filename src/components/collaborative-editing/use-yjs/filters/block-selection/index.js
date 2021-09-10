@@ -14,12 +14,16 @@ import './style.scss';
  */
 const addSelectionBorders = ( OriginalComponent ) => {
 	return ( props ) => {
-		const isSelected = useSelect(
+		const { isSelected, color } = useSelect(
 			( select ) => {
 				const peers = select( 'isolated/editor' ).getPeers();
-				return Object.values( peers ).some(
+				const matchedPeer = Object.values( peers ).find(
 					( peer ) => peer.start?.clientId === props.clientId && peer.end?.clientId === props.clientId
 				);
+				return {
+					isSelected: !! matchedPeer,
+					color: matchedPeer?.color,
+				};
 			},
 			[ props.clientId ]
 		);
@@ -27,6 +31,12 @@ const addSelectionBorders = ( OriginalComponent ) => {
 			<OriginalComponent
 				{ ...props }
 				className={ isSelected ? 'is-iso-editor-collab-peer-selected' : undefined }
+				wrapperProps={ {
+					...props.wrapperProps,
+					style: {
+						'--iso-editor-collab-peer-block-color': color,
+					},
+				} }
 			/>
 		);
 	};
