@@ -33,7 +33,7 @@ The Isolated Block Editor is provided in three forms:
 Requires: Gutenberg 10.6.0, tested up to Gutenberg 10.9.0 RC 1
 
 Examples:
-- [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor
+- [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/blob/trunk/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor
 - [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
 - [Gutenberg Chrome Extension](https://github.com/Automattic/gutenberg-everywhere-chrome/) - a Chrome extension that allows Gutenberg to be used on any page
 - [Gutenberg Desktop](https://github.com/Automattic/gutenberg-desktop/) - a desktop editor that supports the loading and saving of HTML and Markdown files
