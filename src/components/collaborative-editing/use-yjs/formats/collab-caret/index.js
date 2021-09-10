@@ -12,6 +12,7 @@ import { applyFormat, registerFormatType } from '@wordpress/rich-text';
 /**
  * Internal dependencies
  */
+import { shouldUseWhiteText } from './color-utils';
 import './style.scss';
 
 const FORMAT_NAME = 'isolated/collab-caret';
@@ -48,7 +49,12 @@ export function applyCarets( record, carets = [] ) {
 						'is-shifted': isShifted,
 					} ),
 					title: label,
-					style: `--iso-editor-collab-caret-color: ${ color || '#2e3d48' }`,
+					style: [
+						`--iso-editor-collab-caret-color: ${ color || '#2e3d48' };`,
+						`--iso-editor-collab-caret-label-text-color: ${
+							shouldUseWhiteText( color ) ? '#fff' : 'currentColor'
+						};`,
+					].join( ' ' ),
 				},
 			},
 			start,
