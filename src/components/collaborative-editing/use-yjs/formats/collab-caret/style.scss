@@ -15,8 +15,8 @@ mark.iso-editor-collab-caret::before {
 	position: absolute;
 	content: '';
 	font-size: 1em;
-	width: 2px;
-	background: var( --iso-editor-collab-caret-color );
+	width: 1px;
+	background: currentColor;
 }
 
 mark.iso-editor-collab-caret.is-shifted::before {
