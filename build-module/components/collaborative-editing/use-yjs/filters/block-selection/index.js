@@ -16,21 +16,33 @@ import './style.scss';
 
 const addSelectionBorders = OriginalComponent => {
   return props => {
-    const isSelected = useSelect(select => {
+    const {
+      isSelected,
+      color
+    } = useSelect(select => {
       const peers = select('isolated/editor').getPeers();
-      return Object.values(peers).some(peer => {
+      const matchedPeer = Object.values(peers).find(peer => {
         var _peer$start, _peer$end;
 
         return ((_peer$start = peer.start) === null || _peer$start === void 0 ? void 0 : _peer$start.clientId) === props.clientId && ((_peer$end = peer.end) === null || _peer$end === void 0 ? void 0 : _peer$end.clientId) === props.clientId;
       });
+      return {
+        isSelected: !!matchedPeer,
+        color: matchedPeer === null || matchedPeer === void 0 ? void 0 : matchedPeer.color
+      };
     }, [props.clientId]);
     return createElement(OriginalComponent, _extends({}, props, {
-      className: isSelected ? 'is-iso-editor-collab-peer-selected' : undefined
+      className: isSelected ? 'is-iso-editor-collab-peer-selected' : undefined,
+      wrapperProps: {
+        style: {
+          '--iso-editor-collab-peer-block-color': color
+        }
+      }
     }));
   };
 };
 
 export const addFilterCollabBlockSelection = () => {
-  addFilter('editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders);
+  addFilter('editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders, 9);
 };
 //# sourceMappingURL=index.js.map

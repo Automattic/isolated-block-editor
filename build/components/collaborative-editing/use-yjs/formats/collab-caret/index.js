@@ -16,6 +16,8 @@ var _classnames = _interopRequireDefault(require("classnames"));
 
 var _richText = require("@wordpress/rich-text");
 
+var _colorUtils = require("./color-utils");
+
 require("./style.scss");
 
 /**
@@ -66,7 +68,7 @@ function applyCarets(record) {
           'is-shifted': isShifted
         }),
         title: label,
-        style: "--iso-editor-collab-caret-color: ".concat(color || '#2e3d48')
+        style: ["--iso-editor-collab-caret-color: ".concat(color || '#2e3d48', ";"), "--iso-editor-collab-caret-label-text-color: ".concat((0, _colorUtils.shouldUseWhiteText)(color) ? '#fff' : 'currentColor', ";")].join(' ')
       }
     }, start, end);
   });
