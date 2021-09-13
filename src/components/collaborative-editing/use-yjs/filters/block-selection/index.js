@@ -32,7 +32,6 @@ const addSelectionBorders = ( OriginalComponent ) => {
 				{ ...props }
 				className={ isSelected ? 'is-iso-editor-collab-peer-selected' : undefined }
 				wrapperProps={ {
-					...props.wrapperProps,
 					style: {
 						'--iso-editor-collab-peer-block-color': color,
 					},
@@ -43,5 +42,5 @@ const addSelectionBorders = ( OriginalComponent ) => {
 };
 
 export const addFilterCollabBlockSelection = () => {
-	addFilter( 'editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders );
+	addFilter( 'editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders, 9 );
 };
