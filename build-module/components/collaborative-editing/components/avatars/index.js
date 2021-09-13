@@ -16,14 +16,16 @@ import './style.scss';
 export function CollaborativeEditingAvatars({
   peers
 }) {
-  const MAX_AVATAR_COUNT = 3;
+  const MAX_AVATAR_COUNT = 4;
+  const shouldOverflow = peers.length > MAX_AVATAR_COUNT;
+  const actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
   return createElement("div", {
     className: "iso-editor-collab-avatars"
-  }, createElement(VisuallyHidden, null, "Currently editing:"), peers.slice(0, MAX_AVATAR_COUNT).map(peer => createElement(CollaborativeEditingAvatar, {
+  }, createElement(VisuallyHidden, null, "Currently editing:"), peers.slice(0, actualAvatarCount).map(peer => createElement(CollaborativeEditingAvatar, {
     key: peer.id,
     peer: peer
-  })), peers.length > MAX_AVATAR_COUNT && createElement(CollaborativeEditingAvatarsOverflow, {
-    peers: peers === null || peers === void 0 ? void 0 : peers.slice(MAX_AVATAR_COUNT)
+  })), shouldOverflow && createElement(CollaborativeEditingAvatarsOverflow, {
+    peers: peers === null || peers === void 0 ? void 0 : peers.slice(actualAvatarCount)
   }));
 }
 export function CollaborativeEditingAvatar({

@@ -13,19 +13,19 @@ import './style.scss';
  * @param {import("../..").AvailablePeer[]} props.peers
  */
 export function CollaborativeEditingAvatars( { peers } ) {
-	const MAX_AVATAR_COUNT = 3;
+	const MAX_AVATAR_COUNT = 4;
+	const shouldOverflow = peers.length > MAX_AVATAR_COUNT;
+	const actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
 
 	return (
 		<div className="iso-editor-collab-avatars">
 			<VisuallyHidden>Currently editing:</VisuallyHidden>
 
-			{ peers.slice( 0, MAX_AVATAR_COUNT ).map( ( peer ) => (
+			{ peers.slice( 0, actualAvatarCount ).map( ( peer ) => (
 				<CollaborativeEditingAvatar key={ peer.id } peer={ peer } />
 			) ) }
 
-			{ peers.length > MAX_AVATAR_COUNT && (
-				<CollaborativeEditingAvatarsOverflow peers={ peers?.slice( MAX_AVATAR_COUNT ) } />
-			) }
+			{ shouldOverflow && <CollaborativeEditingAvatarsOverflow peers={ peers?.slice( actualAvatarCount ) } /> }
 		</div>
 	);
 }

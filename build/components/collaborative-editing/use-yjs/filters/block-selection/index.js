@@ -29,22 +29,34 @@ import { createElement } from "@wordpress/element";
  */
 var addSelectionBorders = function addSelectionBorders(OriginalComponent) {
   return function (props) {
-    var isSelected = (0, _data.useSelect)(function (select) {
+    var _useSelect = (0, _data.useSelect)(function (select) {
       var peers = select('isolated/editor').getPeers();
-      return Object.values(peers).some(function (peer) {
+      var matchedPeer = Object.values(peers).find(function (peer) {
         var _peer$start, _peer$end;
 
         return ((_peer$start = peer.start) === null || _peer$start === void 0 ? void 0 : _peer$start.clientId) === props.clientId && ((_peer$end = peer.end) === null || _peer$end === void 0 ? void 0 : _peer$end.clientId) === props.clientId;
       });
-    }, [props.clientId]);
+      return {
+        isSelected: !!matchedPeer,
+        color: matchedPeer === null || matchedPeer === void 0 ? void 0 : matchedPeer.color
+      };
+    }, [props.clientId]),
+        isSelected = _useSelect.isSelected,
+        color = _useSelect.color;
+
     return createElement(OriginalComponent, (0, _extends2["default"])({}, props, {
-      className: isSelected ? 'is-iso-editor-collab-peer-selected' : undefined
+      className: isSelected ? 'is-iso-editor-collab-peer-selected' : undefined,
+      wrapperProps: {
+        style: {
+          '--iso-editor-collab-peer-block-color': color
+        }
+      }
     }));
   };
 };
 
 var addFilterCollabBlockSelection = function addFilterCollabBlockSelection() {
-  (0, _hooks.addFilter)('editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders);
+  (0, _hooks.addFilter)('editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders, 9);
 };
 
 exports.addFilterCollabBlockSelection = addFilterCollabBlockSelection;

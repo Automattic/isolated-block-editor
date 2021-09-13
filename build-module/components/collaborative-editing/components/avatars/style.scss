@@ -2,6 +2,7 @@
 @import '@wordpress/base-styles/_variables';
 
 $avatarSize: 32px;
+$avatarBorderWidth: 2px;
 
 .iso-editor-collab-avatars {
 	display: flex;
@@ -16,7 +17,7 @@ $avatarSize: 32px;
 	width: $avatarSize;
 	height: $avatarSize;
 	border-radius: 50%;
-	border-width: 2px;
+	border-width: $avatarBorderWidth;
 	border-style: solid;
 
 	& + & {
@@ -61,9 +62,13 @@ $avatarSize: 32px;
 }
 
 .iso-editor-collab-avatars__overflow {
+	display: flex;
+	align-items: center;
 	margin-left: 4px;
-	height: 100%;
+	height: $avatarSize + ( $avatarBorderWidth * 2 );
 	cursor: default;
+	font-size: 14px;
+	line-height: 1.4;
 }
 
 .iso-editor-collab-avatars__overflow-list {
@@ -74,14 +79,12 @@ $avatarSize: 32px;
 
 .iso-editor-collab-avatars__overflow-list-item {
 	margin: 0;
-	line-height: 1;
 
 	& + & {
-		margin-top: 6px;
+		margin-top: 2px;
 	}
 }
 
 .iso-editor-collab-avatars__overflow-more {
-	margin: 6px 0 0;
-	line-height: 1;
+	margin: 2px 0 0;
 }

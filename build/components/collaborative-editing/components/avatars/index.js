@@ -36,16 +36,18 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  */
 function CollaborativeEditingAvatars(_ref) {
   var peers = _ref.peers;
-  var MAX_AVATAR_COUNT = 3;
+  var MAX_AVATAR_COUNT = 4;
+  var shouldOverflow = peers.length > MAX_AVATAR_COUNT;
+  var actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
   return createElement("div", {
     className: "iso-editor-collab-avatars"
-  }, createElement(_components.VisuallyHidden, null, "Currently editing:"), peers.slice(0, MAX_AVATAR_COUNT).map(function (peer) {
+  }, createElement(_components.VisuallyHidden, null, "Currently editing:"), peers.slice(0, actualAvatarCount).map(function (peer) {
     return createElement(CollaborativeEditingAvatar, {
       key: peer.id,
       peer: peer
     });
-  }), peers.length > MAX_AVATAR_COUNT && createElement(CollaborativeEditingAvatarsOverflow, {
-    peers: peers === null || peers === void 0 ? void 0 : peers.slice(MAX_AVATAR_COUNT)
+  }), shouldOverflow && createElement(CollaborativeEditingAvatarsOverflow, {
+    peers: peers === null || peers === void 0 ? void 0 : peers.slice(actualAvatarCount)
   }));
 }
 
