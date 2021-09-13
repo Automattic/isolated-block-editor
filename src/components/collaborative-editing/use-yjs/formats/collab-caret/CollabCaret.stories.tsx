@@ -1,3 +1,5 @@
+import type { Story } from '@storybook/react';
+
 import { applyCarets, settings } from '.';
 
 export default {
@@ -30,7 +32,12 @@ function CollabCaret( { label, color } ) {
 	);
 }
 
-const Template = ( props ) => {
+type Props = {
+	label: string;
+	color: string;
+};
+
+const Template: Story< Props > = ( props ) => {
 	return <CollabCaret { ...props } />;
 };
 
