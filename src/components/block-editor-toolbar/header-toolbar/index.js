@@ -71,7 +71,7 @@ function HeaderToolbar( props ) {
 
 	return (
 		<NavigableToolbar className="edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>
-			{ ( inserter || undo || navigation || toc ) && (
+			{ ( inserter || undo || navigation || toc || selectorTool ) && (
 				<div className="edit-post-header-toolbar__left">
 					{ inserter && (
 						<ToolbarItem

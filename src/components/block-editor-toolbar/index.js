@@ -14,7 +14,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import MoreMenu from './more-menu';
 import HeaderToolbar from './header-toolbar';
 import Inspector from './inspector';
-import ToolbarSlot from './slot';
 import './style.scss';
 
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
