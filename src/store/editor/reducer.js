@@ -68,6 +68,7 @@ const DEFAULT_STATE = {
 			inspector: true,
 			navigation: false,
 			documentInspector: false,
+			selectorTool: false,
 		},
 		moreMenu: {
 			editor: false,

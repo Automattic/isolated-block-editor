@@ -58,8 +58,6 @@ const BlockEditorToolbar = ( props ) => {
 				</div>
 
 				<div className="edit-post-header__settings">
-					<ToolbarSlot.Slot />
-
 					{ inspector && (
 						<Button
 							icon={ cog }
