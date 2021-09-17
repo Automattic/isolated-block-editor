@@ -154,7 +154,7 @@ export function initializeIsoEditor() {
  * @callback OnLoad
  * @param {OnParse} parse - Current block parser
  * @param {OnParse} rawHandler - Current raw handler
- * @returns {object[]}
+ * @returns {object[]|Promise}
  */
 
 /**
