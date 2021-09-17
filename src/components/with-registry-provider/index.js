@@ -12,7 +12,6 @@ import { storeConfig as coreEditorStoreConfig } from '@wordpress/editor';
  */
 import storeConfig from '../../store';
 import applyMiddlewares from '../../store/middlewares';
-import applyBlockEditorMiddlewares from './middlewares';
 import reusableStore from './reusable-store';
 import applyDefaultSettings from '../default-settings';
 import decoratedEditor from '../../store/core-editor';
@@ -89,8 +88,6 @@ const withRegistryProvider = createHigherOrderComponent(
 				// This should be removed after the refactoring of the effects to controls.
 				applyMiddlewares( store );
 				setSubRegistry( newRegistry );
-
-				applyBlockEditorMiddlewares( blockEditorStore );
 
 				return function cleanup() {
 					registries = registries.filter( ( item ) => item !== store );
