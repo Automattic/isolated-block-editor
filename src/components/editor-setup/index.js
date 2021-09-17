@@ -87,7 +87,8 @@ export default compose( [
 							settings.editor,
 							settings.iso,
 							blockTypes,
-							hasFixedToolbar || settings.editor?.hasFixedToolbar || false
+							// Use the default preference, if set, otherwise use the feature
+							settings.iso?.defaultPreferences?.fixedToolbar !== undefined ? settings.iso?.defaultPreferences?.fixedToolbar : hasFixedToolbar
 						),
 
 						// Reusable blocks
