@@ -15,7 +15,6 @@ import { useRef, useCallback } from '@wordpress/element';
  */
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
-import './style.scss';
 
 const preventDefault = ( event ) => {
 	event.preventDefault();
