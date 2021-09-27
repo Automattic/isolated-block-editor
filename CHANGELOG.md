@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+### [2.4.2] - 2021-09-27
+
+### Changed
+
 - Tweaks to collaborative editing UI.
 
 ## [2.4.1] - 2021-09-09
@@ -35,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix blur event when clicking in some UI components in the block inspector
 
 ### Changed
+
 - Updated all @wordpress packages to latest
 
 ## [2.3.0] - 2021-07-29
@@ -50,13 +55,16 @@ Skipped due to mishandling of release.
 ## [2.1.0] - 2021-07-29
 
 ### Added
+
 - `ToolbarSlot` added for toolbar customisation
 - Add `getEditCount` selector to help detect changes
 
 ### Changed
+
 - Updated all @wordpress packages to latest
 
 ## [2.0.0] - 2021-07-20
 
 ### Changed
+
 - Package renamed to @automattic/isolated-block-editor
