@@ -72,7 +72,6 @@ export default function applyDefaultSettings( settings ) {
 
 			// Default to top toolbar
 			defaultPreferences: {
-				fixedToolbar: true,
 				...( iso?.defaultPreferences ?? {} ),
 			},
 
