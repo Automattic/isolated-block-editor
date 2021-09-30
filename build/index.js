@@ -55,6 +55,8 @@ var _data = require("@wordpress/data");
 
 require("@wordpress/format-library");
 
+var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
+
 var _blockEditorContainer = _interopRequireDefault(require("./components/block-editor-container"));
 
 var _withRegistryProvider = _interopRequireDefault(require("./components/with-registry-provider"));
@@ -232,16 +234,14 @@ function IsolatedBlockEditor(props) {
       settings = props.settings,
       params = (0, _objectWithoutProperties2["default"])(props, _excluded);
   initializeIsoEditor();
-  return createElement(_element.StrictMode, null, createElement("div", {
-    className: "interface-interface-skeleton__content"
-  }), createElement(_contentSaver["default"], {
+  return createElement(_element.StrictMode, null, createElement(_keyboardShortcuts.ShortcutProvider, null, createElement(_contentSaver["default"], {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
   }), createElement(_editorSetup["default"], {
     settings: settings
   }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], (0, _extends2["default"])({}, params, {
     settings: settings
-  }), children)));
+  }), children))));
 }
 
 var _default = (0, _withRegistryProvider["default"])(IsolatedBlockEditor);

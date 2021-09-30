@@ -13,6 +13,7 @@ import { registerCoreBlocks } from '@wordpress/block-library';
 import { addFilter } from '@wordpress/hooks';
 import { use } from '@wordpress/data';
 import '@wordpress/format-library';
+import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
 /**
  * Internal dependencies
  */
@@ -179,16 +180,14 @@ function IsolatedBlockEditor(props) {
     ...params
   } = props;
   initializeIsoEditor();
-  return createElement(StrictMode, null, createElement("div", {
-    className: "interface-interface-skeleton__content"
-  }), createElement(ContentSaver, {
+  return createElement(StrictMode, null, createElement(ShortcutProvider, null, createElement(ContentSaver, {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
   }), createElement(EditorSetup, {
     settings: settings
   }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(BlockEditorContainer, _extends({}, params, {
     settings: settings
-  }), children)));
+  }), children))));
 }
 
 export default withRegistryProvider(IsolatedBlockEditor);

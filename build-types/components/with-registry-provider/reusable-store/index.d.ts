@@ -9,6 +9,4 @@ declare var _default: {
     selectors: typeof selectors;
 };
 export default _default;
-import * as actions from "./actions";
-import * as selectors from "./selectors";
 //# sourceMappingURL=index.d.ts.map
