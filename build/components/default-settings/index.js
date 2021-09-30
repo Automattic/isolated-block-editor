@@ -62,7 +62,9 @@ function applyDefaultSettings(settings) {
         // @ts-ignore */}
         toc: false,
         // @ts-ignore */}
-        undo: true
+        undo: true,
+        // @ts-ignore */}
+        selectorTool: false
       }, (_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {}),
       // Nothing appears in the 'more menu'
       moreMenu: getMenu(iso === null || iso === void 0 ? void 0 : iso.moreMenu, _objectSpread({
@@ -74,9 +76,7 @@ function applyDefaultSettings(settings) {
       // No link menu
       linkMenu: (_iso$linkMenu = iso === null || iso === void 0 ? void 0 : iso.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
       // Default to top toolbar
-      defaultPreferences: _objectSpread({
-        fixedToolbar: true
-      }, (_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {}),
+      defaultPreferences: _objectSpread({}, (_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {}),
       allowApi: (_iso$allowApi = iso === null || iso === void 0 ? void 0 : iso.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
       // No default pattern
       currentPattern: (_iso$currentPattern = iso === null || iso === void 0 ? void 0 : iso.currentPattern) !== null && _iso$currentPattern !== void 0 ? _iso$currentPattern : null,

@@ -7,6 +7,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _isPromise = _interopRequireDefault(require("is-promise"));
+
 var _components = require("@wordpress/components");
 
 var _data = require("@wordpress/data");
@@ -26,6 +32,10 @@ var _blockEditor2 = _interopRequireDefault(require("../block-editor"));
 var _editorContent = _interopRequireDefault(require("./editor-content"));
 
 import { createElement } from "@wordpress/element";
+
+/**
+ * External dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -54,8 +64,8 @@ import { createElement } from "@wordpress/element";
  * @param {object[]} blocks - Editor content to save
  * @param {object} [options]
  */
-function getInitialContent(settings, content) {
-  return (0, _editorContent["default"])(settings.iso.patterns, settings.iso.currentPattern, settings.editor.template, content);
+function getInitialContent(_x, _x2) {
+  return _getInitialContent.apply(this, arguments);
 }
 /**
  * The editor itself, including toolbar
@@ -74,6 +84,30 @@ function getInitialContent(settings, content) {
  */
 
 
+function _getInitialContent() {
+  _getInitialContent = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(settings, loader) {
+    var contentLoader;
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            contentLoader = (0, _isPromise["default"])(loader) ? loader : new Promise(function (resolve) {
+              resolve(loader ? loader(_blocks.parse, _blocks.rawHandler) : []);
+            });
+            return _context2.abrupt("return", contentLoader.then(function (content) {
+              return (0, _editorContent["default"])(settings.iso.patterns, settings.iso.currentPattern, settings.editor.template, content);
+            }));
+
+          case 2:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _getInitialContent.apply(this, arguments);
+}
+
 function BlockEditorContents(props) {
   var blocks = props.blocks,
       updateBlocksWithoutUndo = props.updateBlocksWithoutUndo,
@@ -87,11 +121,37 @@ function BlockEditorContents(props) {
       onLoad = props.onLoad; // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 
   (0, _element.useEffect)(function () {
-    var initialContent = getInitialContent(settings, onLoad ? onLoad(_blocks.parse, _blocks.rawHandler) : []);
+    var loadData = /*#__PURE__*/function () {
+      var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
+        var initialContent;
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return getInitialContent(settings, onLoad);
 
-    if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
-      updateBlocksWithoutUndo(initialContent);
-    }
+              case 2:
+                initialContent = _context.sent;
+
+                if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
+                  updateBlocksWithoutUndo(initialContent);
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function loadData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    loadData();
   }, []);
   return createElement(_blockEditor.BlockEditorProvider, {
     value: blocks || [],

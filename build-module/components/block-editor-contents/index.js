@@ -1,8 +1,13 @@
 import { createElement } from "@wordpress/element";
 
 /**
+ * External dependencies
+ */
+import isPromise from 'is-promise';
+/**
  * WordPress dependencies
  */
+
 import { Popover } from '@wordpress/components';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
@@ -36,8 +41,13 @@ import getInitialEditorContent from './editor-content';
  * @param {object} [options]
  */
 
-function getInitialContent(settings, content) {
-  return getInitialEditorContent(settings.iso.patterns, settings.iso.currentPattern, settings.editor.template, content);
+async function getInitialContent(settings, loader) {
+  const contentLoader = isPromise(loader) ? loader : new Promise(resolve => {
+    resolve(loader ? loader(parse, rawHandler) : []);
+  });
+  return contentLoader.then(content => {
+    return getInitialEditorContent(settings.iso.patterns, settings.iso.currentPattern, settings.editor.template, content);
+  });
 }
 /**
  * The editor itself, including toolbar
@@ -73,11 +83,15 @@ function BlockEditorContents(props) {
   } = props; // Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
 
   useEffect(() => {
-    const initialContent = getInitialContent(settings, onLoad ? onLoad(parse, rawHandler) : []);
+    const loadData = async () => {
+      const initialContent = await getInitialContent(settings, onLoad);
 
-    if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
-      updateBlocksWithoutUndo(initialContent);
-    }
+      if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
+        updateBlocksWithoutUndo(initialContent);
+      }
+    };
+
+    loadData();
   }, []);
   return createElement(BlockEditorProvider, {
     value: blocks || [],

@@ -29,8 +29,6 @@ var _store = _interopRequireDefault(require("../../store"));
 
 var _middlewares = _interopRequireDefault(require("../../store/middlewares"));
 
-var _middlewares2 = _interopRequireDefault(require("./middlewares"));
-
 var _reusableStore = _interopRequireDefault(require("./reusable-store"));
 
 var _defaultSettings = _interopRequireDefault(require("../default-settings"));
@@ -109,7 +107,6 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
 
       (0, _middlewares["default"])(store);
       setSubRegistry(newRegistry);
-      (0, _middlewares2["default"])(blockEditorStore);
       return function cleanup() {
         registries = registries.filter(function (item) {
           return item !== store;

@@ -8,6 +8,7 @@
  * @property {boolean} [navigation] - Enable or disable the toolbar navigation button
  * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
  * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
+ * @property {boolean} [selectorTool] - Enable or disable the selector tool
  * @property {boolean} [documentInspector] - Enable or disable the document inspector
  */
 /**
@@ -85,6 +86,10 @@ export type ToolbarSettings = {
      * - Enable or disable the toolbar undo/redo buttons
      */
     undo?: boolean | undefined;
+    /**
+     * - Enable or disable the selector tool
+     */
+    selectorTool?: boolean | undefined;
     /**
      * - Enable or disable the document inspector
      */
@@ -211,7 +216,7 @@ export type OnParse = (content: string) => object[];
 /**
  * Initial load blocks callback
  */
-export type OnLoad = (parse: OnParse, rawHandler: OnParse) => object[];
+export type OnLoad = (parse: OnParse, rawHandler: OnParse) => object[] | Promise<any>;
 /**
  * Error callback
  */

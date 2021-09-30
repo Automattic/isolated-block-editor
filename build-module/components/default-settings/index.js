@@ -53,6 +53,8 @@ export default function applyDefaultSettings(settings) {
         toc: false,
         // @ts-ignore */}
         undo: true,
+        // @ts-ignore */}
+        selectorTool: false,
         ...((_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {})
       },
       // Nothing appears in the 'more menu'
@@ -66,9 +68,7 @@ export default function applyDefaultSettings(settings) {
       // No link menu
       linkMenu: (_iso$linkMenu = iso === null || iso === void 0 ? void 0 : iso.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
       // Default to top toolbar
-      defaultPreferences: {
-        fixedToolbar: true,
-        ...((_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
+      defaultPreferences: { ...((_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
       },
       allowApi: (_iso$allowApi = iso === null || iso === void 0 ? void 0 : iso.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
       // No default pattern

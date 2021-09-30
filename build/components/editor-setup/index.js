@@ -95,10 +95,11 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _r
     isEditing: isEditing(),
     topToolbar: hasFixedToolbar,
     currentSettings: (0, _element.useMemo)(function () {
-      var _settings$editor;
+      var _settings$iso, _settings$iso$default, _settings$iso2, _settings$iso2$defaul;
 
       return _objectSpread(_objectSpread({}, settings), {}, {
-        editor: _objectSpread(_objectSpread({}, (0, _editorSettings["default"])(settings.editor, settings.iso, blockTypes, hasFixedToolbar || ((_settings$editor = settings.editor) === null || _settings$editor === void 0 ? void 0 : _settings$editor.hasFixedToolbar) || false)), {}, {
+        editor: _objectSpread(_objectSpread({}, (0, _editorSettings["default"])(settings.editor, settings.iso, blockTypes, // Use the default preference, if set, otherwise use the feature
+        ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$default = _settings$iso.defaultPreferences) === null || _settings$iso$default === void 0 ? void 0 : _settings$iso$default.fixedToolbar) !== undefined ? (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$defaul = _settings$iso2.defaultPreferences) === null || _settings$iso2$defaul === void 0 ? void 0 : _settings$iso2$defaul.fixedToolbar : hasFixedToolbar)), {}, {
           // Reusable blocks
           __experimentalReusableBlocks: [],
           __experimentalFetchReusableBlocks: false // ...( settings.editor?.__experimentalReusableBlocks === false

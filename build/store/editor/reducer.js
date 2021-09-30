@@ -79,7 +79,8 @@ var DEFAULT_STATE = {
       undo: true,
       inspector: true,
       navigation: false,
-      documentInspector: false
+      documentInspector: false,
+      selectorTool: false
     },
     moreMenu: {
       editor: false,
