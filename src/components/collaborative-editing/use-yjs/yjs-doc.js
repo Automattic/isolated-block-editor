@@ -5,9 +5,19 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
 
 export function createDocument( { identity, applyDataChanges, getData, sendMessage } ) {
 	const doc = new yjs.Doc();
+
+	const setupUndoManagerOnReady = ( state ) => {
+		if ( state === 'on' ) {
+			const postMap = doc.getMap( 'post' );
+			const undoManager = new yjs.UndoManager( postMap, { trackedOrigins: new Set( [ identity ] ) } );
+			postUndoManager = undoManager;
+		}
+	};
+
 	let state = 'off';
+	let postUndoManager;
 	let listeners = [];
-	let stateListeners = [];
+	let stateListeners = [ setupUndoManagerOnReady ];
 
 	doc.on( 'update', ( update, origin ) => {
 		if ( origin === identity && state === 'on' ) {
@@ -124,6 +134,14 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 
 		getState() {
 			return state;
+		},
+
+		undo() {
+			postUndoManager?.undo();
+		},
+
+		redo() {
+			postUndoManager?.redo();
 		},
 	};
 }
