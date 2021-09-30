@@ -280,3 +280,9 @@ Add any components to customise the editor. These components will have access to
 ### Extending
 
 Custom behaviour can be added through child components. These components will have access to the `isolated/editor` store, as well as to the editor instance versions of `core/block-editor`.
+
+## Releasing
+
+To make a release, ensure you are on the trunk branch. Do not update the version number in `package.json` - the release process will do this for you. Then run:
+
+`GITHUB_TOKEN=<TOKEN> yarn dist`
