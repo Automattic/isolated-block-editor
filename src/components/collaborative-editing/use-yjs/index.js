@@ -9,7 +9,7 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 /**
  * WordPress dependencies
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, useRegistry } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 
 /**
@@ -167,6 +167,8 @@ export default function useYjs( { settings } ) {
 	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
 	const { selectionChange } = useDispatch( 'core/block-editor' );
 
+	const registry = useRegistry();
+
 	const onRemoteDataChange = ( blocks ) => {
 		const { start, end } = getSelection();
 
@@ -175,27 +177,37 @@ export default function useYjs( { settings } ) {
 		// not specified on the RichText component.
 		const oldText = start?.attributeKey ? getBlock( start.clientId ).attributes[ start.attributeKey ] : undefined;
 
-		// TODO: Once we can use @wordpress/data v6.1.0, the rest of this function should be wrapped
-		// in a `batch()` transaction so the caret adjustment can be fully synchronous.
-		// https://github.com/WordPress/gutenberg/blob/trunk/packages/data/CHANGELOG.md#610-2021-09-09
+		// We can't use the standard getBlock() selector here because we want to locate
+		// a block inside the blocks array we just received (before committing it to redux state).
+		const findBlockByClientId = ( blocks, clientId ) => {
+			return blocks.reduce(
+				( _acc, block ) =>
+					block.clientId === clientId ? block : findBlockByClientId( block.innerBlocks, clientId ),
+				undefined
+			);
+		};
+		const selectedBlockInUpdatedBlocks = findBlockByClientId( blocks, start.clientId );
 
-		updateBlocksWithUndo( blocks );
+		// Batching ensures that the blocks update and the possible caret shift will be in the same render
+		registry.batch( () => {
+			updateBlocksWithUndo( blocks );
 
-		// If possible, try to intelligently infer my new caret position after it might have been
-		// affected by an incoming peer edit.
-		if ( oldText !== undefined && getBlock( start.clientId ) ) {
-			const newText = getBlock( start.clientId ).attributes[ start.attributeKey ];
-			const newStartOffset = calculateNewPosition( oldText, newText, start.offset );
-			const newEndOffset =
-				end.offset !== start.offset ? calculateNewPosition( oldText, newText, end.offset ) : newStartOffset;
+			// If possible, try to intelligently infer my new caret position after it might have been
+			// affected by an incoming peer edit.
+			if ( oldText !== undefined && selectedBlockInUpdatedBlocks ) {
+				const newText = selectedBlockInUpdatedBlocks.attributes[ start.attributeKey ];
+				const newStartOffset = calculateNewPosition( oldText, newText, start.offset );
+				const newEndOffset =
+					end.offset !== start.offset ? calculateNewPosition( oldText, newText, end.offset ) : newStartOffset;
 
-			if ( start.offset !== newStartOffset || end.offset !== newEndOffset ) {
-				debug(
-					`smart shifted caret position from ${ start.offset },${ end.offset } to ${ newStartOffset },${ newEndOffset }`
-				);
-				selectionChange( start.clientId, start.attributeKey, newStartOffset, newEndOffset );
+				if ( start.offset !== newStartOffset || end.offset !== newEndOffset ) {
+					debug(
+						`smart shifted caret position from ${ start.offset },${ end.offset } to ${ newStartOffset },${ newEndOffset }`
+					);
+					selectionChange( start.clientId, start.attributeKey, newStartOffset, newEndOffset );
+				}
 			}
-		}
+		} );
 	};
 
 	useEffect( () => {
