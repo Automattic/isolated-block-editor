@@ -178,23 +178,28 @@ export default function useYjs( { settings } ) {
 		const oldText = start?.attributeKey ? getBlock( start.clientId ).attributes[ start.attributeKey ] : undefined;
 
 		// We can't use the standard getBlock() selector here because we want to locate
-		// a block inside the blocks array we just received (before committing it to redux state).
+		// a block inside the new blocks array we just received (before committing it to redux state).
 		const findBlockByClientId = ( blocks, clientId ) => {
-			return blocks.reduce(
-				( _acc, block ) =>
-					block.clientId === clientId ? block : findBlockByClientId( block.innerBlocks, clientId ),
-				undefined
-			);
+			return blocks.reduce( ( acc, block ) => {
+				if ( acc ) return acc;
+				return block.clientId === clientId ? block : findBlockByClientId( block.innerBlocks, clientId );
+			}, undefined );
 		};
-		const selectedBlockInUpdatedBlocks = findBlockByClientId( blocks, start.clientId );
 
-		// Batching ensures that the blocks update and the possible caret shift will be in the same render
-		registry.batch( () => {
+		const isInnerBlock = ( blocks, clientId ) => {
+			return ! blocks.find( ( block ) => block.clientId === clientId );
+		};
+
+		const updateBlocksAndMaybeShiftCaret = () => {
 			updateBlocksWithUndo( blocks );
+
+			if ( oldText === undefined ) return;
+
+			const selectedBlockInUpdatedBlocks = findBlockByClientId( blocks, start.clientId );
 
 			// If possible, try to intelligently infer my new caret position after it might have been
 			// affected by an incoming peer edit.
-			if ( oldText !== undefined && selectedBlockInUpdatedBlocks ) {
+			if ( selectedBlockInUpdatedBlocks ) {
 				const newText = selectedBlockInUpdatedBlocks.attributes[ start.attributeKey ];
 				const newStartOffset = calculateNewPosition( oldText, newText, start.offset );
 				const newEndOffset =
@@ -207,7 +212,17 @@ export default function useYjs( { settings } ) {
 					selectionChange( start.clientId, start.attributeKey, newStartOffset, newEndOffset );
 				}
 			}
-		} );
+		};
+
+		// Batching ensures that the blocks update and the possible caret shift will be in the same render.
+		// Ideally we want to batch in both cases, but when the selected block is nested inside another
+		// block, there is a bug that completely resets the selection after our intended selectionChange().
+		// TODO: Fix the bug! (Maybe related: https://github.com/Automattic/isolated-block-editor/issues/60)
+		if ( isInnerBlock( blocks, start.clientId ) ) {
+			updateBlocksAndMaybeShiftCaret();
+		} else {
+			registry.batch( updateBlocksAndMaybeShiftCaret );
+		}
 	};
 
 	useEffect( () => {
