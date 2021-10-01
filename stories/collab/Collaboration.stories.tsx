@@ -1,9 +1,11 @@
 import IsolatedBlockEditor, { BlockEditorSettings, CollaborativeEditing } from '../../src/index';
-import mockTransport from './mock-transport';
+import mockTransport, { resetPeers, setUpForceRemount } from './mock-transport';
 import type { CollaborationSettings } from '../../src/components/collaborative-editing';
 
 import { random, sample } from 'lodash';
 import type { Story } from '@storybook/react';
+
+import { useEffect, useState } from '@wordpress/element';
 
 export default {
 	title: 'Collaboration',
@@ -22,9 +24,15 @@ const username = `${ sample( [ 'Pink', 'Yellow', 'Blue', 'Green' ] ) } ${ sample
 ] ) } ${ random( 1, 9 ) }`;
 
 const Template: Story< Props > = ( { collabSettings, ...isoEditorProps } ) => {
+	const [ forceRemountCounter, setForceRemountCounter ] = useState( 0 );
+
+	useEffect( () => {
+		setUpForceRemount( () => setForceRemountCounter( Date.now() ), collabSettings.channelId );
+	}, [] );
+
 	return (
 		<>
-			<IsolatedBlockEditor { ...isoEditorProps }>
+			<IsolatedBlockEditor key={ forceRemountCounter } { ...isoEditorProps }>
 				<CollaborativeEditing settings={ collabSettings } />
 			</IsolatedBlockEditor>
 
@@ -32,16 +40,19 @@ const Template: Story< Props > = ( { collabSettings, ...isoEditorProps } ) => {
 				<>
 					<p>My name: { username }</p>
 
+					<button
+						onClick={ () => {
+							resetPeers( collabSettings.channelId );
+							setForceRemountCounter( Date.now() );
+						} }
+					>
+						Reset peers
+					</button>
+
 					<hr />
 
 					<h2>How to test</h2>
 					<p>Open this page in another window to test real-time collaborative editing.</p>
-
-					<p>
-						To view logging messages, open DevTools console and enter{ ' ' }
-						<code>localStorage.debug = 'iso-editor:*'</code>.
-					</p>
-
 					<p>
 						This local demo depends on shared Local Storage (instead of network) to pass messages across
 						tabs. It will not work:
@@ -54,6 +65,16 @@ const Template: Story< Props > = ( { collabSettings, ...isoEditorProps } ) => {
 							<a href="https://bugs.webkit.org/show_bug.cgi?id=225344">this bug</a> has shipped
 						</li>
 					</ul>
+
+					<h2>Dev tips</h2>
+					<p>
+						Click the "Reset peers" button when peer counts start to inflate while developing. Hot module
+						reloading can mess up our localStorage state because components don't fully remount.
+					</p>
+					<p>
+						To view logging messages, open DevTools console and enter{ ' ' }
+						<code>localStorage.debug = 'iso-editor:*'</code>.
+					</p>
 				</>
 			) }
 		</>
