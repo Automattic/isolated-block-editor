@@ -162,7 +162,7 @@ export default function useYjs( { settings } ) {
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
-	}, [] );
+	} );
 
 	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
 	const { selectionChange } = useDispatch( 'core/block-editor' );
