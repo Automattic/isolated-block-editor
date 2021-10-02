@@ -7,10 +7,15 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { displayShortcut } from '@wordpress/keycodes';
 import { undo as undoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
 
 function EditorHistoryUndo( props, ref ) {
-	const hasUndo = useSelect( ( select ) => select( 'isolated/editor' ).hasEditorUndo(), [] );
-	const { undo } = useDispatch( 'isolated/editor' );
+	const hasUndo = useSelect( ( select ) => {
+		return applyFilters( 'isoEditor.blockEditor.hasEditorUndo', select( 'isolated/editor' ).hasEditorUndo() );
+	}, [] );
+	const { undo: defaultUndo } = useDispatch( 'isolated/editor' );
+	const undo = applyFilters( 'isoEditor.blockEditor.undo', defaultUndo );
+
 	return (
 		<Button
 			{ ...props }

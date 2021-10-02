@@ -7,10 +7,15 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { displayShortcut } from '@wordpress/keycodes';
 import { redo as redoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
 
 function EditorHistoryRedo( props, ref ) {
-	const hasRedo = useSelect( ( select ) => select( 'core/editor' ).hasEditorRedo(), [] );
-	const { redo } = useDispatch( 'core/editor' );
+	const hasRedo = useSelect( ( select ) => {
+		return applyFilters( 'isoEditor.blockEditor.hasEditorRedo', select( 'isolated/editor' ).hasEditorRedo() );
+	}, [] );
+	const { redo: defaultRedo } = useDispatch( 'isolated/editor' );
+	const redo = applyFilters( 'isoEditor.blockEditor.redo', defaultRedo );
+
 	return (
 		<Button
 			{ ...props }

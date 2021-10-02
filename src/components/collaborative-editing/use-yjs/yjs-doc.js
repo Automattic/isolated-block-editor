@@ -1,26 +1,30 @@
 import * as yjs from 'yjs';
 
+const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
+
 const encodeArray = ( array ) => array.toString();
 const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
 
 export function createDocument( { identity, applyDataChanges, getData, sendMessage } ) {
 	const doc = new yjs.Doc();
+	let state = 'off';
+	let undoManager;
 
 	const setupUndoManagerOnReady = ( state ) => {
 		if ( state === 'on' ) {
 			const postMap = doc.getMap( 'post' );
-			const undoManager = new yjs.UndoManager( postMap, { trackedOrigins: new Set( [ identity ] ) } );
-			postUndoManager = undoManager;
+			undoManager = new yjs.UndoManager( postMap, { trackedOrigins: new Set( [ identity ] ) } );
+			debugUndo( 'instantiated UndoManager' );
 		}
 	};
 
-	let state = 'off';
-	let postUndoManager;
 	let listeners = [];
 	let stateListeners = [ setupUndoManagerOnReady ];
 
 	doc.on( 'update', ( update, origin ) => {
-		if ( origin === identity && state === 'on' ) {
+		const isLocalOrigin = origin === identity || origin instanceof yjs.UndoManager;
+
+		if ( isLocalOrigin && state === 'on' ) {
 			sendMessage( {
 				protocol: 'yjs1',
 				messageType: 'syncUpdate',
@@ -136,12 +140,16 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 			return state;
 		},
 
-		undo() {
-			postUndoManager?.undo();
-		},
+		undoManager: {
+			undo() {
+				debugUndo( 'undo' );
+				undoManager?.undo();
+			},
 
-		redo() {
-			postUndoManager?.redo();
+			redo() {
+				debugUndo( 'redo' );
+				undoManager?.redo();
+			},
 		},
 	};
 }

@@ -6,6 +6,7 @@ import { KeyboardShortcuts } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { BlockEditorKeyboardShortcuts } from '@wordpress/block-editor';
 import { EditorNotices } from '@wordpress/editor';
+import { applyFilters } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -67,25 +68,10 @@ function BlockEditor( props ) {
 }
 
 export default withDispatch( ( dispatch, _ownProps, { select } ) => {
-	const hasPeers = select( 'isolated/editor' ).hasPeers;
 	const { redo, undo } = dispatch( 'isolated/editor' );
 
-	const maybeUndo = ( actionCreator ) => () => {
-		if ( hasPeers() ) {
-			const noticeId = 'isolated/undo-disabled';
-			dispatch( 'core/notices' ).removeNotice( noticeId );
-			return dispatch( 'core/notices' ).createNotice(
-				'warning',
-				'Undo/redo is disabled while editing with other users.',
-				{ id: noticeId }
-			);
-		} else {
-			return actionCreator();
-		}
-	};
-
 	return {
-		redo: maybeUndo( redo ),
-		undo: maybeUndo( undo ),
+		redo: applyFilters( 'isoEditor.blockEditor.redo', redo ),
+		undo: applyFilters( 'isoEditor.blockEditor.undo', undo ),
 	};
 } )( BlockEditor );
