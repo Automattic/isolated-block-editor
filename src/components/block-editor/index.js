@@ -17,6 +17,7 @@ import { __, _x } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { useEffect } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -84,9 +85,7 @@ function BlockEditor( props ) {
 		previousShortcut,
 		nextShortcut,
 	} = useSelect( ( select ) => {
-		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select(
-			'isolated/editor'
-		);
+		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select( 'isolated/editor' );
 
 		return {
 			sidebarIsOpened: !! select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),
@@ -193,25 +192,10 @@ function BlockEditor( props ) {
 }
 
 export default withDispatch( ( dispatch, _ownProps, { select } ) => {
-	const hasPeers = select( 'isolated/editor' ).hasPeers;
 	const { redo, undo } = dispatch( 'isolated/editor' );
 
-	const maybeUndo = ( actionCreator ) => () => {
-		if ( hasPeers() ) {
-			const noticeId = 'isolated/undo-disabled';
-			dispatch( 'core/notices' ).removeNotice( noticeId );
-			return dispatch( 'core/notices' ).createNotice(
-				'warning',
-				'Undo/redo is disabled while editing with other users.',
-				{ id: noticeId }
-			);
-		} else {
-			return actionCreator();
-		}
-	};
-
 	return {
-		redo: maybeUndo( redo ),
-		undo: maybeUndo( undo ),
+		redo: applyFilters( 'isoEditor.blockEditor.redo', redo ),
+		undo: applyFilters( 'isoEditor.blockEditor.undo', undo ),
 	};
 } )( BlockEditor );

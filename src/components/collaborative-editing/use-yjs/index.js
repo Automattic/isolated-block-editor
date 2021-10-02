@@ -15,6 +15,7 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
  */
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
+import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -140,7 +141,7 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
 
 			window.addEventListener( 'beforeunload', () => disconnect() );
 
-			return { applyChangesToYjs, sendSelection, disconnect };
+			return { applyChangesToYjs, sendSelection, undoManager: doc.undoManager, disconnect };
 		} );
 }
 
@@ -189,7 +190,7 @@ export default function useYjs( { settings } ) {
 			getBlocks,
 			setPeerSelection,
 			setAvailablePeers,
-		} ).then( ( { applyChangesToYjs, sendSelection, disconnect } ) => {
+		} ).then( ( { applyChangesToYjs, sendSelection, undoManager, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
@@ -197,6 +198,8 @@ export default function useYjs( { settings } ) {
 
 			onBlocksChange.current = applyChangesToYjs;
 			onSelectionChange.current = sendSelection;
+			addFilter( 'isoEditor.blockEditor.undo', 'isolated-block-editor/collab', () => undoManager.undo );
+			addFilter( 'isoEditor.blockEditor.redo', 'isolated-block-editor/collab', () => undoManager.redo );
 		} );
 
 		return () => onUnmount();

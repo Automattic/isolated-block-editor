@@ -45,5 +45,5 @@ const addSelectionBorders = ( OriginalComponent ) => {
 };
 
 export const addFilterCollabBlockSelection = () => {
-	addFilter( 'editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders, 9 );
+	addFilter( 'editor.BlockListBlock', 'isolated-block-editor/collab', addSelectionBorders, 9 );
 };
