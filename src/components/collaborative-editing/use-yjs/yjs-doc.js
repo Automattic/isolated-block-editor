@@ -141,11 +141,16 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 		},
 
 		undoManager: {
+			hasUndo() {
+				return undoManager?.undoStack.length > 1;
+			},
+			hasRedo() {
+				return undoManager?.redoStack.length > 0;
+			},
 			undo() {
 				debugUndo( 'undo' );
 				undoManager?.undo();
 			},
-
 			redo() {
 				debugUndo( 'redo' );
 				undoManager?.redo();

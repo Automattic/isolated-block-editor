@@ -195,6 +195,12 @@ export default function useYjs( { settings } ) {
 			onSelectionChange.current = sendSelection;
 			addFilter( 'isoEditor.blockEditor.undo', 'isolated-block-editor/collab', () => undoManager.undo );
 			addFilter( 'isoEditor.blockEditor.redo', 'isolated-block-editor/collab', () => undoManager.redo );
+			addFilter( 'isoEditor.blockEditor.hasEditorUndo', 'isolated-block-editor/collab', () =>
+				undoManager.hasUndo()
+			);
+			addFilter( 'isoEditor.blockEditor.hasEditorRedo', 'isolated-block-editor/collab', () =>
+				undoManager.hasRedo()
+			);
 		} );
 
 		return () => onUnmount();
