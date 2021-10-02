@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { noop, sample } from 'lodash';
+import { noop, over, sample } from 'lodash';
 import { createDocument } from './yjs-doc';
 import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 
@@ -33,6 +33,8 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
 /**
  * @param {object} opts - Hook options
  * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
+ * @param {Function} opts.getSelection
+ * @param {Function} opts.setSelection
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
@@ -42,7 +44,15 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
  * @property {object} selectionStart
  * @property {object} selectionEnd
  */
-async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelection, setAvailablePeers } ) {
+async function initYDoc( {
+	getBlocks,
+	getSelection,
+	setSelection,
+	onRemoteDataChange,
+	settings,
+	setPeerSelection,
+	setAvailablePeers,
+} ) {
 	const { channelId, transport } = settings;
 
 	/** @type string */
@@ -54,6 +64,8 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
 		identity,
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
+		getSelection,
+		setSelection,
 		/** @param {object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
@@ -150,16 +162,20 @@ export default function useYjs( { settings } ) {
 	const onBlocksChange = useRef( noop );
 	const onSelectionChange = useRef( noop );
 
-	const { blocks, getBlocks, selectionStart, selectionEnd } = useSelect( ( select ) => {
+	const { getBlocks, getSelection, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
-			blocks: select( 'isolated/editor' ).getBlocks(),
 			getBlocks: select( 'isolated/editor' ).getBlocks,
+			getSelection: () => ( {
+				start: select( 'core/block-editor' ).getSelectionStart(),
+				end: select( 'core/block-editor' ).getSelectionEnd(),
+			} ),
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );
 
 	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
+	const { selectionChange } = useDispatch( 'core/block-editor' );
 
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
@@ -183,6 +199,9 @@ export default function useYjs( { settings } ) {
 			onRemoteDataChange: updateBlocksWithUndo,
 			settings,
 			getBlocks,
+			getSelection,
+			setSelection: ( { start, end } ) =>
+				selectionChange( start?.clientId, start?.attributeKey, start?.offset, end?.offset ),
 			setPeerSelection,
 			setAvailablePeers,
 		} ).then( ( { applyChangesToYjs, sendSelection, undoManager, disconnect } ) => {
@@ -193,6 +212,12 @@ export default function useYjs( { settings } ) {
 
 			onBlocksChange.current = applyChangesToYjs;
 			onSelectionChange.current = sendSelection;
+			addFilter( 'isoEditor.blockEditorProvider.onInput', 'isolated-block-editor/collab', ( onInput ) =>
+				over( [ onInput, applyChangesToYjs, () => debug( 'BlockEditorProvider onInput' ) ] )
+			);
+			addFilter( 'isoEditor.blockEditorProvider.onChange', 'isolated-block-editor/collab', ( onChange ) =>
+				over( [ onChange, applyChangesToYjs, () => debug( 'BlockEditorProvider onChange' ) ] )
+			);
 			addFilter( 'isoEditor.blockEditor.undo', 'isolated-block-editor/collab', () => undoManager.undo );
 			addFilter( 'isoEditor.blockEditor.redo', 'isolated-block-editor/collab', () => undoManager.redo );
 			addFilter( 'isoEditor.blockEditor.hasEditorUndo', 'isolated-block-editor/collab', () =>
@@ -205,10 +230,6 @@ export default function useYjs( { settings } ) {
 
 		return () => onUnmount();
 	}, [] );
-
-	useEffect( () => {
-		onBlocksChange.current( blocks );
-	}, [ blocks ] );
 
 	useEffect( () => {
 		onSelectionChange.current( selectionStart, selectionEnd );

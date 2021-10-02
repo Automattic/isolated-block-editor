@@ -6,6 +6,7 @@ import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
 import { parse, rawHandler } from '@wordpress/blocks';
+import { applyFilters } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -72,8 +73,8 @@ function BlockEditorContents( props ) {
 	return (
 		<BlockEditorProvider
 			value={ blocks || [] }
-			onInput={ updateBlocksWithoutUndo }
-			onChange={ updateBlocksWithUndo }
+			onInput={ applyFilters( 'isoEditor.blockEditorProvider.onInput', updateBlocksWithoutUndo ) }
+			onChange={ applyFilters( 'isoEditor.blockEditorProvider.onChange', updateBlocksWithUndo ) }
 			useSubRegistry={ false }
 			selection={ selection }
 			settings={ settings.editor }
