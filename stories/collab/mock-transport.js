@@ -1,7 +1,10 @@
 const listeners = [];
 const disconnectHandlers = [];
 
-/** @return {import("../../src/components/block-editor-contents/use-yjs").CollaborationTransport} */
+/**
+ * @param channelId
+ * @return {import("../../src/components/block-editor-contents/use-yjs").CollaborationTransport}
+ */
 const mockTransport = ( channelId ) => ( {
 	sendMessage: ( data ) => {
 		window.localStorage.setItem( `isoEditorYjsMessage-${ channelId }`, JSON.stringify( data ) );

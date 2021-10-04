@@ -4,6 +4,9 @@
 import { addFilter } from '@wordpress/hooks';
 import { useSelect } from '@wordpress/data';
 
+/**
+ * Internal dependencies
+ */
 import './style.scss';
 
 /**

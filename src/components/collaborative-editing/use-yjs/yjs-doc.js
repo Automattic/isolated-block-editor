@@ -1,14 +1,12 @@
+/**
+ * External dependencies
+ */
 import * as yjs from 'yjs';
 
 const encodeArray = ( array ) => array.toString();
 const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
 
-export function createDocument( {
-	identity,
-	applyDataChanges,
-	getData,
-	sendMessage,
-} ) {
+export function createDocument( { identity, applyDataChanges, getData, sendMessage } ) {
 	const doc = new yjs.Doc();
 	let state = 'off';
 	let listeners = [];
@@ -85,21 +83,13 @@ export function createDocument( {
 
 			switch ( messageType ) {
 				case 'sync1':
-					if (
-						content.destination &&
-						content.destination !== identity
-					) {
+					if ( content.destination && content.destination !== identity ) {
 						return;
 					}
 					sendMessage( {
 						protocol: 'yjs1',
 						messageType: 'sync2',
-						update: encodeArray(
-							yjs.encodeStateAsUpdate(
-								doc,
-								decodeArray( content.stateVector )
-							)
-						),
+						update: encodeArray( yjs.encodeStateAsUpdate( doc, decodeArray( content.stateVector ) ) ),
 						destination: origin,
 					} );
 					if ( ! content.isReply ) {
@@ -110,19 +100,11 @@ export function createDocument( {
 					if ( content.destination !== identity ) {
 						return;
 					}
-					yjs.applyUpdate(
-						doc,
-						decodeArray( content.update ),
-						origin
-					);
+					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
 					setState( 'on' );
 					break;
 				case 'syncUpdate':
-					yjs.applyUpdate(
-						doc,
-						decodeArray( content.update ),
-						origin
-					);
+					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
 					break;
 			}
 		},
@@ -139,9 +121,7 @@ export function createDocument( {
 			stateListeners.push( listener );
 
 			return () => {
-				stateListeners = stateListeners.filter(
-					( l ) => l !== listener
-				);
+				stateListeners = stateListeners.filter( ( l ) => l !== listener );
 			};
 		},
 

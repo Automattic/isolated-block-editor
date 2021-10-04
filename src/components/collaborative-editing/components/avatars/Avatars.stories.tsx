@@ -1,5 +1,11 @@
+/**
+ * External dependencies
+ */
 import { sample } from 'lodash';
 
+/**
+ * Internal dependencies
+ */
 import { CollaborativeEditingAvatars, CollaborativeEditingAvatar } from '.';
 import { defaultColors } from '../../use-yjs';
 
