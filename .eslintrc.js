@@ -28,6 +28,7 @@ module.exports = {
 	globals: {
 		wp: 'off',
 	},
+	ignorePatterns: [ 'build/', 'build-*/', 'node_modules/', '*.d.ts' ],
 	rules: {
 		'@wordpress/dependency-group': 'error',
 		'@wordpress/react-no-unsafe-timeout': 'error',
