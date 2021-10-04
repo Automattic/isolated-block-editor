@@ -64,4 +64,20 @@ const mockTransport = ( channelId ) => ( {
 	},
 } );
 
+export const resetPeers = ( channelId ) => {
+	window.localStorage.setItem( `isoEditorYjsPeers-${ channelId }`, '' );
+};
+
+export const setUpForceRemount = ( forceRemount, channelId ) => {
+	listeners.push( {
+		event: 'storage',
+		listener: window.addEventListener( 'storage', ( event ) => {
+			if ( event.storageArea !== localStorage ) return;
+			if ( event.key === `isoEditorYjsPeers-${ channelId }` && ! event.newValue ) {
+				forceRemount();
+			}
+		} ),
+	} );
+};
+
 export default mockTransport;
