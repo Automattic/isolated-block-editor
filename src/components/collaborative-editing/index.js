@@ -24,6 +24,9 @@ import CollaborativeEditingAvatars from './components/avatars';
  * @property {(message: CollaborationTransportDocMessage|CollaborationTransportSelectionMessage) => void} sendMessage
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
  * @property {() => Promise<void>} disconnect
+ */
+
+/**
  * @typedef CollaborationTransportConnectOpts
  * @property {Object} user
  * @property {string} user.identity
@@ -33,19 +36,31 @@ import CollaborativeEditingAvatars from './components/avatars';
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]
+ */
+
+/**
  * @typedef AvailablePeer
  * @property {string} id
  * @property {string} name
  * @property {string} color
  * @property {string} [avatarUrl]
+ */
+
+/**
  * @typedef CollaborationTransportDocMessage
  * @property {string} identity
  * @property {'doc'} type
  * @property {Object} message
+ */
+
+/**
  * @typedef CollaborationTransportSelectionMessage
  * @property {string} identity
  * @property {'selection'} type
  * @property {EditorSelection} selection
+ */
+
+/**
  * @typedef EditorSelection
  * @property {Object} start
  * @property {Object} end

@@ -47,7 +47,7 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
 async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelection, setAvailablePeers } ) {
 	const { channelId, transport } = settings;
 
-	/** @type string */
+	/** @type {string} */
 	const identity = uuidv4();
 
 	debug( `initYDoc (identity: ${ identity })` );
@@ -169,6 +169,7 @@ export default function useYjs( { settings } ) {
 		}
 
 		if ( ! settings.transport ) {
+			// eslint-disable-next-line no-console
 			console.error( `Collaborative editor is disabled because a transport module wasn't provided.` );
 			return;
 		}
