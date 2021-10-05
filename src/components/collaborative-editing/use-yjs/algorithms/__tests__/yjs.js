@@ -1,4 +1,11 @@
+/**
+ * External dependencies
+ */
 import * as yjs from 'yjs';
+
+/**
+ * Internal dependencies
+ */
 import { updateBlocksDoc, blocksDocToArray } from '../yjs';
 
 jest.mock( 'uuid', () => {
@@ -24,11 +31,7 @@ function applyYjsUpdate( yDoc, update ) {
 	} );
 }
 
-async function getUpdatedBlocksUsingYjsAlgo(
-	originalBlocks,
-	updatedLocalBlocks,
-	updatedRemoteBlocks
-) {
+async function getUpdatedBlocksUsingYjsAlgo( originalBlocks, updatedLocalBlocks, updatedRemoteBlocks ) {
 	// Local doc.
 	const localYDoc = new yjs.Doc();
 	const localYBlocks = localYDoc.getMap( 'blocks' );
@@ -69,10 +72,7 @@ async function getUpdatedBlocksUsingYjsAlgo(
 		);
 
 		// Merging remote edit into local edit.
-		await applyYjsUpdate(
-			localYDoc,
-			yjs.encodeStateAsUpdate( remoteYDoc )
-		);
+		await applyYjsUpdate( localYDoc, yjs.encodeStateAsUpdate( remoteYDoc ) );
 	}
 
 	return blocksDocToArray( localYBlocks );
@@ -105,13 +105,9 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 				},
 			];
 
-			expect(
-				await algo(
-					originalBlocks,
-					updatedLocalBlocks,
-					updateRemoteBlocks
-				)
-			).toEqual( updateRemoteBlocks );
+			expect( await algo( originalBlocks, updatedLocalBlocks, updateRemoteBlocks ) ).toEqual(
+				updateRemoteBlocks
+			);
 		} );
 
 		test( 'New local block and remote update to single block.', async () => {
@@ -168,13 +164,7 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 				},
 			];
 
-			expect(
-				await algo(
-					originalBlocks,
-					updatedLocalBlocks,
-					updateRemoteBlocks
-				)
-			).toEqual( expectedMerge );
+			expect( await algo( originalBlocks, updatedLocalBlocks, updateRemoteBlocks ) ).toEqual( expectedMerge );
 		} );
 
 		test( 'Local deletion of multiple blocks and update to single block.', async () => {
@@ -223,13 +213,7 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 				},
 			];
 
-			expect(
-				await algo(
-					originalBlocks,
-					updatedLocalBlocks,
-					updateRemoteBlocks
-				)
-			).toEqual( expectedMerge );
+			expect( await algo( originalBlocks, updatedLocalBlocks, updateRemoteBlocks ) ).toEqual( expectedMerge );
 		} );
 
 		test( 'Moving a block locally while updating it remotely.', async () => {
@@ -300,13 +284,7 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 				},
 			];
 
-			expect(
-				await algo(
-					originalBlocks,
-					updatedLocalBlocks,
-					updateRemoteBlocks
-				)
-			).toEqual( expectedMerge );
+			expect( await algo( originalBlocks, updatedLocalBlocks, updateRemoteBlocks ) ).toEqual( expectedMerge );
 		} );
 
 		test( 'Moving a block to inner blocks while updating it remotely.', async () => {
@@ -379,13 +357,7 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 				},
 			];
 
-			expect(
-				await algo(
-					originalBlocks,
-					updatedLocalBlocks,
-					updateRemoteBlocks
-				)
-			).toEqual( expectedMerge );
+			expect( await algo( originalBlocks, updatedLocalBlocks, updateRemoteBlocks ) ).toEqual( expectedMerge );
 		} );
 	} );
 } );

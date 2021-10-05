@@ -1,5 +1,8 @@
 // @ts-nocheck TODO
 
+/**
+ * External dependencies
+ */
 import * as yjs from 'yjs';
 import { isEqual } from 'lodash';
 
@@ -58,20 +61,13 @@ export function updateBlocksDoc( yDocBlocks, blocks, clientId = '' ) {
 	);
 	currentOrder
 		.slice( orderDiff.index, orderDiff.remove )
-		.forEach(
-			( _clientId ) =>
-				! orderDiff.insert.includes( _clientId ) &&
-				byClientId.delete( _clientId )
-		);
+		.forEach( ( _clientId ) => ! orderDiff.insert.includes( _clientId ) && byClientId.delete( _clientId ) );
 	order.delete( orderDiff.index, orderDiff.remove );
 	order.insert( orderDiff.index, orderDiff.insert );
 
 	for ( const _block of blocks ) {
 		const { innerBlocks, ...block } = _block;
-		if (
-			! byClientId.has( block.clientId ) ||
-			! isEqual( byClientId.get( block.clientId ), block )
-		) {
+		if ( ! byClientId.has( block.clientId ) || ! isEqual( byClientId.get( block.clientId ), block ) ) {
 			byClientId.set( block.clientId, block );
 		}
 
@@ -94,16 +90,7 @@ export function updateCommentsDoc( commentsDoc, comments = [] ) {
 		}
 		currentDoc = commentsDoc.get( comment._id );
 		// Update regular fields
-		[
-			'type',
-			'content',
-			'createdAt',
-			'status',
-			'start',
-			'end',
-			'authorId',
-			'authorName',
-		].forEach( ( field ) => {
+		[ 'type', 'content', 'createdAt', 'status', 'start', 'end', 'authorId', 'authorName' ].forEach( ( field ) => {
 			if ( isNewDoc || currentDoc.get( field ) !== comment[ field ] ) {
 				currentDoc.set( field, comment[ field ] );
 			}
@@ -131,16 +118,11 @@ export function updateCommentRepliesDoc( repliesDoc, replies = [] ) {
 			repliesDoc.set( reply._id, new yjs.Map() );
 		}
 		currentReplyDoc = repliesDoc.get( reply._id );
-		[ 'content', 'createdAt', 'authorId', 'authorName' ].forEach(
-			( field ) => {
-				if (
-					isNewDoc ||
-					currentReplyDoc.get( field ) !== reply[ field ]
-				) {
-					currentReplyDoc.set( field, reply[ field ] );
-				}
+		[ 'content', 'createdAt', 'authorId', 'authorName' ].forEach( ( field ) => {
+			if ( isNewDoc || currentReplyDoc.get( field ) !== reply[ field ] ) {
+				currentReplyDoc.set( field, reply[ field ] );
 			}
-		);
+		} );
 	} );
 }
 
@@ -176,32 +158,30 @@ export function commentsDocToArray( commentsDoc ) {
 		return [];
 	}
 
-	return Object.entries( commentsDoc.toJSON() ).map(
-		( [ id, commentDoc ] ) => {
-			return {
-				_id: id,
-				type: commentDoc.type,
-				content: commentDoc.content,
-				createdAt: commentDoc.createdAt,
-				status: commentDoc.status,
-				start: commentDoc.start,
-				end: commentDoc.end,
-				authorId: commentDoc.authorId,
-				authorName: commentDoc.authorName,
-				replies: Object.entries( commentDoc.replies )
-					.map( ( [ replyId, entryDoc ] ) => {
-						return {
-							_id: replyId,
-							content: entryDoc.content,
-							createdAt: entryDoc.createdAt,
-							authorId: entryDoc.authorId,
-							authorName: entryDoc.authorName,
-						};
-					} )
-					.sort( ( a, b ) => a.createdAt - b.createdAt ),
-			};
-		}
-	);
+	return Object.entries( commentsDoc.toJSON() ).map( ( [ id, commentDoc ] ) => {
+		return {
+			_id: id,
+			type: commentDoc.type,
+			content: commentDoc.content,
+			createdAt: commentDoc.createdAt,
+			status: commentDoc.status,
+			start: commentDoc.start,
+			end: commentDoc.end,
+			authorId: commentDoc.authorId,
+			authorName: commentDoc.authorName,
+			replies: Object.entries( commentDoc.replies )
+				.map( ( [ replyId, entryDoc ] ) => {
+					return {
+						_id: replyId,
+						content: entryDoc.content,
+						createdAt: entryDoc.createdAt,
+						authorId: entryDoc.authorId,
+						authorName: entryDoc.authorName,
+					};
+				} )
+				.sort( ( a, b ) => a.createdAt - b.createdAt ),
+		};
+	} );
 }
 
 /**

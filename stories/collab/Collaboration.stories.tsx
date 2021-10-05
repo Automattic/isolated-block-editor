@@ -1,10 +1,19 @@
+/**
+ * Internal dependencies
+ */
 import IsolatedBlockEditor, { BlockEditorSettings, CollaborativeEditing } from '../../src/index';
 import mockTransport, { resetPeers, setUpForceRemount } from './mock-transport';
 import type { CollaborationSettings } from '../../src/components/collaborative-editing';
 
+/**
+ * External dependencies
+ */
 import { random, sample } from 'lodash';
 import type { Story } from '@storybook/react';
 
+/**
+ * WordPress dependencies
+ */
 import { useEffect, useState } from '@wordpress/element';
 
 export default {
