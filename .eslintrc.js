@@ -28,7 +28,10 @@ module.exports = {
 	globals: {
 		wp: 'off',
 	},
+	ignorePatterns: [ 'build/', 'build-*/', 'node_modules/', '*.d.ts' ],
 	rules: {
+		'jsdoc/check-line-alignment': 'off',
+		'jsdoc/require-property-description': 'off',
 		'@wordpress/dependency-group': 'error',
 		'@wordpress/react-no-unsafe-timeout': 'error',
 		'no-restricted-syntax': [
@@ -139,4 +142,9 @@ module.exports = {
 			],
 		},
 	],
+	settings: {
+		jsdoc: {
+			mode: 'typescript',
+		},
+	},
 };

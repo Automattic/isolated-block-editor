@@ -25,6 +25,8 @@
 		"build": "yarn build:es6 && yarn build:cjs && yarn build:browser && yarn build:types",
 		"clean": "rm -rf build build-module build-browser build-types dist tsconfig.tsbuildinfo",
 		"dist": "yarn build && rm -rf dist && mkdir dist && zip build-browser.zip -r build-browser && mv build-browser.zip dist/isolated-block-editor.zip && release-it",
+		"format": "wp-scripts format",
+		"lint:js": "wp-scripts lint-js",
 		"storybook": "start-storybook -p 6006"
 	},
 	"sideEffects": [
@@ -85,6 +87,7 @@
 		"@wordpress/wordcount": "^3.2.1",
 		"classnames": "^2.3.1",
 		"debug": "^4.3.2",
+		"eslint-plugin-eslint-comments": "^3.2.0",
 		"react": "17.0.2",
 		"react-autosize-textarea": "^7.1.0",
 		"react-dom": "17.0.2",
