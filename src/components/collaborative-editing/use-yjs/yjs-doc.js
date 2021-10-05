@@ -15,8 +15,8 @@ export function createDocument( { identity, applyDataChanges, getData, getSelect
 	/** @type {yjs.UndoManager | undefined} */
 	let undoManager;
 
-	const setupUndoManagerOnReady = ( state ) => {
-		if ( state === 'on' && ! undoManager ) {
+	const setupUndoManagerOnReady = ( newState ) => {
+		if ( newState === 'on' && ! undoManager ) {
 			const postMap = doc.getMap( 'post' );
 			undoManager = new yjs.UndoManager( postMap, { trackedOrigins: new Set( [ identity ] ) } );
 
