@@ -6,13 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [2.5.0] - 2021-10-06
+
 ### Added
 
 - `selectorTool` setting to show the selector tool
 
 ### Breaking changes
 
-- Toolbar has changed to match core Gutenberg and will now be two lines in height, unless the top toolbar mode is disabled
+- Toolbar has changed to match core Gutenberg and will now be two lines in height (when using 'top toolbar' mode)
 
 ### [2.4.3] - 2021-09-30
 
