@@ -15,7 +15,6 @@ import { storeConfig as coreEditorStoreConfig } from '@wordpress/editor';
 
 import storeConfig from '../../store';
 import applyMiddlewares from '../../store/middlewares';
-import applyBlockEditorMiddlewares from './middlewares';
 import reusableStore from './reusable-store';
 import applyDefaultSettings from '../default-settings';
 import decoratedEditor from '../../store/core-editor'; // Keep track of the registries we create so we can release them after the editor instance is removed
@@ -81,7 +80,6 @@ const withRegistryProvider = createHigherOrderComponent(WrappedComponent => with
 
     applyMiddlewares(store);
     setSubRegistry(newRegistry);
-    applyBlockEditorMiddlewares(blockEditorStore);
     return function cleanup() {
       registries = registries.filter(item => item !== store);
     };

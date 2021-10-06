@@ -5,22 +5,20 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
-import {
-	BlockToolbar,
-	NavigableToolbar,
-	BlockNavigationDropdown,
-	__experimentalLibrary as Library,
-} from '@wordpress/block-editor';
+import { NavigableToolbar, BlockNavigationDropdown, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
 import { TableOfContents } from '@wordpress/editor';
 import { plus } from '@wordpress/icons';
-import { useRef } from '@wordpress/element';
+import { useRef, useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
-import './style.scss';
+
+const preventDefault = ( event ) => {
+	event.preventDefault();
+};
 
 function HeaderToolbar( props ) {
 	const inserterButton = useRef();
@@ -31,6 +29,7 @@ function HeaderToolbar( props ) {
 		hasPeers,
 		isInserterEnabled,
 		isTextModeEnabled,
+		showIconLabels,
 		previewDeviceType,
 		isInserterOpened,
 	} = useSelect( ( select ) => {
@@ -47,10 +46,12 @@ function HeaderToolbar( props ) {
 			isTextModeEnabled: select( 'isolated/editor' ).getEditorMode() === 'text',
 			previewDeviceType: 'Desktop',
 			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
+			showIconLabels: false, // Not implemented yet
 		};
 	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { inserter, toc, navigation, undo: undoSetting } = props.settings.iso.toolbar;
+	const isWideViewport = useViewportMatch( 'wide' );
+	const { inserter, toc, navigation, undo: undoSetting, selectorTool } = props.settings.iso.toolbar;
 	const undo = undoSetting && ! hasPeers;
 	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
@@ -58,33 +59,35 @@ function HeaderToolbar( props ) {
 		  __( 'Document and block tools' )
 		: /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
 		  __( 'Document tools' );
+	const openInserter = useCallback( () => {
+		if ( isInserterOpened ) {
+			// Focusing the inserter button closes the inserter popover
+			// @ts-ignore
+			inserterButton.current.focus();
+		} else {
+			setIsInserterOpened( true );
+		}
+	}, [ isInserterOpened, setIsInserterOpened ] );
 
 	return (
 		<NavigableToolbar className="edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>
-			{ ( inserter || undo || navigation || toc ) && (
+			{ ( inserter || undo || navigation || toc || selectorTool ) && (
 				<div className="edit-post-header-toolbar__left">
 					{ inserter && (
 						<ToolbarItem
 							ref={ inserterButton }
 							as={ Button }
 							className="edit-post-header-toolbar__inserter-toggle"
-							isPrimary
 							isPressed={ isInserterOpened }
-							onMouseDown={ ( event ) => {
-								event.preventDefault();
-							} }
-							onClick={ () => {
-								if ( isInserterOpened ) {
-									// Focusing the inserter button closes the inserter popover
-									// @ts-ignore
-									inserterButton.current.focus();
-								} else {
-									setIsInserterOpened( true );
-								}
-							} }
+							onMouseDown={ preventDefault }
+							onClick={ openInserter }
 							disabled={ ! isInserterEnabled }
+							isPrimary
 							icon={ plus }
-							label={ _x( 'Add block', 'Generic label for block inserter button' ) }
+							/* translators: button label text should, if possible, be under 16
+					characters. */
+							label={ _x( 'Toggle block inserter', 'Generic label for block inserter button' ) }
+							showTooltip={ ! showIconLabels }
 						/>
 					) }
 
@@ -106,16 +109,31 @@ function HeaderToolbar( props ) {
 						</Popover>
 					) }
 
-					{ undo && <ToolbarItem as={ EditorHistoryUndo } /> }
-					{ undo && <ToolbarItem as={ EditorHistoryRedo } /> }
+					{ selectorTool && <ToolSelector /> }
+					{ undo && (
+						<ToolbarItem
+							as={ EditorHistoryUndo }
+							showTooltip={ ! showIconLabels }
+							variant={ showIconLabels ? 'tertiary' : undefined }
+						/>
+					) }
+					{ undo && (
+						<ToolbarItem
+							as={ EditorHistoryRedo }
+							showTooltip={ ! showIconLabels }
+							variant={ showIconLabels ? 'tertiary' : undefined }
+						/>
+					) }
 					{ navigation && <ToolbarItem as={ BlockNavigationDropdown } isDisabled={ isTextModeEnabled } /> }
-					{ toc && <ToolbarItem as={ TableOfContents } hasOutlineItemsDisabled={ isTextModeEnabled } /> }
-				</div>
-			) }
-
-			{ displayBlockToolbar && ! isTextModeEnabled && (
-				<div className="edit-post-header-toolbar__block-toolbar">
-					<BlockToolbar hideDragHandle />
+					{ toc && (
+						<ToolbarItem
+							as={ TableOfContents }
+							hasOutlineItemsDisabled={ isTextModeEnabled }
+							repositionDropdown={ showIconLabels && ! isWideViewport }
+							showTooltip={ ! showIconLabels }
+							variant={ showIconLabels ? 'tertiary' : undefined }
+						/>
+					) }
 				</div>
 			) }
 		</NavigableToolbar>

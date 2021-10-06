@@ -7,17 +7,20 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
-import { BlockToolbar, NavigableToolbar, BlockNavigationDropdown, __experimentalLibrary as Library } from '@wordpress/block-editor';
+import { NavigableToolbar, BlockNavigationDropdown, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
 import { TableOfContents } from '@wordpress/editor';
 import { plus } from '@wordpress/icons';
-import { useRef } from '@wordpress/element';
+import { useRef, useCallback } from '@wordpress/element';
 /**
  * Internal dependencies
  */
 
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
-import './style.scss';
+
+const preventDefault = event => {
+  event.preventDefault();
+};
 
 function HeaderToolbar(props) {
   const inserterButton = useRef();
@@ -30,6 +33,7 @@ function HeaderToolbar(props) {
     hasPeers,
     isInserterEnabled,
     isTextModeEnabled,
+    showIconLabels,
     previewDeviceType,
     isInserterOpened
   } = useSelect(select => {
@@ -45,15 +49,19 @@ function HeaderToolbar(props) {
       isInserterEnabled: select('isolated/editor').getEditorMode() === 'visual' && select('core/editor').getEditorSettings().richEditingEnabled && hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
       isTextModeEnabled: select('isolated/editor').getEditorMode() === 'text',
       previewDeviceType: 'Desktop',
-      isInserterOpened: select('isolated/editor').isInserterOpened()
+      isInserterOpened: select('isolated/editor').isInserterOpened(),
+      showIconLabels: false // Not implemented yet
+
     };
   }, []);
   const isLargeViewport = useViewportMatch('medium');
+  const isWideViewport = useViewportMatch('wide');
   const {
     inserter,
     toc,
     navigation,
-    undo: undoSetting
+    undo: undoSetting,
+    selectorTool
   } = props.settings.iso.toolbar;
   const undo = undoSetting && !hasPeers;
   const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
@@ -62,32 +70,35 @@ function HeaderToolbar(props) {
   __('Document and block tools') :
   /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
   __('Document tools');
+  const openInserter = useCallback(() => {
+    if (isInserterOpened) {
+      // Focusing the inserter button closes the inserter popover
+      // @ts-ignore
+      inserterButton.current.focus();
+    } else {
+      setIsInserterOpened(true);
+    }
+  }, [isInserterOpened, setIsInserterOpened]);
   return createElement(NavigableToolbar, {
     className: "edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel
-  }, (inserter || undo || navigation || toc) && createElement("div", {
+  }, (inserter || undo || navigation || toc || selectorTool) && createElement("div", {
     className: "edit-post-header-toolbar__left"
   }, inserter && createElement(ToolbarItem, {
     ref: inserterButton,
     as: Button,
     className: "edit-post-header-toolbar__inserter-toggle",
-    isPrimary: true,
     isPressed: isInserterOpened,
-    onMouseDown: event => {
-      event.preventDefault();
-    },
-    onClick: () => {
-      if (isInserterOpened) {
-        // Focusing the inserter button closes the inserter popover
-        // @ts-ignore
-        inserterButton.current.focus();
-      } else {
-        setIsInserterOpened(true);
-      }
-    },
+    onMouseDown: preventDefault,
+    onClick: openInserter,
     disabled: !isInserterEnabled,
-    icon: plus,
-    label: _x('Add block', 'Generic label for block inserter button')
+    isPrimary: true,
+    icon: plus
+    /* translators: button label text should, if possible, be under 16
+    characters. */
+    ,
+    label: _x('Toggle block inserter', 'Generic label for block inserter button'),
+    showTooltip: !showIconLabels
   }), isInserterOpened && createElement(Popover, {
     position: "bottom right",
     onClose: () => setIsInserterOpened(false),
@@ -100,20 +111,23 @@ function HeaderToolbar(props) {
         setIsInserterOpened(false);
       }
     }
-  })), undo && createElement(ToolbarItem, {
-    as: EditorHistoryUndo
+  })), selectorTool && createElement(ToolSelector, null), undo && createElement(ToolbarItem, {
+    as: EditorHistoryUndo,
+    showTooltip: !showIconLabels,
+    variant: showIconLabels ? 'tertiary' : undefined
   }), undo && createElement(ToolbarItem, {
-    as: EditorHistoryRedo
+    as: EditorHistoryRedo,
+    showTooltip: !showIconLabels,
+    variant: showIconLabels ? 'tertiary' : undefined
   }), navigation && createElement(ToolbarItem, {
     as: BlockNavigationDropdown,
     isDisabled: isTextModeEnabled
   }), toc && createElement(ToolbarItem, {
     as: TableOfContents,
-    hasOutlineItemsDisabled: isTextModeEnabled
-  })), displayBlockToolbar && !isTextModeEnabled && createElement("div", {
-    className: "edit-post-header-toolbar__block-toolbar"
-  }, createElement(BlockToolbar, {
-    hideDragHandle: true
+    hasOutlineItemsDisabled: isTextModeEnabled,
+    repositionDropdown: showIconLabels && !isWideViewport,
+    showTooltip: !showIconLabels,
+    variant: showIconLabels ? 'tertiary' : undefined
   })));
 }
 

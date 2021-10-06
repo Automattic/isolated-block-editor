@@ -51,6 +51,8 @@ export default function applyDefaultSettings( settings ) {
 				toc: false,
 				// @ts-ignore */}
 				undo: true,
+				// @ts-ignore */}
+				selectorTool: false,
 
 				...( iso?.toolbar ?? {} ),
 			},
@@ -70,7 +72,6 @@ export default function applyDefaultSettings( settings ) {
 
 			// Default to top toolbar
 			defaultPreferences: {
-				fixedToolbar: true,
 				...( iso?.defaultPreferences ?? {} ),
 			},
 
