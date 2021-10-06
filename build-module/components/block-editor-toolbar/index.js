@@ -15,7 +15,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import MoreMenu from './more-menu';
 import HeaderToolbar from './header-toolbar';
 import Inspector from './inspector';
-import ToolbarSlot from './slot';
 import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 
@@ -76,7 +75,7 @@ const BlockEditorToolbar = props => {
     settings: settings
   })), createElement("div", {
     className: "edit-post-header__settings"
-  }, createElement(ToolbarSlot.Slot, null), inspector && createElement(Button, {
+  }, inspector && createElement(Button, {
     icon: cog,
     label: __('Settings'),
     onClick: () => setInspecting(!isInspecting),
