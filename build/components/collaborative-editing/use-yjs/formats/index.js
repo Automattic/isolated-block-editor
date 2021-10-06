@@ -7,6 +7,9 @@ exports.registerCollabFormats = void 0;
 
 var _collabCaret = require("./collab-caret");
 
+/**
+ * Internal dependencies
+ */
 var registerCollabFormats = function registerCollabFormats() {
   (0, _collabCaret.registerFormatCollabCaret)();
 };

@@ -33,6 +33,10 @@ var _formats = require("./formats");
  */
 
 /**
+ * Internal dependencies
+ */
+
+/**
  * WordPress dependencies
  */
 
@@ -55,16 +59,15 @@ var debug = require('debug')('iso-editor:collab');
 
 var defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
- * @param {object} opts - Hook options
+ * @param {Object} opts - Hook options
  * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
  * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
- *
  * @typedef IsoEditorSelection
- * @property {object} selectionStart
- * @property {object} selectionEnd
+ * @property {Object} selectionStart
+ * @property {Object} selectionEnd
  */
 
 exports.defaultColors = defaultColors;
@@ -73,7 +76,7 @@ function initYDoc(_x) {
   return _initYDoc.apply(this, arguments);
 }
 /**
- * @param {object} opts - Hook options
+ * @param {Object} opts - Hook options
  * @param {CollaborationSettings} [opts.settings]
  */
 
@@ -88,7 +91,7 @@ function _initYDoc() {
           case 0:
             getBlocks = _ref.getBlocks, onRemoteDataChange = _ref.onRemoteDataChange, settings = _ref.settings, setPeerSelection = _ref.setPeerSelection, _setAvailablePeers = _ref.setAvailablePeers;
             channelId = settings.channelId, transport = settings.transport;
-            /** @type string */
+            /** @type {string} */
 
             identity = (0, _uuid.v4)();
             debug("initYDoc (identity: ".concat(identity, ")"));
@@ -97,7 +100,7 @@ function _initYDoc() {
               applyDataChanges: _yjs.updatePostDoc,
               getData: _yjs.postDocToObject,
 
-              /** @param {object} message */
+              /** @param {Object} message */
               sendMessage: function sendMessage(message) {
                 debug('sendDocMessage', message);
                 transport.sendMessage({
@@ -242,6 +245,7 @@ function useYjs(_ref2) {
     }
 
     if (!settings.transport) {
+      // eslint-disable-next-line no-console
       console.error("Collaborative editor is disabled because a transport module wasn't provided.");
       return;
     }

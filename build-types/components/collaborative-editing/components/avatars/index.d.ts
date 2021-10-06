@@ -1,5 +1,5 @@
 /**
- * @param {object} props
+ * @param {Object} props
  * @param {import("../..").AvailablePeer[]} props.peers
  */
 export function CollaborativeEditingAvatars({ peers }: {

@@ -1,4 +1,8 @@
 // @ts-nocheck TODO
+
+/**
+ * External dependencies
+ */
 import * as yjs from 'yjs';
 import { isEqual } from 'lodash';
 /**

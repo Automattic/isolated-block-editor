@@ -21,6 +21,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Real-time collaboration settings
+ *
  * @typedef CollaborationSettings
  * @property {boolean} enabled
  * @property {string} [channelId] Optional channel id to pass to transport.connect().
@@ -32,13 +33,16 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Transport module for real-time collaboration
+ *
  * @typedef CollaborationTransport
  * @property {(message: CollaborationTransportDocMessage|CollaborationTransportSelectionMessage) => void} sendMessage
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
  * @property {() => Promise<void>} disconnect
- *
+ */
+
+/**
  * @typedef CollaborationTransportConnectOpts
- * @property {object} user
+ * @property {Object} user
  * @property {string} user.identity
  * @property {string} user.name
  * @property {string} [user.avatarUrl]
@@ -46,30 +50,38 @@ import { createElement } from "@wordpress/element";
  * @property {(message: object) => void} onReceiveMessage Callback to run when a message is received.
  * @property {(peers: AvailablePeer[]) => void} setAvailablePeers Callback to run when peers change.
  * @property {string} [channelId]
- *
+ */
+
+/**
  * @typedef AvailablePeer
  * @property {string} id
  * @property {string} name
  * @property {string} color
  * @property {string} [avatarUrl]
- *
+ */
+
+/**
  * @typedef CollaborationTransportDocMessage
  * @property {string} identity
  * @property {'doc'} type
- * @property {object} message
- *
+ * @property {Object} message
+ */
+
+/**
  * @typedef CollaborationTransportSelectionMessage
  * @property {string} identity
  * @property {'selection'} type
  * @property {EditorSelection} selection
- *
- * @typedef EditorSelection
- * @property {object} start
- * @property {object} end
  */
 
 /**
- * @param {object} props
+ * @typedef EditorSelection
+ * @property {Object} start
+ * @property {Object} end
+ */
+
+/**
+ * @param {Object} props
  * @param {CollaborationSettings} props.settings
  */
 function CollaborativeEditing(_ref) {

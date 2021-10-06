@@ -3,6 +3,10 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { noop, sample } from 'lodash';
+/**
+ * Internal dependencies
+ */
+
 import { createDocument } from './yjs-doc';
 import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 /**
@@ -34,16 +38,15 @@ const debug = require('debug')('iso-editor:collab');
 
 export const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
- * @param {object} opts - Hook options
+ * @param {Object} opts - Hook options
  * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
  * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
  * @param {CollaborationSettings} opts.settings
  * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
  * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
- *
  * @typedef IsoEditorSelection
- * @property {object} selectionStart
- * @property {object} selectionEnd
+ * @property {Object} selectionStart
+ * @property {Object} selectionEnd
  */
 
 async function initYDoc({
@@ -57,7 +60,7 @@ async function initYDoc({
     channelId,
     transport
   } = settings;
-  /** @type string */
+  /** @type {string} */
 
   const identity = uuidv4();
   debug(`initYDoc (identity: ${identity})`);
@@ -66,7 +69,7 @@ async function initYDoc({
     applyDataChanges: updatePostDoc,
     getData: postDocToObject,
 
-    /** @param {object} message */
+    /** @param {Object} message */
     sendMessage: message => {
       debug('sendDocMessage', message);
       transport.sendMessage({
@@ -168,7 +171,7 @@ async function initYDoc({
   });
 }
 /**
- * @param {object} opts - Hook options
+ * @param {Object} opts - Hook options
  * @param {CollaborationSettings} [opts.settings]
  */
 
@@ -202,6 +205,7 @@ export default function useYjs({
     }
 
     if (!settings.transport) {
+      // eslint-disable-next-line no-console
       console.error(`Collaborative editor is disabled because a transport module wasn't provided.`);
       return;
     }

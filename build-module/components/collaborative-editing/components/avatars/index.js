@@ -7,9 +7,13 @@ import { Popover, VisuallyHidden } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+/**
+ * Internal dependencies
+ */
+
 import './style.scss';
 /**
- * @param {object} props
+ * @param {Object} props
  * @param {import("../..").AvailablePeer[]} props.peers
  */
 

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import type { Story } from '@storybook/react';
 declare const _default: {
     title: string;

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import * as yjs from 'yjs';
 
 const encodeArray = array => array.toString();

@@ -1,5 +1,5 @@
 /**
- * @param {object} opts - Hook options
+ * @param {Object} opts - Hook options
  * @param {CollaborationSettings} [opts.settings]
  */
 export default function useYjs({ settings }: {
@@ -13,8 +13,8 @@ export default function useYjs({ settings }: {
 /** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
 export const defaultColors: string[];
 export type IsoEditorSelection = {
-    selectionStart: object;
-    selectionEnd: object;
+    selectionStart: any;
+    selectionEnd: any;
 };
 export type CollaborationSettings = import('..').CollaborationSettings;
 export type CollaborationTransport = import('..').CollaborationTransport;

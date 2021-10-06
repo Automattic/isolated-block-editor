@@ -1,4 +1,4 @@
-export function createDocument({ identity, applyDataChanges, getData, sendMessage, }: {
+export function createDocument({ identity, applyDataChanges, getData, sendMessage }: {
     identity: any;
     applyDataChanges: any;
     getData: any;

@@ -6,6 +6,10 @@ import { createElement } from "@wordpress/element";
  */
 import { addFilter } from '@wordpress/hooks';
 import { useSelect } from '@wordpress/data';
+/**
+ * Internal dependencies
+ */
+
 import './style.scss';
 /**
  * Adds peer selected className to the block-list-block component.

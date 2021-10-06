@@ -7,6 +7,9 @@ exports.addCollabFilters = void 0;
 
 var _blockSelection = require("./block-selection");
 
+/**
+ * Internal dependencies
+ */
 var addCollabFilters = function addCollabFilters() {
   (0, _blockSelection.addFilterCollabBlockSelection)();
 };

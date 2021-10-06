@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import { CollaborativeEditingAvatars } from '.';
 import type { Story } from '@storybook/react';
 declare const _default: {

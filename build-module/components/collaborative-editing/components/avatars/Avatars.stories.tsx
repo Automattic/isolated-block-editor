@@ -1,5 +1,11 @@
+/**
+ * External dependencies
+ */
 import { sample } from 'lodash';
 
+/**
+ * Internal dependencies
+ */
 import { CollaborativeEditingAvatars, CollaborativeEditingAvatar } from '.';
 import { defaultColors } from '../../use-yjs';
 
@@ -15,6 +21,7 @@ const generateRandomPeers = ( count ) => {
 		? [ ...Array( count ) ].map( ( peer, index ) => ( {
 				id: index.toString(),
 				name: `Peery Collabson ${ index }`,
+				// eslint-disable-next-line no-restricted-syntax
 				avatarUrl: `https://i.pravatar.cc/64?cacheBust=${ Math.random() }`,
 				color: sample( defaultColors ) as string,
 		  } ) )

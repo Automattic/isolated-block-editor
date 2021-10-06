@@ -1,5 +1,11 @@
+/**
+ * External dependencies
+ */
 import type { Story } from '@storybook/react';
 
+/**
+ * Internal dependencies
+ */
 import { applyCarets, settings } from '.';
 
 export default {

@@ -22,6 +22,10 @@ import { createElement } from "@wordpress/element";
  */
 
 /**
+ * Internal dependencies
+ */
+
+/**
  * Adds peer selected className to the block-list-block component.
  *
  * @param {Object} OriginalComponent The original BlockListBlock component.
