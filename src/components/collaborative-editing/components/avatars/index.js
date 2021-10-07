@@ -2,9 +2,10 @@
  * WordPress dependencies
  */
 import { Popover, VisuallyHidden } from '@wordpress/components';
-import { withSelect } from '@wordpress/data';
+import { withSelect, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -35,6 +36,13 @@ export function CollaborativeEditingAvatars( { peers } ) {
 
 export function CollaborativeEditingAvatar( { peer } ) {
 	const [ isVisible, setIsVisible ] = useState( false );
+	const { selectBlock } = useDispatch( blockEditorStore );
+
+	const focusPeerSelectedBlock = () => {
+		if ( peer && peer.start && peer.start.clientId ) {
+			selectBlock( peer.start.clientId );
+		}
+	};
 
 	return (
 		<div
@@ -42,6 +50,10 @@ export function CollaborativeEditingAvatar( { peer } ) {
 			aria-label={ peer.name }
 			onMouseEnter={ () => setIsVisible( true ) }
 			onMouseLeave={ () => setIsVisible( false ) }
+			tabIndex={ -1 }
+			role="button"
+			onKeyDown={ () => {} }
+			onClick={ focusPeerSelectedBlock }
 			style={ {
 				borderColor: peer.color,
 				background: peer.color,
