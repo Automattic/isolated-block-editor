@@ -5,9 +5,23 @@ import * as yjs from 'yjs';
 
 const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
 
+/** @typedef {import('./algorithms/yjs').PostObject} PostObject */
+/** @typedef {import('..').EditorSelection} EditorSelection */
+
 const encodeArray = ( array ) => array.toString();
 const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
 
+/**
+ * Create a Yjs document.
+ *
+ * @param {Object} opts
+ * @param {string} opts.identity - Client identifier.
+ * @param {function(yjs.Doc, PostObject): void} opts.applyDataChanges - Function to apply changes to the Yjs doc.
+ * @param {function(yjs.Doc): PostObject} opts.getData - Function to get post object data from the Yjs doc.
+ * @param {function(): EditorSelection} opts.getSelection
+ * @param {function(EditorSelection): void} opts.setSelection
+ * @param {function(any): void} opts.sendMessage
+ */
 export function createDocument( { identity, applyDataChanges, getData, getSelection, setSelection, sendMessage } ) {
 	const doc = new yjs.Doc();
 	let state = 'off';

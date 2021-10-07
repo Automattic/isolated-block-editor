@@ -13,7 +13,7 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 /**
  * WordPress dependencies
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useRegistry, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
 
@@ -26,37 +26,17 @@ import { registerCollabFormats } from './formats';
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /** @typedef {import('..').CollaborationSettings} CollaborationSettings */
-/** @typedef {import('..').CollaborationTransport} CollaborationTransport */
-/** @typedef {import('..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
-/** @typedef {import('..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
-/** @typedef {import('..').EditorSelection} EditorSelection */
-/** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
 
 export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
 
 /**
- * @param {Object} opts - Hook options
- * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
- * @param {Function} opts.getSelection
- * @param {Function} opts.setSelection
- * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
- * @param {CollaborationSettings} opts.settings
- * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
- * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
- * @typedef IsoEditorSelection
- * @property {Object} selectionStart
- * @property {Object} selectionEnd
+ * @param {Object} opts
+ * @param {import('..').CollaborationSettings} opts.settings
+ * @param {Object} opts.registry - Redux data registry for this context.
  */
-async function initYDoc( {
-	getBlocks,
-	getSelection,
-	setSelection,
-	onRemoteDataChange,
-	settings,
-	setPeerSelection,
-	setAvailablePeers,
-} ) {
+async function initYDoc( { settings, registry } ) {
 	const { channelId, transport } = settings;
+	const { dispatch, select } = registry;
 
 	/** @type {string} */
 	const identity = uuidv4();
@@ -67,8 +47,17 @@ async function initYDoc( {
 		identity,
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
-		getSelection,
-		setSelection,
+		getSelection: () => ( {
+			start: select( 'core/block-editor' ).getSelectionStart(),
+			end: select( 'core/block-editor' ).getSelectionEnd(),
+		} ),
+		setSelection: ( { start, end } ) =>
+			dispatch( 'core/block-editor' ).selectionChange(
+				start?.clientId,
+				start?.attributeKey,
+				start?.offset,
+				end?.offset
+			),
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
@@ -76,7 +65,7 @@ async function initYDoc( {
 		},
 	} );
 
-	/** @param {CollaborationTransportDocMessage|CollaborationTransportSelectionMessage} data */
+	/** @param {import('..').CollaborationTransportMessage} data */
 	const onReceiveMessage = ( data ) => {
 		debug( 'remote change received by transport', data );
 
@@ -86,7 +75,7 @@ async function initYDoc( {
 				break;
 			}
 			case 'selection': {
-				setPeerSelection( data.identity, data.selection );
+				dispatch( 'isolated/editor' ).setPeerSelection( data.identity, data.selection );
 				break;
 			}
 		}
@@ -94,7 +83,7 @@ async function initYDoc( {
 
 	doc.onRemoteDataChange( ( changes ) => {
 		debug( 'remote change received by ydoc', changes );
-		onRemoteDataChange( changes.blocks );
+		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks );
 	} );
 
 	return transport
@@ -108,7 +97,7 @@ async function initYDoc( {
 			onReceiveMessage,
 			setAvailablePeers: ( peers ) => {
 				debug( 'setAvailablePeers', peers );
-				setAvailablePeers( peers );
+				dispatch( 'isolated/editor' ).setAvailablePeers( peers );
 			},
 			channelId,
 		} )
@@ -121,7 +110,7 @@ async function initYDoc( {
 				// Fetching the blocks from redux now, after the transport has successfully connected,
 				// ensures that we don't initialize the Yjs doc with stale blocks.
 				// (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
-				doc.startSharing( { title: '', blocks: getBlocks() } );
+				doc.startSharing( { title: '', blocks: select( 'core/block-editor' ).getBlocks() } );
 			} else {
 				doc.connect();
 			}
@@ -162,24 +151,16 @@ async function initYDoc( {
  * @param {CollaborationSettings} [opts.settings]
  */
 export default function useYjs( { settings } ) {
-	const onBlocksChange = useRef( noop );
 	const onSelectionChange = useRef( noop );
+	const registry = useRegistry();
 
-	const { getBlocks, getFormatType, getSelection, selectionStart, selectionEnd } = useSelect( ( select ) => {
+	const { getFormatType, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
-			getBlocks: select( 'isolated/editor' ).getBlocks,
 			getFormatType: select( 'core/rich-text' ).getFormatType,
-			getSelection: () => ( {
-				start: select( 'core/block-editor' ).getSelectionStart(),
-				end: select( 'core/block-editor' ).getSelectionEnd(),
-			} ),
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );
-
-	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
-	const { selectionChange } = useDispatch( 'core/block-editor' );
 
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
@@ -201,22 +182,16 @@ export default function useYjs( { settings } ) {
 		let onUnmount = noop;
 
 		initYDoc( {
-			onRemoteDataChange: updateBlocksWithUndo,
 			settings,
-			getBlocks,
-			getSelection,
-			setSelection: ( { start, end } ) =>
-				selectionChange( start?.clientId, start?.attributeKey, start?.offset, end?.offset ),
-			setPeerSelection,
-			setAvailablePeers,
+			registry,
 		} ).then( ( { applyChangesToYjs, sendSelection, undoManager, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
 			};
 
-			onBlocksChange.current = applyChangesToYjs;
 			onSelectionChange.current = sendSelection;
+
 			addFilter( 'isoEditor.blockEditorProvider.onInput', 'isolated-block-editor/collab', ( onInput ) =>
 				over( [ onInput, applyChangesToYjs, () => debug( 'BlockEditorProvider onInput' ) ] )
 			);
