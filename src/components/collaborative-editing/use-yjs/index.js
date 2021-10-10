@@ -65,85 +65,93 @@ async function initYDoc( { settings, registry } ) {
 		},
 	} );
 
-	/** @param {import('..').CollaborationTransportMessage} data */
-	const onReceiveMessage = ( data ) => {
-		debug( 'remote change received by transport', data );
-
-		switch ( data.type ) {
-			case 'doc': {
-				doc.receiveMessage( data.message );
-				break;
-			}
-			case 'selection': {
-				dispatch( 'isolated/editor' ).setPeerSelection( data.identity, data.selection );
-				break;
-			}
-		}
-	};
-
 	doc.onRemoteDataChange( ( changes ) => {
 		debug( 'remote change received by ydoc', changes );
 		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks );
 	} );
 
-	return transport
-		.connect( {
-			user: {
-				identity,
-				name: settings.username,
-				color: settings.caretColor || sample( defaultColors ),
-				avatarUrl: settings.avatarUrl,
-			},
-			onReceiveMessage,
-			setAvailablePeers: ( peers ) => {
-				debug( 'setAvailablePeers', peers );
-				dispatch( 'isolated/editor' ).setAvailablePeers( peers );
-			},
-			channelId,
-		} )
-		.then( ( { isFirstInChannel } ) => {
-			debug( `connected (channelId: ${ channelId })` );
+	const { isFirstInChannel } = await transport.connect( {
+		user: {
+			identity,
+			name: settings.username,
+			color: settings.caretColor || sample( defaultColors ),
+			avatarUrl: settings.avatarUrl,
+		},
+		/** @param {import('..').CollaborationTransportMessage} data */
+		onReceiveMessage: ( data ) => {
+			debug( 'remote change received by transport', data );
 
-			if ( isFirstInChannel ) {
-				debug( 'first in channel' );
-
-				// Fetching the blocks from redux now, after the transport has successfully connected,
-				// ensures that we don't initialize the Yjs doc with stale blocks.
-				// (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
-				doc.startSharing( { title: '', blocks: select( 'core/block-editor' ).getBlocks() } );
-			} else {
-				doc.connect();
-			}
-
-			const applyChangesToYjs = ( blocks ) => {
-				if ( doc.getState() !== 'on' ) {
-					return;
+			switch ( data.type ) {
+				case 'doc': {
+					doc.receiveMessage( data.message );
+					break;
 				}
-				debug( 'local changes applied to ydoc' );
-				doc.applyDataChanges( { blocks } );
-			};
+				case 'selection': {
+					dispatch( 'isolated/editor' ).setPeerSelection( data.identity, data.selection );
+					break;
+				}
+			}
+		},
+		setAvailablePeers: ( peers ) => {
+			debug( 'setAvailablePeers', peers );
+			dispatch( 'isolated/editor' ).setAvailablePeers( peers );
+		},
+		channelId,
+	} );
 
-			const sendSelection = ( start, end ) => {
-				debug( 'sendSelection', start, end );
-				transport.sendMessage( {
-					type: 'selection',
-					identity,
-					selection: {
-						start,
-						end,
-					},
-				} );
-			};
+	debug( `connected (channelId: ${ channelId })` );
 
-			const disconnect = () => {
-				transport.disconnect();
-				doc.disconnect();
-			};
+	if ( isFirstInChannel ) {
+		debug( 'first in channel' );
 
-			window.addEventListener( 'beforeunload', () => disconnect() );
+		// Fetching the blocks from redux now, after the transport has successfully connected,
+		// ensures that we don't initialize the Yjs doc with stale blocks.
+		// (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
+		doc.startSharing( { title: '', blocks: select( 'core/block-editor' ).getBlocks() } );
+	} else {
+		doc.connect();
+	}
 
-			return { applyChangesToYjs, sendSelection, undoManager: doc.undoManager, disconnect };
-		} );
+	const applyChangesToYjs = ( blocks ) => {
+		if ( doc.getState() !== 'on' ) {
+			return;
+		}
+		debug( 'local changes applied to ydoc' );
+		doc.applyDataChanges( { blocks } );
+	};
+
+	addFilter( 'isoEditor.blockEditorProvider.onInput', 'isolated-block-editor/collab', ( onInput ) =>
+		over( [ onInput, applyChangesToYjs, () => debug( 'BlockEditorProvider onInput' ) ] )
+	);
+	addFilter( 'isoEditor.blockEditorProvider.onChange', 'isolated-block-editor/collab', ( onChange ) =>
+		over( [ onChange, applyChangesToYjs, () => debug( 'BlockEditorProvider onChange' ) ] )
+	);
+
+	const disconnect = () => {
+		transport.disconnect();
+		doc.disconnect();
+	};
+
+	window.addEventListener( 'beforeunload', () => disconnect() );
+
+	return {
+		sendSelection: ( start, end ) => {
+			debug( 'sendSelection', start, end );
+			transport.sendMessage( {
+				type: 'selection',
+				identity,
+				selection: {
+					start,
+					end,
+				},
+			} );
+		},
+		undoManager: doc.undoManager,
+		disconnect: () => {
+			window.removeEventListener( 'beforeunload', disconnect );
+			disconnect();
+		},
+	};
 }
 
 /**
@@ -184,7 +192,7 @@ export default function useYjs( { settings } ) {
 		initYDoc( {
 			settings,
 			registry,
-		} ).then( ( { applyChangesToYjs, sendSelection, undoManager, disconnect } ) => {
+		} ).then( ( { sendSelection, undoManager, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
@@ -192,12 +200,6 @@ export default function useYjs( { settings } ) {
 
 			onSelectionChange.current = sendSelection;
 
-			addFilter( 'isoEditor.blockEditorProvider.onInput', 'isolated-block-editor/collab', ( onInput ) =>
-				over( [ onInput, applyChangesToYjs, () => debug( 'BlockEditorProvider onInput' ) ] )
-			);
-			addFilter( 'isoEditor.blockEditorProvider.onChange', 'isolated-block-editor/collab', ( onChange ) =>
-				over( [ onChange, applyChangesToYjs, () => debug( 'BlockEditorProvider onChange' ) ] )
-			);
 			addFilter( 'isoEditor.blockEditor.undo', 'isolated-block-editor/collab', () => undoManager.undo );
 			addFilter( 'isoEditor.blockEditor.redo', 'isolated-block-editor/collab', () => undoManager.redo );
 			addFilter( 'isoEditor.blockEditor.hasEditorUndo', 'isolated-block-editor/collab', () =>
