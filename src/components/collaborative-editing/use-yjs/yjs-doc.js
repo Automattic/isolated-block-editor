@@ -3,10 +3,7 @@
  */
 import * as yjs from 'yjs';
 
-const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
-
 /** @typedef {import('./algorithms/yjs').PostObject} PostObject */
-/** @typedef {import('..').EditorSelection} EditorSelection */
 
 const encodeArray = ( array ) => array.toString();
 const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
@@ -18,43 +15,14 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  * @param {string} opts.identity - Client identifier.
  * @param {function(yjs.Doc, PostObject): void} opts.applyDataChanges - Function to apply changes to the Yjs doc.
  * @param {function(yjs.Doc): PostObject} opts.getData - Function to get post object data from the Yjs doc.
- * @param {function(): EditorSelection} opts.getSelection
- * @param {function(EditorSelection): void} opts.setSelection
  * @param {function(any): void} opts.sendMessage
  */
-export function createDocument( { identity, applyDataChanges, getData, getSelection, setSelection, sendMessage } ) {
+export function createDocument( { identity, applyDataChanges, getData, sendMessage } ) {
 	const doc = new yjs.Doc();
 	let state = 'off';
 
-	/** @type {yjs.UndoManager | undefined} */
-	let undoManager;
-
-	const setupUndoManagerOnReady = ( newState ) => {
-		if ( newState === 'on' && ! undoManager ) {
-			const postMap = doc.getMap( 'post' );
-			undoManager = new yjs.UndoManager( postMap, { trackedOrigins: new Set( [ identity ] ) } );
-
-			undoManager.on( 'stack-item-added', ( event ) => {
-				const selection = getSelection();
-				event.stackItem.meta.set( 'caret-location', selection );
-				debugUndo( 'undo stack item added with selection', selection );
-			} );
-			undoManager.on( 'stack-item-popped', ( event ) => {
-				const selectionReferenceItem =
-					event.type === 'undo' ? undoManager?.undoStack.at( -1 ) : event.stackItem;
-				const selection = selectionReferenceItem?.meta.get( 'caret-location' );
-				if ( selection?.start ) {
-					setSelection( selection );
-				}
-				debugUndo( 'stack item popped with selection', selection );
-			} );
-
-			debugUndo( 'instantiated UndoManager' );
-		}
-	};
-
 	let listeners = [];
-	let stateListeners = [ setupUndoManagerOnReady ];
+	let stateListeners = [];
 
 	doc.on( 'update', ( update, origin ) => {
 		const isLocalOrigin = origin === identity || origin instanceof yjs.UndoManager;
@@ -175,21 +143,8 @@ export function createDocument( { identity, applyDataChanges, getData, getSelect
 			return state;
 		},
 
-		undoManager: {
-			hasUndo() {
-				return ( undoManager?.undoStack.length ?? 0 ) > 1;
-			},
-			hasRedo() {
-				return !! undoManager?.redoStack.length;
-			},
-			undo() {
-				debugUndo( 'undo' );
-				undoManager?.undo();
-			},
-			redo() {
-				debugUndo( 'redo' );
-				undoManager?.redo();
-			},
+		getPostMap() {
+			return doc.getMap( 'post' );
 		},
 	};
 }

@@ -22,6 +22,7 @@ import { addFilter } from '@wordpress/hooks';
  */
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
+import { setupUndoManager } from './yjs-undo';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
@@ -47,22 +48,21 @@ async function initYDoc( { settings, registry } ) {
 		identity,
 		applyDataChanges: updatePostDoc,
 		getData: postDocToObject,
-		getSelection: () => ( {
-			start: select( 'core/block-editor' ).getSelectionStart(),
-			end: select( 'core/block-editor' ).getSelectionEnd(),
-		} ),
-		setSelection: ( { start, end } ) =>
-			dispatch( 'core/block-editor' ).selectionChange(
-				start?.clientId,
-				start?.attributeKey,
-				start?.offset,
-				end?.offset
-			),
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
 			transport.sendMessage( { type: 'doc', identity, message } );
 		},
+	} );
+
+	let isUndoManagerReady = false;
+
+	doc.onStateChange( ( newState ) => {
+		// Set up undo manager only once per Yjs doc
+		if ( newState === 'on' && ! isUndoManagerReady ) {
+			setupUndoManager( doc.getPostMap(), identity, registry );
+			isUndoManagerReady = true;
+		}
 	} );
 
 	doc.onRemoteDataChange( ( changes ) => {
@@ -192,22 +192,13 @@ export default function useYjs( { settings } ) {
 		initYDoc( {
 			settings,
 			registry,
-		} ).then( ( { sendSelection, undoManager, disconnect } ) => {
+		} ).then( ( { sendSelection, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
 			};
 
 			onSelectionChange.current = sendSelection;
-
-			addFilter( 'isoEditor.blockEditor.undo', 'isolated-block-editor/collab', () => undoManager.undo );
-			addFilter( 'isoEditor.blockEditor.redo', 'isolated-block-editor/collab', () => undoManager.redo );
-			addFilter( 'isoEditor.blockEditor.hasEditorUndo', 'isolated-block-editor/collab', () =>
-				undoManager.hasUndo()
-			);
-			addFilter( 'isoEditor.blockEditor.hasEditorRedo', 'isolated-block-editor/collab', () =>
-				undoManager.hasRedo()
-			);
 		} );
 
 		return () => onUnmount();
