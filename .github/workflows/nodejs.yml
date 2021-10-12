@@ -35,5 +35,6 @@ jobs:
             # Uncomment this when all files are clean
             # - run: yarn lint:js
 
-            - run: yarn build
             - run: yarn test
+
+            - run: yarn build
