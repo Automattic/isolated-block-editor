@@ -152,10 +152,11 @@ export default function useYjs( { settings } ) {
 	const onBlocksChange = useRef( noop );
 	const onSelectionChange = useRef( noop );
 
-	const { blocks, getBlocks, selectionStart, selectionEnd } = useSelect( ( select ) => {
+	const { blocks, getBlocks, getFormatType, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
 			blocks: select( 'isolated/editor' ).getBlocks(),
 			getBlocks: select( 'isolated/editor' ).getBlocks,
+			getFormatType: select( 'core/rich-text' ).getFormatType,
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
@@ -175,7 +176,7 @@ export default function useYjs( { settings } ) {
 		}
 
 		debug( 'registered collab formats' );
-		registerCollabFormats();
+		registerCollabFormats( getFormatType );
 
 		debug( 'added collab filters' );
 		addCollabFilters();

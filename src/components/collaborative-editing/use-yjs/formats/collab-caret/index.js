@@ -15,7 +15,7 @@ import { applyFormat, registerFormatType } from '@wordpress/rich-text';
 import { shouldUseWhiteText } from './color-utils';
 import './style.scss';
 
-const FORMAT_NAME = 'isolated/collab-caret';
+export const FORMAT_NAME = 'isolated/collab-caret';
 
 /**
  * Applies given carets to the given record.
