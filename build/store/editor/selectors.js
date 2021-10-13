@@ -3,17 +3,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getCurrentPattern = getCurrentPattern;
+exports.getCurrentPatternName = getCurrentPatternName;
 exports.getEditorMode = getEditorMode;
 exports.getEditorSettings = getEditorSettings;
-exports.isEditorReady = isEditorReady;
-exports.getCurrentPatternName = getCurrentPatternName;
-exports.getCurrentPattern = getCurrentPattern;
 exports.getIgnoredContent = getIgnoredContent;
 exports.getNamedPattern = getNamedPattern;
+exports.getPatterns = getPatterns;
+exports.isEditing = isEditing;
+exports.isEditorReady = isEditorReady;
 exports.isInserterOpened = isInserterOpened;
 exports.isInspecting = isInspecting;
-exports.isEditing = isEditing;
-exports.getPatterns = getPatterns;
 
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 

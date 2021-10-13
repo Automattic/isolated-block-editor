@@ -5,8 +5,8 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CollaborativeEditingAvatars = CollaborativeEditingAvatars;
 exports.CollaborativeEditingAvatar = CollaborativeEditingAvatar;
+exports.CollaborativeEditingAvatars = CollaborativeEditingAvatars;
 exports.CollaborativeEditingAvatarsOverflow = CollaborativeEditingAvatarsOverflow;
 exports["default"] = void 0;
 

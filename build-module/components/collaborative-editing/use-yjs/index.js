@@ -184,12 +184,14 @@ export default function useYjs({
   const {
     blocks,
     getBlocks,
+    getFormatType,
     selectionStart,
     selectionEnd
   } = useSelect(select => {
     return {
       blocks: select('isolated/editor').getBlocks(),
       getBlocks: select('isolated/editor').getBlocks,
+      getFormatType: select('core/rich-text').getFormatType,
       selectionStart: select('core/block-editor').getSelectionStart(),
       selectionEnd: select('core/block-editor').getSelectionEnd()
     };
@@ -211,7 +213,7 @@ export default function useYjs({
     }
 
     debug('registered collab formats');
-    registerCollabFormats();
+    registerCollabFormats(getFormatType);
     debug('added collab filters');
     addCollabFilters();
     let onUnmount = noop;

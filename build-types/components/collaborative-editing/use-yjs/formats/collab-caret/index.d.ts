@@ -6,6 +6,7 @@
  * @return {Object} A record with the carets applied.
  */
 export function applyCarets(record: any, carets?: any[]): any;
+export const FORMAT_NAME: "isolated/collab-caret";
 export namespace settings {
     const title: string;
     const tagName: string;

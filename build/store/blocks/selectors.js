@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getBlocks = getBlocks;
-exports.getEditorSelection = getEditorSelection;
-exports.hasEditorUndo = hasEditorUndo;
-exports.hasEditorRedo = hasEditorRedo;
 exports.getEditCount = getEditCount;
+exports.getEditorSelection = getEditorSelection;
+exports.hasEditorRedo = hasEditorRedo;
+exports.hasEditorUndo = hasEditorUndo;
 
 var _selectors = require("../editor/selectors");
 

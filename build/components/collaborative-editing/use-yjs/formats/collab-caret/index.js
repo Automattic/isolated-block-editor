@@ -5,8 +5,9 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.FORMAT_NAME = void 0;
 exports.applyCarets = applyCarets;
-exports.registerFormatCollabCaret = exports.settings = void 0;
+exports.settings = exports.registerFormatCollabCaret = void 0;
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
@@ -39,6 +40,8 @@ var FORMAT_NAME = 'isolated/collab-caret';
  * @param {Array} carets The carets to apply.
  * @return {Object} A record with the carets applied.
  */
+
+exports.FORMAT_NAME = FORMAT_NAME;
 
 function applyCarets(record) {
   var carets = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];

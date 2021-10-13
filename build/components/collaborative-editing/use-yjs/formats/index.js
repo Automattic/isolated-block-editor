@@ -10,8 +10,10 @@ var _collabCaret = require("./collab-caret");
 /**
  * Internal dependencies
  */
-var registerCollabFormats = function registerCollabFormats() {
-  (0, _collabCaret.registerFormatCollabCaret)();
+var registerCollabFormats = function registerCollabFormats(getFormatType) {
+  if (!getFormatType(_collabCaret.FORMAT_NAME)) {
+    (0, _collabCaret.registerFormatCollabCaret)();
+  }
 };
 
 exports.registerCollabFormats = registerCollabFormats;
