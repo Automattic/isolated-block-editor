@@ -5,8 +5,8 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isEditingReusableBlock = isEditingReusableBlock;
 exports["default"] = void 0;
+exports.isEditingReusableBlock = isEditingReusableBlock;
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 

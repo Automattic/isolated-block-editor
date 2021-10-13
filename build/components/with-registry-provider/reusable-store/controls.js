@@ -7,8 +7,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.convertBlockToStatic = convertBlockToStatic;
 exports.convertBlocksToReusable = convertBlocksToReusable;
-exports.deleteReusableBlock = deleteReusableBlock;
 exports["default"] = void 0;
+exports.deleteReusableBlock = deleteReusableBlock;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 

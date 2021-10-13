@@ -225,12 +225,14 @@ function useYjs(_ref2) {
     return {
       blocks: select('isolated/editor').getBlocks(),
       getBlocks: select('isolated/editor').getBlocks,
+      getFormatType: select('core/rich-text').getFormatType,
       selectionStart: select('core/block-editor').getSelectionStart(),
       selectionEnd: select('core/block-editor').getSelectionEnd()
     };
   }, []),
       blocks = _useSelect.blocks,
       getBlocks = _useSelect.getBlocks,
+      getFormatType = _useSelect.getFormatType,
       selectionStart = _useSelect.selectionStart,
       selectionEnd = _useSelect.selectionEnd;
 
@@ -251,7 +253,7 @@ function useYjs(_ref2) {
     }
 
     debug('registered collab formats');
-    (0, _formats.registerCollabFormats)();
+    (0, _formats.registerCollabFormats)(getFormatType);
     debug('added collab filters');
     (0, _filters.addCollabFilters)();
     var onUnmount = _lodash.noop;

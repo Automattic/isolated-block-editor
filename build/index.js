@@ -5,24 +5,16 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.initializeEditor = initializeEditor;
-exports.initializeIsoEditor = initializeIsoEditor;
-Object.defineProperty(exports, "DocumentSection", {
-  enumerable: true,
-  get: function get() {
-    return _document["default"];
-  }
-});
-Object.defineProperty(exports, "ToolbarSlot", {
-  enumerable: true,
-  get: function get() {
-    return _slot["default"];
-  }
-});
 Object.defineProperty(exports, "CollaborativeEditing", {
   enumerable: true,
   get: function get() {
     return _collaborativeEditing["default"];
+  }
+});
+Object.defineProperty(exports, "DocumentSection", {
+  enumerable: true,
+  get: function get() {
+    return _document["default"];
   }
 });
 Object.defineProperty(exports, "EditorLoaded", {
@@ -31,7 +23,15 @@ Object.defineProperty(exports, "EditorLoaded", {
     return _editorLoaded["default"];
   }
 });
+Object.defineProperty(exports, "ToolbarSlot", {
+  enumerable: true,
+  get: function get() {
+    return _slot["default"];
+  }
+});
 exports["default"] = void 0;
+exports.initializeEditor = initializeEditor;
+exports.initializeIsoEditor = initializeIsoEditor;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 

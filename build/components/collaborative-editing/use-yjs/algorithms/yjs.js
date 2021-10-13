@@ -7,13 +7,13 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateBlocksDoc = updateBlocksDoc;
-exports.updateCommentsDoc = updateCommentsDoc;
-exports.updateCommentRepliesDoc = updateCommentRepliesDoc;
-exports.updatePostDoc = updatePostDoc;
-exports.commentsDocToArray = commentsDocToArray;
 exports.blocksDocToArray = blocksDocToArray;
+exports.commentsDocToArray = commentsDocToArray;
 exports.postDocToObject = postDocToObject;
+exports.updateBlocksDoc = updateBlocksDoc;
+exports.updateCommentRepliesDoc = updateCommentRepliesDoc;
+exports.updateCommentsDoc = updateCommentsDoc;
+exports.updatePostDoc = updatePostDoc;
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 

@@ -59,4 +59,9 @@
 	a[href="edit.php?post_type=wp_block"] {
 		display: none;
 	}
+
+	// Ensure that we always override the black background from core
+	.edit-post-visual-editor {
+		background-color: #fff;
+	}
 }
