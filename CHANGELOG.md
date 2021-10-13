@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [2.5.1] - 2021-10-13
+
+### Added
+
+- Browser build contains toolbar styles
+
+### Fixed
+
+- Browser build now contains `@wordpress/keyboard-shortcuts` module
+- Prevent duplicate collaboration format registration
+- Fix multi-line collaboration carets
+
 ### [2.5.0] - 2021-10-06
 
 ### Added
