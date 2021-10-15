@@ -130,7 +130,7 @@ export default compose( [
 
 		return {
 			onAvatarClick( peer ) {
-				if ( peer && peer.start && peer.start.clientId ) {
+				if ( peer?.start?.clientId ) {
 					selectBlock( peer.start.clientId );
 				}
 			},
