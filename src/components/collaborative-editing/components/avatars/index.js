@@ -39,14 +39,11 @@ export function CollaborativeEditingAvatar( { peer, onAvatarClick } ) {
 	const [ isVisible, setIsVisible ] = useState( false );
 
 	return (
-		<div
-			className="iso-editor-collab-avatars__avatar"
+		<button
+			className="iso-editor-collab-avatars__avatar-btn"
 			aria-label={ peer.name }
 			onMouseEnter={ () => setIsVisible( true ) }
 			onMouseLeave={ () => setIsVisible( false ) }
-			tabIndex={ -1 }
-			role="button"
-			onKeyDown={ () => {} }
 			onClick={ () => onAvatarClick( peer ) }
 			style={ {
 				borderColor: peer.color,
@@ -63,7 +60,7 @@ export function CollaborativeEditingAvatar( { peer, onAvatarClick } ) {
 			) : (
 				<span className="iso-editor-collab-avatars__name-initial">{ peer.name.charAt( 0 ) }</span>
 			) }
-		</div>
+		</button>
 	);
 }
 
