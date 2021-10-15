@@ -2,10 +2,10 @@
  * WordPress dependencies
  */
 import { Popover, VisuallyHidden } from '@wordpress/components';
-import { withSelect, useDispatch } from '@wordpress/data';
+import { withSelect, withDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { store as blockEditorStore } from '@wordpress/block-editor';
+import { compose } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -15,8 +15,9 @@ import './style.scss';
 /**
  * @param {Object} props
  * @param {import("../..").AvailablePeer[]} props.peers
+ * @param {Function} props.onAvatarClick
  */
-export function CollaborativeEditingAvatars( { peers } ) {
+export function CollaborativeEditingAvatars( { peers, onAvatarClick } ) {
 	const MAX_AVATAR_COUNT = 4;
 	const shouldOverflow = peers.length > MAX_AVATAR_COUNT;
 	const actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
@@ -26,7 +27,7 @@ export function CollaborativeEditingAvatars( { peers } ) {
 			<VisuallyHidden>Currently editing:</VisuallyHidden>
 
 			{ peers.slice( 0, actualAvatarCount ).map( ( peer ) => (
-				<CollaborativeEditingAvatar key={ peer.id } peer={ peer } />
+				<CollaborativeEditingAvatar key={ peer.id } peer={ peer } onAvatarClick={ onAvatarClick } />
 			) ) }
 
 			{ shouldOverflow && <CollaborativeEditingAvatarsOverflow peers={ peers?.slice( actualAvatarCount ) } /> }
@@ -34,15 +35,8 @@ export function CollaborativeEditingAvatars( { peers } ) {
 	);
 }
 
-export function CollaborativeEditingAvatar( { peer } ) {
+export function CollaborativeEditingAvatar( { peer, onAvatarClick } ) {
 	const [ isVisible, setIsVisible ] = useState( false );
-	const { selectBlock } = useDispatch( blockEditorStore );
-
-	const focusPeerSelectedBlock = () => {
-		if ( peer && peer.start && peer.start.clientId ) {
-			selectBlock( peer.start.clientId );
-		}
-	};
 
 	return (
 		<div
@@ -53,7 +47,7 @@ export function CollaborativeEditingAvatar( { peer } ) {
 			tabIndex={ -1 }
 			role="button"
 			onKeyDown={ () => {} }
-			onClick={ focusPeerSelectedBlock }
+			onClick={ () => onAvatarClick( peer ) }
 			style={ {
 				borderColor: peer.color,
 				background: peer.color,
@@ -121,15 +115,28 @@ export function CollaborativeEditingAvatarsOverflow( { peers } ) {
 	);
 }
 
-export default withSelect( ( select ) => {
-	const peers = select( 'isolated/editor' ).getPeers();
+export default compose( [
+	withSelect( ( select ) => {
+		const peers = select( 'isolated/editor' ).getPeers();
 
-	return {
-		peers: Object.keys( peers ).map( ( id ) => {
-			return {
-				id,
-				...peers[ id ],
-			};
-		} ),
-	};
-} )( CollaborativeEditingAvatars );
+		return {
+			peers: Object.keys( peers ).map( ( id ) => {
+				return {
+					id,
+					...peers[ id ],
+				};
+			} ),
+		};
+	} ),
+	withDispatch( ( dispatch ) => {
+		const { selectBlock } = dispatch( 'core/block-editor' );
+
+		return {
+			onAvatarClick( peer ) {
+				if ( peer && peer.start && peer.start.clientId ) {
+					selectBlock( peer.start.clientId );
+				}
+			},
+		};
+	} ),
+] )( CollaborativeEditingAvatars );
