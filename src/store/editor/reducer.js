@@ -152,13 +152,14 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				isInserterOpened: action.isOpen,
+				isInspectorOpened: false,
 				isListViewOpened: false,
 			};
 
 		case 'SET_INSPECTOR_OPEN':
 			return {
 				...state,
-				isInserterOpened: false,
+				isInspectorOpened: action.isOpen,
 				isListViewOpened: false,
 			};
 
@@ -166,6 +167,7 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				isInserterOpened: false,
+				isInspectorOpened: false,
 				isListViewOpened: action.isOpen,
 			};
 
