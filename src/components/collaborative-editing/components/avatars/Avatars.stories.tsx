@@ -28,12 +28,16 @@ const generateRandomPeers = ( count ) => {
 		: [];
 };
 
+const onAvatarClickMock = () => {};
+
 type Props = {
 	peerCount: number;
 };
 
 const Template: Story< Props > = ( { peerCount } ) => {
-	return <CollaborativeEditingAvatars peers={ generateRandomPeers( peerCount ) } />;
+	return (
+		<CollaborativeEditingAvatars peers={ generateRandomPeers( peerCount ) } onAvatarClick={ onAvatarClickMock } />
+	);
 };
 
 export const Default = Template.bind( {} );
@@ -47,7 +51,7 @@ Empty.args = {
 };
 
 export const NoImage = ( args ) => {
-	return <CollaborativeEditingAvatar peer={ args } />;
+	return <CollaborativeEditingAvatar peer={ args } onAvatarClick={ onAvatarClickMock } />;
 };
 NoImage.args = {
 	id: 0,
