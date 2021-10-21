@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking changes
+
+- Editor now saves initial content if there is anything to save
+
 ### [2.5.1] - 2021-10-13
 
 ### Added
