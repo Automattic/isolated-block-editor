@@ -22,6 +22,8 @@ var _element = require("@wordpress/element");
 
 var _i18n = require("@wordpress/i18n");
 
+var _compose = require("@wordpress/compose");
+
 require("./style.scss");
 
 import { createElement, Fragment } from "@wordpress/element";
@@ -33,9 +35,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 /**
  * @param {Object} props
  * @param {import("../..").AvailablePeer[]} props.peers
+ * @param {Function} props.onAvatarClick
  */
 function CollaborativeEditingAvatars(_ref) {
-  var peers = _ref.peers;
+  var peers = _ref.peers,
+      onAvatarClick = _ref.onAvatarClick;
   var MAX_AVATAR_COUNT = 4;
   var shouldOverflow = peers.length > MAX_AVATAR_COUNT;
   var actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
@@ -44,7 +48,8 @@ function CollaborativeEditingAvatars(_ref) {
   }, createElement(_components.VisuallyHidden, null, "Currently editing:"), peers.slice(0, actualAvatarCount).map(function (peer) {
     return createElement(CollaborativeEditingAvatar, {
       key: peer.id,
-      peer: peer
+      peer: peer,
+      onAvatarClick: onAvatarClick
     });
   }), shouldOverflow && createElement(CollaborativeEditingAvatarsOverflow, {
     peers: peers === null || peers === void 0 ? void 0 : peers.slice(actualAvatarCount)
@@ -52,21 +57,25 @@ function CollaborativeEditingAvatars(_ref) {
 }
 
 function CollaborativeEditingAvatar(_ref2) {
-  var peer = _ref2.peer;
+  var peer = _ref2.peer,
+      onAvatarClick = _ref2.onAvatarClick;
 
   var _useState = (0, _element.useState)(false),
       _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
       isVisible = _useState2[0],
       setIsVisible = _useState2[1];
 
-  return createElement("div", {
-    className: "iso-editor-collab-avatars__avatar",
+  return createElement("button", {
+    className: "iso-editor-collab-avatars__avatar-btn",
     "aria-label": peer.name,
     onMouseEnter: function onMouseEnter() {
       return setIsVisible(true);
     },
     onMouseLeave: function onMouseLeave() {
       return setIsVisible(false);
+    },
+    onClick: function onClick() {
+      return onAvatarClick(peer);
     },
     style: {
       borderColor: peer.color,
@@ -124,7 +133,7 @@ function CollaborativeEditingAvatarsOverflow(_ref3) {
   }, "+".concat(peers.length)), createElement(_components.VisuallyHidden, null, createElement(NameList, null)));
 }
 
-var _default = (0, _data.withSelect)(function (select) {
+var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var peers = select('isolated/editor').getPeers();
   return {
     peers: Object.keys(peers).map(function (id) {
@@ -133,7 +142,20 @@ var _default = (0, _data.withSelect)(function (select) {
       }, peers[id]);
     })
   };
-})(CollaborativeEditingAvatars);
+}), (0, _data.withDispatch)(function (dispatch) {
+  var _dispatch = dispatch('core/block-editor'),
+      selectBlock = _dispatch.selectBlock;
+
+  return {
+    onAvatarClick: function onAvatarClick(peer) {
+      var _peer$start;
+
+      if (peer !== null && peer !== void 0 && (_peer$start = peer.start) !== null && _peer$start !== void 0 && _peer$start.clientId) {
+        selectBlock(peer.start.clientId);
+      }
+    }
+  };
+})])(CollaborativeEditingAvatars);
 
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

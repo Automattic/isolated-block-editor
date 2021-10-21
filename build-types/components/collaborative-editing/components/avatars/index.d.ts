@@ -1,12 +1,15 @@
 /**
  * @param {Object} props
  * @param {import("../..").AvailablePeer[]} props.peers
+ * @param {Function} props.onAvatarClick
  */
-export function CollaborativeEditingAvatars({ peers }: {
+export function CollaborativeEditingAvatars({ peers, onAvatarClick }: {
     peers: import("../..").AvailablePeer[];
+    onAvatarClick: Function;
 }): JSX.Element;
-export function CollaborativeEditingAvatar({ peer }: {
+export function CollaborativeEditingAvatar({ peer, onAvatarClick }: {
     peer: any;
+    onAvatarClick: any;
 }): JSX.Element;
 export function CollaborativeEditingAvatarsOverflow({ peers }: {
     peers: any;
