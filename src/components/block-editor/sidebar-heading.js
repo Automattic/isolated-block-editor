@@ -9,7 +9,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
  * Internal dependencies
  */
 
-const SettingsHeader = ( { sidebarName } ) => {
+const SettingsHeader = ( { sidebarName, hasDocument } ) => {
 	const { openGeneralSidebar } = useDispatch( 'isolated/editor' );
 	const openDocumentSettings = () => openGeneralSidebar( 'edit-post/document' );
 	const openBlockSettings = () => openGeneralSidebar( 'edit-post/block' );
@@ -37,16 +37,18 @@ const SettingsHeader = ( { sidebarName } ) => {
 	/* Use a list so screen readers will announce how many tabs there are. */
 	return (
 		<ul>
-			<li>
-				<Button
-					onClick={ openDocumentSettings }
-					className={ `edit-post-sidebar__panel-tab ${ documentActiveClass }` }
-					aria-label={ documentAriaLabel }
-					data-label={ documentLabel }
-				>
-					{ documentLabel }
-				</Button>
-			</li>
+			{ hasDocument && (
+				<li>
+					<Button
+						onClick={ openDocumentSettings }
+						className={ `edit-post-sidebar__panel-tab ${ documentActiveClass }` }
+						aria-label={ documentAriaLabel }
+						data-label={ documentLabel }
+					>
+						{ documentLabel }
+					</Button>
+				</li>
+			) }
 
 			<li>
 				<Button

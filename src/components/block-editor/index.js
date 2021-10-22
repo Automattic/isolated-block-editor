@@ -124,7 +124,7 @@ function BlockEditor( props ) {
 
 	return (
 		<>
-			<SettingsSidebar />
+			<SettingsSidebar hasDocument={ settings?.iso?.toolbar?.documentInspector ?? false } />
 			<FullscreenMode isActive={ isFullscreenActive } />
 
 			<InterfaceSkeleton
