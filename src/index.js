@@ -27,6 +27,7 @@ import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
 import CollaborativeEditing from './components/collaborative-editing';
+import FooterSlot from './components/footer-slot';
 
 // Export library components
 import EditorLoaded from './components/editor-loaded';
@@ -211,4 +212,4 @@ function IsolatedBlockEditor( props ) {
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing };
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };

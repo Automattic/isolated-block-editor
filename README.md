@@ -169,6 +169,7 @@ The `IsolatedBlockEditor` also exports the following support components:
 - `EditorLoaded` - Include this to be notified when the editor is loading and has loaded
 - `DocumentSection` - Wrap up a component to appear in the document tab of the inspector
 - `ToolbarSlot` - Insert content into the toolbar
+- `FooterSlot` - Insert content into the footer
 - [`CollaborativeEditing`](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/collaborative-editing) - Enable real-time collaborative editing
 
 ```js

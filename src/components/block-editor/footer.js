@@ -11,7 +11,7 @@ import { store as editorStore } from '@wordpress/editor';
  * Internal dependencies
  */
 
-import FooterSection from '../footer';
+import FooterSection from '../footer-slot';
 
 const Footer = ( { editorMode } ) => {
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
@@ -22,7 +22,8 @@ const Footer = ( { editorMode } ) => {
 
 		return {
 			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
-			showBlockBreadcrumbs: isFeatureActive( 'showBlockBreadcrumbs' ),
+			// TODO: This is currently disabled until it can be better worked in
+			showBlockBreadcrumbs: false, //isFeatureActive( 'showBlockBreadcrumbs' ),
 			// translators: Default label for the Document in the Block Breadcrumb.
 			documentLabel: postTypeLabel || _x( 'Document', 'noun' ),
 		};
