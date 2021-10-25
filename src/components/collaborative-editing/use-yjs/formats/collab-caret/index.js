@@ -52,7 +52,7 @@ export function applyCarets( record, carets = [] ) {
 					style: [
 						`--iso-editor-collab-caret-color: ${ color || '#2e3d48' };`,
 						`--iso-editor-collab-caret-label-text-color: ${
-							shouldUseWhiteText( color ) ? '#fff' : 'currentColor'
+							shouldUseWhiteText( color ) ? '#fff' : '#000'
 						};`,
 					].join( ' ' ),
 				},
