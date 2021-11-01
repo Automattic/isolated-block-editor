@@ -42,20 +42,28 @@ function ContentSaver(props) {
       blocks = _useSelect.blocks,
       ignoredContent = _useSelect.ignoredContent;
 
+  function saveBlocks() {
+    // Save the content in the format wanted by the user
+    onSaveBlocks && onSaveBlocks(blocks, ignoredContent);
+    onSaveContent && onSaveContent((0, _blocks.serialize)(blocks));
+  }
+
   (0, _element.useEffect)(function () {
     if (!blocks) {
       setReady(true);
       return;
-    } // We don't want the onSave to trigger when we first load our content. It's not a major problem, but it adds complexity to the caller if it might trigger a remote save
+    } // Try and avoid an initial first save if no content
 
 
     if (firstTime.current) {
       firstTime.current = false;
-      setReady(true);
+      setReady(true); // The editor has initial content - save it
+
+      if (blocks && blocks.length > 1) {
+        saveBlocks();
+      }
     } else {
-      // Save the content in the format wanted by the user
-      onSaveBlocks && onSaveBlocks(blocks, ignoredContent);
-      onSaveContent && onSaveContent((0, _blocks.serialize)(blocks));
+      saveBlocks();
     }
   }, [blocks]);
   return null;

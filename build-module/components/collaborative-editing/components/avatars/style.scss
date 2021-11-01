@@ -10,7 +10,7 @@ $avatarBorderWidth: 2px;
 	margin: 0 8px;
 }
 
-.iso-editor-collab-avatars__avatar {
+.iso-editor-collab-avatars__avatar-btn {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -19,6 +19,12 @@ $avatarBorderWidth: 2px;
 	border-radius: 50%;
 	border-width: $avatarBorderWidth;
 	border-style: solid;
+	padding: 0;
+	box-sizing: content-box;
+
+	&:hover {
+		cursor: pointer;
+	}
 
 	& + & {
 		margin-left: -4px;
