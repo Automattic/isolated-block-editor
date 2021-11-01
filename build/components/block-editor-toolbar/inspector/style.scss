@@ -51,7 +51,7 @@
 		margin-top: 1px;
 	}
 
-	ul li {
+	ul:not(.editor-post-taxonomies__flat-term-most-used-list) li {
 		margin: 0;
 
 		.is-active {

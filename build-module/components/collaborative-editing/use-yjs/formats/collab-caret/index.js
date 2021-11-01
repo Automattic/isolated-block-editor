@@ -52,7 +52,7 @@ export function applyCarets(record, carets = []) {
           'is-shifted': isShifted
         }),
         title: label,
-        style: [`--iso-editor-collab-caret-color: ${color || '#2e3d48'};`, `--iso-editor-collab-caret-label-text-color: ${shouldUseWhiteText(color) ? '#fff' : 'currentColor'};`].join(' ')
+        style: [`--iso-editor-collab-caret-color: ${color || '#2e3d48'};`, `--iso-editor-collab-caret-label-text-color: ${shouldUseWhiteText(color) ? '#fff' : '#1e1e1e'};`].join(' ')
       }
     }, start, end);
   });

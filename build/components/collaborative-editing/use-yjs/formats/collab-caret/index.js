@@ -71,7 +71,7 @@ function applyCarets(record) {
           'is-shifted': isShifted
         }),
         title: label,
-        style: ["--iso-editor-collab-caret-color: ".concat(color || '#2e3d48', ";"), "--iso-editor-collab-caret-label-text-color: ".concat((0, _colorUtils.shouldUseWhiteText)(color) ? '#fff' : 'currentColor', ";")].join(' ')
+        style: ["--iso-editor-collab-caret-color: ".concat(color || '#2e3d48', ";"), "--iso-editor-collab-caret-label-text-color: ".concat((0, _colorUtils.shouldUseWhiteText)(color) ? '#fff' : '#1e1e1e', ";")].join(' ')
       }
     }, start, end);
   });
