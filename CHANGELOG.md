@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [2.6.0] - 2021-11-01
+
+### Fixed
+
+- Fix changing of caret avatar text color in collab mode
+- Fix no list margin in Gutenberg term component
+
 ### Breaking changes
 
 - Editor now saves initial content if there is anything to save
