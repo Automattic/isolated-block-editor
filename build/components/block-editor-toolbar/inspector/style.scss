@@ -2,70 +2,8 @@
 @import '@wordpress/base-styles/_mixins';
 @import '@wordpress/base-styles/_variables';
 
-// Add appropriate font and colors to block inspector. These can often be overridden by the page CSS
-.iso-editor .block-editor-inserter__menu,
 .iso-editor .popover-slot .iso-inspector {
-	background-color: $white;
-	line-height: $default-line-height;
-	font-family: $default-font;
-	font-size: $default-font-size;
-}
-
-.iso-editor .block-editor-inserter__menu {
-	min-width: $sidebar-width + 20;
-	max-height: 55vh;
-}
-
-.iso-editor .popover-slot .iso-inspector {
-	overflow: visible;
-
-	fieldset {
-		border: none;
-	}
-
-	.components-panel__body {
-		width: 100%;
-		margin-bottom: 0;
-	}
-
-	.components-panel__body {
-		border-bottom: none;
-	}
-
-	h2,
-	h3,
-	label {
-		font-size: $default-font-size;
-	}
-
-	.components-popover__content {
-		min-height: 650px;
-		width: $sidebar-width + 20;
-	}
-
-	ul {
-		margin: 0;
-	}
-
-	.components-panel__header {
-		margin-top: 1px;
-	}
-
 	ul:not(.editor-post-taxonomies__flat-term-most-used-list) li {
 		margin: 0;
-
-		.is-active {
-			box-shadow: inset 0 0 0 2px transparent, inset 0 -4px 0 0 #007cba;
-			box-shadow: inset 0 0 0 var( --wp-admin-border-width-focus ) transparent,
-				inset 0 -4px 0 0 var( --wp-admin-theme-color );
-			position: relative;
-			z-index: 1;
-
-			&:focus {
-				box-shadow: inset 0 0 0 2px #007cba, inset 0 -4px 0 0 #007cba;
-				box-shadow: inset 0 0 0 var( --wp-admin-border-width-focus ) var( --wp-admin-theme-color ),
-					inset 0 -4px 0 0 var( --wp-admin-theme-color );
-			}
-		}
 	}
 }

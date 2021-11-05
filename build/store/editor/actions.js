@@ -1,9 +1,21 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _data = require("@wordpress/data");
+
+var _interface = require("@wordpress/interface");
+
+/**
+ * WordPress dependencies
+ */
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
@@ -55,7 +67,7 @@ var actions = {
 
   /**
    * Mark the block inserter as open or closed
-   * @param {boolean} isOpen
+   * @param {boolean} name
    */
   setIsInserterOpened: function setIsInserterOpened(isOpen) {
     return {
@@ -76,12 +88,51 @@ var actions = {
   },
 
   /**
-   * Mark the block inserter as open or closed
+   * Open the named sidebar
+   * @param {string} name Name of sidebar section
+   */
+  openGeneralSidebar: /*#__PURE__*/_regenerator["default"].mark(function openGeneralSidebar(name) {
+    return _regenerator["default"].wrap(function openGeneralSidebar$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _data.controls.dispatch(_interface.store, 'enableComplementaryArea', 'isolated/editor', name);
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, openGeneralSidebar);
+  }),
+
+  /**
+   * Close the sidebar (or popover)
+   */
+  closeGeneralSidebar: /*#__PURE__*/_regenerator["default"].mark(function closeGeneralSidebar() {
+    return _regenerator["default"].wrap(function closeGeneralSidebar$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return _data.controls.dispatch(_interface.store, 'disableComplementaryArea', 'isolated/editor');
+
+          case 2:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, closeGeneralSidebar);
+  }),
+
+  /**
+   * Set the status of the listview sidebar section
    * @param {boolean} isOpen
    */
-  setInspecting: function setInspecting(isOpen) {
+  setIsListViewOpened: function setIsListViewOpened(isOpen) {
     return {
-      type: 'SET_INSPECTOR_OPEN',
+      type: 'SET_LISTVIEW_OPEN',
       isOpen: isOpen
     };
   }

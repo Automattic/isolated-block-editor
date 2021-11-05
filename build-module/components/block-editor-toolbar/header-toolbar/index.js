@@ -9,8 +9,9 @@ import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
 import { NavigableToolbar, BlockNavigationDropdown, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
 import { TableOfContents } from '@wordpress/editor';
-import { plus } from '@wordpress/icons';
+import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
+import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 /**
  * Internal dependencies
  */
@@ -23,9 +24,12 @@ const preventDefault = event => {
 };
 
 function HeaderToolbar(props) {
+  var _props$settings, _props$settings$iso, _props$settings$iso$s;
+
   const inserterButton = useRef();
   const {
-    setIsInserterOpened
+    setIsInserterOpened,
+    setIsListViewOpened
   } = useDispatch('isolated/editor');
   const isMobileViewport = useViewportMatch('medium', '<');
   const {
@@ -35,23 +39,33 @@ function HeaderToolbar(props) {
     isTextModeEnabled,
     showIconLabels,
     previewDeviceType,
-    isInserterOpened
+    isInserterOpened,
+    isListViewOpen,
+    listViewShortcut
   } = useSelect(select => {
     const {
       hasInserterItems,
       getBlockRootClientId,
       getBlockSelectionEnd
     } = select('core/block-editor');
+    const {
+      isListViewOpened
+    } = select('isolated/editor');
+    const {
+      getShortcutRepresentation
+    } = select(keyboardShortcutsStore);
     return {
       hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
       hasPeers: select('isolated/editor').hasPeers(),
       // This setting (richEditingEnabled) should not live in the block editor's setting.
       isInserterEnabled: select('isolated/editor').getEditorMode() === 'visual' && select('core/editor').getEditorSettings().richEditingEnabled && hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
+      isListViewOpen: isListViewOpened(),
       isTextModeEnabled: select('isolated/editor').getEditorMode() === 'text',
       previewDeviceType: 'Desktop',
       isInserterOpened: select('isolated/editor').isInserterOpened(),
-      showIconLabels: false // Not implemented yet
-
+      showIconLabels: false,
+      // Not implemented yet
+      listViewShortcut: getShortcutRepresentation('core/edit-post/toggle-list-view')
     };
   }, []);
   const isLargeViewport = useViewportMatch('medium');
@@ -63,6 +77,7 @@ function HeaderToolbar(props) {
     undo: undoSetting,
     selectorTool
   } = props.settings.iso.toolbar;
+  const inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$iso = _props$settings.iso) === null || _props$settings$iso === void 0 ? void 0 : (_props$settings$iso$s = _props$settings$iso.sidebar) === null || _props$settings$iso$s === void 0 ? void 0 : _props$settings$iso$s.inserter) || false;
   const undo = undoSetting && !hasPeers;
   const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
   const toolbarAriaLabel = displayBlockToolbar ?
@@ -79,6 +94,7 @@ function HeaderToolbar(props) {
       setIsInserterOpened(true);
     }
   }, [isInserterOpened, setIsInserterOpened]);
+  const toggleListView = useCallback(() => setIsListViewOpened(!isListViewOpen), [setIsListViewOpened, isListViewOpen]);
   return createElement(NavigableToolbar, {
     className: "edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel
@@ -99,7 +115,7 @@ function HeaderToolbar(props) {
     ,
     label: _x('Toggle block inserter', 'Generic label for block inserter button'),
     showTooltip: !showIconLabels
-  }), isInserterOpened && createElement(Popover, {
+  }), isInserterOpened && !inserterInSidebar && createElement(Popover, {
     position: "bottom right",
     onClose: () => setIsInserterOpened(false),
     anchorRef: inserterButton.current
@@ -119,9 +135,21 @@ function HeaderToolbar(props) {
     as: EditorHistoryRedo,
     showTooltip: !showIconLabels,
     variant: showIconLabels ? 'tertiary' : undefined
-  }), navigation && createElement(ToolbarItem, {
+  }), navigation && !inserterInSidebar && createElement(ToolbarItem, {
     as: BlockNavigationDropdown,
     isDisabled: isTextModeEnabled
+  }), navigation && inserterInSidebar && createElement(ToolbarItem, {
+    as: Button,
+    className: "edit-post-header-toolbar__list-view-toggle",
+    icon: listView,
+    disabled: isTextModeEnabled,
+    isPressed: isListViewOpen
+    /* translators: button label text should, if possible, be under 16 characters. */
+    ,
+    label: __('List View'),
+    onClick: toggleListView,
+    shortcut: listViewShortcut,
+    showTooltip: !showIconLabels
   }), toc && createElement(ToolbarItem, {
     as: TableOfContents,
     hasOutlineItemsDisabled: isTextModeEnabled,

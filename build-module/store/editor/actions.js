@@ -1,6 +1,12 @@
+/**
+ * WordPress dependencies
+ */
+import { controls } from '@wordpress/data';
+import { store as interfaceStore } from '@wordpress/interface';
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
 /** @typedef {import('./reducer').EditorMode} EditorMode */
+
 const actions = {
   /**
    * Set whether the editor is ready for editing
@@ -48,7 +54,7 @@ const actions = {
 
   /**
    * Mark the block inserter as open or closed
-   * @param {boolean} isOpen
+   * @param {boolean} name
    */
   setIsInserterOpened(isOpen) {
     return {
@@ -69,12 +75,27 @@ const actions = {
   },
 
   /**
-   * Mark the block inserter as open or closed
+   * Open the named sidebar
+   * @param {string} name Name of sidebar section
+   */
+  *openGeneralSidebar(name) {
+    yield controls.dispatch(interfaceStore, 'enableComplementaryArea', 'isolated/editor', name);
+  },
+
+  /**
+   * Close the sidebar (or popover)
+   */
+  *closeGeneralSidebar() {
+    yield controls.dispatch(interfaceStore, 'disableComplementaryArea', 'isolated/editor');
+  },
+
+  /**
+   * Set the status of the listview sidebar section
    * @param {boolean} isOpen
    */
-  setInspecting(isOpen) {
+  setIsListViewOpened(isOpen) {
     return {
-      type: 'SET_INSPECTOR_OPEN',
+      type: 'SET_LISTVIEW_OPEN',
       isOpen
     };
   }

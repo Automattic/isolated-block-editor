@@ -8,6 +8,7 @@ import { Button } from '@wordpress/components';
 import { cog } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useViewportMatch } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
@@ -15,6 +16,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import MoreMenu from './more-menu';
 import HeaderToolbar from './header-toolbar';
 import Inspector from './inspector';
+import ToolbarSlot from './slot';
 import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 
@@ -32,14 +34,14 @@ import './style.scss';
  */
 
 const BlockEditorToolbar = props => {
-  var _settings$iso;
+  var _settings$iso, _settings$iso2, _settings$iso2$sideba;
 
   const {
     settings,
     editorMode,
     renderMoreMenu
   } = props;
-  const shortcut = 'x';
+  const isHugeViewport = useViewportMatch('huge', '>=');
   const {
     inspector,
     documentInspector
@@ -47,22 +49,53 @@ const BlockEditorToolbar = props => {
   const {
     moreMenu
   } = settings.iso || {};
+  const inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inspector) || false;
   const {
-    setInspecting
+    openGeneralSidebar,
+    closeGeneralSidebar
   } = useDispatch('isolated/editor');
   const {
-    isInspecting,
-    isBlockSelected
+    setIsInserterOpened
+  } = useDispatch('isolated/editor');
+  const {
+    isEditorSidebarOpened,
+    isBlockSelected,
+    hasBlockSelected,
+    isInserterOpened,
+    isEditing
   } = useSelect(select => ({
-    isInspecting: select('isolated/editor').isInspecting(),
-    isBlockSelected: !!select('core/block-editor').getBlockSelectionStart()
+    isEditing: select('isolated/editor'),
+    isEditorSidebarOpened: select('isolated/editor').isEditorSidebarOpened(),
+    isBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
+    hasBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
+    isInserterOpened: select('isolated/editor').isInserterOpened()
   }), []);
+
+  function toggleSidebar() {
+    if (isEditorSidebarOpened) {
+      closeGeneralSidebar();
+    } else {
+      openGeneralSidebar(hasBlockSelected ? 'edit-post/block' : 'edit-post/document');
+    }
+  }
+
   useEffect(() => {
     // Close the block inspector when no block is selected. Gutenberg gets a bit crashy otherwise
-    if (isInspecting && !isBlockSelected) {
-      setInspecting(false);
+    if (!inspectorInSidebar && !isEditing && !isBlockSelected && isEditorSidebarOpened) {
+      closeGeneralSidebar();
     }
-  }, [isBlockSelected]);
+  }, [isEditing]); // Inserter and Sidebars are mutually exclusive
+
+  useEffect(() => {
+    if (isEditorSidebarOpened && !isHugeViewport) {
+      setIsInserterOpened(false);
+    }
+  }, [isEditorSidebarOpened, isHugeViewport]);
+  useEffect(() => {
+    if (isInserterOpened && (!isHugeViewport || !inspectorInSidebar)) {
+      closeGeneralSidebar();
+    }
+  }, [isInserterOpened, isHugeViewport]);
   return createElement("div", {
     className: "edit-post-editor-regions__header",
     role: "region",
@@ -75,20 +108,19 @@ const BlockEditorToolbar = props => {
     settings: settings
   })), createElement("div", {
     className: "edit-post-header__settings"
-  }, inspector && createElement(Button, {
+  }, createElement(ToolbarSlot.Slot, null), inspector && createElement(Button, {
     icon: cog,
     label: __('Settings'),
-    onClick: () => setInspecting(!isInspecting),
-    isPressed: isInspecting,
-    "aria-expanded": isInspecting,
-    shortcut: shortcut,
+    onClick: toggleSidebar,
+    isPressed: isEditorSidebarOpened,
+    "aria-expanded": isEditorSidebarOpened,
     disabled: editorMode === 'text'
-  }), isInspecting && createElement(Inspector, {
+  }), isEditorSidebarOpened && !inspectorInSidebar && createElement(Inspector, {
     documentInspector: documentInspector,
     blockSelected: isBlockSelected
   }), moreMenu && createElement(MoreMenu, {
     settings: settings,
-    onClick: () => setInspecting(false),
+    onClick: () => closeGeneralSidebar(),
     renderMoreMenu: renderMoreMenu
   }))));
 };
