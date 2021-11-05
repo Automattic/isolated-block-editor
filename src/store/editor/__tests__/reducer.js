@@ -13,40 +13,16 @@ describe( 'isolated/editor store', () => {
 			expect( state.isReady ).toBe( true );
 		} );
 
-		it( 'inspector is closed when focus is set', () => {
-			const state = reducer( { isInspecting: true }, { type: 'SET_EDITING', isEditing: true } );
-
-			expect( state.isInspecting ).toBe( false );
-		} );
-
-		it( 'inspector is closed when focus is lost', () => {
-			const state = reducer( { isInspecting: true }, { type: 'SET_EDITING', isEditing: false } );
-
-			expect( state.isInspecting ).toBe( false );
-		} );
-
-		it( 'inserter is closed when inspector is opened', () => {
-			const state = reducer( { isInserterOpened: true }, { type: 'SET_INSPECTOR_OPEN', isOpen: true } );
-
-			expect( state ).toEqual( { isInspecting: true, isInserterOpened: false } );
-		} );
-
-		it( 'inserter is closed when inspector is closed', () => {
-			const state = reducer( { isInserterOpened: true }, { type: 'SET_INSPECTOR_OPEN', isOpen: false } );
-
-			expect( state ).toEqual( { isInspecting: false, isInserterOpened: false } );
-		} );
-
 		it( 'inspector is closed when inserter is opened', () => {
-			const state = reducer( { isInspecting: true }, { type: 'SET_INSERTER_OPEN', isOpen: true } );
+			const state = reducer( { isInserterOpened: false }, { type: 'SET_INSERTER_OPEN', isOpen: true } );
 
-			expect( state ).toEqual( { isInspecting: false, isInserterOpened: true } );
+			expect( state ).toEqual( { isInserterOpened: true, isInspectorOpened: false, isListViewOpened: false } );
 		} );
 
 		it( 'inspector is closed when inserter is closed', () => {
-			const state = reducer( { isInspecting: true }, { type: 'SET_INSERTER_OPEN', isOpen: false } );
+			const state = reducer( { isInserterOpened: true }, { type: 'SET_INSERTER_OPEN', isOpen: false } );
 
-			expect( state ).toEqual( { isInspecting: false, isInserterOpened: false } );
+			expect( state ).toEqual( { isInserterOpened: false, isInspectorOpened: false, isListViewOpened: false } );
 		} );
 	} );
 } );
