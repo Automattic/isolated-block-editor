@@ -10,12 +10,16 @@ import { useViewportMatch, __experimentalUseDialog as useDialog } from '@wordpre
 export default function InserterSidebar() {
 	const { setIsInserterOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
+	// Note: focusOnMount not present in Gutenberg
+	// @ts-ignore
 	const [ inserterDialogRef, inserterDialogProps ] = useDialog( {
 		onClose: () => setIsInserterOpened( false ),
 	} );
 
 	return (
-		<div ref={ inserterDialogRef } { ...inserterDialogProps } className="edit-post-editor__inserter-panel">
+		<div
+// @ts-ignore
+		ref={ inserterDialogRef } { ...inserterDialogProps } className="edit-post-editor__inserter-panel">
 			<div className="edit-post-editor__inserter-panel-header">
 				<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
 			</div>
@@ -24,7 +28,6 @@ export default function InserterSidebar() {
 					showMostUsedBlocks={ false }
 					showInserterHelpPanel
 					shouldFocusBlock={ isMobileViewport }
-
 				/>
 			</div>
 		</div>

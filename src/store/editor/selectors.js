@@ -1,11 +1,19 @@
-import { get, includes, some, flatten, values } from 'lodash';
+/**
+ * External dependencies
+ */
+import { includes } from 'lodash';
+
+/**
+ * WordPress dependencies
+ */
+import { createRegistrySelector } from '@wordpress/data';
+import { store as interfaceStore } from '@wordpress/interface';
 
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 /** @typedef {import('./reducer').EditorMode} EditorMode */
 /** @typedef {import('./reducer').Pattern} Pattern */
 /** @typedef {import('./reducer').EditorState} EditorState */
-import { createRegistrySelector } from '@wordpress/data';
-import { store as interfaceStore } from '@wordpress/interface';
+
 /**
  * Get current editor mode
  * @param {{editor: EditorState}} state - Current state

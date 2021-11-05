@@ -59,6 +59,7 @@ const SettingsSidebar = ( { hasDocument }) => {
 
 	return (
 		<PluginSidebarEditPost
+			className="iso-sidebar"
 			identifier={ sidebarName }
 			header={ <SettingsHeader sidebarName={ sidebarName } hasDocument={ hasDocument } /> }
 			closeLabel={ __( 'Close settings' ) }
