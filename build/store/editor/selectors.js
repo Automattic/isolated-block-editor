@@ -12,8 +12,15 @@ exports.getNamedPattern = getNamedPattern;
 exports.getPatterns = getPatterns;
 exports.isEditing = isEditing;
 exports.isEditorReady = isEditorReady;
+exports.isEditorSidebarOpened = void 0;
 exports.isInserterOpened = isInserterOpened;
-exports.isInspecting = isInspecting;
+exports.isListViewOpened = isListViewOpened;
+
+var _lodash = require("lodash");
+
+var _data = require("@wordpress/data");
+
+var _interface = require("@wordpress/interface");
 
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 
@@ -132,22 +139,20 @@ function getNamedPattern(state, patternName) {
 function isInserterOpened(state) {
   return state.editor.isInserterOpened;
 }
-/**
- * Is the block inspector open?
- * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
- */
 
-
-function isInspecting(state) {
-  return state.editor.isInspecting;
-}
+var isEditorSidebarOpened = (0, _data.createRegistrySelector)(function (select) {
+  return function () {
+    var activeGeneralSidebar = select(_interface.store).getActiveComplementaryArea('isolated/editor');
+    return (0, _lodash.includes)(['edit-post/document', 'edit-post/block'], activeGeneralSidebar);
+  };
+});
 /**
  * Are we editing this editor?
  * @param {{editor: EditorState}} state - Current state
  * @returns {boolean}
  */
 
+exports.isEditorSidebarOpened = isEditorSidebarOpened;
 
 function isEditing(state) {
   return state.editor.isEditing;
@@ -161,5 +166,9 @@ function isEditing(state) {
 
 function getPatterns(state) {
   return state.editor.patterns;
+}
+
+function isListViewOpened(state) {
+  return state.editor.isListViewOpened;
 }
 //# sourceMappingURL=selectors.js.map
