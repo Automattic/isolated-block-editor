@@ -1,8 +1,11 @@
+import { get, includes, some, flatten, values } from 'lodash';
+
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 /** @typedef {import('./reducer').EditorMode} EditorMode */
 /** @typedef {import('./reducer').Pattern} Pattern */
 /** @typedef {import('./reducer').EditorState} EditorState */
-
+import { createRegistrySelector } from '@wordpress/data';
+import { store as interfaceStore } from '@wordpress/interface';
 /**
  * Get current editor mode
  * @param {{editor: EditorState}} state - Current state
@@ -99,14 +102,18 @@ export function isInserterOpened( state ) {
 	return state.editor.isInserterOpened;
 }
 
-/**
- * Is the block inspector open?
- * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
- */
-export function isInspecting( state ) {
-	return state.editor.isInspecting;
-}
+export const isEditorSidebarOpened = createRegistrySelector(
+	( select ) => () => {
+		const activeGeneralSidebar = select(
+			interfaceStore
+		).getActiveComplementaryArea( 'isolated/editor' );
+
+		return includes(
+			[ 'edit-post/document', 'edit-post/block' ],
+			activeGeneralSidebar
+		);
+	}
+);
 
 /**
  * Are we editing this editor?
@@ -124,4 +131,8 @@ export function isEditing( state ) {
  */
 export function getPatterns( state ) {
 	return state.editor.patterns;
+}
+
+export function isListViewOpened( state ) {
+	return state.editor.isListViewOpened;
 }

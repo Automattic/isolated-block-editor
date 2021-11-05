@@ -6,9 +6,6 @@
 @import '@wordpress/base-styles/_z-index';
 
 .edit-post-header {
-	// TODO: This is causing the popover text to wiggle when focused
-	border-bottom: $border-width solid $gray-200;
-
 	// Make toolbar sticky on larger breakpoints
 	@include break-zoomed-in {
 		flex-wrap: nowrap;

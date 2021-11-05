@@ -3,6 +3,13 @@
 @import "@wordpress/base-styles/_colors";
 
 .iso-editor {
+	// Restrict the interface skeleton to our container, and not assume it's own a WP admin page
+	.edit-post-layout.interface-interface-skeleton {
+		position: static;
+		top:auto;
+		left: auto;
+	}
+
 	.is-mode__text .edit-post-text-editor__body {
 		margin-left: 0;
 		margin-right: 0;
@@ -58,6 +65,13 @@
 	// Hide the 'manage reusable blocks' option
 	a[href="edit.php?post_type=wp_block"] {
 		display: none;
+	}
+
+	.is-fullscreen-mode {
+		.block-editor-block-list__layout > div:first-child > .block-list-appender:first-child .wp-block,
+		.block-editor-block-list__layout > .block-list-appender:first-child .wp-block {
+			margin: 0 auto !important;
+		}
 	}
 
 	// Ensure that we always override the black background from core
