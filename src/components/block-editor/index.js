@@ -82,7 +82,9 @@ function BlockEditor( props ) {
 		previousShortcut,
 		nextShortcut,
 	} = useSelect( ( select ) => {
-		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select( 'isolated/editor' );
+		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select(
+			'isolated/editor'
+		);
 
 		return {
 			sidebarIsOpened: !! select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),

@@ -2,8 +2,13 @@
 @import '@wordpress/base-styles/_mixins';
 @import '@wordpress/base-styles/_variables';
 
-.iso-editor .popover-slot .iso-inspector {
-	ul:not(.editor-post-taxonomies__flat-term-most-used-list) li {
+.iso-editor .popover-slot {
+	.iso-inspector ul:not(.editor-post-taxonomies__flat-term-most-used-list) li {
 		margin: 0;
+	}
+
+	.block-editor-inserter__menu {
+		min-width: $sidebar-width + 20;
+		max-height: 55vh;
 	}
 }

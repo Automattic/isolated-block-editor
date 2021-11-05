@@ -57,6 +57,14 @@ const BlockEditorToolbar = ( props ) => {
 		}
 	}
 
+	// If in popover mode then ensure the sidebar is closed when the editor is first started. This is because the complimentary area status
+	// is saved to localStorage, and it might have been left open when in sidebar mode.
+	useEffect( () => {
+		if ( ! inspectorInSidebar ) {
+			closeGeneralSidebar();
+		}
+	}, [] );
+
 	useEffect( () => {
 		// Close the block inspector when no block is selected. Gutenberg gets a bit crashy otherwise
 		if ( ! inspectorInSidebar && ! isEditing && ! isBlockSelected && isEditorSidebarOpened ) {
