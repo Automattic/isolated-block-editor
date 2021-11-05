@@ -55,7 +55,9 @@ function PluginSidebarEditPost(_ref) {
   }, props));
 }
 
-var SettingsSidebar = function SettingsSidebar() {
+var SettingsSidebar = function SettingsSidebar(_ref2) {
+  var hasDocument = _ref2.hasDocument;
+
   var _useSelect2 = (0, _data.useSelect)(function (select) {
     var sidebar = select(_interface.store).getActiveComplementaryArea('isolated/editor');
 
@@ -79,7 +81,8 @@ var SettingsSidebar = function SettingsSidebar() {
   return createElement(PluginSidebarEditPost, {
     identifier: sidebarName,
     header: createElement(_sidebarHeading["default"], {
-      sidebarName: sidebarName
+      sidebarName: sidebarName,
+      hasDocument: hasDocument
     }),
     closeLabel: (0, _i18n.__)('Close settings'),
     headerClassName: "edit-post-sidebar__panel-tabs"

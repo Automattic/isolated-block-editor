@@ -23,6 +23,12 @@ Object.defineProperty(exports, "EditorLoaded", {
     return _editorLoaded["default"];
   }
 });
+Object.defineProperty(exports, "FooterSlot", {
+  enumerable: true,
+  get: function get() {
+    return _footerSlot["default"];
+  }
+});
 Object.defineProperty(exports, "ToolbarSlot", {
   enumerable: true,
   get: function get() {
@@ -76,6 +82,8 @@ var _document = _interopRequireDefault(require("./components/document"));
 var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
 
 var _collaborativeEditing = _interopRequireDefault(require("./components/collaborative-editing"));
+
+var _footerSlot = _interopRequireDefault(require("./components/footer-slot"));
 
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 

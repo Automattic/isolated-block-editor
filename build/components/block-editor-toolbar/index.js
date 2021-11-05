@@ -98,8 +98,15 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     } else {
       openGeneralSidebar(hasBlockSelected ? 'edit-post/block' : 'edit-post/document');
     }
-  }
+  } // If in popover mode then ensure the sidebar is closed when the editor is first started. This is because the complimentary area status
+  // is saved to localStorage, and it might have been left open when in sidebar mode.
 
+
+  (0, _element.useEffect)(function () {
+    if (!inspectorInSidebar) {
+      closeGeneralSidebar();
+    }
+  }, []);
   (0, _element.useEffect)(function () {
     // Close the block inspector when no block is selected. Gutenberg gets a bit crashy otherwise
     if (!inspectorInSidebar && !isEditing && !isBlockSelected && isEditorSidebarOpened) {

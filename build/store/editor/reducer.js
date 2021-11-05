@@ -160,18 +160,20 @@ var reducer = function reducer() {
     case 'SET_INSERTER_OPEN':
       return _objectSpread(_objectSpread({}, state), {}, {
         isInserterOpened: action.isOpen,
+        isInspectorOpened: false,
         isListViewOpened: false
       });
 
     case 'SET_INSPECTOR_OPEN':
       return _objectSpread(_objectSpread({}, state), {}, {
-        isInserterOpened: false,
+        isInspectorOpened: action.isOpen,
         isListViewOpened: false
       });
 
     case 'SET_LISTVIEW_OPEN':
       return _objectSpread(_objectSpread({}, state), {}, {
         isInserterOpened: false,
+        isInspectorOpened: false,
         isListViewOpened: action.isOpen
       });
 

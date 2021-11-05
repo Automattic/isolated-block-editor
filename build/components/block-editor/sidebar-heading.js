@@ -25,7 +25,8 @@ import { createElement } from "@wordpress/element";
  * Internal dependencies
  */
 var SettingsHeader = function SettingsHeader(_ref) {
-  var sidebarName = _ref.sidebarName;
+  var sidebarName = _ref.sidebarName,
+      hasDocument = _ref.hasDocument;
 
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       openGeneralSidebar = _useDispatch.openGeneralSidebar;
@@ -61,7 +62,7 @@ var SettingsHeader = function SettingsHeader(_ref) {
   /* Use a list so screen readers will announce how many tabs there are. */
 
 
-  return createElement("ul", null, createElement("li", null, createElement(_components.Button, {
+  return createElement("ul", null, hasDocument && createElement("li", null, createElement(_components.Button, {
     onClick: openDocumentSettings,
     className: "edit-post-sidebar__panel-tab ".concat(documentActiveClass),
     "aria-label": documentAriaLabel,

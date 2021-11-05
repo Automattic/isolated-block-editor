@@ -11,7 +11,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
  */
 
 const SettingsHeader = ({
-  sidebarName
+  sidebarName,
+  hasDocument
 }) => {
   const {
     openGeneralSidebar
@@ -36,7 +37,7 @@ const SettingsHeader = ({
   [__('Block'), ''];
   /* Use a list so screen readers will announce how many tabs there are. */
 
-  return createElement("ul", null, createElement("li", null, createElement(Button, {
+  return createElement("ul", null, hasDocument && createElement("li", null, createElement(Button, {
     onClick: openDocumentSettings,
     className: `edit-post-sidebar__panel-tab ${documentActiveClass}`,
     "aria-label": documentAriaLabel,

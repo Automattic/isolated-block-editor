@@ -17,7 +17,7 @@ var _i18n = require("@wordpress/i18n");
 
 var _editor = require("@wordpress/editor");
 
-var _footer = _interopRequireDefault(require("../footer"));
+var _footerSlot = _interopRequireDefault(require("../footer-slot"));
 
 import { createElement } from "@wordpress/element";
 
@@ -43,7 +43,9 @@ var Footer = function Footer(_ref) {
 
     return {
       hasFixedToolbar: isFeatureActive('fixedToolbar'),
-      showBlockBreadcrumbs: isFeatureActive('showBlockBreadcrumbs'),
+      // TODO: This is currently disabled until it can be better worked in
+      showBlockBreadcrumbs: false,
+      //isFeatureActive( 'showBlockBreadcrumbs' ),
       // translators: Default label for the Document in the Block Breadcrumb.
       documentLabel: postTypeLabel || (0, _i18n._x)('Document', 'noun')
     };
@@ -55,7 +57,7 @@ var Footer = function Footer(_ref) {
     className: "edit-post-layout__footer"
   }, showBlockBreadcrumbs && !isMobileViewport && editorMode === 'visual' && createElement(_blockEditor.BlockBreadcrumb, {
     rootLabelText: documentLabel
-  }), createElement(_footer["default"].Slot, null));
+  }), createElement(_footerSlot["default"].Slot, null));
 };
 
 var _default = Footer;

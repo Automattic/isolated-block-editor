@@ -27,7 +27,8 @@ import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
-import CollaborativeEditing from './components/collaborative-editing'; // Export library components
+import CollaborativeEditing from './components/collaborative-editing';
+import FooterSlot from './components/footer-slot'; // Export library components
 
 import EditorLoaded from './components/editor-loaded'; // A fake edit-post store is needed
 
@@ -201,5 +202,5 @@ function IsolatedBlockEditor(props) {
 }
 
 export default withRegistryProvider(IsolatedBlockEditor);
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing };
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };
 //# sourceMappingURL=index.js.map

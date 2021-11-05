@@ -75,7 +75,7 @@ const interfaceLabels = {
  */
 
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso3;
+  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso3, _settings$iso$toolbar, _settings$iso4, _settings$iso4$toolba;
 
   const {
     isEditing,
@@ -139,7 +139,9 @@ function BlockEditor(props) {
     return null;
   };
 
-  return createElement(Fragment, null, createElement(SettingsSidebar, null), createElement(FullscreenMode, {
+  return createElement(Fragment, null, createElement(SettingsSidebar, {
+    hasDocument: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : (_settings$iso4$toolba = _settings$iso4.toolbar) === null || _settings$iso4$toolba === void 0 ? void 0 : _settings$iso4$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+  }), createElement(FullscreenMode, {
     isActive: isFullscreenActive
   }), createElement(InterfaceSkeleton, {
     className: className,

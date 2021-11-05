@@ -42,7 +42,9 @@ function PluginSidebarEditPost({
   }, props));
 }
 
-const SettingsSidebar = () => {
+const SettingsSidebar = ({
+  hasDocument
+}) => {
   const {
     sidebarName,
     keyboardShortcut
@@ -66,7 +68,8 @@ const SettingsSidebar = () => {
   return createElement(PluginSidebarEditPost, {
     identifier: sidebarName,
     header: createElement(SettingsHeader, {
-      sidebarName: sidebarName
+      sidebarName: sidebarName,
+      hasDocument: hasDocument
     }),
     closeLabel: __('Close settings'),
     headerClassName: "edit-post-sidebar__panel-tabs"
