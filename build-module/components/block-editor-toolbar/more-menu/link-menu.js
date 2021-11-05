@@ -15,9 +15,10 @@ import { MenuItem, ExternalLink } from '@wordpress/components';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 
-function LinkMenu({
-  settings
-}) {
+function LinkMenu(_ref) {
+  let {
+    settings
+  } = _ref;
   const {
     linkMenu = []
   } = settings.iso || {};
@@ -28,14 +29,17 @@ function LinkMenu({
 
   return createElement(MenuGroup, {
     label: __('Links')
-  }, linkMenu.map(({
-    title,
-    url
-  }) => createElement(MenuItem, {
-    key: title
-  }, createElement(ExternalLink, {
-    href: url
-  }, title))));
+  }, linkMenu.map(_ref2 => {
+    let {
+      title,
+      url
+    } = _ref2;
+    return createElement(MenuItem, {
+      key: title
+    }, createElement(ExternalLink, {
+      href: url
+    }, title));
+  }));
 }
 
 export default LinkMenu;

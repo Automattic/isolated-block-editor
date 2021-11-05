@@ -23,7 +23,8 @@ export const FORMAT_NAME = 'isolated/collab-caret';
  * @return {Object} A record with the carets applied.
  */
 
-export function applyCarets(record, carets = []) {
+export function applyCarets(record) {
+  let carets = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   carets.forEach(caret => {
     let {
       start,
@@ -59,17 +60,21 @@ export function applyCarets(record, carets = []) {
   return record;
 }
 const getCarets = memoize((peers, richTextIdentifier, blockClientId) => {
-  return Object.entries(peers).filter(([, peer]) => {
+  return Object.entries(peers).filter(_ref => {
     var _peer$start, _peer$end;
 
+    let [, peer] = _ref;
     return (peer === null || peer === void 0 ? void 0 : (_peer$start = peer.start) === null || _peer$start === void 0 ? void 0 : _peer$start.clientId) === blockClientId && (peer === null || peer === void 0 ? void 0 : (_peer$end = peer.end) === null || _peer$end === void 0 ? void 0 : _peer$end.clientId) === blockClientId && peer.start.attributeKey === richTextIdentifier;
-  }).map(([id, peer]) => ({
-    id,
-    label: peer.name,
-    start: peer.start.offset,
-    end: peer.end.offset,
-    color: peer.color
-  }));
+  }).map(_ref2 => {
+    let [id, peer] = _ref2;
+    return {
+      id,
+      label: peer.name,
+      start: peer.start.offset,
+      end: peer.end.offset,
+      color: peer.color
+    };
+  });
 });
 export const settings = {
   title: 'Collaboration peer caret',
@@ -84,18 +89,20 @@ export const settings = {
     return null;
   },
 
-  __experimentalGetPropsForEditableTreePreparation(select, {
-    richTextIdentifier,
-    blockClientId
-  }) {
+  __experimentalGetPropsForEditableTreePreparation(select, _ref3) {
+    let {
+      richTextIdentifier,
+      blockClientId
+    } = _ref3;
     return {
       carets: getCarets(select('isolated/editor').getPeers(), richTextIdentifier, blockClientId)
     };
   },
 
-  __experimentalCreatePrepareEditableTree({
-    carets
-  }) {
+  __experimentalCreatePrepareEditableTree(_ref4) {
+    let {
+      carets
+    } = _ref4;
     return (formats, text) => {
       if (!(carets !== null && carets !== void 0 && carets.length)) {
         return formats;

@@ -20,6 +20,12 @@
  * @property {boolean} [topToolbar] - Enable or disable the 'top toolbar' option
  */
 /**
+ * Sidebar settings
+ * @typedef SidebarSettings
+ * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
+ * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
+ */
+/**
  * Isolated Editor Settings
  * @typedef IsoSettings
  * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
@@ -27,6 +33,7 @@
  * @property {{allowBlocks: string[], disallowBlocks: string[]}} [blocks] - Block restrictions
  * @property {string[]} [disallowEmbed] - List of embed names to remove
  * @property {object[]} [customStores] - Array of custom stores
+ * @property {boolean} [footer] - Show footer component
  * @property {ToolbarSettings} [toolbar] - Toolbar settings
  * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
@@ -34,6 +41,7 @@
  * @property {Pattern[]} [patterns] - List of patterns
  * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
+ * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 /**
  * Block Editor Settings
@@ -117,6 +125,19 @@ export type MoreMenuSettings = {
     topToolbar?: boolean | undefined;
 };
 /**
+ * Sidebar settings
+ */
+export type SidebarSettings = {
+    /**
+     * - Display the block inspector in a sidebar (true) or popover (false)
+     */
+    inspector?: boolean | undefined;
+    /**
+     * - Display the block inserter in a sidebar (true) or popover (false)
+     */
+    inserter?: boolean | undefined;
+};
+/**
  * Isolated Editor Settings
  */
 export type IsoSettings = {
@@ -143,6 +164,10 @@ export type IsoSettings = {
      * - Array of custom stores
      */
     customStores?: any[] | undefined;
+    /**
+     * - Show footer component
+     */
+    footer?: boolean | undefined;
     /**
      * - Toolbar settings
      */
@@ -174,6 +199,10 @@ export type IsoSettings = {
      * - Allow API requests
      */
     allowApi?: boolean | undefined;
+    /**
+     * - Configure sidebar functionality
+     */
+    sidebar?: SidebarSettings | undefined;
 };
 /**
  * Block Editor Settings
@@ -225,5 +254,6 @@ import EditorLoaded from "./components/editor-loaded";
 import DocumentSection from "./components/document";
 import ToolbarSlot from "./components/block-editor-toolbar/slot";
 import CollaborativeEditing from "./components/collaborative-editing";
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing };
+import FooterSlot from "./components/footer-slot";
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };
 //# sourceMappingURL=index.d.ts.map

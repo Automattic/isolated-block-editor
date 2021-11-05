@@ -14,9 +14,10 @@ import { store as editorStore } from '@wordpress/editor';
 
 import FooterSection from '../footer-slot';
 
-const Footer = ({
-  editorMode
-}) => {
+const Footer = _ref => {
+  let {
+    editorMode
+  } = _ref;
   const isMobileViewport = useViewportMatch('medium', '<');
   const {
     showBlockBreadcrumbs,

@@ -49,13 +49,14 @@ export const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D
  * @property {Object} selectionEnd
  */
 
-async function initYDoc({
-  getBlocks,
-  onRemoteDataChange,
-  settings,
-  setPeerSelection,
-  setAvailablePeers
-}) {
+async function initYDoc(_ref) {
+  let {
+    getBlocks,
+    onRemoteDataChange,
+    settings,
+    setPeerSelection,
+    setAvailablePeers
+  } = _ref;
   const {
     channelId,
     transport
@@ -116,9 +117,10 @@ async function initYDoc({
       setAvailablePeers(peers);
     },
     channelId
-  }).then(({
-    isFirstInChannel
-  }) => {
+  }).then(_ref2 => {
+    let {
+      isFirstInChannel
+    } = _ref2;
     debug(`connected (channelId: ${channelId})`);
 
     if (isFirstInChannel) {
@@ -176,9 +178,10 @@ async function initYDoc({
  */
 
 
-export default function useYjs({
-  settings
-}) {
+export default function useYjs(_ref3) {
+  let {
+    settings
+  } = _ref3;
   const onBlocksChange = useRef(noop);
   const onSelectionChange = useRef(noop);
   const {
@@ -223,11 +226,13 @@ export default function useYjs({
       getBlocks,
       setPeerSelection,
       setAvailablePeers
-    }).then(({
-      applyChangesToYjs,
-      sendSelection,
-      disconnect
-    }) => {
+    }).then(_ref4 => {
+      let {
+        applyChangesToYjs,
+        sendSelection,
+        disconnect
+      } = _ref4;
+
       onUnmount = () => {
         debug('unmount');
         disconnect();

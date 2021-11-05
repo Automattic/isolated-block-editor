@@ -9,12 +9,13 @@ import { MenuItem, withSpokenMessages } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { check } from '@wordpress/icons';
 
-function OptionToggle({
-  onToggle,
-  isActive,
-  label,
-  info
-}) {
+function OptionToggle(_ref) {
+  let {
+    onToggle,
+    isActive,
+    label,
+    info
+  } = _ref;
   return createElement(MenuItem, {
     icon: isActive && check,
     isSelected: isActive,
@@ -24,11 +25,14 @@ function OptionToggle({
   }, label);
 }
 
-export default compose([withSelect((select, {
-  option
-}) => ({
-  isActive: select('isolated/editor').isOptionActive(option)
-})), withDispatch((dispatch, ownProps) => ({
+export default compose([withSelect((select, _ref2) => {
+  let {
+    option
+  } = _ref2;
+  return {
+    isActive: select('isolated/editor').isOptionActive(option)
+  };
+}), withDispatch((dispatch, ownProps) => ({
   onToggle() {
     dispatch('isolated/editor').toggleOption(ownProps.option);
     ownProps.onClose();

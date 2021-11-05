@@ -68,19 +68,19 @@ declare namespace actions {
     };
     /**
      * Mark the block inserter as open or closed
-     * @param {boolean} isOpen
+     * @param {boolean} name
      */
-    function setIsInserterOpened(isOpen: boolean): {
+    function setIsInserterOpened(isOpen: any): {
         type: string;
-        isOpen: boolean;
+        isOpen: any;
     };
     /**
      * Mark the block inserter as open or closed
-     * @param {boolean} isOpen
+     * @param {boolean} name
      */
-    function setIsInserterOpened(isOpen: boolean): {
+    function setIsInserterOpened(isOpen: any): {
         type: string;
-        isOpen: boolean;
+        isOpen: any;
     };
     /**
      * Mark this editor as in-use or not
@@ -99,18 +99,36 @@ declare namespace actions {
         isEditing: boolean;
     };
     /**
-     * Mark the block inserter as open or closed
+     * Open the named sidebar
+     * @param {string} name Name of sidebar section
+     */
+    function openGeneralSidebar(name: string): Generator<any, void, unknown>;
+    /**
+     * Open the named sidebar
+     * @param {string} name Name of sidebar section
+     */
+    function openGeneralSidebar(name: string): Generator<any, void, unknown>;
+    /**
+     * Close the sidebar (or popover)
+     */
+    function closeGeneralSidebar(): Generator<any, void, unknown>;
+    /**
+     * Close the sidebar (or popover)
+     */
+    function closeGeneralSidebar(): Generator<any, void, unknown>;
+    /**
+     * Set the status of the listview sidebar section
      * @param {boolean} isOpen
      */
-    function setInspecting(isOpen: boolean): {
+    function setIsListViewOpened(isOpen: boolean): {
         type: string;
         isOpen: boolean;
     };
     /**
-     * Mark the block inserter as open or closed
+     * Set the status of the listview sidebar section
      * @param {boolean} isOpen
      */
-    function setInspecting(isOpen: boolean): {
+    function setIsListViewOpened(isOpen: boolean): {
         type: string;
         isOpen: boolean;
     };

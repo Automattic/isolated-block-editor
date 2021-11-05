@@ -69,9 +69,10 @@ function EditorSetup(props) {
   return null;
 }
 
-export default compose([withSelect((select, {
-  settings
-}) => {
+export default compose([withSelect((select, _ref) => {
+  let {
+    settings
+  } = _ref;
   const {
     isEditing,
     isFeatureActive
@@ -122,9 +123,10 @@ export default compose([withSelect((select, {
   return {
     setupEditor,
     setupCoreEditor,
-    updateSettings: ({
-      editor
-    }) => {
+    updateSettings: _ref2 => {
+      let {
+        editor
+      } = _ref2;
       updateSettings(editor);
       updateEditorSettings(editor);
     }

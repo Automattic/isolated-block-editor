@@ -174,9 +174,10 @@ function BlockEditor(props) {
   }));
 }
 
-export default withDispatch((dispatch, _ownProps, {
-  select
-}) => {
+export default withDispatch((dispatch, _ownProps, _ref) => {
+  let {
+    select
+  } = _ref;
   const hasPeers = select('isolated/editor').hasPeers;
   const {
     redo,

@@ -15,10 +15,11 @@ import { useSelect } from '@wordpress/data';
 * @param {OnLoad} [props.onLoading] - Callback to signal that the editor is loading
 */
 
-function EditorLoaded({
-  onLoaded,
-  onLoading
-}) {
+function EditorLoaded(_ref) {
+  let {
+    onLoaded,
+    onLoading
+  } = _ref;
   const {
     isEditorReady
   } = useSelect(select => ({

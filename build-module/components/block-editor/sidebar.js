@@ -17,10 +17,11 @@ import { useSelect } from '@wordpress/data';
 import SettingsHeader from './sidebar-heading';
 import Document from '../document';
 
-function PluginSidebarEditPost({
-  className,
-  ...props
-}) {
+function PluginSidebarEditPost(_ref) {
+  let {
+    className,
+    ...props
+  } = _ref;
   const {
     postTitle,
     shortcut,
@@ -42,9 +43,10 @@ function PluginSidebarEditPost({
   }, props));
 }
 
-const SettingsSidebar = ({
-  hasDocument
-}) => {
+const SettingsSidebar = _ref2 => {
+  let {
+    hasDocument
+  } = _ref2;
   const {
     sidebarName,
     keyboardShortcut
@@ -66,6 +68,7 @@ const SettingsSidebar = ({
     };
   }, []);
   return createElement(PluginSidebarEditPost, {
+    className: "iso-sidebar",
     identifier: sidebarName,
     header: createElement(SettingsHeader, {
       sidebarName: sidebarName,

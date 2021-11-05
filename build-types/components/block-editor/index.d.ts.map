@@ -1,1 +1,1 @@
-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor/index.js"],"names":[],"mappings":";;yBAkBc,OAAO,4BAA4B,EAAE,UAAU"}
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor/index.js"],"names":[],"mappings":";;yBA+Bc,OAAO,4BAA4B,EAAE,UAAU;kCAC/C,OAAO,aAAa,EAAE,mBAAmB;qBACzC,OAAO,aAAa,EAAE,MAAM"}

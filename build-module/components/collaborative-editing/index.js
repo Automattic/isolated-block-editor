@@ -72,9 +72,10 @@ import CollaborativeEditingAvatars from './components/avatars';
  * @param {CollaborationSettings} props.settings
  */
 
-function CollaborativeEditing({
-  settings
-}) {
+function CollaborativeEditing(_ref) {
+  let {
+    settings
+  } = _ref;
   useYjs({
     settings
   });

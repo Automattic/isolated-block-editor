@@ -13,7 +13,8 @@ const actions = {
    * @param {object[]} blocks
    * @param {object} options
    */
-  updateBlocksWithUndo(blocks, options = {}) {
+  updateBlocksWithUndo(blocks) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return {
       type: 'UPDATE_BLOCKS_WITH_UNDO',
       blocks,
@@ -26,7 +27,8 @@ const actions = {
    * @param {object[]} blocks
    * @param {object} options
    */
-  updateBlocksWithoutUndo(blocks, options = {}) {
+  updateBlocksWithoutUndo(blocks) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return {
       type: 'UPDATE_BLOCKS_WITHOUT_UNDO',
       blocks,

@@ -79,6 +79,7 @@ var SettingsSidebar = function SettingsSidebar(_ref2) {
       keyboardShortcut = _useSelect2.keyboardShortcut;
 
   return createElement(PluginSidebarEditPost, {
+    className: "iso-sidebar",
     identifier: sidebarName,
     header: createElement(_sidebarHeading["default"], {
       sidebarName: sidebarName,

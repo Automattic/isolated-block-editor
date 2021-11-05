@@ -5,9 +5,10 @@ const {
   Slot
 } = createSlotFill('IsolatedFooter');
 
-const FooterSection = ({
-  children
-}) => {
+const FooterSection = _ref => {
+  let {
+    children
+  } = _ref;
   return createElement(Fill, null, children);
 };
 

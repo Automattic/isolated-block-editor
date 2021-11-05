@@ -30,7 +30,8 @@ function InserterSidebar() {
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       setIsInserterOpened = _useDispatch.setIsInserterOpened;
 
-  var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
+  var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<'); // Note: focusOnMount not present in Gutenberg
+  // @ts-ignore
 
   var _useDialog = (0, _compose.__experimentalUseDialog)({
     onClose: function onClose() {
@@ -42,6 +43,7 @@ function InserterSidebar() {
       inserterDialogProps = _useDialog2[1];
 
   return createElement("div", (0, _extends2["default"])({
+    // @ts-ignore
     ref: inserterDialogRef
   }, inserterDialogProps, {
     className: "edit-post-editor__inserter-panel"

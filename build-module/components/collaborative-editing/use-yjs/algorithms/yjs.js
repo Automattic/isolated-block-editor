@@ -43,7 +43,9 @@ function simpleDiff(a, b) {
  */
 
 
-export function updateBlocksDoc(yDocBlocks, blocks, clientId = '') {
+export function updateBlocksDoc(yDocBlocks, blocks) {
+  let clientId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
   if (!yDocBlocks.has('order')) {
     yDocBlocks.set('order', new yjs.Map());
   }
@@ -83,7 +85,8 @@ export function updateBlocksDoc(yDocBlocks, blocks, clientId = '') {
  * @param {Object}  comments     Updated comments.
  */
 
-export function updateCommentsDoc(commentsDoc, comments = []) {
+export function updateCommentsDoc(commentsDoc) {
+  let comments = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   comments.forEach(comment => {
     let currentDoc = commentsDoc.get(comment._id);
     const isNewDoc = !currentDoc;
@@ -114,7 +117,8 @@ export function updateCommentsDoc(commentsDoc, comments = []) {
  * @param {Object}  replies     Updated replies.
  */
 
-export function updateCommentRepliesDoc(repliesDoc, replies = []) {
+export function updateCommentRepliesDoc(repliesDoc) {
+  let replies = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   replies.forEach(reply => {
     let currentReplyDoc = repliesDoc.get(reply._id);
     const isNewDoc = !currentReplyDoc;
@@ -169,7 +173,8 @@ export function commentsDocToArray(commentsDoc) {
     return [];
   }
 
-  return Object.entries(commentsDoc.toJSON()).map(([id, commentDoc]) => {
+  return Object.entries(commentsDoc.toJSON()).map(_ref => {
+    let [id, commentDoc] = _ref;
     return {
       _id: id,
       type: commentDoc.type,
@@ -180,7 +185,8 @@ export function commentsDocToArray(commentsDoc) {
       end: commentDoc.end,
       authorId: commentDoc.authorId,
       authorName: commentDoc.authorName,
-      replies: Object.entries(commentDoc.replies).map(([replyId, entryDoc]) => {
+      replies: Object.entries(commentDoc.replies).map(_ref2 => {
+        let [replyId, entryDoc] = _ref2;
         return {
           _id: replyId,
           content: entryDoc.content,
@@ -200,8 +206,10 @@ export function commentsDocToArray(commentsDoc) {
  * @return {Array} Block list.
  */
 
-export function blocksDocToArray(yDocBlocks, clientId = '') {
+export function blocksDocToArray(yDocBlocks) {
   var _order$get;
+
+  let clientId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
   if (!yDocBlocks) {
     return [];

@@ -29,14 +29,16 @@ import { check } from '@wordpress/icons';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 
-function EditorMenu({
-  onClose,
-  editorMode,
-  onSetMode,
-  isCodeEditingEnabled,
-  settings
-}) {
+function EditorMenu(_ref) {
   var _settings$iso, _settings$iso2, _settings$iso2$moreMe;
+
+  let {
+    onClose,
+    editorMode,
+    onSetMode,
+    isCodeEditingEnabled,
+    settings
+  } = _ref;
 
   /**
    * @param {string} mode

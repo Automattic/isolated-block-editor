@@ -1,4 +1,7 @@
-const reducer = (state = {}, action) => {
+const reducer = function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
   switch (action.type) {
     case 'SET_PEER_SELECTION':
       {
@@ -15,12 +18,13 @@ const reducer = (state = {}, action) => {
 
     case 'SET_AVAILABLE_PEERS':
       {
-        return action.peers.reduce((acc, {
-          id,
-          name,
-          color,
-          avatarUrl
-        }) => {
+        return action.peers.reduce((acc, _ref) => {
+          let {
+            id,
+            name,
+            color,
+            avatarUrl
+          } = _ref;
           acc[id] = state[id] || {
             name,
             color,

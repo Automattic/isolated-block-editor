@@ -22,6 +22,14 @@ var _data = require("@wordpress/data");
 
 var _interface = require("@wordpress/interface");
 
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 
 /** @typedef {import('./reducer').EditorMode} EditorMode */
