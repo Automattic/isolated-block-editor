@@ -3,6 +3,7 @@
  */
 
 import { combineReducers } from '@wordpress/data';
+import { controls } from '@wordpress/data-controls';
 
 /**
  * Internal dependencies
@@ -18,11 +19,15 @@ import optionsReducer from './options/reducer';
 import optionActions from './options/actions';
 import peersReducer from './peers/reducer';
 import peersActions from './peers/actions';
+import collabReducer from './collab/reducer';
+import * as collabActions from './collab/actions';
 import * as blockSelectors from './blocks/selectors';
 import * as editorSelectors from './editor/selectors';
 import * as preferenceSelectors from './preferences/selectors';
 import * as optionSelectors from './options/selectors';
 import * as peersSelectors from './peers/selectors';
+import * as collabSelectors from './collab/selectors';
+import * as collabControls from './collab/controls';
 
 function storeConfig( preferencesKey, defaultPreferences ) {
 	return {
@@ -32,6 +37,7 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			preferences: preferencesReducer,
 			options: optionsReducer,
 			peers: peersReducer,
+			collab: collabReducer,
 		} ),
 
 		actions: {
@@ -40,6 +46,7 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			...optionActions,
 			...preferenceActions,
 			...peersActions,
+			...collabActions,
 		},
 
 		selectors: {
@@ -48,6 +55,12 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			...preferenceSelectors,
 			...optionSelectors,
 			...peersSelectors,
+			...collabSelectors,
+		},
+
+		controls: {
+			...controls,
+			...collabControls,
 		},
 
 		persist: [ 'preferences' ],

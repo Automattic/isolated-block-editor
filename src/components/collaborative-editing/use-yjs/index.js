@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { noop, over, sample } from 'lodash';
+import { noop, sample } from 'lodash';
 
 /**
  * Internal dependencies
@@ -15,7 +15,6 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
  */
 import { useRegistry, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
-import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -61,6 +60,8 @@ async function initYDoc( { settings, registry } ) {
 		// Set up undo manager only once per Yjs doc
 		if ( newState === 'on' && ! isUndoManagerReady ) {
 			setupUndoManager( doc.getPostMap(), identity, registry );
+			dispatch( 'isolated/editor' ).setYDoc( doc );
+
 			isUndoManagerReady = true;
 		}
 	} );
@@ -111,21 +112,6 @@ async function initYDoc( { settings, registry } ) {
 	} else {
 		doc.connect();
 	}
-
-	const applyChangesToYjs = ( blocks ) => {
-		if ( doc.getState() !== 'on' ) {
-			return;
-		}
-		debug( 'local changes applied to ydoc' );
-		doc.applyDataChanges( { blocks } );
-	};
-
-	addFilter( 'isoEditor.blockEditorProvider.onInput', 'isolated-block-editor/collab', ( onInput ) =>
-		over( [ onInput, applyChangesToYjs, () => debug( 'BlockEditorProvider onInput' ) ] )
-	);
-	addFilter( 'isoEditor.blockEditorProvider.onChange', 'isolated-block-editor/collab', ( onChange ) =>
-		over( [ onChange, applyChangesToYjs, () => debug( 'BlockEditorProvider onChange' ) ] )
-	);
 
 	const disconnect = () => {
 		transport.disconnect();
