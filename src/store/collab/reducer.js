@@ -1,7 +1,10 @@
 const reducer = ( state = {}, action ) => {
 	switch ( action.type ) {
-		case 'SET_YJS_DOC': {
+		case 'SET_COLLAB_YJS_DOC': {
 			return { ...state, yDoc: action.doc };
+		}
+		case 'SET_COLLAB_UNDO_MANAGER': {
+			return { ...state, undoManager: action.undoManager };
 		}
 	}
 

@@ -3,7 +3,6 @@
  */
 
 import { combineReducers } from '@wordpress/data';
-import { controls } from '@wordpress/data-controls';
 
 /**
  * Internal dependencies
@@ -17,17 +16,19 @@ import preferencesReducer from './preferences/reducer';
 import preferenceActions from './preferences/actions';
 import optionsReducer from './options/reducer';
 import optionActions from './options/actions';
-import peersReducer from './peers/reducer';
-import peersActions from './peers/actions';
-import collabReducer from './collab/reducer';
-import * as collabActions from './collab/actions';
 import * as blockSelectors from './blocks/selectors';
 import * as editorSelectors from './editor/selectors';
 import * as preferenceSelectors from './preferences/selectors';
 import * as optionSelectors from './options/selectors';
-import * as peersSelectors from './peers/selectors';
+
+// Collaborative Editing
+import * as collabActions from './collab/actions';
 import * as collabSelectors from './collab/selectors';
-import * as collabControls from './collab/controls';
+import * as peersSelectors from './peers/selectors';
+import collabControls from './collab/controls'; // will safely noop if collab isn't initialized
+import collabReducer from './collab/reducer';
+import peersActions from './peers/actions';
+import peersReducer from './peers/reducer';
 
 function storeConfig( preferencesKey, defaultPreferences ) {
 	return {
@@ -59,7 +60,6 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 		},
 
 		controls: {
-			...controls,
 			...collabControls,
 		},
 

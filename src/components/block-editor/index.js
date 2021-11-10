@@ -17,7 +17,6 @@ import { __, _x } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { useEffect } from '@wordpress/element';
-import { applyFilters } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -191,11 +190,7 @@ function BlockEditor( props ) {
 	);
 }
 
-export default withDispatch( ( dispatch, _ownProps, { select } ) => {
+export default withDispatch( ( dispatch ) => {
 	const { redo, undo } = dispatch( 'isolated/editor' );
-
-	return {
-		redo: applyFilters( 'isoEditor.blockEditor.redo', redo ),
-		undo: applyFilters( 'isoEditor.blockEditor.undo', undo ),
-	};
+	return { redo, undo };
 } )( BlockEditor );

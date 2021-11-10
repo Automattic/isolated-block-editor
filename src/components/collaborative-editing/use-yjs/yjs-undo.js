@@ -3,11 +3,6 @@
  */
 import * as yjs from 'yjs';
 
-/**
- * WordPress dependencies
- */
-import { addFilter } from '@wordpress/hooks';
-
 const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
 
 /**
@@ -34,38 +29,37 @@ export function setupUndoManager( typeScope, identity, registry ) {
 
 	const undoManager = new yjs.UndoManager( typeScope, { trackedOrigins: new Set( [ identity ] ) } );
 
+	const debugUndoWithStackSizes = ( ...args ) => {
+		debugUndo( ...args );
+		debugUndo( `stack size: undo ${ undoManager.undoStack.length }, redo ${ undoManager.redoStack.length }` );
+	};
+
 	undoManager.on( 'stack-item-added', ( event ) => {
 		const selection = getSelection();
 		event.stackItem.meta.set( 'caret-location', selection );
-		debugUndo( 'undo stack item added with selection', selection );
+		debugUndoWithStackSizes( `${ event.type } stack item added with selection`, selection );
 	} );
+
 	undoManager.on( 'stack-item-popped', ( event ) => {
-		const selectionReferenceItem = event.type === 'undo' ? undoManager?.undoStack.at( -1 ) : event.stackItem;
-		const selection = selectionReferenceItem?.meta.get( 'caret-location' );
+		if ( event.type === 'undo' && undoManager.undoStack.length === 0 ) {
+			debugUndoWithStackSizes( `undo stack item popped (last item, no caret position to restore)` );
+			return;
+		}
+
+		const selectionReferenceItem =
+			event.type === 'undo' ? undoManager.undoStack[ undoManager.undoStack.length - 1 ] : event.stackItem;
+		const selection = selectionReferenceItem.meta.get( 'caret-location' );
+
 		if ( selection?.start ) {
 			setSelection( selection );
+			debugUndoWithStackSizes( `${ event.type } stack item popped with selection`, selection );
+			return;
 		}
-		debugUndo( 'stack item popped with selection', selection );
+
+		debugUndoWithStackSizes( `${ event.type } stack item popped without selection` );
 	} );
+
+	dispatch( 'isolated/editor' ).setUndoManager( undoManager );
 
 	debugUndo( 'instantiated UndoManager' );
-
-	addFilter( 'isoEditor.blockEditor.undo', 'isolated-block-editor/collab', () => () => {
-		debugUndo( 'undo' );
-		undoManager.undo();
-	} );
-	addFilter( 'isoEditor.blockEditor.redo', 'isolated-block-editor/collab', () => () => {
-		debugUndo( 'redo' );
-		undoManager.redo();
-	} );
-	addFilter(
-		'isoEditor.blockEditor.hasEditorUndo',
-		'isolated-block-editor/collab',
-		() => ( undoManager.undoStack.length ?? 0 ) > 1
-	);
-	addFilter(
-		'isoEditor.blockEditor.hasEditorRedo',
-		'isolated-block-editor/collab',
-		() => !! undoManager.redoStack.length
-	);
 }

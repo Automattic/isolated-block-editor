@@ -68,7 +68,12 @@ async function initYDoc( { settings, registry } ) {
 
 	doc.onRemoteDataChange( ( changes ) => {
 		debug( 'remote change received by ydoc', changes );
-		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks );
+		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
+	} );
+
+	doc.onUndoRedo( ( changes ) => {
+		debug( 'ydoc updated by undo manager', changes );
+		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
 	} );
 
 	const { isFirstInChannel } = await transport.connect( {

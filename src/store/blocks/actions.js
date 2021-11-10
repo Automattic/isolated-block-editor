@@ -1,11 +1,11 @@
 import { ActionCreators } from 'redux-undo';
 
 const actions = {
-	undo() {
-		return ActionCreators.undo();
+	*undo() {
+		return yield ActionCreators.undo();
 	},
-	redo() {
-		return ActionCreators.redo();
+	*redo() {
+		return yield ActionCreators.redo();
 	},
 	/**
 	 * Update blocks without undo history

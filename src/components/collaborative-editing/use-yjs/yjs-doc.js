@@ -21,23 +21,30 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 	const doc = new yjs.Doc();
 	let state = 'off';
 
-	let listeners = [];
+	let remoteChangeListeners = [];
 	let stateListeners = [];
+	let undoRedoListeners = [];
 
 	doc.on( 'update', ( update, origin ) => {
-		const isLocalOrigin = origin === identity || origin instanceof yjs.UndoManager;
+		const isRemoteOrigin = origin !== identity && ! ( origin instanceof yjs.UndoManager );
 
-		if ( isLocalOrigin && state === 'on' ) {
+		if ( isRemoteOrigin ) {
+			const newData = getData( doc );
+			remoteChangeListeners.forEach( ( listener ) => listener( newData ) );
+			return;
+		}
+
+		if ( origin instanceof yjs.UndoManager ) {
+			const newData = getData( doc );
+			undoRedoListeners.forEach( ( listener ) => listener( newData ) );
+		}
+
+		if ( ! isRemoteOrigin && state === 'on' ) {
 			sendMessage( {
 				protocol: 'yjs1',
 				messageType: 'syncUpdate',
 				update: encodeArray( update ),
 			} );
-		}
-
-		if ( origin !== identity ) {
-			const newData = getData( doc );
-			listeners.forEach( ( listener ) => listener( newData ) );
 		}
 	} );
 
@@ -124,10 +131,10 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 		},
 
 		onRemoteDataChange( listener ) {
-			listeners.push( listener );
+			remoteChangeListeners.push( listener );
 
 			return () => {
-				listeners = listeners.filter( ( l ) => l !== listener );
+				remoteChangeListeners = remoteChangeListeners.filter( ( l ) => l !== listener );
 			};
 		},
 
@@ -136,6 +143,14 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 
 			return () => {
 				stateListeners = stateListeners.filter( ( l ) => l !== listener );
+			};
+		},
+
+		onUndoRedo( listener ) {
+			undoRedoListeners.push( listener );
+
+			return () => {
+				undoRedoListeners = undoRedoListeners.filter( ( l ) => l !== listener );
 			};
 		},
 
