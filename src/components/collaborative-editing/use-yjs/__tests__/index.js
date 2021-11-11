@@ -8,52 +8,7 @@ import userEvent from '@testing-library/user-event';
  * Internal dependencies
  */
 import IsolatedBlockEditor, { CollaborativeEditing } from '../../../../index';
-
-/**
- * Helper to generate mock transport modules for an isolated channel.
- *
- * @param {number} count - Number of transport modules to generate.
- * @return {Object[]} - Array of transport modules.
- */
-function getTransports( count ) {
-	const peers = {};
-
-	const getAvailablePeers = ( excludeId ) =>
-		Object.values( peers ).reduce( ( acc, p ) => {
-			if ( p.user.id === excludeId ) return acc;
-			return [ ...acc, p.user ];
-		}, [] );
-
-	const mockTransport = () => ( {
-		_identity: undefined,
-		connect: jest.fn( ( { onReceiveMessage, setAvailablePeers, user } ) => {
-			mockTransport._identity = user.identity;
-			peers[ user.identity ] = { onReceiveMessage, setAvailablePeers, user: { ...user, id: user.identity } };
-			Object.keys( peers ).forEach( ( identity ) => {
-				peers[ identity ].setAvailablePeers( getAvailablePeers( identity ) );
-			} );
-			return Promise.resolve( { isFirstInChannel: Object.keys( peers ).length === 1 } );
-		} ),
-		sendMessage: jest.fn( ( data ) => {
-			// console.log( data.message.messageType, data.identity.substring( 0, 4 ) );
-			Object.keys( peers ).forEach( ( identity ) => {
-				if ( identity !== data.identity ) {
-					peers[ identity ].onReceiveMessage( data );
-				}
-			} );
-		} ),
-		disconnect: jest.fn( () => {
-			delete peers[ mockTransport._identity ];
-			Object.keys( peers ).forEach( ( identity ) => {
-				peers[ identity ].setAvailablePeers( getAvailablePeers( identity ) );
-			} );
-		} ),
-	} );
-
-	return Array( count )
-		.fill( null )
-		.map( () => mockTransport() );
-}
+import { getTransports } from '../__test-helpers__/utils';
 
 const collabSettings = {
 	enabled: true,
@@ -209,64 +164,5 @@ describe( 'CollaborativeEditing', () => {
 
 		expect( aliceScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'initialtyped' );
 		expect( bobScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'initialtyped' );
-	} );
-} );
-
-describe( 'CollaborativeEditing: Undo/Redo', () => {
-	beforeEach( () => {
-		// Real timers are used so Yjs can merge undo stack items
-		jest.useRealTimers();
-	} );
-
-	afterEach( () => {
-		jest.useFakeTimers();
-	} );
-
-	it( 'should undo/redo single user edits', async () => {
-		const [ transport ] = getTransports( 1 );
-		const onSave = jest.fn();
-
-		render(
-			<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave }>
-				<CollaborativeEditing settings={ { ...collabSettings, transport } } />
-			</IsolatedBlockEditor>
-		);
-
-		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
-		expect( screen.getByRole( 'button', { name: 'Redo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
-
-		userEvent.click( screen.getByText( /^Start writing.+/ ) );
-
-		userEvent.keyboard( 'hello' );
-		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello' );
-
-		// Emulate pause for Yjs to make a new undo stack item
-		screen.getByRole( 'document', { name: 'Paragraph block' } ).blur();
-		await waitFor( () => new Promise( ( resolve ) => setTimeout( resolve, 500 ) ) );
-		userEvent.click( screen.getByRole( 'document', { name: 'Paragraph block' } ) );
-
-		userEvent.keyboard( 'world' );
-		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'helloworld' );
-
-		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'false' );
-		userEvent.click( screen.getByRole( 'button', { name: 'Undo' } ) );
-
-		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello' );
-
-		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'false' );
-		expect( screen.getByRole( 'button', { name: 'Redo' } ) ).toHaveAttribute( 'aria-disabled', 'false' );
-		userEvent.click( screen.getByRole( 'button', { name: 'Undo' } ) );
-
-		expect( screen.getByText( /^Start writing.+/ ) ).toBeInTheDocument();
-		expect( onSave ).toHaveBeenLastCalledWith( '' );
-
-		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
-		expect( screen.getByRole( 'button', { name: 'Redo' } ) ).toHaveAttribute( 'aria-disabled', 'false' );
-
-		userEvent.click( screen.getByRole( 'button', { name: 'Redo' } ) );
-		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello' );
-
-		userEvent.click( screen.getByRole( 'button', { name: 'Redo' } ) );
-		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'helloworld' );
 	} );
 } );
