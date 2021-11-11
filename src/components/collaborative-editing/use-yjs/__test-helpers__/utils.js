@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Helper to generate mock transport modules for an isolated channel.
  *
  * @param {number} count - Number of transport modules to generate.
@@ -46,4 +51,16 @@ export function getTransports( count ) {
 	return Array( count )
 		.fill( null )
 		.map( () => mockTransport() );
+}
+
+/**
+ * Emulate a pause between typing events for Yjs to make a new undo stack item.
+ *
+ * Requires jest.useRealTimers().
+ *
+ * @param {import('@testing-library/dom').Screen} screen
+ */
+export async function pauseTyping( screen ) {
+	screen.getAllByRole( 'document' ).forEach( ( el ) => el.blur() );
+	await waitFor( () => new Promise( ( resolve ) => setTimeout( resolve, 550 ) ) );
 }
