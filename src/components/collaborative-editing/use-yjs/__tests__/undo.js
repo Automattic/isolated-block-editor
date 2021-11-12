@@ -108,7 +108,7 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 		userEvent.keyboard( 'bobby:' );
 
 		userEvent.click( bobScreen.getByRole( 'button', { name: 'Undo' } ) );
-		expect( screen.queryByText( 'bobby:' ) ).toBe( null );
+		expect( screen.queryByText( 'bobby:' ) ).not.toBeInTheDocument();
 
 		userEvent.click( bobScreen.getAllByRole( 'document' )[ 1 ] );
 		userEvent.keyboard( 'bob:' );
@@ -119,11 +119,11 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 		userEvent.keyboard( 'hello' );
 
 		userEvent.click( bobScreen.getByRole( 'button', { name: 'Undo' } ) );
-		expect( screen.queryByText( 'bob:' ) ).toBe( null );
+		expect( screen.queryByText( 'bob:' ) ).not.toBeInTheDocument();
 		expect( screen.getByText( 'alice:hello' ) ).toBeInTheDocument();
 
 		userEvent.click( aliceScreen.getByRole( 'button', { name: 'Undo' } ) );
-		expect( screen.queryByText( 'hello' ) ).toBe( null );
+		expect( screen.queryByText( 'hello' ) ).not.toBeInTheDocument();
 
 		userEvent.click( bobScreen.getByRole( 'button', { name: 'Redo' } ) );
 		expect( screen.getByText( 'bob:' ) ).toBeInTheDocument();
