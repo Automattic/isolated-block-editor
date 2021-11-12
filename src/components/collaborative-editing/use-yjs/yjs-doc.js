@@ -13,33 +13,29 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  *
  * @param {Object} opts
  * @param {string} opts.identity - Client identifier.
- * @param {function(yjs.Doc, PostObject): void} opts.applyDataChanges - Function to apply changes to the Yjs doc.
- * @param {function(yjs.Doc): PostObject} opts.getData - Function to get post object data from the Yjs doc.
+ * @param {function(yjs.Doc, PostObject): void} opts.applyChangesToYDoc - Function to apply changes to the Yjs doc.
+ * @param {function(yjs.Doc): PostObject} opts.getPostFromYDoc - Function to get post object data from the Yjs doc.
  * @param {function(any): void} opts.sendMessage
  */
-export function createDocument( { identity, applyDataChanges, getData, sendMessage } ) {
+export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc, sendMessage } ) {
 	const doc = new yjs.Doc();
+	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
 
-	let remoteChangeListeners = [];
-	let stateListeners = [];
-	let undoRedoListeners = [];
+	let yDocTriggeredChangeListeners = [];
+	let connectionReadyListeners = [];
 
 	doc.on( 'update', ( update, origin ) => {
-		const isRemoteOrigin = origin !== identity && ! ( origin instanceof yjs.UndoManager );
-
-		if ( isRemoteOrigin ) {
-			const newData = getData( doc );
-			remoteChangeListeners.forEach( ( listener ) => listener( newData ) );
-			return;
+		// Change received from peer, or triggered by self undo/redo
+		if ( origin !== identity ) {
+			const newData = getPostFromYDoc( doc );
+			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
 		}
 
-		if ( origin instanceof yjs.UndoManager ) {
-			const newData = getData( doc );
-			undoRedoListeners.forEach( ( listener ) => listener( newData ) );
-		}
+		const isLocalOrigin = origin === identity || origin instanceof yjs.UndoManager;
 
-		if ( ! isRemoteOrigin && state === 'on' ) {
+		// Change should be broadcast to peers
+		if ( isLocalOrigin && state === 'on' ) {
 			sendMessage( {
 				protocol: 'yjs1',
 				messageType: 'syncUpdate',
@@ -50,7 +46,10 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 
 	const setState = ( newState ) => {
 		state = newState;
-		stateListeners.forEach( ( listener ) => listener( newState ) );
+
+		if ( newState === 'on' ) {
+			connectionReadyListeners.forEach( ( listener ) => listener() );
+		}
 	};
 
 	const sync = ( destination, isReply ) => {
@@ -66,12 +65,12 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 	};
 
 	return {
-		applyDataChanges( data ) {
+		applyChangesToYDoc( data ) {
 			if ( state !== 'on' ) {
 				throw 'wrong state';
 			}
 			doc.transact( () => {
-				applyDataChanges( doc, data );
+				applyChangesToYDoc( doc, data );
 			}, identity );
 		},
 
@@ -94,7 +93,7 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 			}
 
 			setState( 'on' );
-			this.applyDataChanges( data );
+			this.applyChangesToYDoc( data );
 		},
 
 		receiveMessage( { protocol, messageType, origin, ...content } ) {
@@ -130,27 +129,19 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 			}
 		},
 
-		onRemoteDataChange( listener ) {
-			remoteChangeListeners.push( listener );
+		onYDocTriggeredChange( listener ) {
+			yDocTriggeredChangeListeners.push( listener );
 
 			return () => {
-				remoteChangeListeners = remoteChangeListeners.filter( ( l ) => l !== listener );
+				yDocTriggeredChangeListeners = yDocTriggeredChangeListeners.filter( ( l ) => l !== listener );
 			};
 		},
 
-		onStateChange( listener ) {
-			stateListeners.push( listener );
+		onConnectionReady( listener ) {
+			connectionReadyListeners.push( listener );
 
 			return () => {
-				stateListeners = stateListeners.filter( ( l ) => l !== listener );
-			};
-		},
-
-		onUndoRedo( listener ) {
-			undoRedoListeners.push( listener );
-
-			return () => {
-				undoRedoListeners = undoRedoListeners.filter( ( l ) => l !== listener );
+				connectionReadyListeners = connectionReadyListeners.filter( ( l ) => l !== listener );
 			};
 		},
 

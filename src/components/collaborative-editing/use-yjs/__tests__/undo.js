@@ -120,8 +120,8 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 
 		userEvent.click( bobScreen.getByRole( 'button', { name: 'Undo' } ) );
 		expect( screen.queryByText( 'bob:' ) ).toBe( null );
-
 		expect( screen.getByText( 'alice:hello' ) ).toBeInTheDocument();
+
 		userEvent.click( aliceScreen.getByRole( 'button', { name: 'Undo' } ) );
 		expect( screen.queryByText( 'hello' ) ).toBe( null );
 

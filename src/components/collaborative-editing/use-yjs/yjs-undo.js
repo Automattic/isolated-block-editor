@@ -46,6 +46,7 @@ export function setupUndoManager( typeScope, identity, registry ) {
 			return;
 		}
 
+		// For undos, we want to get the caret position associated with the next item in the stack
 		const selectionReferenceItem =
 			event.type === 'undo' ? undoManager.undoStack[ undoManager.undoStack.length - 1 ] : event.stackItem;
 		const selection = selectionReferenceItem.meta.get( 'caret-location' );

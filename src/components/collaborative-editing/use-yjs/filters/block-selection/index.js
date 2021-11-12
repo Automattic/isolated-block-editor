@@ -19,7 +19,7 @@ const addSelectionBorders = ( OriginalComponent ) => {
 	return ( props ) => {
 		const { isSelected, color } = useSelect(
 			( select ) => {
-				const peers = select( 'isolated/editor' ).getPeers();
+				const peers = select( 'isolated/editor' ).getCollabPeers();
 				const matchedPeer = Object.values( peers ).find(
 					( peer ) => peer.start?.clientId === props.clientId && peer.end?.clientId === props.clientId
 				);
@@ -45,5 +45,5 @@ const addSelectionBorders = ( OriginalComponent ) => {
 };
 
 export const addFilterCollabBlockSelection = () => {
-	addFilter( 'editor.BlockListBlock', 'isolated-block-editor/collab', addSelectionBorders, 9 );
+	addFilter( 'editor.BlockListBlock', 'isolated-block-editor', addSelectionBorders, 9 );
 };

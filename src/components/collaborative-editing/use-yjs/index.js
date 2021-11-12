@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { noop, sample } from 'lodash';
+import { noop, once, sample } from 'lodash';
 
 /**
  * Internal dependencies
@@ -45,8 +45,8 @@ async function initYDoc( { settings, registry } ) {
 
 	const doc = createDocument( {
 		identity,
-		applyDataChanges: updatePostDoc,
-		getData: postDocToObject,
+		applyChangesToYDoc: updatePostDoc,
+		getPostFromYDoc: postDocToObject,
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
@@ -54,25 +54,15 @@ async function initYDoc( { settings, registry } ) {
 		},
 	} );
 
-	let isUndoManagerReady = false;
-
-	doc.onStateChange( ( newState ) => {
-		// Set up undo manager only once per Yjs doc
-		if ( newState === 'on' && ! isUndoManagerReady ) {
-			setupUndoManager( doc.getPostMap(), identity, registry );
+	doc.onConnectionReady(
+		once( () => {
 			dispatch( 'isolated/editor' ).setYDoc( doc );
+			setupUndoManager( doc.getPostMap(), identity, registry );
+		} )
+	);
 
-			isUndoManagerReady = true;
-		}
-	} );
-
-	doc.onRemoteDataChange( ( changes ) => {
-		debug( 'remote change received by ydoc', changes );
-		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
-	} );
-
-	doc.onUndoRedo( ( changes ) => {
-		debug( 'ydoc updated by undo manager', changes );
+	doc.onYDocTriggeredChange( ( changes ) => {
+		debug( 'changes triggered by ydoc, applying to editor state', changes );
 		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
 	} );
 
@@ -93,14 +83,14 @@ async function initYDoc( { settings, registry } ) {
 					break;
 				}
 				case 'selection': {
-					dispatch( 'isolated/editor' ).setPeerSelection( data.identity, data.selection );
+					dispatch( 'isolated/editor' ).setCollabPeerSelection( data.identity, data.selection );
 					break;
 				}
 			}
 		},
 		setAvailablePeers: ( peers ) => {
 			debug( 'setAvailablePeers', peers );
-			dispatch( 'isolated/editor' ).setAvailablePeers( peers );
+			dispatch( 'isolated/editor' ).setAvailableCollabPeers( peers );
 		},
 		channelId,
 	} );
@@ -137,7 +127,6 @@ async function initYDoc( { settings, registry } ) {
 				},
 			} );
 		},
-		undoManager: doc.undoManager,
 		disconnect: () => {
 			window.removeEventListener( 'beforeunload', disconnect );
 			disconnect();
