@@ -30,11 +30,13 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 		const [ transport ] = getTransports( 1 );
 		const onSave = jest.fn();
 
-		render(
-			<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave }>
-				<CollaborativeEditing settings={ { ...collabSettings, transport } } />
-			</IsolatedBlockEditor>
-		);
+		await act( async () => {
+			render(
+				<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave }>
+					<CollaborativeEditing settings={ { ...collabSettings, transport } } />
+				</IsolatedBlockEditor>
+			);
+		} );
 
 		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
 		expect( screen.getByRole( 'button', { name: 'Redo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
@@ -130,5 +132,32 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 
 		// Both editors should have the same content
 		expect( onSave1 ).toHaveBeenLastCalledWith( onSave2.mock.calls[ onSave2.mock.calls.length - 1 ][ 0 ] );
+	} );
+
+	it( 'should not put the initial load content in the undo stack', async () => {
+		const [ transport ] = getTransports( 1 );
+
+		await act( async () =>
+			render(
+				<IsolatedBlockEditor
+					settings={ {} }
+					onLoad={ ( parse ) => parse( '<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->' ) }
+				>
+					<CollaborativeEditing settings={ { ...collabSettings, transport } } />
+				</IsolatedBlockEditor>
+			)
+		);
+
+		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
+
+		userEvent.click( screen.getByRole( 'document', { name: 'Paragraph block' } ) );
+		userEvent.keyboard( 'hello' );
+		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello' );
+		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'false' );
+
+		userEvent.click( screen.getByRole( 'button', { name: 'Undo' } ) );
+		expect( screen.queryByText( 'hello' ) ).not.toBeInTheDocument();
+		expect( screen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'initial' );
+		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
 	} );
 } );

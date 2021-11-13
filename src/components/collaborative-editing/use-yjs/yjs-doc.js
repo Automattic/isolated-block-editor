@@ -32,7 +32,8 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
 		}
 
-		const isLocalOrigin = origin === identity || origin instanceof yjs.UndoManager;
+		const isLocalOrigin =
+			origin === identity || origin === `no-undo--${ identity }` || origin instanceof yjs.UndoManager;
 
 		// Change should be broadcast to peers
 		if ( isLocalOrigin && state === 'on' ) {
@@ -65,13 +66,16 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 	};
 
 	return {
-		applyChangesToYDoc( data ) {
+		applyChangesToYDoc( data, { isInitialContent = false } = {} ) {
 			if ( state !== 'on' ) {
 				throw 'wrong state';
 			}
+
+			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
+
 			doc.transact( () => {
 				applyChangesToYDoc( doc, data );
-			}, identity );
+			}, transactionOrigin );
 		},
 
 		connect() {
@@ -93,7 +97,8 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 			}
 
 			setState( 'on' );
-			this.applyChangesToYDoc( data );
+
+			this.applyChangesToYDoc( data, { isInitialContent: true } );
 		},
 
 		receiveMessage( { protocol, messageType, origin, ...content } ) {
