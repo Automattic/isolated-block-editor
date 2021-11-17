@@ -12,6 +12,15 @@ export const Default = () => {
 	return <IsolatedBlockEditor settings={ {} } />;
 };
 
+export const WithOnLoad = () => {
+	return (
+		<IsolatedBlockEditor
+			settings={ {} }
+			onLoad={ ( parse ) => parse( '<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->' ) }
+		/>
+	);
+};
+
 export const ToolbarSettings = ( toolbarSettings ) => {
 	return (
 		<IsolatedBlockEditor settings={ { iso: { toolbar: toolbarSettings } } }>
