@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### [2.6.0] - 2021-11-01
+## [2.7.0] - 2021-11-23
+
+### Breaking changes
+
+- Uses Gutenberg interface skeleton, changing the overall layout of the editor
+
+### Added
+
+- Gutenberg sidebars, for the block inserter and inspector, are supported through the `sidebar` setting
+- `footer` setting to enable the footer area
+- `FooterSlot` component to insert content into footer area
+
+## [2.6.0] - 2021-11-01
 
 ### Fixed
 
@@ -17,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Editor now saves initial content if there is anything to save
 
-### [2.5.1] - 2021-10-13
+## [2.5.1] - 2021-10-13
 
 ### Added
 
@@ -29,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prevent duplicate collaboration format registration
 - Fix multi-line collaboration carets
 
-### [2.5.0] - 2021-10-06
+## [2.5.0] - 2021-10-06
 
 ### Added
 
@@ -39,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Toolbar has changed to match core Gutenberg and will now be two lines in height (when using 'top toolbar' mode)
 
-### [2.4.3] - 2021-09-30
+## [2.4.3] - 2021-09-30
 
 ### Fixed
 
