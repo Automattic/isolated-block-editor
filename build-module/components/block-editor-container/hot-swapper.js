@@ -3,10 +3,11 @@ import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
 
-function HotSwapper({
-  isEditing,
-  hotSwap
-}) {
+function HotSwapper(_ref) {
+  let {
+    isEditing,
+    hotSwap
+  } = _ref;
   useEffect(() => {
     hotSwap(isEditing);
   }, [isEditing]);
@@ -20,9 +21,10 @@ export default compose([withSelect(select => {
   return {
     isEditing: isEditing()
   };
-}), withDispatch((dispatch, ownProps, {
-  select
-}) => {
+}), withDispatch((dispatch, ownProps, _ref2) => {
+  let {
+    select
+  } = _ref2;
   return {
     hotSwap: isEditing => {
       storeHotSwapPlugin.resetEditor();

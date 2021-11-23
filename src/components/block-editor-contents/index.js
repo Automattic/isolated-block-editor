@@ -16,7 +16,6 @@ import { parse, rawHandler } from '@wordpress/blocks';
  * Internal dependencies
  */
 import { BlockEditorProvider } from '@wordpress/block-editor';
-import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
 
@@ -94,8 +93,12 @@ function BlockEditorContents( props ) {
 			selection={ selection }
 			settings={ settings.editor }
 		>
-			<BlockEditorToolbar editorMode={ editorMode } settings={ settings } renderMoreMenu={ renderMoreMenu } />
-			<BlockEditor isEditing={ isEditing } editorMode={ editorMode }>
+			<BlockEditor
+				isEditing={ isEditing }
+				editorMode={ editorMode }
+				settings={ settings }
+				renderMoreMenu={ renderMoreMenu }
+			>
 				{ children }
 			</BlockEditor>
 

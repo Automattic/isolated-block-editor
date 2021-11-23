@@ -28,15 +28,17 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             pattern: string;
         };
-        setIsInserterOpened(isOpen: boolean): {
+        setIsInserterOpened(isOpen: any): {
             type: string;
-            isOpen: boolean;
+            isOpen: any;
         };
         setEditing(isEditing: boolean): {
             type: string;
             isEditing: boolean;
         };
-        setInspecting(isOpen: boolean): {
+        openGeneralSidebar(name: string): Generator<any, void, unknown>;
+        closeGeneralSidebar(): Generator<any, void, unknown>;
+        setIsListViewOpened(isOpen: boolean): {
             type: string;
             isOpen: boolean;
         };
@@ -59,9 +61,6 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
          * WordPress dependencies
          */
         isFeatureActive(state: any, feature: string): any;
-        /**
-         * WordPress dependencies
-         */
         getEditorMode(state: {
             editor: import("./editor/reducer").EditorState;
         }): import("./editor/reducer").EditorMode;
@@ -86,15 +85,14 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         isInserterOpened(state: {
             editor: import("./editor/reducer").EditorState;
         }): boolean;
-        isInspecting(state: {
-            editor: import("./editor/reducer").EditorState;
-        }): boolean;
         isEditing(state: {
             editor: import("./editor/reducer").EditorState;
         }): boolean;
         getPatterns(state: {
             editor: import("./editor/reducer").EditorState;
         }): import("./editor/reducer").Pattern[];
+        isListViewOpened(state: any): any;
+        isEditorSidebarOpened: any;
         getBlocks(state: any): any[];
         getEditorSelection(state: any): any;
         hasEditorUndo(state: any): boolean;

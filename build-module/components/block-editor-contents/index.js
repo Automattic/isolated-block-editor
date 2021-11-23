@@ -18,7 +18,6 @@ import { parse, rawHandler } from '@wordpress/blocks';
  */
 
 import { BlockEditorProvider } from '@wordpress/block-editor';
-import BlockEditorToolbar from '../block-editor-toolbar';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
@@ -100,13 +99,11 @@ function BlockEditorContents(props) {
     useSubRegistry: false,
     selection: selection,
     settings: settings.editor
-  }, createElement(BlockEditorToolbar, {
+  }, createElement(BlockEditor, {
+    isEditing: isEditing,
     editorMode: editorMode,
     settings: settings,
     renderMoreMenu: renderMoreMenu
-  }), createElement(BlockEditor, {
-    isEditing: isEditing,
-    editorMode: editorMode
   }, children), createElement(Popover.Slot, null));
 }
 

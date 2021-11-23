@@ -57,6 +57,15 @@ export default function applyDefaultSettings( settings ) {
 				...( iso?.toolbar ?? {} ),
 			},
 
+			sidebar: {
+				inserter: false,
+				inspector: false,
+
+				...( iso?.sidebar ?? {} ),
+			},
+
+			footer: iso?.footer ?? false,
+
 			// Nothing appears in the 'more menu'
 			moreMenu: getMenu( iso?.moreMenu, {
 				editor: false,

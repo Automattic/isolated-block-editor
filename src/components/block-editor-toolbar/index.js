@@ -7,6 +7,7 @@ import { Button } from '@wordpress/components';
 import { cog } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useViewportMatch } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -31,24 +32,57 @@ import './style.scss';
  */
 const BlockEditorToolbar = ( props ) => {
 	const { settings, editorMode, renderMoreMenu } = props;
-	const shortcut = 'x';
+	const isHugeViewport = useViewportMatch( 'huge', '>=' );
 	const { inspector, documentInspector } = settings.iso?.toolbar || {};
 	const { moreMenu } = settings.iso || {};
-	const { setInspecting } = useDispatch( 'isolated/editor' );
-	const { isInspecting, isBlockSelected } = useSelect(
+	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
+	const { openGeneralSidebar, closeGeneralSidebar } = useDispatch( 'isolated/editor' );
+	const { setIsInserterOpened } = useDispatch( 'isolated/editor' );
+	const { isEditorSidebarOpened, isBlockSelected, hasBlockSelected, isInserterOpened, isEditing } = useSelect(
 		( select ) => ( {
-			isInspecting: select( 'isolated/editor' ).isInspecting(),
+			isEditing: select( 'isolated/editor' ),
+			isEditorSidebarOpened: select( 'isolated/editor' ).isEditorSidebarOpened(),
 			isBlockSelected: !! select( 'core/block-editor' ).getBlockSelectionStart(),
+			hasBlockSelected: !! select( 'core/block-editor' ).getBlockSelectionStart(),
+			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
 		} ),
 		[]
 	);
 
+	function toggleSidebar() {
+		if ( isEditorSidebarOpened ) {
+			closeGeneralSidebar();
+		} else {
+			openGeneralSidebar( hasBlockSelected ? 'edit-post/block' : 'edit-post/document' );
+		}
+	}
+
+	// If in popover mode then ensure the sidebar is closed when the editor is first started. This is because the complimentary area status
+	// is saved to localStorage, and it might have been left open when in sidebar mode.
+	useEffect( () => {
+		if ( ! inspectorInSidebar ) {
+			closeGeneralSidebar();
+		}
+	}, [] );
+
 	useEffect( () => {
 		// Close the block inspector when no block is selected. Gutenberg gets a bit crashy otherwise
-		if ( isInspecting && ! isBlockSelected ) {
-			setInspecting( false );
+		if ( ! inspectorInSidebar && ! isEditing && ! isBlockSelected && isEditorSidebarOpened ) {
+			closeGeneralSidebar();
 		}
-	}, [ isBlockSelected ] );
+	}, [ isEditing ] );
+
+	// Inserter and Sidebars are mutually exclusive
+	useEffect( () => {
+		if ( isEditorSidebarOpened && ! isHugeViewport ) {
+			setIsInserterOpened( false );
+		}
+	}, [ isEditorSidebarOpened, isHugeViewport ] );
+	useEffect( () => {
+		if ( isInserterOpened && ( ! isHugeViewport || ! inspectorInSidebar ) ) {
+			closeGeneralSidebar();
+		}
+	}, [ isInserterOpened, isHugeViewport ] );
 
 	return (
 		<div className="edit-post-editor-regions__header" role="region" tabIndex={ -1 }>
@@ -64,22 +98,21 @@ const BlockEditorToolbar = ( props ) => {
 						<Button
 							icon={ cog }
 							label={ __( 'Settings' ) }
-							onClick={ () => setInspecting( ! isInspecting ) }
-							isPressed={ isInspecting }
-							aria-expanded={ isInspecting }
-							shortcut={ shortcut }
+							onClick={ toggleSidebar }
+							isPressed={ isEditorSidebarOpened }
+							aria-expanded={ isEditorSidebarOpened }
 							disabled={ editorMode === 'text' }
 						/>
 					) }
 
-					{ isInspecting && (
+					{ isEditorSidebarOpened && ! inspectorInSidebar && (
 						<Inspector documentInspector={ documentInspector } blockSelected={ isBlockSelected } />
 					) }
 
 					{ moreMenu && (
 						<MoreMenu
 							settings={ settings }
-							onClick={ () => setInspecting( false ) }
+							onClick={ () => closeGeneralSidebar() }
 							renderMoreMenu={ renderMoreMenu }
 						/>
 					) }

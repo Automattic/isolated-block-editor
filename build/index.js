@@ -23,6 +23,12 @@ Object.defineProperty(exports, "EditorLoaded", {
     return _editorLoaded["default"];
   }
 });
+Object.defineProperty(exports, "FooterSlot", {
+  enumerable: true,
+  get: function get() {
+    return _footerSlot["default"];
+  }
+});
 Object.defineProperty(exports, "ToolbarSlot", {
   enumerable: true,
   get: function get() {
@@ -77,6 +83,8 @@ var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/sl
 
 var _collaborativeEditing = _interopRequireDefault(require("./components/collaborative-editing"));
 
+var _footerSlot = _interopRequireDefault(require("./components/footer-slot"));
+
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 
 require("./store/edit-post");
@@ -112,6 +120,13 @@ import { createElement } from "@wordpress/element";
  */
 
 /**
+ * Sidebar settings
+ * @typedef SidebarSettings
+ * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
+ * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
+ */
+
+/**
  * Isolated Editor Settings
  * @typedef IsoSettings
  * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
@@ -119,6 +134,7 @@ import { createElement } from "@wordpress/element";
  * @property {{allowBlocks: string[], disallowBlocks: string[]}} [blocks] - Block restrictions
  * @property {string[]} [disallowEmbed] - List of embed names to remove
  * @property {object[]} [customStores] - Array of custom stores
+ * @property {boolean} [footer] - Show footer component
  * @property {ToolbarSettings} [toolbar] - Toolbar settings
  * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
@@ -126,6 +142,7 @@ import { createElement } from "@wordpress/element";
  * @property {Pattern[]} [patterns] - List of patterns
  * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
+ * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 
 /**

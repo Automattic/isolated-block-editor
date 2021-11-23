@@ -32,7 +32,7 @@ function getMenu(current, defaultMenu) {
 
 
 function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
 
   var iso = settings.iso,
       editor = settings.editor;
@@ -66,6 +66,11 @@ function applyDefaultSettings(settings) {
         // @ts-ignore */}
         selectorTool: false
       }, (_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {}),
+      sidebar: _objectSpread({
+        inserter: false,
+        inspector: false
+      }, (_iso$sidebar = iso === null || iso === void 0 ? void 0 : iso.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {}),
+      footer: (_iso$footer = iso === null || iso === void 0 ? void 0 : iso.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,
       // Nothing appears in the 'more menu'
       moreMenu: getMenu(iso === null || iso === void 0 ? void 0 : iso.moreMenu, _objectSpread({
         editor: false,

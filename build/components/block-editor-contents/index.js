@@ -25,8 +25,6 @@ var _blocks = require("@wordpress/blocks");
 
 var _blockEditor = require("@wordpress/block-editor");
 
-var _blockEditorToolbar = _interopRequireDefault(require("../block-editor-toolbar"));
-
 var _blockEditor2 = _interopRequireDefault(require("../block-editor"));
 
 var _editorContent = _interopRequireDefault(require("./editor-content"));
@@ -160,13 +158,11 @@ function BlockEditorContents(props) {
     useSubRegistry: false,
     selection: selection,
     settings: settings.editor
-  }, createElement(_blockEditorToolbar["default"], {
+  }, createElement(_blockEditor2["default"], {
+    isEditing: isEditing,
     editorMode: editorMode,
     settings: settings,
     renderMoreMenu: renderMoreMenu
-  }), createElement(_blockEditor2["default"], {
-    isEditing: isEditing,
-    editorMode: editorMode
   }, children), createElement(_components.Popover.Slot, null));
 }
 

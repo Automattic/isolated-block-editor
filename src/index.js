@@ -27,6 +27,7 @@ import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
 import CollaborativeEditing from './components/collaborative-editing';
+import FooterSlot from './components/footer-slot';
 
 // Export library components
 import EditorLoaded from './components/editor-loaded';
@@ -60,6 +61,13 @@ import './style.scss';
  */
 
 /**
+ * Sidebar settings
+ * @typedef SidebarSettings
+ * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
+ * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
+ */
+
+/**
  * Isolated Editor Settings
  * @typedef IsoSettings
  * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
@@ -67,6 +75,7 @@ import './style.scss';
  * @property {{allowBlocks: string[], disallowBlocks: string[]}} [blocks] - Block restrictions
  * @property {string[]} [disallowEmbed] - List of embed names to remove
  * @property {object[]} [customStores] - Array of custom stores
+ * @property {boolean} [footer] - Show footer component
  * @property {ToolbarSettings} [toolbar] - Toolbar settings
  * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
@@ -74,6 +83,7 @@ import './style.scss';
  * @property {Pattern[]} [patterns] - List of patterns
  * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
+ * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 
 /**
@@ -202,4 +212,4 @@ function IsolatedBlockEditor( props ) {
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing };
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };

@@ -5,10 +5,16 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
-import { NavigableToolbar, BlockNavigationDropdown, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
+import {
+	NavigableToolbar,
+	BlockNavigationDropdown,
+	__experimentalLibrary as Library,
+	ToolSelector,
+} from '@wordpress/block-editor';
 import { TableOfContents } from '@wordpress/editor';
-import { plus } from '@wordpress/icons';
+import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
+import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 
 /**
  * Internal dependencies
@@ -22,7 +28,7 @@ const preventDefault = ( event ) => {
 
 function HeaderToolbar( props ) {
 	const inserterButton = useRef();
-	const { setIsInserterOpened } = useDispatch( 'isolated/editor' );
+	const { setIsInserterOpened, setIsListViewOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const {
 		hasFixedToolbar,
@@ -32,8 +38,12 @@ function HeaderToolbar( props ) {
 		showIconLabels,
 		previewDeviceType,
 		isInserterOpened,
+		isListViewOpen,
+		listViewShortcut
 	} = useSelect( ( select ) => {
 		const { hasInserterItems, getBlockRootClientId, getBlockSelectionEnd } = select( 'core/block-editor' );
+		const { isListViewOpened } = select( 'isolated/editor' );
+		const { getShortcutRepresentation } = select( keyboardShortcutsStore );
 
 		return {
 			hasFixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
@@ -43,15 +53,20 @@ function HeaderToolbar( props ) {
 				select( 'isolated/editor' ).getEditorMode() === 'visual' &&
 				select( 'core/editor' ).getEditorSettings().richEditingEnabled &&
 				hasInserterItems( getBlockRootClientId( getBlockSelectionEnd() ) ),
+			isListViewOpen: isListViewOpened(),
 			isTextModeEnabled: select( 'isolated/editor' ).getEditorMode() === 'text',
 			previewDeviceType: 'Desktop',
 			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
 			showIconLabels: false, // Not implemented yet
+			listViewShortcut: getShortcutRepresentation(
+				'core/edit-post/toggle-list-view'
+			),
 		};
 	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const isWideViewport = useViewportMatch( 'wide' );
 	const { inserter, toc, navigation, undo: undoSetting, selectorTool } = props.settings.iso.toolbar;
+	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
 	const undo = undoSetting && ! hasPeers;
 	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
@@ -68,6 +83,11 @@ function HeaderToolbar( props ) {
 			setIsInserterOpened( true );
 		}
 	}, [ isInserterOpened, setIsInserterOpened ] );
+
+	const toggleListView = useCallback(
+		() => setIsListViewOpened( ! isListViewOpen ),
+		[ setIsListViewOpened, isListViewOpen ]
+	);
 
 	return (
 		<NavigableToolbar className="edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>
@@ -91,7 +111,7 @@ function HeaderToolbar( props ) {
 						/>
 					) }
 
-					{ isInserterOpened && (
+					{ isInserterOpened && ! inserterInSidebar && (
 						<Popover
 							position="bottom right"
 							onClose={ () => setIsInserterOpened( false ) }
@@ -124,7 +144,23 @@ function HeaderToolbar( props ) {
 							variant={ showIconLabels ? 'tertiary' : undefined }
 						/>
 					) }
-					{ navigation && <ToolbarItem as={ BlockNavigationDropdown } isDisabled={ isTextModeEnabled } /> }
+					{ navigation && ! inserterInSidebar && (
+						<ToolbarItem as={ BlockNavigationDropdown } isDisabled={ isTextModeEnabled } />
+					) }
+					{ navigation && inserterInSidebar && (
+						<ToolbarItem
+							as={ Button }
+							className="edit-post-header-toolbar__list-view-toggle"
+							icon={ listView }
+							disabled={ isTextModeEnabled }
+							isPressed={ isListViewOpen }
+							/* translators: button label text should, if possible, be under 16 characters. */
+							label={ __( 'List View' ) }
+							onClick={ toggleListView }
+							shortcut={ listViewShortcut }
+							showTooltip={ ! showIconLabels }
+						/>
+					) }
 					{ toc && (
 						<ToolbarItem
 							as={ TableOfContents }

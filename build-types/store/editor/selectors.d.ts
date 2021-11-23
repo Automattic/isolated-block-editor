@@ -67,14 +67,6 @@ export function isInserterOpened(state: {
     editor: EditorState;
 }): boolean;
 /**
- * Is the block inspector open?
- * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
- */
-export function isInspecting(state: {
-    editor: EditorState;
-}): boolean;
-/**
  * Are we editing this editor?
  * @param {{editor: EditorState}} state - Current state
  * @returns {boolean}
@@ -90,6 +82,8 @@ export function isEditing(state: {
 export function getPatterns(state: {
     editor: EditorState;
 }): Pattern[];
+export function isListViewOpened(state: any): any;
+export const isEditorSidebarOpened: any;
 export type IsoSettings = import('../../index').IsoSettings;
 export type EditorMode = import('./reducer').EditorMode;
 export type Pattern = import('./reducer').Pattern;

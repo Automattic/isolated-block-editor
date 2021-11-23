@@ -26,13 +26,13 @@ export type EditorState = {
      */
     editorMode: EditorMode;
     /**
-     * - whether the inserter is open
+     * - whether the inserter is open.
      */
     isInserterOpened: boolean;
     /**
-     * - whether the block inspector is open
+     * - whether the list view is open.
      */
-    isInspecting: boolean;
+    isListViewOpened: boolean;
     /**
      * - array of patterns.
      */
@@ -73,13 +73,13 @@ declare function reducer(state: EditorState | undefined, action: any): {
      */
     editorMode: EditorMode;
     /**
-     * - whether the inserter is open
+     * - whether the inserter is open.
      */
     isInserterOpened: boolean;
     /**
-     * - whether the block inspector is open
+     * - whether the list view is open.
      */
-    isInspecting: boolean;
+    isListViewOpened: boolean;
     /**
      * - is this editor being used?
      */
@@ -90,11 +90,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
     isReady: boolean;
 } | {
     editorMode: any;
-    isInspecting: boolean;
     /**
-     * - whether the inserter is open
+     * - whether the inserter is open.
      */
     isInserterOpened: boolean;
+    /**
+     * - whether the list view is open.
+     */
+    isListViewOpened: boolean;
     /**
      * - array of patterns.
      */
@@ -125,7 +128,8 @@ declare function reducer(state: EditorState | undefined, action: any): {
     settings: IsoSettings;
 } | {
     isInserterOpened: any;
-    isInspecting: boolean;
+    isInspectorOpened: boolean;
+    isListViewOpened: boolean;
     /**
      * - whether in visual or code editing mode.
      */
@@ -159,8 +163,48 @@ declare function reducer(state: EditorState | undefined, action: any): {
      */
     settings: IsoSettings;
 } | {
-    isInspecting: any;
+    isInspectorOpened: any;
+    isListViewOpened: boolean;
+    /**
+     * - whether in visual or code editing mode.
+     */
+    editorMode: EditorMode;
+    /**
+     * - whether the inserter is open.
+     */
     isInserterOpened: boolean;
+    /**
+     * - array of patterns.
+     */
+    patterns: Pattern[];
+    /**
+     * - current pattern name.
+     */
+    currentPattern: string | null;
+    /**
+     * - content to ignore when saving.
+     */
+    ignoredContent: string[];
+    /**
+     * - the Gutenberg template
+     */
+    gutenbergTemplate: object | null;
+    /**
+     * - is this editor being used?
+     */
+    isEditing: boolean;
+    /**
+     * - is the editor ready?
+     */
+    isReady: boolean;
+    /**
+     * - editor settings
+     */
+    settings: IsoSettings;
+} | {
+    isInserterOpened: boolean;
+    isInspectorOpened: boolean;
+    isListViewOpened: any;
     /**
      * - whether in visual or code editing mode.
      */
@@ -195,15 +239,18 @@ declare function reducer(state: EditorState | undefined, action: any): {
     settings: IsoSettings;
 } | {
     isEditing: any;
-    isInspecting: boolean;
     /**
      * - whether in visual or code editing mode.
      */
     editorMode: EditorMode;
     /**
-     * - whether the inserter is open
+     * - whether the inserter is open.
      */
     isInserterOpened: boolean;
+    /**
+     * - whether the list view is open.
+     */
+    isListViewOpened: boolean;
     /**
      * - array of patterns.
      */
@@ -235,13 +282,13 @@ declare function reducer(state: EditorState | undefined, action: any): {
      */
     editorMode: EditorMode;
     /**
-     * - whether the inserter is open
+     * - whether the inserter is open.
      */
     isInserterOpened: boolean;
     /**
-     * - whether the block inspector is open
+     * - whether the list view is open.
      */
-    isInspecting: boolean;
+    isListViewOpened: boolean;
     /**
      * - array of patterns.
      */

@@ -19,10 +19,11 @@ import './style.scss';
  * @param {Function} props.onAvatarClick
  */
 
-export function CollaborativeEditingAvatars({
-  peers,
-  onAvatarClick
-}) {
+export function CollaborativeEditingAvatars(_ref) {
+  let {
+    peers,
+    onAvatarClick
+  } = _ref;
   const MAX_AVATAR_COUNT = 4;
   const shouldOverflow = peers.length > MAX_AVATAR_COUNT;
   const actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
@@ -36,10 +37,11 @@ export function CollaborativeEditingAvatars({
     peers: peers === null || peers === void 0 ? void 0 : peers.slice(actualAvatarCount)
   }));
 }
-export function CollaborativeEditingAvatar({
-  peer,
-  onAvatarClick
-}) {
+export function CollaborativeEditingAvatar(_ref2) {
+  let {
+    peer,
+    onAvatarClick
+  } = _ref2;
   const [isVisible, setIsVisible] = useState(false);
   return createElement("button", {
     className: "iso-editor-collab-avatars__avatar-btn",
@@ -62,9 +64,10 @@ export function CollaborativeEditingAvatar({
     className: "iso-editor-collab-avatars__name-initial"
   }, peer.name.charAt(0)));
 }
-export function CollaborativeEditingAvatarsOverflow({
-  peers
-}) {
+export function CollaborativeEditingAvatarsOverflow(_ref3) {
+  let {
+    peers
+  } = _ref3;
   const MAX_NAME_COUNT = 20;
   const [isVisible, setIsVisible] = useState(false);
 

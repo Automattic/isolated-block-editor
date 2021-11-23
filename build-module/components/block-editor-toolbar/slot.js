@@ -17,9 +17,10 @@ const {
  * @returns object
  */
 
-const ToolbarSlot = ({
-  children
-}) => {
+const ToolbarSlot = _ref => {
+  let {
+    children
+  } = _ref;
   return createElement(Fill, null, children);
 };
 

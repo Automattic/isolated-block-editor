@@ -24,12 +24,13 @@ import OptionToggle from '../toggle-option';
  * @param {BlockEditorSettings} props.settings - Settings
  */
 
-function WritingMenu({
-  onClose,
-  settings
-}) {
+function WritingMenu(_ref) {
   var _settings$iso;
 
+  let {
+    onClose,
+    settings
+  } = _ref;
   const {
     preview,
     fullscreen,

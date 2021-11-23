@@ -7,12 +7,13 @@ const encodeArray = array => array.toString();
 
 const decodeArray = string => new Uint8Array(string.split(','));
 
-export function createDocument({
-  identity,
-  applyDataChanges,
-  getData,
-  sendMessage
-}) {
+export function createDocument(_ref) {
+  let {
+    identity,
+    applyDataChanges,
+    getData,
+    sendMessage
+  } = _ref;
   const doc = new yjs.Doc();
   let state = 'off';
   let listeners = [];
@@ -82,12 +83,14 @@ export function createDocument({
       this.applyDataChanges(data);
     },
 
-    receiveMessage({
-      protocol,
-      messageType,
-      origin,
-      ...content
-    }) {
+    receiveMessage(_ref2) {
+      let {
+        protocol,
+        messageType,
+        origin,
+        ...content
+      } = _ref2;
+
       if (protocol !== 'yjs1') {
         throw 'wrong protocol';
       }

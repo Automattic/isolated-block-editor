@@ -15,7 +15,8 @@ import PostTextEditor from './post-text-editor';
  * The original is not exported, and contains code for post titles
  */
 
-function TextEditor({}) {
+function TextEditor(_ref) {
+  let {} = _ref;
   return createElement("div", {
     className: "edit-post-text-editor"
   }, createElement("div", {

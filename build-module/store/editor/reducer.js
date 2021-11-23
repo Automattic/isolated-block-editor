@@ -23,8 +23,8 @@ const getPattern = (patterns, currentPattern) => patterns && patterns.find(item 
  *
  * @typedef EditorState
  * @property {EditorMode} editorMode - whether in visual or code editing mode.
- * @property {boolean} isInserterOpened - whether the inserter is open
- * @property {boolean} isInspecting - whether the block inspector is open
+ * @property {boolean} isInserterOpened - whether the inserter is open.
+ * @property {boolean} isListViewOpened - whether the list view is open.
  * @property {Pattern[]} patterns - array of patterns.
  * @property {string|null} currentPattern - current pattern name.
  * @property {string[]} ignoredContent - content to ignore when saving.
@@ -42,7 +42,7 @@ const DEFAULT_STATE = {
   editorMode: 'visual',
   isInserterOpened: false,
   isEditing: false,
-  isInspecting: false,
+  isListViewOpened: false,
   isReady: false,
   patterns: [],
   currentPattern: null,
@@ -65,6 +65,10 @@ const DEFAULT_STATE = {
       navigation: false,
       documentInspector: false,
       selectorTool: false
+    },
+    sidebar: {
+      inspector: false,
+      inserter: false
     },
     moreMenu: {
       editor: false,
@@ -107,7 +111,10 @@ function getIgnoredContent(patterns, currentPattern, gutenbergTemplate) {
   return ignored;
 }
 
-const reducer = (state = DEFAULT_STATE, action) => {
+const reducer = function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
   switch (action.type) {
     case 'SETUP_EDITOR':
       {
@@ -129,32 +136,37 @@ const reducer = (state = DEFAULT_STATE, action) => {
     case 'SET_CURRENT_PATTERN':
       return { ...state,
         currentPattern: action.pattern,
-        ignoredContent: getIgnoredContent(state.patterns, action.pattern, state.gutenbergTemplate),
-        isInspecting: false
+        ignoredContent: getIgnoredContent(state.patterns, action.pattern, state.gutenbergTemplate)
       };
 
     case 'SET_EDITOR_MODE':
       return { ...state,
-        editorMode: action.editorMode,
-        isInspecting: false
+        editorMode: action.editorMode
       };
 
     case 'SET_INSERTER_OPEN':
       return { ...state,
         isInserterOpened: action.isOpen,
-        isInspecting: false
+        isInspectorOpened: false,
+        isListViewOpened: false
       };
 
     case 'SET_INSPECTOR_OPEN':
       return { ...state,
-        isInspecting: action.isOpen,
-        isInserterOpened: false
+        isInspectorOpened: action.isOpen,
+        isListViewOpened: false
+      };
+
+    case 'SET_LISTVIEW_OPEN':
+      return { ...state,
+        isInserterOpened: false,
+        isInspectorOpened: false,
+        isListViewOpened: action.isOpen
       };
 
     case 'SET_EDITING':
       return { ...state,
-        isEditing: action.isEditing,
-        isInspecting: false
+        isEditing: action.isEditing
       };
 
     case 'SET_EDITOR_READY':
