@@ -91,7 +91,7 @@
 		text-decoration: none;
 	}
 
-	.components-popover__content button {
+	.components-popover__content button:not(.is-active) {
 		font-weight: normal;
 		text-transform: none;
 		font-family: Arial;
