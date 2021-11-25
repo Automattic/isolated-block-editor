@@ -16,6 +16,7 @@ import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfac
 import { __, _x } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -121,6 +122,17 @@ function BlockEditor( props ) {
 
 		return null;
 	};
+
+	// For back-compat with older iso-editor
+	useEffect( () => {
+		if ( isFullscreenActive ) {
+			// @ts-ignore
+			document.querySelector( 'html' ).classList.add( 'is-fullscreen-mode' );
+		} else {
+			// @ts-ignore
+			document.querySelector( 'html' ).classList.remove( 'is-fullscreen-mode' );
+		}
+	}, [ isFullscreenActive ] );
 
 	return (
 		<>
