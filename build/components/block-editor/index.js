@@ -29,6 +29,8 @@ var _i18n = require("@wordpress/i18n");
 
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
 
+var _element = require("@wordpress/element");
+
 var _sidebar = _interopRequireDefault(require("./sidebar"));
 
 var _visualEditor = _interopRequireDefault(require("./visual-editor"));
@@ -164,8 +166,18 @@ function BlockEditor(props) {
     }
 
     return null;
-  };
+  }; // For back-compat with older iso-editor
 
+
+  (0, _element.useEffect)(function () {
+    if (isFullscreenActive) {
+      // @ts-ignore
+      document.querySelector('html').classList.add('is-fullscreen-mode');
+    } else {
+      // @ts-ignore
+      document.querySelector('html').classList.remove('is-fullscreen-mode');
+    }
+  }, [isFullscreenActive]);
   return createElement(Fragment, null, createElement(_sidebar["default"], {
     hasDocument: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : (_settings$iso4$toolba = _settings$iso4.toolbar) === null || _settings$iso4$toolba === void 0 ? void 0 : _settings$iso4$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
   }), createElement(_interface.FullscreenMode, {

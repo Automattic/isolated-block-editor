@@ -10,6 +10,11 @@
 		left: auto;
 	}
 
+	.interface-interface-skeleton__editor,
+	.interface-interface-skeleton__content {
+		width: 100%;
+	}
+
 	.is-mode__text .edit-post-text-editor__body {
 		margin-left: 0;
 		margin-right: 0;

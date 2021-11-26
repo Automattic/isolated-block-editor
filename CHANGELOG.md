@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Restore previous `is-fullscreen-mode` behaviour
+- Set a max width on interface skeleton to help stop wide content pushing outside of the editor
+- Change how inserter is closed so it works better with pattern explorer
+
 ## [2.7.0] - 2021-11-23
 
 ### Breaking changes
