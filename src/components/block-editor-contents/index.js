@@ -9,7 +9,7 @@ import isPromise from 'is-promise';
 import { Popover } from '@wordpress/components';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { useEffect } from '@wordpress/element';
+import { useLayoutEffect } from '@wordpress/element';
 import { parse, rawHandler } from '@wordpress/blocks';
 
 /**
@@ -59,6 +59,7 @@ async function getInitialContent( settings, loader ) {
  * @param {object[]} props.blocks
  * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
  * @param {OnUpdate} props.updateBlocksWithUndo - Callback to update blocks
+ * @param {*} props.clearHistory - Callback to clear history
  * @param {boolean} props.isEditing - Are we editing in this editor?
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {object} props.children - Child components
@@ -68,17 +69,19 @@ async function getInitialContent( settings, loader ) {
  * @param {OnLoad} props.onLoad - Load initial blocks
  */
 function BlockEditorContents( props ) {
-	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, selection, isEditing, editorMode } = props;
+	const { blocks, updateBlocksWithoutUndo, updateBlocksWithUndo, clearHistory, selection, isEditing, editorMode } = props;
 	const { children, settings, renderMoreMenu, onLoad } = props;
 
 	// Set initial content, if we have any, but only if there is no existing data in the editor (from elsewhere)
-	useEffect( () => {
+	useLayoutEffect( () => {
 		const loadData = async () => {
 			const initialContent = await getInitialContent( settings, onLoad );
 
 			if ( initialContent.length > 0 && ( ! blocks || blocks.length === 0 ) ) {
 				updateBlocksWithoutUndo( initialContent );
 			}
+
+			clearHistory();
 		};
 
 		loadData();
@@ -119,11 +122,12 @@ export default compose( [
 		};
 	} ),
 	withDispatch( ( dispatch ) => {
-		const { updateBlocksWithUndo, updateBlocksWithoutUndo } = dispatch( 'isolated/editor' );
+		const { updateBlocksWithUndo, updateBlocksWithoutUndo, clearHistory } = dispatch( 'isolated/editor' );
 
 		return {
 			updateBlocksWithUndo,
 			updateBlocksWithoutUndo,
+			clearHistory,
 		};
 	} ),
 ] )( BlockEditorContents );

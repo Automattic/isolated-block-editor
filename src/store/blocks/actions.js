@@ -7,6 +7,9 @@ const actions = {
 	redo() {
 		return ActionCreators.redo();
 	},
+	clearHistory() {
+		return ActionCreators.clearHistory();
+	},
 	/**
 	 * Update blocks without undo history
 	 * @param {object[]} blocks
