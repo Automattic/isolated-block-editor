@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking changes
+
+- Renamed collab-related selectors and action creators for clarity:
+  - `getPeers` to `getCollabPeers`
+  - `hasPeers` to `hasCollabPeers`
+  - `setAvailablePeers` to `setAvailableCollabPeers`
+  - `setPeerSelection` to `setCollabPeerSelection`
+
+### Added
+
+- Smart undo/redo functionality in collab mode. Each peer will only be able to undo their own edits and not of others, with the current limitation being that they are editing separate blocks.
+
 ## [2.8.1] - 2021-12-06
 
 ### Fixed
