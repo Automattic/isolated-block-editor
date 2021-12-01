@@ -41,6 +41,13 @@ function EditorSetup( props ) {
 
 	// This is the initial setup
 	useEffect( () => {
+		// Ensure we always have a __editorAssets value - Gutenberg hardcoded assets
+		// @ts-ignore
+		if ( typeof window.__editorAssets === undefined ) {
+			// @ts-ignore
+			window.__editorAssets = { styles: '', scripts: '' }
+		}
+
 		// Setup the Isolated Editor & Gutenberg
 		setupEditor( currentSettings );
 
