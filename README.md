@@ -282,6 +282,17 @@ Add any components to customise the editor. These components will have access to
 
 Custom behaviour can be added through child components. These components will have access to the `isolated/editor` store, as well as to the editor instance versions of `core/block-editor`.
 
+### Gutenberg requirements
+
+Gutenberg uses iframes to display various parts of the editor, and it uses the global `window.__editorAssets` to store styles and scripts that will be added to this iframe. You may need to also
+use this.
+
+The default is:
+
+`window.__editorAssets = { styles: '', scripts: '' }`
+
+The values should be full `<link>` and `<script>` tags.
+
 ## Releasing
 
 To make a release, ensure you are on the trunk branch. Do not update the version number in `package.json` - the release process will do this for you. Then run:
