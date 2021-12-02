@@ -14,7 +14,6 @@ import {
 	__unstableUseTypewriter as useTypewriter,
 	__unstableUseClipboardHandler as useClipboardHandler,
 	__unstableUseTypingObserver as useTypingObserver,
-	__unstableUseCanvasClickRedirect as useCanvasClickRedirect,
 	__experimentalBlockSettingsMenuFirstItem,
 	BlockTools,
 } from '@wordpress/block-editor';
@@ -31,7 +30,6 @@ const VisualEditor = () => {
 	const mergedRefs = useMergeRefs( [
 		ref,
 		useClipboardHandler(),
-		useCanvasClickRedirect(),
 		useTypewriter(),
 		useBlockSelectionClearer(),
 		useTypingObserver(),

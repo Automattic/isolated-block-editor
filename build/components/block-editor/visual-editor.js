@@ -32,7 +32,7 @@ import { createElement } from "@wordpress/element";
  */
 var VisualEditor = function VisualEditor() {
   var ref = (0, _element.useRef)();
-  var mergedRefs = (0, _compose.useMergeRefs)([ref, (0, _blockEditor.__unstableUseClipboardHandler)(), (0, _blockEditor.__unstableUseCanvasClickRedirect)(), (0, _blockEditor.__unstableUseTypewriter)(), (0, _blockEditor.__unstableUseBlockSelectionClearer)(), (0, _blockEditor.__unstableUseTypingObserver)()]);
+  var mergedRefs = (0, _compose.useMergeRefs)([ref, (0, _blockEditor.__unstableUseClipboardHandler)(), (0, _blockEditor.__unstableUseTypewriter)(), (0, _blockEditor.__unstableUseBlockSelectionClearer)(), (0, _blockEditor.__unstableUseTypingObserver)()]);
   return createElement(_blockEditor.BlockTools, {
     __unstableContentRef: ref,
     className: "edit-post-visual-editor"

@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.2] - 2021-12-02
+
+### Fixed
+
+- Fix crash with Gutenberg 12.1.0
+- Updated all package versions to resolve a dependency problem
+
 ## [2.7.1] - 2021-11-26
 
 ### Fixed
