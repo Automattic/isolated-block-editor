@@ -48,6 +48,7 @@ var getPattern = function getPattern(patterns, currentPattern) {
  * @property {boolean} isEditing - is this editor being used?
  * @property {boolean} isReady - is the editor ready?
  * @property {IsoSettings} settings - editor settings
+ * @property {string} deviceType - current device type
  */
 
 /** @type EditorState */
@@ -64,6 +65,7 @@ var DEFAULT_STATE = {
   currentPattern: null,
   gutenbergTemplate: null,
   ignoredContent: [],
+  deviceType: 'Desktop',
   settings: {
     preferencesKey: null,
     persistenceKey: null,
@@ -185,6 +187,11 @@ var reducer = function reducer() {
     case 'SET_EDITOR_READY':
       return _objectSpread(_objectSpread({}, state), {}, {
         isReady: action.isReady
+      });
+
+    case 'SET_DEVICE_TYPE':
+      return _objectSpread(_objectSpread({}, state), {}, {
+        deviceType: action.deviceType
       });
   }
 

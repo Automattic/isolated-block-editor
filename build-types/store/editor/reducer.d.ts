@@ -61,6 +61,10 @@ export type EditorState = {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 };
 declare function reducer(state: EditorState | undefined, action: any): {
     patterns: any;
@@ -88,6 +92,10 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - is the editor ready?
      */
     isReady: boolean;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 } | {
     editorMode: any;
     /**
@@ -126,6 +134,10 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 } | {
     isInserterOpened: any;
     isInspectorOpened: boolean;
@@ -162,6 +174,10 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 } | {
     isInspectorOpened: any;
     isListViewOpened: boolean;
@@ -201,6 +217,10 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 } | {
     isInserterOpened: boolean;
     isInspectorOpened: boolean;
@@ -237,6 +257,10 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 } | {
     isEditing: any;
     /**
@@ -275,6 +299,10 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
 } | {
     isReady: any;
     /**
@@ -309,6 +337,52 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - is this editor being used?
      */
     isEditing: boolean;
+    /**
+     * - editor settings
+     */
+    settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
+} | {
+    deviceType: any;
+    /**
+     * - whether in visual or code editing mode.
+     */
+    editorMode: EditorMode;
+    /**
+     * - whether the inserter is open.
+     */
+    isInserterOpened: boolean;
+    /**
+     * - whether the list view is open.
+     */
+    isListViewOpened: boolean;
+    /**
+     * - array of patterns.
+     */
+    patterns: Pattern[];
+    /**
+     * - current pattern name.
+     */
+    currentPattern: string | null;
+    /**
+     * - content to ignore when saving.
+     */
+    ignoredContent: string[];
+    /**
+     * - the Gutenberg template
+     */
+    gutenbergTemplate: object | null;
+    /**
+     * - is this editor being used?
+     */
+    isEditing: boolean;
+    /**
+     * - is the editor ready?
+     */
+    isReady: boolean;
     /**
      * - editor settings
      */

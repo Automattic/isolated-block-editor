@@ -32,6 +32,7 @@ const getPattern = (patterns, currentPattern) => patterns && patterns.find(item 
  * @property {boolean} isEditing - is this editor being used?
  * @property {boolean} isReady - is the editor ready?
  * @property {IsoSettings} settings - editor settings
+ * @property {string} deviceType - current device type
  */
 
 /** @type EditorState */
@@ -48,6 +49,7 @@ const DEFAULT_STATE = {
   currentPattern: null,
   gutenbergTemplate: null,
   ignoredContent: [],
+  deviceType: 'Desktop',
   settings: {
     preferencesKey: null,
     persistenceKey: null,
@@ -172,6 +174,11 @@ const reducer = function () {
     case 'SET_EDITOR_READY':
       return { ...state,
         isReady: action.isReady
+      };
+
+    case 'SET_DEVICE_TYPE':
+      return { ...state,
+        deviceType: action.deviceType
       };
   }
 

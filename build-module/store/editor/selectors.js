@@ -139,7 +139,22 @@ export function isEditing(state) {
 export function getPatterns(state) {
   return state.editor.patterns;
 }
+/**
+ * Determine if the list viewer is open
+ * @param {{editor: EditorState}} state - Current state
+ * @returns {boolean}
+ */
+
 export function isListViewOpened(state) {
   return state.editor.isListViewOpened;
+}
+/**
+ * Return current device type
+ * @param {{editor: EditorState}} state - Current state
+ * @returns {string}
+ */
+
+export function getPreviewDeviceType(state) {
+  return state.editor.deviceType;
 }
 //# sourceMappingURL=selectors.js.map

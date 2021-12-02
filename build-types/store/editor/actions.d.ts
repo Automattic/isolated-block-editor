@@ -83,6 +83,22 @@ declare namespace actions {
         isOpen: any;
     };
     /**
+     * Set the current device type
+     * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
+     */
+    function setDeviceType(deviceType: string): {
+        type: string;
+        deviceType: string;
+    };
+    /**
+     * Set the current device type
+     * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
+     */
+    function setDeviceType(deviceType: string): {
+        type: string;
+        deviceType: string;
+    };
+    /**
      * Mark this editor as in-use or not
      * @param {boolean} isEditing
      */

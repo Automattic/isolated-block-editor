@@ -87,6 +87,8 @@ function BlockEditor(props) {
     settings,
     renderMoreMenu
   } = props;
+  const styles = {}; // TODO: do we need hasThemeStyles support here?
+
   const isMobileViewport = useViewportMatch('medium', '<');
   const inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$sidebar = _settings$iso.sidebar) === null || _settings$iso$sidebar === void 0 ? void 0 : _settings$iso$sidebar.inspector) || false;
   const inserterInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inserter) || false;
@@ -173,7 +175,9 @@ function BlockEditor(props) {
         [rawShortcut.primary('z')]: undo,
         [rawShortcut.primaryShift('z')]: redo
       }
-    }, editorMode === 'visual' && createElement(VisualEditor, null), editorMode === 'text' && createElement(TextEditor, null)), children),
+    }, editorMode === 'visual' && createElement(VisualEditor, {
+      styles: styles
+    }), editorMode === 'text' && createElement(TextEditor, null)), children),
     footer: showFooter && createElement(Footer, {
       editorMode: editorMode
     }),

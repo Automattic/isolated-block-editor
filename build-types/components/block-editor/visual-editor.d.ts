@@ -4,5 +4,7 @@ export default VisualEditor;
  *
  * The original is not exported, and contains code for post titles
  */
-declare function VisualEditor(): JSX.Element;
+declare function VisualEditor({ styles }: {
+    styles: any;
+}): JSX.Element;
 //# sourceMappingURL=visual-editor.d.ts.map

@@ -82,7 +82,22 @@ export function isEditing(state: {
 export function getPatterns(state: {
     editor: EditorState;
 }): Pattern[];
-export function isListViewOpened(state: any): any;
+/**
+ * Determine if the list viewer is open
+ * @param {{editor: EditorState}} state - Current state
+ * @returns {boolean}
+ */
+export function isListViewOpened(state: {
+    editor: EditorState;
+}): boolean;
+/**
+ * Return current device type
+ * @param {{editor: EditorState}} state - Current state
+ * @returns {string}
+ */
+export function getPreviewDeviceType(state: {
+    editor: EditorState;
+}): string;
 export const isEditorSidebarOpened: any;
 export type IsoSettings = import('../../index').IsoSettings;
 export type EditorMode = import('./reducer').EditorMode;
