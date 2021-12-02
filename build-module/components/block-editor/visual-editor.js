@@ -8,7 +8,7 @@ import React from 'react';
  * WordPress dependencies
  */
 
-import { BlockList, WritingFlow, ObserveTyping, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __unstableUseCanvasClickRedirect as useCanvasClickRedirect, __experimentalBlockSettingsMenuFirstItem, BlockTools } from '@wordpress/block-editor';
+import { BlockList, WritingFlow, ObserveTyping, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __experimentalBlockSettingsMenuFirstItem, BlockTools } from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
 import { useMergeRefs } from '@wordpress/compose';
 /**
@@ -19,7 +19,7 @@ import { useMergeRefs } from '@wordpress/compose';
 
 const VisualEditor = () => {
   const ref = useRef();
-  const mergedRefs = useMergeRefs([ref, useClipboardHandler(), useCanvasClickRedirect(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
+  const mergedRefs = useMergeRefs([ref, useClipboardHandler(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
   return createElement(BlockTools, {
     __unstableContentRef: ref,
     className: "edit-post-visual-editor"
