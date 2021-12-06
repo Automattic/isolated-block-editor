@@ -100,9 +100,11 @@ function applyDefaultSettings(settings) {
       maxUploadFileSize: 0,
       // @ts-ignore */}
       allowedMimeTypes: [],
-      styles: {
+      styles: [{
+        baseURL: '',
+        __unstableType: 'theme',
         css: "body { font-family: 'Noto Serif' }"
-      },
+      }],
       imageSizes: [],
       richEditingEnabled: true,
       codeEditingEnabled: false,

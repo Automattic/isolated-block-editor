@@ -10,6 +10,7 @@ exports.getEditorSettings = getEditorSettings;
 exports.getIgnoredContent = getIgnoredContent;
 exports.getNamedPattern = getNamedPattern;
 exports.getPatterns = getPatterns;
+exports.getPreviewDeviceType = getPreviewDeviceType;
 exports.isEditing = isEditing;
 exports.isEditorReady = isEditorReady;
 exports.isEditorSidebarOpened = void 0;
@@ -175,8 +176,24 @@ function isEditing(state) {
 function getPatterns(state) {
   return state.editor.patterns;
 }
+/**
+ * Determine if the list viewer is open
+ * @param {{editor: EditorState}} state - Current state
+ * @returns {boolean}
+ */
+
 
 function isListViewOpened(state) {
   return state.editor.isListViewOpened;
+}
+/**
+ * Return current device type
+ * @param {{editor: EditorState}} state - Current state
+ * @returns {string}
+ */
+
+
+function getPreviewDeviceType(state) {
+  return state.editor.deviceType;
 }
 //# sourceMappingURL=selectors.js.map

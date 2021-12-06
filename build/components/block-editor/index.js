@@ -114,6 +114,8 @@ function BlockEditor(props) {
       redo = props.redo,
       settings = props.settings,
       renderMoreMenu = props.renderMoreMenu;
+  var styles = {}; // TODO: do we need hasThemeStyles support here?
+
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
   var inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$sidebar = _settings$iso.sidebar) === null || _settings$iso$sidebar === void 0 ? void 0 : _settings$iso$sidebar.inspector) || false;
   var inserterInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inserter) || false;
@@ -198,7 +200,9 @@ function BlockEditor(props) {
     content: createElement(Fragment, null, createElement(_editor.EditorNotices, null), isEditing && createElement(Fragment, null, createElement(_blockEditor.BlockEditorKeyboardShortcuts, null), createElement(_blockEditor.BlockEditorKeyboardShortcuts.Register, null)), createElement(_components.KeyboardShortcuts, {
       bindGlobal: false,
       shortcuts: (_ref = {}, (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primary('z'), undo), (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primaryShift('z'), redo), _ref)
-    }, editorMode === 'visual' && createElement(_visualEditor["default"], null), editorMode === 'text' && createElement(_textEditor["default"], null)), children),
+    }, editorMode === 'visual' && createElement(_visualEditor["default"], {
+      styles: styles
+    }), editorMode === 'text' && createElement(_textEditor["default"], null)), children),
     footer: showFooter && createElement(_footer["default"], {
       editorMode: editorMode
     }),

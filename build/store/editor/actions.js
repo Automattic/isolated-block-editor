@@ -77,6 +77,17 @@ var actions = {
   },
 
   /**
+   * Set the current device type
+   * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
+   */
+  setDeviceType: function setDeviceType(deviceType) {
+    return {
+      type: 'SET_DEVICE_TYPE',
+      deviceType: deviceType
+    };
+  },
+
+  /**
    * Mark this editor as in-use or not
    * @param {boolean} isEditing
    */

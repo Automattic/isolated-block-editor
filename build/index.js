@@ -163,6 +163,8 @@ import { createElement } from "@wordpress/element";
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
+ * @property {object[]} styles
+ * @property {object[]} defaultEditorStyles
  */
 
 /**

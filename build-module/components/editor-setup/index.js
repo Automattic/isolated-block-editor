@@ -47,7 +47,17 @@ function EditorSetup(props) {
   } = props; // This is the initial setup
 
   useEffect(() => {
-    // Setup the Isolated Editor & Gutenberg
+    // Ensure we always have a __editorAssets value - Gutenberg hardcoded assets
+    // @ts-ignore
+    if (typeof window.__editorAssets === undefined) {
+      // @ts-ignore
+      window.__editorAssets = {
+        styles: '',
+        scripts: ''
+      };
+    } // Setup the Isolated Editor & Gutenberg
+
+
     setupEditor(currentSettings); // And Gutenberg
 
     updateSettings(currentSettings); // Set up the post entities with some dummy data, ensuring that anything that uses post entities can work

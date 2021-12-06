@@ -32,6 +32,10 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             isOpen: any;
         };
+        setDeviceType(deviceType: string): {
+            type: string;
+            deviceType: string;
+        };
         setEditing(isEditing: boolean): {
             type: string;
             isEditing: boolean;
@@ -91,7 +95,12 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         getPatterns(state: {
             editor: import("./editor/reducer").EditorState;
         }): import("./editor/reducer").Pattern[];
-        isListViewOpened(state: any): any;
+        isListViewOpened(state: {
+            editor: import("./editor/reducer").EditorState;
+        }): boolean;
+        getPreviewDeviceType(state: {
+            editor: import("./editor/reducer").EditorState;
+        }): string;
         isEditorSidebarOpened: any;
         getBlocks(state: any): any[];
         getEditorSelection(state: any): any;

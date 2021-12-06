@@ -60,6 +60,8 @@
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
+ * @property {object[]} styles
+ * @property {object[]} defaultEditorStyles
  */
 /**
  * Initialize Gutenberg
@@ -229,6 +231,8 @@ export type EditorSettings = {
     template: object[] | null;
     templateLock: null;
     reusableBlocks: object[];
+    styles: object[];
+    defaultEditorStyles: object[];
 };
 /**
  * Save blocks callback
