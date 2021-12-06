@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] - 2021-12-06
+
+### Added
+
+- Add support for changing device types (via `setDeviceType` and `getDeviceType`)
+- Add support for resizable canvas
+- Add editor styles to editor
+
+### Fixed
+
+- Set a default `__editorAssets` if not defined
+- Fixed block previews not detecting height changes
+- Fix invalid default editor styles
+
 ## [2.7.2] - 2021-12-02
 
 ### Fixed
