@@ -6,9 +6,10 @@
 @import '@wordpress/base-styles/_animations';
 @import '@wordpress/base-styles/_z-index';
 
-// Stop Gutenberg preventing mobile scrolling
-html {
-	position: unset;
+// Gutenberg has a global `position: unset` style applied to the editor that is used in the core editor to prevent the page scrolling (it scrolls internally)
+// but that isn't suitable for other situations. We need to remove that.
+html.interface-interface-skeleton__html-container {
+	position: unset !important;
 }
 
 .components-modal__frame,

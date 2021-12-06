@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.1] - 2021-12-06
+
+### Fixed
+
+- Fix CSS override to disable Gutenberg's mobile `position: static` - it needs to be important but still allow previews to work
+
 ## [2.8.0] - 2021-12-06
 
 ### Added
