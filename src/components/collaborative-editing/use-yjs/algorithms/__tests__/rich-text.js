@@ -69,7 +69,8 @@ describe( 'applyHTMLDelta', () => {
 		expect( yxmlText.toString() ).toBe( after );
 	} );
 
-	it( 'should handle nested tags', () => {
+	// TODO: This behavior was reversed in https://github.com/WordPress/gutenberg/pull/35016 😬
+	it.skip( 'should handle nested tags', () => {
 		const before = '<a href="url">link italic</a>';
 		const after = '<a href="url">link <em>italic</em></a>';
 		const yxmlText = yxmlTextFrom( before );
