@@ -5,16 +5,41 @@ import * as yjs from 'yjs';
 import { isEqual } from 'lodash';
 
 /**
- * Internal dependencies
- */
-import * as diff from './diff';
-
-/**
  * @typedef {Object} PostObject
  * @property {string} title
  * @property {Object[]} blocks
  * @property {Object[]} comments
  */
+
+/**
+ * Returns information for splicing array `a` into array `b`,
+ * by swapping the minimum slice of disagreement.
+ *
+ * @param {Array} a
+ * @param {Array} b
+ * @return {Object} diff.
+ */
+function simpleDiff( a, b ) {
+	let left = 0;
+	let right = 0;
+	while ( left < a.length && left < b.length && a[ left ] === b[ left ] ) {
+		left++;
+	}
+	if ( left !== a.length || left !== b.length ) {
+		while (
+			right + left < a.length &&
+			right + left < b.length &&
+			a[ a.length - right - 1 ] === b[ b.length - right - 1 ]
+		) {
+			right++;
+		}
+	}
+	return {
+		index: left,
+		remove: a.length - left - right,
+		insert: b.slice( left, b.length - right ),
+	};
+}
 
 /**
  * Updates the block doc with the local blocks block changes.
@@ -35,7 +60,7 @@ export function updateBlocksDoc( yDocBlocks, blocks, clientId = '' ) {
 	}
 	const byClientId = yDocBlocks.get( 'byClientId' );
 	const currentOrder = order.toArray();
-	const orderDiff = diff.simpleDiffArray(
+	const orderDiff = simpleDiff(
 		currentOrder,
 		blocks.map( ( block ) => block.clientId )
 	);
