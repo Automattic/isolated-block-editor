@@ -18,7 +18,7 @@ import { create, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
  * @returns {Object[]} Y.Text formats
  */
 export function gutenFormatsToYFormats( formats ) {
-	const findIndexOfEqualFormat = ( needle, haystack = [] ) => haystack.findIndex( ( f ) => isEqual( needle, f ) );
+	const findIndexOfEqualFormat = ( needle, haystack = [] ) => haystack.findIndex( ( f ) => needle === f );
 	const visited = Array( formats.length )
 		.fill( null )
 		.map( () => ( {} ) );
