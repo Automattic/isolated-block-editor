@@ -96,7 +96,7 @@ export function CollaborativeEditingAvatarsOverflow(_ref3) {
   }, `+${peers.length}`), createElement(VisuallyHidden, null, createElement(NameList, null)));
 }
 export default compose([withSelect(select => {
-  const peers = select('isolated/editor').getPeers();
+  const peers = select('isolated/editor').getCollabPeers();
   return {
     peers: Object.keys(peers).map(id => {
       return {

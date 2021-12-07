@@ -14,7 +14,7 @@ export function getBlocks( state ) {
  * @param {object} state - Current state
  * @returns {object}
  */
- export function getEditorSelection( state ) {
+export function getEditorSelection( state ) {
 	return state.blocks.present.selection;
 }
 
@@ -24,7 +24,13 @@ export function getBlocks( state ) {
  * @returns {boolean}
  */
 export function hasEditorUndo( state ) {
-	return state.blocks.past.length > 0 && getEditorMode( state ) === 'visual';
+	if ( getEditorMode( state ) !== 'visual' ) return false;
+
+	if ( state.collab?.undoManager ) {
+		return !! state.collab.undoManager.undoStack.length;
+	}
+
+	return state.blocks.past.length > 0;
 }
 
 /**
@@ -33,7 +39,13 @@ export function hasEditorUndo( state ) {
  * @returns {boolean}
  */
 export function hasEditorRedo( state ) {
-	return state.blocks.future.length > 0 && getEditorMode( state ) === 'visual';
+	if ( getEditorMode( state ) !== 'visual' ) return false;
+
+	if ( state.collab?.undoManager ) {
+		return !! state.collab.undoManager.redoStack.length;
+	}
+
+	return state.blocks.future.length > 0;
 }
 
 /**

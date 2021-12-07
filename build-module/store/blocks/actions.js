@@ -1,11 +1,11 @@
 import { ActionCreators } from 'redux-undo';
 const actions = {
-  undo() {
-    return ActionCreators.undo();
+  *undo() {
+    return yield ActionCreators.undo();
   },
 
-  redo() {
-    return ActionCreators.redo();
+  *redo() {
+    return yield ActionCreators.redo();
   },
 
   /**
@@ -13,9 +13,9 @@ const actions = {
    * @param {object[]} blocks
    * @param {object} options
    */
-  updateBlocksWithUndo(blocks) {
+  *updateBlocksWithUndo(blocks) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return {
+    return yield {
       type: 'UPDATE_BLOCKS_WITH_UNDO',
       blocks,
       ...options
@@ -27,9 +27,9 @@ const actions = {
    * @param {object[]} blocks
    * @param {object} options
    */
-  updateBlocksWithoutUndo(blocks) {
+  *updateBlocksWithoutUndo(blocks) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return {
+    return yield {
       type: 'UPDATE_BLOCKS_WITHOUT_UNDO',
       blocks,
       ...options

@@ -32,14 +32,13 @@ function HeaderToolbar( props ) {
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const {
 		hasFixedToolbar,
-		hasPeers,
 		isInserterEnabled,
 		isTextModeEnabled,
 		showIconLabels,
 		previewDeviceType,
 		isInserterOpened,
 		isListViewOpen,
-		listViewShortcut
+		listViewShortcut,
 	} = useSelect( ( select ) => {
 		const { hasInserterItems, getBlockRootClientId, getBlockSelectionEnd } = select( 'core/block-editor' );
 		const { isListViewOpened } = select( 'isolated/editor' );
@@ -47,7 +46,6 @@ function HeaderToolbar( props ) {
 
 		return {
 			hasFixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
-			hasPeers: select( 'isolated/editor' ).hasPeers(),
 			// This setting (richEditingEnabled) should not live in the block editor's setting.
 			isInserterEnabled:
 				select( 'isolated/editor' ).getEditorMode() === 'visual' &&
@@ -58,16 +56,13 @@ function HeaderToolbar( props ) {
 			previewDeviceType: 'Desktop',
 			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
 			showIconLabels: false, // Not implemented yet
-			listViewShortcut: getShortcutRepresentation(
-				'core/edit-post/toggle-list-view'
-			),
+			listViewShortcut: getShortcutRepresentation( 'core/edit-post/toggle-list-view' ),
 		};
 	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const isWideViewport = useViewportMatch( 'wide' );
-	const { inserter, toc, navigation, undo: undoSetting, selectorTool } = props.settings.iso.toolbar;
+	const { inserter, toc, navigation, undo, selectorTool } = props.settings.iso.toolbar;
 	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
-	const undo = undoSetting && ! hasPeers;
 	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
 		? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
@@ -84,10 +79,10 @@ function HeaderToolbar( props ) {
 		}
 	}, [ isInserterOpened, setIsInserterOpened ] );
 
-	const toggleListView = useCallback(
-		() => setIsListViewOpened( ! isListViewOpen ),
-		[ setIsListViewOpened, isListViewOpen ]
-	);
+	const toggleListView = useCallback( () => setIsListViewOpened( ! isListViewOpen ), [
+		setIsListViewOpened,
+		isListViewOpen,
+	] );
 
 	return (
 		<NavigableToolbar className="edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>

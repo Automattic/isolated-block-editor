@@ -3,33 +3,54 @@
  */
 import * as yjs from 'yjs';
 
+/** @typedef {import('./algorithms/yjs').PostObject} PostObject */
+
 const encodeArray = ( array ) => array.toString();
 const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
 
-export function createDocument( { identity, applyDataChanges, getData, sendMessage } ) {
+/**
+ * Create a Yjs document.
+ *
+ * @param {Object} opts
+ * @param {string} opts.identity - Client identifier.
+ * @param {function(yjs.Doc, PostObject): void} opts.applyChangesToYDoc - Function to apply changes to the Yjs doc.
+ * @param {function(yjs.Doc): PostObject} opts.getPostFromYDoc - Function to get post object data from the Yjs doc.
+ * @param {function(any): void} opts.sendMessage
+ */
+export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc, sendMessage } ) {
 	const doc = new yjs.Doc();
+	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
-	let listeners = [];
-	let stateListeners = [];
+
+	let yDocTriggeredChangeListeners = [];
+	let connectionReadyListeners = [];
 
 	doc.on( 'update', ( update, origin ) => {
-		if ( origin === identity && state === 'on' ) {
+		// Change received from peer, or triggered by self undo/redo
+		if ( origin !== identity ) {
+			const newData = getPostFromYDoc( doc );
+			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
+		}
+
+		const isLocalOrigin =
+			origin === identity || origin === `no-undo--${ identity }` || origin instanceof yjs.UndoManager;
+
+		// Change should be broadcast to peers
+		if ( isLocalOrigin && state === 'on' ) {
 			sendMessage( {
 				protocol: 'yjs1',
 				messageType: 'syncUpdate',
 				update: encodeArray( update ),
 			} );
 		}
-
-		if ( origin !== identity ) {
-			const newData = getData( doc );
-			listeners.forEach( ( listener ) => listener( newData ) );
-		}
 	} );
 
 	const setState = ( newState ) => {
 		state = newState;
-		stateListeners.forEach( ( listener ) => listener( newState ) );
+
+		if ( newState === 'on' ) {
+			connectionReadyListeners.forEach( ( listener ) => listener() );
+		}
 	};
 
 	const sync = ( destination, isReply ) => {
@@ -45,13 +66,16 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 	};
 
 	return {
-		applyDataChanges( data ) {
+		applyChangesToYDoc( data, { isInitialContent = false } = {} ) {
 			if ( state !== 'on' ) {
 				throw 'wrong state';
 			}
+
+			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
+
 			doc.transact( () => {
-				applyDataChanges( doc, data );
-			}, identity );
+				applyChangesToYDoc( doc, data );
+			}, transactionOrigin );
 		},
 
 		connect() {
@@ -73,7 +97,8 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 			}
 
 			setState( 'on' );
-			this.applyDataChanges( data );
+
+			this.applyChangesToYDoc( data, { isInitialContent: true } );
 		},
 
 		receiveMessage( { protocol, messageType, origin, ...content } ) {
@@ -109,24 +134,28 @@ export function createDocument( { identity, applyDataChanges, getData, sendMessa
 			}
 		},
 
-		onRemoteDataChange( listener ) {
-			listeners.push( listener );
+		onYDocTriggeredChange( listener ) {
+			yDocTriggeredChangeListeners.push( listener );
 
 			return () => {
-				listeners = listeners.filter( ( l ) => l !== listener );
+				yDocTriggeredChangeListeners = yDocTriggeredChangeListeners.filter( ( l ) => l !== listener );
 			};
 		},
 
-		onStateChange( listener ) {
-			stateListeners.push( listener );
+		onConnectionReady( listener ) {
+			connectionReadyListeners.push( listener );
 
 			return () => {
-				stateListeners = stateListeners.filter( ( l ) => l !== listener );
+				connectionReadyListeners = connectionReadyListeners.filter( ( l ) => l !== listener );
 			};
 		},
 
 		getState() {
 			return state;
+		},
+
+		getPostMap() {
+			return doc.getMap( 'post' );
 		},
 	};
 }

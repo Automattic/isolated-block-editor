@@ -28,6 +28,8 @@ var _filters = require("./filters");
 
 var _formats = require("./formats");
 
+var _yjsUndo = require("./yjs-undo");
+
 /**
  * External dependencies
  */
@@ -46,28 +48,12 @@ var _formats = require("./formats");
 var debug = require('debug')('iso-editor:collab');
 /** @typedef {import('..').CollaborationSettings} CollaborationSettings */
 
-/** @typedef {import('..').CollaborationTransport} CollaborationTransport */
-
-/** @typedef {import('..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
-
-/** @typedef {import('..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
-
-/** @typedef {import('..').EditorSelection} EditorSelection */
-
-/** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
-
 
 var defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
 /**
- * @param {Object} opts - Hook options
- * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
- * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
- * @param {CollaborationSettings} opts.settings
- * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
- * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
- * @typedef IsoEditorSelection
- * @property {Object} selectionStart
- * @property {Object} selectionEnd
+ * @param {Object} opts
+ * @param {import('..').CollaborationSettings} opts.settings
+ * @param {Object} opts.registry - Redux data registry for this context.
  */
 
 exports.defaultColors = defaultColors;
@@ -83,22 +69,23 @@ function initYDoc(_x) {
 
 function _initYDoc() {
   _initYDoc = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(_ref) {
-    var getBlocks, onRemoteDataChange, settings, setPeerSelection, _setAvailablePeers, channelId, transport, identity, doc, onReceiveMessage;
+    var settings, registry, channelId, transport, dispatch, select, identity, doc, _yield$transport$conn, isFirstInChannel, _disconnect;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            getBlocks = _ref.getBlocks, onRemoteDataChange = _ref.onRemoteDataChange, settings = _ref.settings, setPeerSelection = _ref.setPeerSelection, _setAvailablePeers = _ref.setAvailablePeers;
+            settings = _ref.settings, registry = _ref.registry;
             channelId = settings.channelId, transport = settings.transport;
+            dispatch = registry.dispatch, select = registry.select;
             /** @type {string} */
 
             identity = (0, _uuid.v4)();
             debug("initYDoc (identity: ".concat(identity, ")"));
             doc = (0, _yjsDoc.createDocument)({
               identity: identity,
-              applyDataChanges: _yjs.updatePostDoc,
-              getData: _yjs.postDocToObject,
+              applyChangesToYDoc: _yjs.updatePostDoc,
+              getPostFromYDoc: _yjs.postDocToObject,
 
               /** @param {Object} message */
               sendMessage: function sendMessage(message) {
@@ -110,76 +97,78 @@ function _initYDoc() {
                 });
               }
             });
-            /** @param {CollaborationTransportDocMessage|CollaborationTransportSelectionMessage} data */
-
-            onReceiveMessage = function onReceiveMessage(data) {
-              debug('remote change received by transport', data);
-
-              switch (data.type) {
-                case 'doc':
-                  {
-                    doc.receiveMessage(data.message);
-                    break;
-                  }
-
-                case 'selection':
-                  {
-                    setPeerSelection(data.identity, data.selection);
-                    break;
-                  }
-              }
-            };
-
-            doc.onRemoteDataChange(function (changes) {
-              debug('remote change received by ydoc', changes);
-              onRemoteDataChange(changes.blocks);
+            doc.onConnectionReady((0, _lodash.once)(function () {
+              dispatch('isolated/editor').setYDoc(doc);
+              (0, _yjsUndo.setupUndoManager)(doc.getPostMap(), identity, registry);
+            }));
+            doc.onYDocTriggeredChange(function (changes) {
+              debug('changes triggered by ydoc, applying to editor state', changes);
+              dispatch('isolated/editor').updateBlocksWithUndo(changes.blocks, {
+                isTriggeredByYDoc: true
+              });
             });
-            return _context.abrupt("return", transport.connect({
+            _context.next = 10;
+            return transport.connect({
               user: {
                 identity: identity,
                 name: settings.username,
                 color: settings.caretColor || (0, _lodash.sample)(defaultColors),
                 avatarUrl: settings.avatarUrl
               },
-              onReceiveMessage: onReceiveMessage,
+
+              /** @param {import('..').CollaborationTransportMessage} data */
+              onReceiveMessage: function onReceiveMessage(data) {
+                debug('remote change received by transport', data);
+
+                switch (data.type) {
+                  case 'doc':
+                    {
+                      doc.receiveMessage(data.message);
+                      break;
+                    }
+
+                  case 'selection':
+                    {
+                      dispatch('isolated/editor').setCollabPeerSelection(data.identity, data.selection);
+                      break;
+                    }
+                }
+              },
               setAvailablePeers: function setAvailablePeers(peers) {
                 debug('setAvailablePeers', peers);
-
-                _setAvailablePeers(peers);
+                dispatch('isolated/editor').setAvailableCollabPeers(peers);
               },
               channelId: channelId
-            }).then(function (_ref4) {
-              var isFirstInChannel = _ref4.isFirstInChannel;
-              debug("connected (channelId: ".concat(channelId, ")"));
+            });
 
-              if (isFirstInChannel) {
-                debug('first in channel'); // Fetching the blocks from redux now, after the transport has successfully connected,
-                // ensures that we don't initialize the Yjs doc with stale blocks.
-                // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
+          case 10:
+            _yield$transport$conn = _context.sent;
+            isFirstInChannel = _yield$transport$conn.isFirstInChannel;
+            debug("connected (channelId: ".concat(channelId, ")"));
 
-                // Fetching the blocks from redux now, after the transport has successfully connected,
-                // ensures that we don't initialize the Yjs doc with stale blocks.
-                // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
-                doc.startSharing({
-                  title: '',
-                  blocks: getBlocks()
-                });
-              } else {
-                doc.connect();
-              }
+            if (isFirstInChannel) {
+              debug('first in channel'); // Fetching the blocks from redux now, after the transport has successfully connected,
+              // ensures that we don't initialize the Yjs doc with stale blocks.
+              // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
 
-              var applyChangesToYjs = function applyChangesToYjs(blocks) {
-                if (doc.getState() !== 'on') {
-                  return;
-                }
+              doc.startSharing({
+                title: '',
+                blocks: select('core/block-editor').getBlocks()
+              });
+            } else {
+              doc.connect();
+            }
 
-                debug('local changes applied to ydoc');
-                doc.applyDataChanges({
-                  blocks: blocks
-                });
-              };
+            _disconnect = function disconnect() {
+              transport.disconnect();
+              doc.disconnect();
+            };
 
-              var sendSelection = function sendSelection(start, end) {
+            window.addEventListener('beforeunload', function () {
+              return _disconnect();
+            });
+            return _context.abrupt("return", {
+              sendSelection: function sendSelection(start, end) {
                 debug('sendSelection', start, end);
                 transport.sendMessage({
                   type: 'selection',
@@ -189,24 +178,15 @@ function _initYDoc() {
                     end: end
                   }
                 });
-              };
+              },
+              disconnect: function disconnect() {
+                window.removeEventListener('beforeunload', _disconnect);
 
-              var disconnect = function disconnect() {
-                transport.disconnect();
-                doc.disconnect();
-              };
+                _disconnect();
+              }
+            });
 
-              window.addEventListener('beforeunload', function () {
-                return disconnect();
-              });
-              return {
-                applyChangesToYjs: applyChangesToYjs,
-                sendSelection: sendSelection,
-                disconnect: disconnect
-              };
-            }));
-
-          case 8:
+          case 17:
           case "end":
             return _context.stop();
         }
@@ -218,28 +198,19 @@ function _initYDoc() {
 
 function useYjs(_ref2) {
   var settings = _ref2.settings;
-  var onBlocksChange = (0, _element.useRef)(_lodash.noop);
   var onSelectionChange = (0, _element.useRef)(_lodash.noop);
+  var registry = (0, _data.useRegistry)();
 
   var _useSelect = (0, _data.useSelect)(function (select) {
     return {
-      blocks: select('isolated/editor').getBlocks(),
-      getBlocks: select('isolated/editor').getBlocks,
       getFormatType: select('core/rich-text').getFormatType,
       selectionStart: select('core/block-editor').getSelectionStart(),
       selectionEnd: select('core/block-editor').getSelectionEnd()
     };
   }, []),
-      blocks = _useSelect.blocks,
-      getBlocks = _useSelect.getBlocks,
       getFormatType = _useSelect.getFormatType,
       selectionStart = _useSelect.selectionStart,
       selectionEnd = _useSelect.selectionEnd;
-
-  var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
-      setAvailablePeers = _useDispatch.setAvailablePeers,
-      setPeerSelection = _useDispatch.setPeerSelection,
-      updateBlocksWithUndo = _useDispatch.updateBlocksWithUndo;
 
   (0, _element.useEffect)(function () {
     if (!(settings !== null && settings !== void 0 && settings.enabled)) {
@@ -258,14 +229,10 @@ function useYjs(_ref2) {
     (0, _filters.addCollabFilters)();
     var onUnmount = _lodash.noop;
     initYDoc({
-      onRemoteDataChange: updateBlocksWithUndo,
       settings: settings,
-      getBlocks: getBlocks,
-      setPeerSelection: setPeerSelection,
-      setAvailablePeers: setAvailablePeers
+      registry: registry
     }).then(function (_ref3) {
-      var applyChangesToYjs = _ref3.applyChangesToYjs,
-          sendSelection = _ref3.sendSelection,
+      var sendSelection = _ref3.sendSelection,
           disconnect = _ref3.disconnect;
 
       onUnmount = function onUnmount() {
@@ -273,16 +240,12 @@ function useYjs(_ref2) {
         disconnect();
       };
 
-      onBlocksChange.current = applyChangesToYjs;
       onSelectionChange.current = sendSelection;
     });
     return function () {
       return onUnmount();
     };
   }, []);
-  (0, _element.useEffect)(function () {
-    onBlocksChange.current(blocks);
-  }, [blocks]);
   (0, _element.useEffect)(function () {
     onSelectionChange.current(selectionStart, selectionEnd);
   }, [selectionStart, selectionEnd]);

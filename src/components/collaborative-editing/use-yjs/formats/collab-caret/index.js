@@ -96,7 +96,7 @@ export const settings = {
 	},
 	__experimentalGetPropsForEditableTreePreparation( select, { richTextIdentifier, blockClientId } ) {
 		return {
-			carets: getCarets( select( 'isolated/editor' ).getPeers(), richTextIdentifier, blockClientId ),
+			carets: getCarets( select( 'isolated/editor' ).getCollabPeers(), richTextIdentifier, blockClientId ),
 		};
 	},
 	__experimentalCreatePrepareEditableTree( { carets } ) {

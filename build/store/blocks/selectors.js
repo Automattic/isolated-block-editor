@@ -37,7 +37,15 @@ function getEditorSelection(state) {
 
 
 function hasEditorUndo(state) {
-  return state.blocks.past.length > 0 && (0, _selectors.getEditorMode)(state) === 'visual';
+  var _state$collab;
+
+  if ((0, _selectors.getEditorMode)(state) !== 'visual') return false;
+
+  if ((_state$collab = state.collab) !== null && _state$collab !== void 0 && _state$collab.undoManager) {
+    return !!state.collab.undoManager.undoStack.length;
+  }
+
+  return state.blocks.past.length > 0;
 }
 /**
  * Is redo possible?
@@ -47,7 +55,15 @@ function hasEditorUndo(state) {
 
 
 function hasEditorRedo(state) {
-  return state.blocks.future.length > 0 && (0, _selectors.getEditorMode)(state) === 'visual';
+  var _state$collab2;
+
+  if ((0, _selectors.getEditorMode)(state) !== 'visual') return false;
+
+  if ((_state$collab2 = state.collab) !== null && _state$collab2 !== void 0 && _state$collab2.undoManager) {
+    return !!state.collab.undoManager.redoStack.length;
+  }
+
+  return state.blocks.future.length > 0;
 }
 /**
  * Get current edit count

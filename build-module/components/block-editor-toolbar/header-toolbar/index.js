@@ -34,7 +34,6 @@ function HeaderToolbar(props) {
   const isMobileViewport = useViewportMatch('medium', '<');
   const {
     hasFixedToolbar,
-    hasPeers,
     isInserterEnabled,
     isTextModeEnabled,
     showIconLabels,
@@ -56,7 +55,6 @@ function HeaderToolbar(props) {
     } = select(keyboardShortcutsStore);
     return {
       hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
-      hasPeers: select('isolated/editor').hasPeers(),
       // This setting (richEditingEnabled) should not live in the block editor's setting.
       isInserterEnabled: select('isolated/editor').getEditorMode() === 'visual' && select('core/editor').getEditorSettings().richEditingEnabled && hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
       isListViewOpen: isListViewOpened(),
@@ -74,11 +72,10 @@ function HeaderToolbar(props) {
     inserter,
     toc,
     navigation,
-    undo: undoSetting,
+    undo,
     selectorTool
   } = props.settings.iso.toolbar;
   const inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$iso = _props$settings.iso) === null || _props$settings$iso === void 0 ? void 0 : (_props$settings$iso$s = _props$settings$iso.sidebar) === null || _props$settings$iso$s === void 0 ? void 0 : _props$settings$iso$s.inserter) || false;
-  const undo = undoSetting && !hasPeers;
   const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
   const toolbarAriaLabel = displayBlockToolbar ?
   /* translators: accessibility text for the editor toolbar when Top Toolbar is on */

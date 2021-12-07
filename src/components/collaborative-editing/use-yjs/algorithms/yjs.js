@@ -1,10 +1,15 @@
-// @ts-nocheck TODO
-
 /**
  * External dependencies
  */
 import * as yjs from 'yjs';
 import { isEqual } from 'lodash';
+
+/**
+ * @typedef {Object} PostObject
+ * @property {string} title
+ * @property {Object[]} blocks
+ * @property {Object[]} comments
+ */
 
 /**
  * Returns information for splicing array `a` into array `b`,
@@ -78,8 +83,8 @@ export function updateBlocksDoc( yDocBlocks, blocks, clientId = '' ) {
 /**
  * Updates the comments doc with the local comments changes.
  *
- * @param {yjs.Doc} commentsDoc  comments doc.
- * @param {Object}  comments     Updated comments.
+ * @param {yjs.Map} commentsDoc  comments doc.
+ * @param {Object[]}  comments     Updated comments.
  */
 export function updateCommentsDoc( commentsDoc, comments = [] ) {
 	comments.forEach( ( comment ) => {
@@ -107,8 +112,8 @@ export function updateCommentsDoc( commentsDoc, comments = [] ) {
 /**
  * Updates the replies doc with the local replies changes.
  *
- * @param {yjs.Doc} repliesDoc  replies doc.
- * @param {Object}  replies     Updated replies.
+ * @param {yjs.Map} repliesDoc  replies doc.
+ * @param {Object[]}  replies     Updated replies.
  */
 export function updateCommentRepliesDoc( repliesDoc, replies = [] ) {
 	replies.forEach( ( reply ) => {
@@ -130,18 +135,18 @@ export function updateCommentRepliesDoc( repliesDoc, replies = [] ) {
  * Updates the post doc with the local post changes.
  *
  * @param {yjs.Doc} doc     Shared doc.
- * @param {Object}  newPost Updated post.
+ * @param {PostObject}  newPost Updated post.
  */
 export function updatePostDoc( doc, newPost ) {
-	const postDoc = doc.get( 'post', yjs.Map );
+	const postDoc = doc.getMap( 'post' );
 	if ( postDoc.get( 'title' ) !== newPost.title ) {
 		postDoc.set( 'title', newPost.title );
 	}
-	if ( ! postDoc.get( 'blocks', yjs.Map ) ) {
+	if ( ! postDoc.get( 'blocks' ) ) {
 		postDoc.set( 'blocks', new yjs.Map() );
 	}
 	updateBlocksDoc( postDoc.get( 'blocks' ), newPost.blocks || [] );
-	if ( ! postDoc.get( 'comments', yjs.Map ) ) {
+	if ( ! postDoc.get( 'comments' ) ) {
 		postDoc.set( 'comments', new yjs.Map() );
 	}
 	updateCommentsDoc( postDoc.get( 'comments' ), newPost.comments );
@@ -209,11 +214,11 @@ export function blocksDocToArray( yDocBlocks, clientId = '' ) {
 /**
  * Converts the post doc into a post object.
  *
- * @param {yjs.Map} doc Shared doc.
- * @return {Object} Post object.
+ * @param {yjs.Doc} doc Shared doc.
+ * @return {PostObject} Post object.
  */
 export function postDocToObject( doc ) {
-	const postDoc = doc.get( 'post', yjs.Map );
+	const postDoc = doc.getMap( 'post' );
 	const blocks = blocksDocToArray( postDoc.get( 'blocks' ) );
 	const comments = commentsDocToArray( postDoc.get( 'comments' ) );
 

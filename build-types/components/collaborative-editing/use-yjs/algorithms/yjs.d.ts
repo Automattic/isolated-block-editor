@@ -9,24 +9,24 @@ export function updateBlocksDoc(yDocBlocks: yjs.Map<any>, blocks: any[], clientI
 /**
  * Updates the comments doc with the local comments changes.
  *
- * @param {yjs.Doc} commentsDoc  comments doc.
- * @param {Object}  comments     Updated comments.
+ * @param {yjs.Map} commentsDoc  comments doc.
+ * @param {Object[]}  comments     Updated comments.
  */
-export function updateCommentsDoc(commentsDoc: yjs.Doc, comments?: any): void;
+export function updateCommentsDoc(commentsDoc: yjs.Map<any>, comments?: any[]): void;
 /**
  * Updates the replies doc with the local replies changes.
  *
- * @param {yjs.Doc} repliesDoc  replies doc.
- * @param {Object}  replies     Updated replies.
+ * @param {yjs.Map} repliesDoc  replies doc.
+ * @param {Object[]}  replies     Updated replies.
  */
-export function updateCommentRepliesDoc(repliesDoc: yjs.Doc, replies?: any): void;
+export function updateCommentRepliesDoc(repliesDoc: yjs.Map<any>, replies?: any[]): void;
 /**
  * Updates the post doc with the local post changes.
  *
  * @param {yjs.Doc} doc     Shared doc.
- * @param {Object}  newPost Updated post.
+ * @param {PostObject}  newPost Updated post.
  */
-export function updatePostDoc(doc: yjs.Doc, newPost: any): void;
+export function updatePostDoc(doc: yjs.Doc, newPost: PostObject): void;
 /**
  * Converts the comments doc into a comment list.
  *
@@ -45,9 +45,14 @@ export function blocksDocToArray(yDocBlocks: yjs.Map<any>, clientId?: string): a
 /**
  * Converts the post doc into a post object.
  *
- * @param {yjs.Map} doc Shared doc.
- * @return {Object} Post object.
+ * @param {yjs.Doc} doc Shared doc.
+ * @return {PostObject} Post object.
  */
-export function postDocToObject(doc: yjs.Map<any>): any;
+export function postDocToObject(doc: yjs.Doc): PostObject;
+export type PostObject = {
+    title: string;
+    blocks: any[];
+    comments: any[];
+};
 import * as yjs from "yjs";
 //# sourceMappingURL=yjs.d.ts.map

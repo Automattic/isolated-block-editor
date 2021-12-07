@@ -29,7 +29,7 @@ export type CollaborationSettings = {
  * Transport module for real-time collaboration
  */
 export type CollaborationTransport = {
-    sendMessage: (message: CollaborationTransportDocMessage | CollaborationTransportSelectionMessage) => void;
+    sendMessage: (message: CollaborationTransportMessage) => void;
     connect: (options: CollaborationTransportConnectOpts) => Promise<{
         isFirstInChannel: boolean;
     }>;
@@ -68,6 +68,7 @@ export type CollaborationTransportSelectionMessage = {
     type: 'selection';
     selection: EditorSelection;
 };
+export type CollaborationTransportMessage = CollaborationTransportDocMessage | CollaborationTransportSelectionMessage;
 export type EditorSelection = {
     start: any;
     end: any;
@@ -87,7 +88,7 @@ export type EditorSelection = {
  * Transport module for real-time collaboration
  *
  * @typedef CollaborationTransport
- * @property {(message: CollaborationTransportDocMessage|CollaborationTransportSelectionMessage) => void} sendMessage
+ * @property {(message: CollaborationTransportMessage) => void} sendMessage
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
  * @property {() => Promise<void>} disconnect
  */
@@ -120,6 +121,9 @@ export type EditorSelection = {
  * @property {string} identity
  * @property {'selection'} type
  * @property {EditorSelection} selection
+ */
+/**
+ * @typedef {CollaborationTransportDocMessage|CollaborationTransportSelectionMessage} CollaborationTransportMessage
  */
 /**
  * @typedef EditorSelection

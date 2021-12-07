@@ -16,13 +16,19 @@ import preferencesReducer from './preferences/reducer';
 import preferenceActions from './preferences/actions';
 import optionsReducer from './options/reducer';
 import optionActions from './options/actions';
-import peersReducer from './peers/reducer';
-import peersActions from './peers/actions';
 import * as blockSelectors from './blocks/selectors';
 import * as editorSelectors from './editor/selectors';
 import * as preferenceSelectors from './preferences/selectors';
 import * as optionSelectors from './options/selectors';
-import * as peersSelectors from './peers/selectors';
+
+// Collaborative Editing
+import * as collabActions from './collab/actions';
+import * as collabSelectors from './collab/selectors';
+import * as collabPeersActions from './collab-peers/actions';
+import * as collabPeersSelectors from './collab-peers/selectors';
+import collabControls from './collab/controls'; // will safely noop if collab isn't initialized
+import collabReducer from './collab/reducer';
+import collabPeersReducer from './collab-peers/reducer';
 
 function storeConfig( preferencesKey, defaultPreferences ) {
 	return {
@@ -31,7 +37,8 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			editor: editorReducer,
 			preferences: preferencesReducer,
 			options: optionsReducer,
-			peers: peersReducer,
+			collab: collabReducer,
+			collabPeers: collabPeersReducer,
 		} ),
 
 		actions: {
@@ -39,7 +46,8 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			...editorActions,
 			...optionActions,
 			...preferenceActions,
-			...peersActions,
+			...collabActions,
+			...collabPeersActions,
 		},
 
 		selectors: {
@@ -47,7 +55,12 @@ function storeConfig( preferencesKey, defaultPreferences ) {
 			...editorSelectors,
 			...preferenceSelectors,
 			...optionSelectors,
-			...peersSelectors,
+			...collabSelectors,
+			...collabPeersSelectors,
+		},
+
+		controls: {
+			...collabControls,
 		},
 
 		persist: [ 'preferences' ],

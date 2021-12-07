@@ -2,8 +2,32 @@ export default storeConfig;
 declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
     reducer: any;
     actions: {
-        setAvailablePeers: typeof import("./peers/actions").setAvailablePeers;
-        setPeerSelection: typeof import("./peers/actions").setPeerSelection;
+        /**
+         * WordPress dependencies
+         */
+        setAvailableCollabPeers(peers: import("../components/collaborative-editing").AvailablePeer[]): {
+            type: string;
+            peers: import("../components/collaborative-editing").AvailablePeer[];
+        };
+        setCollabPeerSelection(peerId: string, selection: import("../components/collaborative-editing").EditorSelection): {
+            type: string;
+            peerId: string;
+            selection: import("../components/collaborative-editing").EditorSelection;
+        };
+        /**
+         * WordPress dependencies
+         */
+        setYDoc(doc: any): {
+            type: string;
+            doc: any;
+        };
+        /**
+         * Internal dependencies
+         */
+        setUndoManager(undoManager: any): {
+            type: string;
+            undoManager: any;
+        };
         toggleFeature(feature: string): {
             type: string;
             feature: string;
@@ -46,17 +70,22 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             isOpen: boolean;
         };
-        undo(): import("redux").Action<any>;
-        redo(): import("redux").Action<any>;
-        updateBlocksWithUndo(blocks: any[], options?: any): any;
-        updateBlocksWithoutUndo(blocks: any[], options?: any): any;
+        undo(): Generator<import("redux").Action<any>, any, unknown>;
+        redo(): Generator<import("redux").Action<any>, any, unknown>;
+        updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
+        updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     };
     selectors: {
         /**
          * WordPress dependencies
          */
-        getPeers(state: any): any;
-        hasPeers(state: any): boolean;
+        getCollabPeers(state: any): any;
+        hasCollabPeers(state: any): boolean;
+        /**
+         * WordPress dependencies
+         */
+        getYDoc(state: any): any;
+        getUndoManager(state: any): any;
         /**
          * WordPress dependencies
          */
@@ -107,6 +136,11 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         hasEditorUndo(state: any): boolean;
         hasEditorRedo(state: any): boolean;
         getEditCount(state: any): number;
+    };
+    controls: {
+        [x: number]: any;
+        UPDATE_BLOCKS_WITH_UNDO: any;
+        UPDATE_BLOCKS_WITHOUT_UNDO: any;
     };
     persist: string[];
     initialState: {

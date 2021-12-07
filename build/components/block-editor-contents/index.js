@@ -133,7 +133,9 @@ function BlockEditorContents(props) {
                 initialContent = _context.sent;
 
                 if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
-                  updateBlocksWithoutUndo(initialContent);
+                  updateBlocksWithoutUndo(initialContent, {
+                    isInitialContent: true
+                  });
                 }
 
               case 4:

@@ -84,9 +84,7 @@ function BlockEditor( props ) {
 		previousShortcut,
 		nextShortcut,
 	} = useSelect( ( select ) => {
-		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select(
-			'isolated/editor'
-		);
+		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select( 'isolated/editor' );
 
 		return {
 			sidebarIsOpened: !! select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),
@@ -192,26 +190,7 @@ function BlockEditor( props ) {
 	);
 }
 
-export default withDispatch( ( dispatch, _ownProps, { select } ) => {
-	const hasPeers = select( 'isolated/editor' ).hasPeers;
+export default withDispatch( ( dispatch ) => {
 	const { redo, undo } = dispatch( 'isolated/editor' );
-
-	const maybeUndo = ( actionCreator ) => () => {
-		if ( hasPeers() ) {
-			const noticeId = 'isolated/undo-disabled';
-			dispatch( 'core/notices' ).removeNotice( noticeId );
-			return dispatch( 'core/notices' ).createNotice(
-				'warning',
-				'Undo/redo is disabled while editing with other users.',
-				{ id: noticeId }
-			);
-		} else {
-			return actionCreator();
-		}
-	};
-
-	return {
-		redo: maybeUndo( redo ),
-		undo: maybeUndo( undo ),
-	};
+	return { redo, undo };
 } )( BlockEditor );

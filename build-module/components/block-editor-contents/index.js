@@ -86,7 +86,9 @@ function BlockEditorContents(props) {
       const initialContent = await getInitialContent(settings, onLoad);
 
       if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
-        updateBlocksWithoutUndo(initialContent);
+        updateBlocksWithoutUndo(initialContent, {
+          isInitialContent: true
+        });
       }
     };
 

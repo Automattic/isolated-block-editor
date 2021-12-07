@@ -95,7 +95,7 @@ export const settings = {
       blockClientId
     } = _ref3;
     return {
-      carets: getCarets(select('isolated/editor').getPeers(), richTextIdentifier, blockClientId)
+      carets: getCarets(select('isolated/editor').getCollabPeers(), richTextIdentifier, blockClientId)
     };
   },
 

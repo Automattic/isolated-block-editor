@@ -134,7 +134,7 @@ function CollaborativeEditingAvatarsOverflow(_ref3) {
 }
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
-  var peers = select('isolated/editor').getPeers();
+  var peers = select('isolated/editor').getCollabPeers();
   return {
     peers: Object.keys(peers).map(function (id) {
       return _objectSpread({

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { noop, sample } from 'lodash';
+import { noop, once, sample } from 'lodash';
 
 /**
  * Internal dependencies
@@ -13,7 +13,7 @@ import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 /**
  * WordPress dependencies
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useRegistry, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 
 /**
@@ -21,31 +21,22 @@ import { useEffect, useRef } from '@wordpress/element';
  */
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
+import { setupUndoManager } from './yjs-undo';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /** @typedef {import('..').CollaborationSettings} CollaborationSettings */
-/** @typedef {import('..').CollaborationTransport} CollaborationTransport */
-/** @typedef {import('..').CollaborationTransportDocMessage} CollaborationTransportDocMessage */
-/** @typedef {import('..').CollaborationTransportSelectionMessage} CollaborationTransportSelectionMessage */
-/** @typedef {import('..').EditorSelection} EditorSelection */
-/** @typedef {import('../../block-editor-contents').OnUpdate} OnUpdate */
 
 export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A' ];
 
 /**
- * @param {Object} opts - Hook options
- * @param {() => object[]} opts.getBlocks - Content to initialize the Yjs doc with.
- * @param {OnUpdate} opts.onRemoteDataChange - Function to update editor blocks in redux state.
- * @param {CollaborationSettings} opts.settings
- * @param {import('../../../store/peers/actions').setAvailablePeers} opts.setAvailablePeers
- * @param {import('../../../store/peers/actions').setPeerSelection} opts.setPeerSelection
- * @typedef IsoEditorSelection
- * @property {Object} selectionStart
- * @property {Object} selectionEnd
+ * @param {Object} opts
+ * @param {import('..').CollaborationSettings} opts.settings
+ * @param {Object} opts.registry - Redux data registry for this context.
  */
-async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelection, setAvailablePeers } ) {
+async function initYDoc( { settings, registry } ) {
 	const { channelId, transport } = settings;
+	const { dispatch, select } = registry;
 
 	/** @type {string} */
 	const identity = uuidv4();
@@ -54,8 +45,8 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
 
 	const doc = createDocument( {
 		identity,
-		applyDataChanges: updatePostDoc,
-		getData: postDocToObject,
+		applyChangesToYDoc: updatePostDoc,
+		getPostFromYDoc: postDocToObject,
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
@@ -63,85 +54,84 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
 		},
 	} );
 
-	/** @param {CollaborationTransportDocMessage|CollaborationTransportSelectionMessage} data */
-	const onReceiveMessage = ( data ) => {
-		debug( 'remote change received by transport', data );
+	doc.onConnectionReady(
+		once( () => {
+			dispatch( 'isolated/editor' ).setYDoc( doc );
+			setupUndoManager( doc.getPostMap(), identity, registry );
+		} )
+	);
 
-		switch ( data.type ) {
-			case 'doc': {
-				doc.receiveMessage( data.message );
-				break;
-			}
-			case 'selection': {
-				setPeerSelection( data.identity, data.selection );
-				break;
-			}
-		}
-	};
-
-	doc.onRemoteDataChange( ( changes ) => {
-		debug( 'remote change received by ydoc', changes );
-		onRemoteDataChange( changes.blocks );
+	doc.onYDocTriggeredChange( ( changes ) => {
+		debug( 'changes triggered by ydoc, applying to editor state', changes );
+		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
 	} );
 
-	return transport
-		.connect( {
-			user: {
-				identity,
-				name: settings.username,
-				color: settings.caretColor || sample( defaultColors ),
-				avatarUrl: settings.avatarUrl,
-			},
-			onReceiveMessage,
-			setAvailablePeers: ( peers ) => {
-				debug( 'setAvailablePeers', peers );
-				setAvailablePeers( peers );
-			},
-			channelId,
-		} )
-		.then( ( { isFirstInChannel } ) => {
-			debug( `connected (channelId: ${ channelId })` );
+	const { isFirstInChannel } = await transport.connect( {
+		user: {
+			identity,
+			name: settings.username,
+			color: settings.caretColor || sample( defaultColors ),
+			avatarUrl: settings.avatarUrl,
+		},
+		/** @param {import('..').CollaborationTransportMessage} data */
+		onReceiveMessage: ( data ) => {
+			debug( 'remote change received by transport', data );
 
-			if ( isFirstInChannel ) {
-				debug( 'first in channel' );
-
-				// Fetching the blocks from redux now, after the transport has successfully connected,
-				// ensures that we don't initialize the Yjs doc with stale blocks.
-				// (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
-				doc.startSharing( { title: '', blocks: getBlocks() } );
-			} else {
-				doc.connect();
-			}
-
-			const applyChangesToYjs = ( blocks ) => {
-				if ( doc.getState() !== 'on' ) {
-					return;
+			switch ( data.type ) {
+				case 'doc': {
+					doc.receiveMessage( data.message );
+					break;
 				}
-				debug( 'local changes applied to ydoc' );
-				doc.applyDataChanges( { blocks } );
-			};
+				case 'selection': {
+					dispatch( 'isolated/editor' ).setCollabPeerSelection( data.identity, data.selection );
+					break;
+				}
+			}
+		},
+		setAvailablePeers: ( peers ) => {
+			debug( 'setAvailablePeers', peers );
+			dispatch( 'isolated/editor' ).setAvailableCollabPeers( peers );
+		},
+		channelId,
+	} );
 
-			const sendSelection = ( start, end ) => {
-				debug( 'sendSelection', start, end );
-				transport.sendMessage( {
-					type: 'selection',
-					identity,
-					selection: {
-						start,
-						end,
-					},
-				} );
-			};
+	debug( `connected (channelId: ${ channelId })` );
 
-			const disconnect = () => {
-				transport.disconnect();
-				doc.disconnect();
-			};
+	if ( isFirstInChannel ) {
+		debug( 'first in channel' );
 
-			window.addEventListener( 'beforeunload', () => disconnect() );
+		// Fetching the blocks from redux now, after the transport has successfully connected,
+		// ensures that we don't initialize the Yjs doc with stale blocks.
+		// (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
+		doc.startSharing( { title: '', blocks: select( 'core/block-editor' ).getBlocks() } );
+	} else {
+		doc.connect();
+	}
 
-			return { applyChangesToYjs, sendSelection, disconnect };
-		} );
+	const disconnect = () => {
+		transport.disconnect();
+		doc.disconnect();
+	};
+
+	window.addEventListener( 'beforeunload', () => disconnect() );
+
+	return {
+		sendSelection: ( start, end ) => {
+			debug( 'sendSelection', start, end );
+			transport.sendMessage( {
+				type: 'selection',
+				identity,
+				selection: {
+					start,
+					end,
+				},
+			} );
+		},
+		disconnect: () => {
+			window.removeEventListener( 'beforeunload', disconnect );
+			disconnect();
+		},
+	};
 }
 
 /**
@@ -149,20 +139,16 @@ async function initYDoc( { getBlocks, onRemoteDataChange, settings, setPeerSelec
  * @param {CollaborationSettings} [opts.settings]
  */
 export default function useYjs( { settings } ) {
-	const onBlocksChange = useRef( noop );
 	const onSelectionChange = useRef( noop );
+	const registry = useRegistry();
 
-	const { blocks, getBlocks, getFormatType, selectionStart, selectionEnd } = useSelect( ( select ) => {
+	const { getFormatType, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
-			blocks: select( 'isolated/editor' ).getBlocks(),
-			getBlocks: select( 'isolated/editor' ).getBlocks,
 			getFormatType: select( 'core/rich-text' ).getFormatType,
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );
-
-	const { setAvailablePeers, setPeerSelection, updateBlocksWithUndo } = useDispatch( 'isolated/editor' );
 
 	useEffect( () => {
 		if ( ! settings?.enabled ) {
@@ -184,27 +170,19 @@ export default function useYjs( { settings } ) {
 		let onUnmount = noop;
 
 		initYDoc( {
-			onRemoteDataChange: updateBlocksWithUndo,
 			settings,
-			getBlocks,
-			setPeerSelection,
-			setAvailablePeers,
-		} ).then( ( { applyChangesToYjs, sendSelection, disconnect } ) => {
+			registry,
+		} ).then( ( { sendSelection, disconnect } ) => {
 			onUnmount = () => {
 				debug( 'unmount' );
 				disconnect();
 			};
 
-			onBlocksChange.current = applyChangesToYjs;
 			onSelectionChange.current = sendSelection;
 		} );
 
 		return () => onUnmount();
 	}, [] );
-
-	useEffect( () => {
-		onBlocksChange.current( blocks );
-	}, [ blocks ] );
 
 	useEffect( () => {
 		onSelectionChange.current( selectionStart, selectionEnd );
