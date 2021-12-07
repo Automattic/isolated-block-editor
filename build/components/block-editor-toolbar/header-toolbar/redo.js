@@ -28,10 +28,10 @@ import { createElement } from "@wordpress/element";
  */
 function EditorHistoryRedo(props, ref) {
   var hasRedo = (0, _data.useSelect)(function (select) {
-    return select('core/editor').hasEditorRedo();
+    return select('isolated/editor').hasEditorRedo();
   }, []);
 
-  var _useDispatch = (0, _data.useDispatch)('core/editor'),
+  var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       redo = _useDispatch.redo;
 
   return createElement(_components.Button, (0, _extends2["default"])({}, props, {

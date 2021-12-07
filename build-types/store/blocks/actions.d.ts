@@ -1,32 +1,32 @@
 export default actions;
 declare namespace actions {
-    function undo(): import("redux").Action<any>;
-    function undo(): import("redux").Action<any>;
-    function redo(): import("redux").Action<any>;
-    function redo(): import("redux").Action<any>;
+    function undo(): Generator<import("redux").Action<any>, any, unknown>;
+    function undo(): Generator<import("redux").Action<any>, any, unknown>;
+    function redo(): Generator<import("redux").Action<any>, any, unknown>;
+    function redo(): Generator<import("redux").Action<any>, any, unknown>;
     /**
      * Update blocks without undo history
      * @param {object[]} blocks
      * @param {object} options
      */
-    function updateBlocksWithUndo(blocks: any[], options?: any): any;
+    function updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
      * @param {object[]} blocks
      * @param {object} options
      */
-    function updateBlocksWithUndo(blocks: any[], options?: any): any;
+    function updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
      * @param {object[]} blocks
      * @param {object} options
      */
-    function updateBlocksWithoutUndo(blocks: any[], options?: any): any;
+    function updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
      * @param {object[]} blocks
      * @param {object} options
      */
-    function updateBlocksWithoutUndo(blocks: any[], options?: any): any;
+    function updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
 }
 //# sourceMappingURL=actions.d.ts.map

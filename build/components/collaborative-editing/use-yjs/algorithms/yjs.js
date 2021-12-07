@@ -42,6 +42,13 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 /**
+ * @typedef {Object} PostObject
+ * @property {string} title
+ * @property {Object[]} blocks
+ * @property {Object[]} comments
+ */
+
+/**
  * Returns information for splicing array `a` into array `b`,
  * by swapping the minimum slice of disagreement.
  *
@@ -128,8 +135,8 @@ function updateBlocksDoc(yDocBlocks, blocks) {
 /**
  * Updates the comments doc with the local comments changes.
  *
- * @param {yjs.Doc} commentsDoc  comments doc.
- * @param {Object}  comments     Updated comments.
+ * @param {yjs.Map} commentsDoc  comments doc.
+ * @param {Object[]}  comments     Updated comments.
  */
 
 
@@ -161,8 +168,8 @@ function updateCommentsDoc(commentsDoc) {
 /**
  * Updates the replies doc with the local replies changes.
  *
- * @param {yjs.Doc} repliesDoc  replies doc.
- * @param {Object}  replies     Updated replies.
+ * @param {yjs.Map} repliesDoc  replies doc.
+ * @param {Object[]}  replies     Updated replies.
  */
 
 
@@ -188,24 +195,24 @@ function updateCommentRepliesDoc(repliesDoc) {
  * Updates the post doc with the local post changes.
  *
  * @param {yjs.Doc} doc     Shared doc.
- * @param {Object}  newPost Updated post.
+ * @param {PostObject}  newPost Updated post.
  */
 
 
 function updatePostDoc(doc, newPost) {
-  var postDoc = doc.get('post', yjs.Map);
+  var postDoc = doc.getMap('post');
 
   if (postDoc.get('title') !== newPost.title) {
     postDoc.set('title', newPost.title);
   }
 
-  if (!postDoc.get('blocks', yjs.Map)) {
+  if (!postDoc.get('blocks')) {
     postDoc.set('blocks', new yjs.Map());
   }
 
   updateBlocksDoc(postDoc.get('blocks'), newPost.blocks || []);
 
-  if (!postDoc.get('comments', yjs.Map)) {
+  if (!postDoc.get('comments')) {
     postDoc.set('comments', new yjs.Map());
   }
 
@@ -288,13 +295,13 @@ function blocksDocToArray(yDocBlocks) {
 /**
  * Converts the post doc into a post object.
  *
- * @param {yjs.Map} doc Shared doc.
- * @return {Object} Post object.
+ * @param {yjs.Doc} doc Shared doc.
+ * @return {PostObject} Post object.
  */
 
 
 function postDocToObject(doc) {
-  var postDoc = doc.get('post', yjs.Map);
+  var postDoc = doc.getMap('post');
   var blocks = blocksDocToArray(postDoc.get('blocks'));
   var comments = commentsDocToArray(postDoc.get('comments'));
   return {

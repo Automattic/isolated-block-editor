@@ -115,7 +115,7 @@ var settings = {
     var richTextIdentifier = _ref5.richTextIdentifier,
         blockClientId = _ref5.blockClientId;
     return {
-      carets: getCarets(select('isolated/editor').getPeers(), richTextIdentifier, blockClientId)
+      carets: getCarets(select('isolated/editor').getCollabPeers(), richTextIdentifier, blockClientId)
     };
   },
   __experimentalCreatePrepareEditableTree: function __experimentalCreatePrepareEditableTree(_ref6) {

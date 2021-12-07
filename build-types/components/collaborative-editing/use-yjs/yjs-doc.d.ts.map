@@ -1,1 +1,1 @@
-{"version":3,"file":"yjs-doc.d.ts","sourceRoot":"","sources":["../../../../src/components/collaborative-editing/use-yjs/yjs-doc.js"],"names":[],"mappings":"AAQA;;;;;;;;;;;;;;;;;;;EA2HC"}
+{"version":3,"file":"yjs-doc.d.ts","sourceRoot":"","sources":["../../../../src/components/collaborative-editing/use-yjs/yjs-doc.js"],"names":[],"mappings":"AAUA;;;;;;;;GAQG;AACH;IALwB,QAAQ,EAArB,MAAM;IACoC,kBAAkB,SAAnD,IAAI,GAAG,QAAE,UAAU,KAAG,IAAI;IACC,eAAe,SAA1C,IAAI,GAAG,KAAG,UAAU;IACH,WAAW,SAA5B,GAAG,KAAG,IAAI;;;;;;;;;;;;;;;;;;EA+I7B;yBA3Ja,OAAO,kBAAkB,EAAE,UAAU"}

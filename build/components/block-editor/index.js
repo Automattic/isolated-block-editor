@@ -214,31 +214,14 @@ function BlockEditor(props) {
   }));
 }
 
-var _default = (0, _data.withDispatch)(function (dispatch, _ownProps, _ref2) {
-  var select = _ref2.select;
-  var hasPeers = select('isolated/editor').hasPeers;
-
+var _default = (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),
       redo = _dispatch.redo,
       undo = _dispatch.undo;
 
-  var maybeUndo = function maybeUndo(actionCreator) {
-    return function () {
-      if (hasPeers()) {
-        var noticeId = 'isolated/undo-disabled';
-        dispatch('core/notices').removeNotice(noticeId);
-        return dispatch('core/notices').createNotice('warning', 'Undo/redo is disabled while editing with other users.', {
-          id: noticeId
-        });
-      } else {
-        return actionCreator();
-      }
-    };
-  };
-
   return {
-    redo: maybeUndo(redo),
-    undo: maybeUndo(undo)
+    redo: redo,
+    undo: undo
   };
 })(BlockEditor);
 

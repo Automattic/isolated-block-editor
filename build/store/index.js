@@ -29,10 +29,6 @@ var _reducer4 = _interopRequireDefault(require("./options/reducer"));
 
 var _actions4 = _interopRequireDefault(require("./options/actions"));
 
-var _reducer5 = _interopRequireDefault(require("./peers/reducer"));
-
-var _actions5 = _interopRequireDefault(require("./peers/actions"));
-
 var blockSelectors = _interopRequireWildcard(require("./blocks/selectors"));
 
 var editorSelectors = _interopRequireWildcard(require("./editor/selectors"));
@@ -41,7 +37,19 @@ var preferenceSelectors = _interopRequireWildcard(require("./preferences/selecto
 
 var optionSelectors = _interopRequireWildcard(require("./options/selectors"));
 
-var peersSelectors = _interopRequireWildcard(require("./peers/selectors"));
+var collabActions = _interopRequireWildcard(require("./collab/actions"));
+
+var collabSelectors = _interopRequireWildcard(require("./collab/selectors"));
+
+var collabPeersActions = _interopRequireWildcard(require("./collab-peers/actions"));
+
+var collabPeersSelectors = _interopRequireWildcard(require("./collab-peers/selectors"));
+
+var _controls = _interopRequireDefault(require("./collab/controls"));
+
+var _reducer5 = _interopRequireDefault(require("./collab/reducer"));
+
+var _reducer6 = _interopRequireDefault(require("./collab-peers/reducer"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -58,10 +66,12 @@ function storeConfig(preferencesKey, defaultPreferences) {
       editor: _reducer2["default"],
       preferences: _reducer3["default"],
       options: _reducer4["default"],
-      peers: _reducer5["default"]
+      collab: _reducer5["default"],
+      collabPeers: _reducer6["default"]
     }),
-    actions: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _actions["default"]), _actions2["default"]), _actions4["default"]), _actions3["default"]), _actions5["default"]),
-    selectors: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, blockSelectors), editorSelectors), preferenceSelectors), optionSelectors), peersSelectors),
+    actions: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, _actions["default"]), _actions2["default"]), _actions4["default"]), _actions3["default"]), collabActions), collabPeersActions),
+    selectors: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, blockSelectors), editorSelectors), preferenceSelectors), optionSelectors), collabSelectors), collabPeersSelectors),
+    controls: _objectSpread({}, _controls["default"]),
     persist: ['preferences'],
     initialState: {
       preferences: preferencesKey && localStorage.getItem(preferencesKey) ? // @ts-ignore

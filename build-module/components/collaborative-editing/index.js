@@ -22,7 +22,7 @@ import CollaborativeEditingAvatars from './components/avatars';
  * Transport module for real-time collaboration
  *
  * @typedef CollaborationTransport
- * @property {(message: CollaborationTransportDocMessage|CollaborationTransportSelectionMessage) => void} sendMessage
+ * @property {(message: CollaborationTransportMessage) => void} sendMessage
  * @property {(options: CollaborationTransportConnectOpts) => Promise<{isFirstInChannel: boolean}>} connect
  * @property {() => Promise<void>} disconnect
  */
@@ -59,6 +59,10 @@ import CollaborativeEditingAvatars from './components/avatars';
  * @property {string} identity
  * @property {'selection'} type
  * @property {EditorSelection} selection
+ */
+
+/**
+ * @typedef {CollaborationTransportDocMessage|CollaborationTransportSelectionMessage} CollaborationTransportMessage
  */
 
 /**
