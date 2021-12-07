@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import * as diff from 'lib0/diff';
 import { isEqual } from 'lodash';
 
 /** @typedef {import("yjs").XmlText} Y.XmlText */
@@ -9,11 +10,6 @@ import { isEqual } from 'lodash';
  * WordPress dependencies
  */
 import { create, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
-
-/**
- * Internal dependencies
- */
-import * as diff from './diff';
 
 /**
  * Convert an array of Gutenberg RichText formats to an array of range-based Y.Text formats.
