@@ -3,6 +3,11 @@
  */
 import * as yjs from 'yjs';
 
+/**
+ * Internal dependencies
+ */
+import { postDocToObject, updatePostDoc } from './algorithms/yjs';
+
 /** @typedef {import('./algorithms/yjs').PostObject} PostObject */
 /** @typedef {import('..').RichTextHint} RichTextHint */
 
@@ -14,11 +19,9 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  *
  * @param {Object} opts
  * @param {string} opts.identity - Client identifier.
- * @param {function(yjs.Doc, PostObject, RichTextHint=): void} opts.yDocUpdater - Function to apply changes to the Yjs doc.
- * @param {function(yjs.Doc): PostObject} opts.getPostFromYDoc - Function to get post object data from the Yjs doc.
- * @param {function(any): void} opts.sendMessage
+ * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
-export function createDocument( { identity, yDocUpdater, getPostFromYDoc, sendMessage } ) {
+export function createDocument( { identity, sendMessage } ) {
 	const doc = new yjs.Doc();
 	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
@@ -29,7 +32,7 @@ export function createDocument( { identity, yDocUpdater, getPostFromYDoc, sendMe
 	doc.on( 'update', ( update, origin ) => {
 		// Change received from peer, or triggered by self undo/redo
 		if ( origin !== identity ) {
-			const newData = getPostFromYDoc( doc );
+			const newData = postDocToObject( doc );
 			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
 		}
 
@@ -70,8 +73,8 @@ export function createDocument( { identity, yDocUpdater, getPostFromYDoc, sendMe
 		/**
 		 * @param {PostObject} data
 		 * @param {Object} [opts]
-		 * @param {boolean} [opts.isInitialContent]
-		 * @param {RichTextHint} [opts.richTextHint]
+		 * @param {boolean} [opts.isInitialContent] Whether this is the initial content loaded from the editor onLoad.
+		 * @param {RichTextHint} [opts.richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
 		 */
 		applyChangesToYDoc( data, { isInitialContent = false, richTextHint } = {} ) {
 			if ( state !== 'on' ) {
@@ -81,7 +84,7 @@ export function createDocument( { identity, yDocUpdater, getPostFromYDoc, sendMe
 			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
 
 			doc.transact( () => {
-				yDocUpdater( doc, data, richTextHint );
+				updatePostDoc( doc, data, richTextHint );
 			}, transactionOrigin );
 		},
 

@@ -17,12 +17,14 @@ import { applyHTMLDelta } from '../algorithms/rich-text';
  * @property {Object[]} comments
  */
 
+/** @typedef {import('../yjs-doc').RichTextHint} RichTextHint */
+
 /**
  * Updates the block doc with the local blocks block changes.
  *
  * @param {yjs.Map} yDocBlocks Blocks doc.
  * @param {Array}   blocks     Updated blocks.
- * @param {import('../..').RichTextHint} richTextHint
+ * @param {RichTextHint} [richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
  * @param {string}  clientId   Current clientId.
  */
 export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = '' ) {
@@ -56,7 +58,7 @@ export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = ''
 		const isPreexisting = byClientId.has( block.clientId );
 
 		if ( ! isPreexisting || ! isEqual( byClientId.get( block.clientId ), block ) ) {
-			const hasRichText = block.clientId === richTextHint?.clientId;
+			const hasRichText = richTextHint && block.clientId === richTextHint.clientId;
 
 			if ( hasRichText ) {
 				updateRichText( {
@@ -150,6 +152,7 @@ export function updateCommentRepliesDoc( repliesDoc, replies = [] ) {
  *
  * @param {yjs.Doc} doc     Shared doc.
  * @param {PostObject}  newPost Updated post.
+ * @param {RichTextHint} [richTextHint]
  */
 export function updatePostDoc( doc, newPost, richTextHint ) {
 	const postDoc = doc.getMap( 'post' );

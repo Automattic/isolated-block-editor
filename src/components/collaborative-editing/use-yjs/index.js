@@ -8,7 +8,6 @@ import { noop, once, sample } from 'lodash';
  * Internal dependencies
  */
 import { createDocument } from './yjs-doc';
-import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 
 /**
  * WordPress dependencies
@@ -45,8 +44,6 @@ async function initYDoc( { settings, registry } ) {
 
 	const doc = createDocument( {
 		identity,
-		yDocUpdater: updatePostDoc,
-		getPostFromYDoc: postDocToObject,
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
