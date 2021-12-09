@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.9.0] - 2021-12-09
+
 ### Breaking changes
 
 - Renamed collab-related selectors and action creators for clarity:
