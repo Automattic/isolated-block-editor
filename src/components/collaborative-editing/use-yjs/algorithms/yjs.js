@@ -86,7 +86,7 @@ export function updateRichText( { oldText = '', newBlock, attributeKey, richText
 	}
 	const blockWithRichTexts = richTexts.get( newBlock.clientId );
 	if ( ! blockWithRichTexts.has( attributeKey ) ) {
-		blockWithRichTexts.set( attributeKey, new yjs.XmlText() );
+		blockWithRichTexts.set( attributeKey, new yjs.XmlText( oldText ) );
 	}
 
 	const yxmlText = blockWithRichTexts.get( attributeKey );
