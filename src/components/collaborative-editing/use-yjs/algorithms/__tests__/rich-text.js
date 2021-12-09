@@ -1,6 +1,7 @@
 import * as Y from 'yjs';
 
 import { create, toHTMLString } from '@wordpress/rich-text';
+import '@wordpress/format-library';
 
 import { applyHTMLDelta, gutenFormatsToYFormats, stringAsMultiline } from '../rich-text';
 
@@ -13,7 +14,6 @@ const yxmlTextFrom = ( html, richTextOpts = {} ) => {
 describe( 'gutenFormatsToYFormats', () => {
 	it( 'should convert to a range-based Yjs format', () => {
 		const { formats } = create( { html: '<a href="some-url">abc</a>' } );
-		const expectedFormatObj = formats[ 0 ][ 0 ];
 		const result = gutenFormatsToYFormats( formats );
 		expect( result ).toEqual( [ { format: { a: { href: 'some-url' } }, index: 0, length: 3 } ] );
 	} );

@@ -9,6 +9,7 @@ import { isEqual } from 'lodash';
 /**
  * WordPress dependencies
  */
+import { select } from '@wordpress/data';
 import { create, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
 
 /**
@@ -39,7 +40,7 @@ export function gutenFormatsToYFormats( formats ) {
 			}
 
 			yFormats.push( {
-				format: { [ f.type ]: f.attributes || true },
+				format: namedGutenFormatToStandardTags( f ),
 				index: charIdx,
 				length: fLength,
 			} );
@@ -47,6 +48,22 @@ export function gutenFormatsToYFormats( formats ) {
 	} );
 
 	return yFormats;
+}
+
+/**
+ * Converts registered formats back to their standard tag/attribute names.
+ *
+ * For example, `core/bold` will be converted back to `strong`.
+ */
+export function namedGutenFormatToStandardTags( format ) {
+	const { tagName, attributes = {} } = select( 'core/rich-text' ).getFormatType( format.type );
+	if ( ! format.attributes ) return { [ tagName ]: true };
+
+	const remappedEntries = Object.entries( format.attributes ).map( ( [ key, value ] ) => [
+		attributes[ key ],
+		value,
+	] );
+	return { [ tagName ]: Object.fromEntries( remappedEntries ) };
 }
 
 /**
