@@ -66,7 +66,13 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 	};
 
 	return {
-		applyChangesToYDoc( data, { isInitialContent = false } = {} ) {
+		/**
+		 * @param {PostObject} data
+		 * @param {Object} [opts]
+		 * @param {boolean} [opts.isInitialContent]
+		 * @param {string|number} [opts.richTextHint]
+		 */
+		applyChangesToYDoc( data, { isInitialContent = false, richTextHint } = {} ) {
 			if ( state !== 'on' ) {
 				throw 'wrong state';
 			}
@@ -74,7 +80,7 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
 
 			doc.transact( () => {
-				applyChangesToYDoc( doc, data );
+				applyChangesToYDoc( doc, data, richTextHint );
 			}, transactionOrigin );
 		},
 
