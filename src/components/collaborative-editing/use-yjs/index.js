@@ -45,7 +45,7 @@ async function initYDoc( { settings, registry } ) {
 
 	const doc = createDocument( {
 		identity,
-		applyChangesToYDoc: updatePostDoc,
+		yDocUpdater: updatePostDoc,
 		getPostFromYDoc: postDocToObject,
 		/** @param {Object} message */
 		sendMessage: ( message ) => {

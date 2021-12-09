@@ -4,6 +4,7 @@
 import * as yjs from 'yjs';
 
 /** @typedef {import('./algorithms/yjs').PostObject} PostObject */
+/** @typedef {import('..').RichTextHint} RichTextHint */
 
 const encodeArray = ( array ) => array.toString();
 const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
@@ -13,11 +14,11 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  *
  * @param {Object} opts
  * @param {string} opts.identity - Client identifier.
- * @param {function(yjs.Doc, PostObject): void} opts.applyChangesToYDoc - Function to apply changes to the Yjs doc.
+ * @param {function(yjs.Doc, PostObject, RichTextHint=): void} opts.yDocUpdater - Function to apply changes to the Yjs doc.
  * @param {function(yjs.Doc): PostObject} opts.getPostFromYDoc - Function to get post object data from the Yjs doc.
  * @param {function(any): void} opts.sendMessage
  */
-export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc, sendMessage } ) {
+export function createDocument( { identity, yDocUpdater, getPostFromYDoc, sendMessage } ) {
 	const doc = new yjs.Doc();
 	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
@@ -70,7 +71,7 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 		 * @param {PostObject} data
 		 * @param {Object} [opts]
 		 * @param {boolean} [opts.isInitialContent]
-		 * @param {string|number} [opts.richTextHint]
+		 * @param {RichTextHint} [opts.richTextHint]
 		 */
 		applyChangesToYDoc( data, { isInitialContent = false, richTextHint } = {} ) {
 			if ( state !== 'on' ) {
@@ -80,7 +81,7 @@ export function createDocument( { identity, applyChangesToYDoc, getPostFromYDoc,
 			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
 
 			doc.transact( () => {
-				applyChangesToYDoc( doc, data, richTextHint );
+				yDocUpdater( doc, data, richTextHint );
 			}, transactionOrigin );
 		},
 
