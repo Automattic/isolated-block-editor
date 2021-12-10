@@ -71,18 +71,18 @@ export function namedGutenFormatToStandardTags( format ) {
  *
  * @param {string} htmlA
  * @param {string} htmlB
- * @param {Y.XmlText} yxmlText
+ * @param {import("yjs").Map} richTextMap
  * @param {Object} [richTextOpts] Optional options object to pass @wordpress/rich-text create().
  */
-export function applyHTMLDelta( htmlA, htmlB, yxmlText, richTextOpts = {} ) {
+export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 	const a = create( { ...richTextOpts, html: htmlA } );
 	const b = create( { ...richTextOpts, html: htmlB } );
 
-	const d = diff.simpleDiffString( a.text, b.text );
+	const stringDiff = diff.simpleDiffString( a.text, b.text );
 
 	// By default, a Yjs string insertion will inherit the formats of the previous character.
 	// We need to prevent this by inserting with an explicit format object nullifying the previous formats.
-	const previousCharFormats = b.formats[ d.index - 1 ];
+	const previousCharFormats = b.formats[ stringDiff.index - 1 ];
 	const nullifierFormat = previousCharFormats?.reduce(
 		( acc, { type } ) => ( {
 			...acc,
@@ -91,25 +91,34 @@ export function applyHTMLDelta( htmlA, htmlB, yxmlText, richTextOpts = {} ) {
 		{}
 	);
 
-	yxmlText.doc?.transact( () => {
-		yxmlText.delete( d.index, d.remove );
-		yxmlText.insert( d.index, d.insert, nullifierFormat );
+	richTextMap.doc?.transact( () => {
+		richTextMap.get( 'xmlText' ).delete( stringDiff.index, stringDiff.remove );
+		richTextMap.get( 'xmlText' ).insert( stringDiff.index, stringDiff.insert, nullifierFormat );
 
 		const gfa = gutenFormatsToYFormats( a.formats );
 		const gfb = gutenFormatsToYFormats( b.formats );
-		const df = diff.simpleDiffArray( gfa, gfb, isEqual );
+		const formatsDiff = diff.simpleDiffArray( gfa, gfb, isEqual );
 
-		if ( df.remove ) {
-			gfa.slice( df.index, df.index + df.remove ).forEach( ( f ) => {
+		if ( formatsDiff.remove ) {
+			gfa.slice( formatsDiff.index, formatsDiff.index + formatsDiff.remove ).forEach( ( f ) => {
 				const tagName = Object.keys( f.format )[ 0 ];
-				yxmlText.format( f.index, f.length, { [ tagName ]: null } );
+				richTextMap.get( 'xmlText' ).format( f.index, f.length, { [ tagName ]: null } );
 			} );
 		}
 
-		if ( df.insert ) {
-			df.insert.forEach( ( f ) => yxmlText.format( f.index, f.length, f.format ) );
+		if ( formatsDiff.insert ) {
+			formatsDiff.insert.forEach( ( f ) => richTextMap.get( 'xmlText' ).format( f.index, f.length, f.format ) );
 		}
 	} );
+}
+
+/**
+ * @param {import("yjs").Map} richTextMap
+ * @param {Object} [richTextOpts] Optional options object to pass @wordpress/rich-text toHTMLString().
+ */
+export function richTextMapToHTML( richTextMap, richTextOpts = {} ) {
+	// TODO: Replacements
+	return richTextMap.get( 'xmlText' ).toString();
 }
 
 /**

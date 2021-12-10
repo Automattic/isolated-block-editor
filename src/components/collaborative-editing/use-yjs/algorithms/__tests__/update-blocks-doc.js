@@ -382,7 +382,7 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 		} );
 		const richTextHint = { clientId: '1', attributeKey: 'content' };
 
-		test( 'Known RichText attribute gets updated simultaneously', async () => {
+		it( 'should merge intelligently when known RichText attribute gets updated simultaneously', async () => {
 			const originalBlocks = [ blockWithContent( 'two' ) ];
 			const updatedLocalBlocks = [ blockWithContent( 'one two' ) ];
 			const updatedRemoteBlocks = [ blockWithContent( 'two three' ) ];
@@ -393,7 +393,7 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 			).toEqual( [ blockWithContent( 'one two three' ) ] );
 		} );
 
-		test( 'Previously unknown RichText attribute gets updated simultaneously', async () => {
+		it( 'should converge on either update when previously unknown RichText attribute gets updated simultaneously', async () => {
 			const originalBlocks = [ blockWithContent( 'two' ) ];
 			const updatedLocalBlocks = [ blockWithContent( 'one two' ) ];
 			const updatedRemoteBlocks = [ blockWithContent( 'two three' ) ];

@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 /**
  * Internal dependencies
  */
-import { applyHTMLDelta } from '../algorithms/rich-text';
+import { applyHTMLDelta, richTextMapToHTML } from '../algorithms/rich-text';
 
 /**
  * @typedef {Object} PostObject
@@ -77,6 +77,7 @@ export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = ''
 	}
 }
 
+/** @returns {Set<string>} */
 function getKnownRichTextAttributes( clientId, richTextHint, richTexts ) {
 	const knownRichTextAttributes = richTexts.has( clientId ) && richTexts.get( clientId );
 	const attributeSet = knownRichTextAttributes ? new Set( knownRichTextAttributes.keys() ) : new Set();
@@ -105,12 +106,18 @@ export function updateRichText( { oldText = '', newBlock, attributeKey, richText
 	}
 	const blockWithRichTexts = richTexts.get( newBlock.clientId );
 	if ( ! blockWithRichTexts.has( attributeKey ) ) {
-		blockWithRichTexts.set( attributeKey, new yjs.XmlText() );
+		blockWithRichTexts.set(
+			attributeKey,
+			new yjs.Map( [
+				[ 'xmlText', new yjs.XmlText() ],
+				[ 'replacements', new yjs.Array() ],
+			] )
+		);
 		applyHTMLDelta( '', oldText, blockWithRichTexts.get( attributeKey ) );
 	}
 
-	const yxmlText = blockWithRichTexts.get( attributeKey );
-	applyHTMLDelta( oldText, newText, yxmlText );
+	const richTextMap = blockWithRichTexts.get( attributeKey );
+	applyHTMLDelta( oldText, newText, richTextMap );
 }
 
 /**
@@ -240,11 +247,11 @@ export function blocksDocToArray( yDocBlocks, clientId = '' ) {
 	const byClientId = yDocBlocks.get( 'byClientId' );
 
 	return order.map( ( _clientId ) => {
-		const richTexts = yDocBlocks.get( 'richTexts' ).get( _clientId ) || new yjs.Map();
-		const richTextsAsStrings = Array.from( richTexts.entries() ).reduce( ( acc, [ key, value ] ) => {
+		const richTextMap = yDocBlocks.get( 'richTexts' ).get( _clientId ) || new yjs.Map();
+		const richTextsAsStrings = Array.from( richTextMap.entries() ).reduce( ( acc, [ key, value ] ) => {
 			return {
 				...acc,
-				[ key ]: value.toString(),
+				[ key ]: richTextMapToHTML( value ),
 			};
 		}, {} );
 
