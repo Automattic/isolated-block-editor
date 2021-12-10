@@ -58,18 +58,17 @@ export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = ''
 		const isPreexisting = byClientId.has( block.clientId );
 
 		if ( ! isPreexisting || ! isEqual( byClientId.get( block.clientId ), block ) ) {
-			const hasRichText = richTextHint && block.clientId === richTextHint.clientId;
+			const richTexts = yDocBlocks.get( 'richTexts' );
+			const knownRichTextAttributes = getKnownRichTextAttributes( block.clientId, richTextHint, richTexts );
 
-			if ( hasRichText ) {
+			knownRichTextAttributes.forEach( ( attributeKey ) => {
 				updateRichText( {
-					oldText: isPreexisting
-						? byClientId.get( block.clientId ).attributes[ richTextHint.attributeKey ]
-						: undefined,
+					oldText: isPreexisting ? byClientId.get( block.clientId ).attributes[ attributeKey ] : undefined,
 					newBlock: block,
-					attributeKey: richTextHint.attributeKey,
-					richTexts: yDocBlocks.get( 'richTexts' ),
+					attributeKey,
+					richTexts,
 				} );
-			}
+			} );
 
 			byClientId.set( block.clientId, block );
 		}
@@ -78,6 +77,24 @@ export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = ''
 	}
 }
 
+function getKnownRichTextAttributes( clientId, richTextHint, richTexts ) {
+	const knownRichTextAttributes = richTexts.has( clientId ) && richTexts.get( clientId );
+	const attributeSet = knownRichTextAttributes ? new Set( knownRichTextAttributes.keys() ) : new Set();
+	if ( richTextHint && clientId === richTextHint.clientId ) {
+		attributeSet.add( richTextHint.attributeKey );
+	}
+	return attributeSet;
+}
+
+/**
+ * Updates the RichText value in the richTexts yMap using index-based manipulation.
+ *
+ * @param {Object} args
+ * @param {string} [args.oldText]
+ * @param {Object} args.newBlock
+ * @param {string} args.attributeKey
+ * @param {yjs.Map} args.richTexts
+ */
 export function updateRichText( { oldText = '', newBlock, attributeKey, richTexts } ) {
 	const newText = newBlock.attributes[ attributeKey ];
 
