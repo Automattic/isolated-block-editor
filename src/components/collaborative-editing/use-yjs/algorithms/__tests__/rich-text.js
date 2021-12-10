@@ -5,11 +5,12 @@ import '@wordpress/format-library';
 
 import { applyHTMLDelta, gutenFormatsToYFormats, richTextMapToHTML, stringAsMultiline } from '../rich-text';
 
-const richTextMapFrom = ( html, richTextOpts = {} ) => {
+const richTextMapFrom = ( html ) => {
 	const richTextMap = new Y.Doc().get( 'richTextMap', Y.Map );
 	richTextMap.set( 'xmlText', new Y.XmlText() );
+	richTextMap.set( 'multilineTag', undefined );
 	richTextMap.set( 'replacements', new Y.Array() );
-	applyHTMLDelta( '', html, richTextMap, richTextOpts );
+	applyHTMLDelta( '', html, richTextMap );
 	return richTextMap;
 };
 
@@ -151,18 +152,16 @@ describe( 'multiline', () => {
 	it( 'should support multiline tags', () => {
 		const before = '<li>foo</li><li>foo</li>';
 		const after = '<li>foo</li><li>bar</li>';
-		const richTextMap = richTextMapFrom( before, { multilineTag: 'li' } );
-		applyHTMLDelta( before, after, richTextMap, { multilineTag: 'li' } );
-		const result = stringAsMultiline( richTextMapToHTML( richTextMap ), 'li' );
-		expect( result ).toBe( after );
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
 	} );
 
 	it( 'should support multiline tags with nested tags', () => {
 		const before = '<li><em>foo</em></li><li>foo</li>';
 		const after = '<li>foo</li><li><em>bar</em></li>';
-		const richTextMap = richTextMapFrom( before, { multilineTag: 'li' } );
-		applyHTMLDelta( before, after, richTextMap, { multilineTag: 'li' } );
-		const result = stringAsMultiline( richTextMapToHTML( richTextMap ), 'li' );
-		expect( result ).toBe( after );
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
 	} );
 } );

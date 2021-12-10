@@ -66,6 +66,15 @@ export function namedGutenFormatToStandardTags( format ) {
 	return { [ tagName ]: Object.fromEntries( remappedEntries ) };
 }
 
+// TODO: Unsolved problem
+// This is an imperfect inferral, so ideally we want to get this information
+// from Gutenberg's internal representation of the RichText.
+function getInferredMultilineTag( html ) {
+	if ( /^<li>/.test( html ) ) return 'li';
+	if ( /^<p>/.test( html ) ) return 'p';
+	return undefined;
+}
+
 /**
  * Apply the delta between two HTML strings to a Y.XmlText.
  *
@@ -75,8 +84,17 @@ export function namedGutenFormatToStandardTags( format ) {
  * @param {Object} [richTextOpts] Optional options object to pass @wordpress/rich-text create().
  */
 export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
-	const a = create( { ...richTextOpts, html: htmlA } );
-	const b = create( { ...richTextOpts, html: htmlB } );
+	const [ multilineTagA, multilineTagB ] = [ htmlA, htmlB ].map( getInferredMultilineTag );
+	const inferredMultilineTag = multilineTagA || multilineTagB;
+	const mergedRichTextOpts = {
+		...( inferredMultilineTag ? { multilineTag: inferredMultilineTag } : {} ),
+		...richTextOpts,
+	};
+
+	richTextMap.set( 'multilineTag', inferredMultilineTag );
+
+	const a = create( { ...mergedRichTextOpts, html: htmlA } );
+	const b = create( { ...mergedRichTextOpts, html: htmlB } );
 
 	const stringDiff = diff.simpleDiffString( a.text, b.text );
 
@@ -114,11 +132,18 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 
 /**
  * @param {import("yjs").Map} richTextMap
- * @param {Object} [richTextOpts] Optional options object to pass @wordpress/rich-text toHTMLString().
  */
-export function richTextMapToHTML( richTextMap, richTextOpts = {} ) {
+export function richTextMapToHTML( richTextMap ) {
+	const multilineTag = richTextMap.get( 'multilineTag' );
+	let text = richTextMap.get( 'xmlText' ).toString();
+
 	// TODO: Replacements
-	return richTextMap.get( 'xmlText' ).toString();
+
+	if ( multilineTag ) {
+		text = stringAsMultiline( text, multilineTag );
+	}
+
+	return text;
 }
 
 /**

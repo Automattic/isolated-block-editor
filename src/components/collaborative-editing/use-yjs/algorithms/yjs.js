@@ -110,6 +110,7 @@ export function updateRichText( { oldText = '', newBlock, attributeKey, richText
 			attributeKey,
 			new yjs.Map( [
 				[ 'xmlText', new yjs.XmlText() ],
+				[ 'multilineTag', undefined ],
 				[ 'replacements', new yjs.Array() ],
 			] )
 		);
