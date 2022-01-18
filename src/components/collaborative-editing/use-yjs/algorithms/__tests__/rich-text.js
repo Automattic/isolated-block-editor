@@ -3,7 +3,7 @@ import * as Y from 'yjs';
 import { create, toHTMLString } from '@wordpress/rich-text';
 import '@wordpress/format-library';
 
-import { applyHTMLDelta, gutenFormatsToYFormats, richTextMapToHTML, stringAsMultiline } from '../rich-text';
+import { applyHTMLDelta, gutenFormatsToYFormats, richTextMapToHTML } from '../rich-text';
 
 const richTextMapFrom = ( html ) => {
 	const richTextMap = new Y.Doc().get( 'richTextMap', Y.Map );

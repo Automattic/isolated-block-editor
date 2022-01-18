@@ -166,7 +166,7 @@ export function richTextMapToHTML( richTextMap ) {
  * @param {string} multilineTag The tag name to wrap each line with.
  * @returns
  */
-export function stringAsMultiline( str, multilineTag ) {
+function stringAsMultiline( str, multilineTag ) {
 	return str
 		.split( __UNSTABLE_LINE_SEPARATOR )
 		.map( ( str ) => `<${ multilineTag }>${ str }</${ multilineTag }>` )
