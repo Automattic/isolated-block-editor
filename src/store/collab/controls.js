@@ -18,7 +18,7 @@ const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => 
 	const doc = registry.select( 'isolated/editor' ).getYDoc();
 
 	if ( doc && ! action.isTriggeredByYDoc ) {
-		doc.applyChangesToYDoc(
+		doc.applyLocalChangesToYDoc(
 			{ blocks: action.blocks },
 			{
 				isInitialContent: action.isInitialContent,
