@@ -6,12 +6,11 @@ const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
 
 /** @returns {import('../../components/collaborative-editing').RichTextHint|undefined} */
 const getRichTextHint = ( registry ) => {
-	const selectionStart = registry.select( 'core/block-editor' ).getSelectionStart();
-
-	// If the selection has an attribute key that is a string, we can deduce that the attribute is a RichText
-	return typeof selectionStart?.attributeKey === 'string'
-		? { clientId: selectionStart.clientId, attributeKey: selectionStart.attributeKey }
-		: undefined;
+	if ( registry.select( 'isolated/editor' ).selectionIsInRichText() ) {
+		const { clientId, attributeKey } = registry.select( 'core/block-editor' ).getSelectionStart();
+		return { clientId, attributeKey };
+	}
+	return undefined;
 };
 
 const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => {
