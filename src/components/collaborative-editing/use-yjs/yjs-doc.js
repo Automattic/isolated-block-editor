@@ -18,16 +18,19 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  * Create a Yjs document.
  *
  * @param {Object} opts
+ * @param {function} opts.getSelectionStart - TEMP.
  * @param {string} opts.identity - Client identifier.
  * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
-export function createDocument( { identity, sendMessage } ) {
+export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 	const doc = new yjs.Doc();
 	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
 
 	let yDocTriggeredChangeListeners = [];
 	let connectionReadyListeners = [];
+
+	let relativePosition;
 
 	doc.on( 'update', ( update, origin ) => {
 		// Change received from peer, or triggered by self undo/redo
@@ -67,6 +70,23 @@ export function createDocument( { identity, sendMessage } ) {
 			destination,
 			isReply,
 		} );
+	};
+
+	const setRelativePosition = () => {
+		const selectionStart = getSelectionStart();
+		const { clientId, attributeKey, offset } = selectionStart || {};
+		const richTexts = doc.getMap( 'post' )?.get( 'blocks' )?.get( 'richTexts' );
+
+		if ( richTexts?.get( clientId )?.has( attributeKey ) ) {
+			const xmlText = richTexts.get( clientId ).get( attributeKey ).get( 'xmlText' );
+			const relPos = yjs.createRelativePositionFromTypeIndex( xmlText, offset, -1 );
+			return () => {
+				const absPos = yjs.createAbsolutePositionFromRelativePosition( relPos, doc, -1 );
+				return absPos ? { previousSelection: selectionStart, adjustedIndex: absPos.index } : undefined;
+			};
+		}
+
+		return undefined;
 	};
 
 	return {
@@ -139,6 +159,8 @@ export function createDocument( { identity, sendMessage } ) {
 					setState( 'on' );
 					break;
 				case 'syncUpdate':
+					// TODO: Cache rel cur pos here
+					relativePosition = setRelativePosition();
 					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
 					break;
 			}
@@ -166,6 +188,10 @@ export function createDocument( { identity, sendMessage } ) {
 
 		getPostMap() {
 			return doc.getMap( 'post' );
+		},
+
+		setRelativePosition() {
+			return relativePosition?.();
 		},
 	};
 }
