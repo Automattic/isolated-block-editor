@@ -85,6 +85,8 @@ describe( 'applyHTMLDelta', () => {
 		// But since @wordpress/rich-text can convert this back to the correct HTML,
 		// it's ok for our purposes.
 		// Update 2021-12-11: This behavior was reversed in https://github.com/WordPress/gutenberg/pull/35016 😬
+		// Should we use normaliseFormats() in richTextMapToHTML?
+		// https://github.com/WordPress/gutenberg/blob/trunk/packages/rich-text/src/normalise-formats.js
 		const wpRichText = create( { html: yxmlResult } );
 		const wpRichTextStringResult = toHTMLString( { value: wpRichText } );
 		expect( wpRichTextStringResult ).toBe( after );
@@ -102,6 +104,14 @@ describe( 'applyHTMLDelta', () => {
 	it( 'should remove tags', () => {
 		const before = '<em>bold</em>';
 		const after = 'bold';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should handle inline images', () => {
+		const before = 'my pic';
+		const after = 'my <img src="foo" alt="bar"> pic';
 		const richTextMap = richTextMapFrom( before );
 		applyHTMLDelta( before, after, richTextMap );
 		expect( richTextMapToHTML( richTextMap ) ).toBe( after );

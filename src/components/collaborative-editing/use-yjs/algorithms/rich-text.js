@@ -10,7 +10,9 @@ import { isEqual } from 'lodash';
  * WordPress dependencies
  */
 import { select } from '@wordpress/data';
-import { create, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
+import { create, toHTMLString, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
+
+const OBJECT_REPLACEMENT_CHARACTER = '\ufffc'; // defined in @wordpress/rich-text special-characters
 
 /**
  * Convert an array of Gutenberg RichText formats to an array of range-based Y.Text formats.
@@ -109,39 +111,50 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 		{}
 	);
 
+	// Yjs can't do insertion operations on sparse arrays. Since replacements do not rely on
+	// an index-based mapping with the full text, let's condense the arrays here.
+	const toDenseArray = ( arr ) => arr.filter( ( x ) => x );
+	const replacementsDiff = diff.simpleDiffArray( toDenseArray( a.replacements ), toDenseArray( b.replacements ) );
+
 	richTextMap.doc?.transact( () => {
 		richTextMap.get( 'xmlText' ).delete( stringDiff.index, stringDiff.remove );
 		richTextMap.get( 'xmlText' ).insert( stringDiff.index, stringDiff.insert, nullifierFormat );
 
-		const gfa = gutenFormatsToYFormats( a.formats );
-		const gfb = gutenFormatsToYFormats( b.formats );
-		const formatsDiff = diff.simpleDiffArray( gfa, gfb, isEqual );
+		const yfa = gutenFormatsToYFormats( a.formats );
+		const yfb = gutenFormatsToYFormats( b.formats );
+		const formatsDiff = diff.simpleDiffArray( yfa, yfb, isEqual );
 
 		if ( formatsDiff.remove ) {
-			gfa.slice( formatsDiff.index, formatsDiff.index + formatsDiff.remove ).forEach( ( f ) => {
+			yfa.slice( formatsDiff.index, formatsDiff.index + formatsDiff.remove ).forEach( ( f ) => {
 				const tagName = Object.keys( f.format )[ 0 ];
 				richTextMap.get( 'xmlText' ).format( f.index, f.length, { [ tagName ]: null } );
 			} );
 		}
-
 		if ( formatsDiff.insert ) {
 			formatsDiff.insert.forEach( ( f ) => richTextMap.get( 'xmlText' ).format( f.index, f.length, f.format ) );
 		}
+
+		richTextMap.get( 'replacements' ).delete( replacementsDiff.index, replacementsDiff.remove );
+		richTextMap.get( 'replacements' ).insert( replacementsDiff.index, replacementsDiff.insert );
 	} );
 }
 
 /**
  * @param {import("yjs").Map} richTextMap
+ * @returns {string}
  */
 export function richTextMapToHTML( richTextMap ) {
-	const multilineTag = richTextMap.get( 'multilineTag' );
 	let text = richTextMap.get( 'xmlText' ).toString();
 
-	// TODO: Replacements
+	richTextMap.get( 'replacements' ).forEach( ( replacement ) => {
+		const replacementHTML = toHTMLString( {
+			value: { replacements: [ replacement ], formats: Array( 1 ), text: OBJECT_REPLACEMENT_CHARACTER },
+		} );
+		text = text.replace( OBJECT_REPLACEMENT_CHARACTER, replacementHTML );
+	} );
 
-	if ( multilineTag ) {
-		text = stringAsMultiline( text, multilineTag );
-	}
+	const multilineTag = richTextMap.get( 'multilineTag' );
+	text = multilineTag ? stringAsMultiline( text, multilineTag ) : text;
 
 	return text;
 }
