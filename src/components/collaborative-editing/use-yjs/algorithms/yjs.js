@@ -63,7 +63,6 @@ export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = ''
 
 			knownRichTextAttributes.forEach( ( attributeKey ) => {
 				updateRichText( {
-					oldText: isPreexisting ? byClientId.get( block.clientId ).attributes[ attributeKey ] : undefined,
 					newBlock: block,
 					attributeKey,
 					richTexts,
@@ -91,15 +90,12 @@ function getKnownRichTextAttributes( clientId, richTextHint, richTexts ) {
  * Updates the RichText value in the richTexts yMap using index-based manipulation.
  *
  * @param {Object} args
- * @param {string} [args.oldText]
  * @param {Object} args.newBlock
  * @param {string} args.attributeKey
  * @param {yjs.Map} args.richTexts
  */
-export function updateRichText( { oldText = '', newBlock, attributeKey, richTexts } ) {
+export function updateRichText( { newBlock, attributeKey, richTexts } ) {
 	const newText = newBlock.attributes[ attributeKey ];
-
-	if ( oldText === newText ) return;
 
 	if ( ! richTexts.has( newBlock.clientId ) ) {
 		richTexts.set( newBlock.clientId, new yjs.Map() );
@@ -114,10 +110,10 @@ export function updateRichText( { oldText = '', newBlock, attributeKey, richText
 				[ 'replacements', new yjs.Array() ],
 			] )
 		);
-		applyHTMLDelta( '', oldText, blockWithRichTexts.get( attributeKey ) );
 	}
 
 	const richTextMap = blockWithRichTexts.get( attributeKey );
+	const oldText = richTextMapToHTML( blockWithRichTexts.get( attributeKey ) );
 	applyHTMLDelta( oldText, newText, richTextMap );
 }
 

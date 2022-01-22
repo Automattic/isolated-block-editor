@@ -2,6 +2,7 @@
  * External dependencies
  */
 import * as yjs from 'yjs';
+import { createMutex } from 'lib0/mutex';
 
 /**
  * Internal dependencies
@@ -24,6 +25,7 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  */
 export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 	const doc = new yjs.Doc();
+	const mutex = createMutex();
 	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
 
@@ -81,6 +83,7 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 			const xmlText = richTexts.get( clientId ).get( attributeKey ).get( 'xmlText' );
 			const relPos = yjs.createRelativePositionFromTypeIndex( xmlText, offset, -1 );
 			return () => {
+				// @ts-ignore Types are wrong
 				const absPos = yjs.createAbsolutePositionFromRelativePosition( relPos, doc, -1 );
 				return absPos ? { previousSelection: selectionStart, adjustedIndex: absPos.index } : undefined;
 			};
@@ -103,9 +106,11 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 
 			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
 
-			doc.transact( () => {
-				updatePostDoc( doc, data, richTextHint );
-			}, transactionOrigin );
+			mutex( () =>
+				doc.transact( () => {
+					updatePostDoc( doc, data, richTextHint );
+				}, transactionOrigin )
+			);
 		},
 
 		connect() {
@@ -155,13 +160,12 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 					if ( content.destination !== identity ) {
 						return;
 					}
-					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
+					mutex( () => yjs.applyUpdate( doc, decodeArray( content.update ), origin ) );
 					setState( 'on' );
 					break;
 				case 'syncUpdate':
-					// TODO: Cache rel cur pos here
 					relativePosition = setRelativePosition();
-					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
+					mutex( () => yjs.applyUpdate( doc, decodeArray( content.update ), origin ) );
 					break;
 			}
 		},
