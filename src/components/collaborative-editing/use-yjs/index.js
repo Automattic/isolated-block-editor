@@ -21,6 +21,7 @@ import { useEffect, useRef } from '@wordpress/element';
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
 import { setupUndoManager } from './yjs-undo';
+import { RelativePosition } from './algorithms/relative-position';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
@@ -44,7 +45,7 @@ async function initYDoc( { settings, registry } ) {
 
 	const doc = createDocument( {
 		identity,
-		getSelectionStart: select( 'core/block-editor' ).getSelectionStart,
+		relativePositionManager: new RelativePosition( registry ),
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
@@ -62,13 +63,6 @@ async function initYDoc( { settings, registry } ) {
 	doc.onYDocTriggeredChange( ( changes ) => {
 		debug( 'changes triggered by ydoc, applying to editor state', changes );
 		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
-
-		const newSelection = doc.setRelativePosition();
-		if ( newSelection ) {
-			const { previousSelection, adjustedIndex } = newSelection;
-			const { clientId, attributeKey } = previousSelection;
-			dispatch( 'core/block-editor' ).selectionChange( clientId, attributeKey, adjustedIndex, adjustedIndex );
-		}
 	} );
 
 	const { isFirstInChannel } = await transport.connect( {

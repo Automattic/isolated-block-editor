@@ -10,6 +10,7 @@ import { createMutex } from 'lib0/mutex';
 import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 
 /** @typedef {import('./algorithms/yjs').PostObject} PostObject */
+/** @typedef {import('./algorithms/relative-position').RelativePosition} RelativePosition */
 /** @typedef {import('..').RichTextHint} RichTextHint */
 
 const encodeArray = ( array ) => array.toString();
@@ -19,11 +20,11 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  * Create a Yjs document.
  *
  * @param {Object} opts
- * @param {function} opts.getSelectionStart - TEMP.
+ * @param {RelativePosition} opts.relativePositionManager - Module to coordinate conversions between the block editor selection and Y.RelativePosition.
  * @param {string} opts.identity - Client identifier.
  * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
-export function createDocument( { identity, getSelectionStart, sendMessage } ) {
+export function createDocument( { identity, relativePositionManager, sendMessage } ) {
 	const doc = new yjs.Doc();
 	const mutex = createMutex();
 	/** @type {'off'|'connecting'|'on'} */
@@ -32,13 +33,12 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 	let yDocTriggeredChangeListeners = [];
 	let connectionReadyListeners = [];
 
-	let relativePosition;
-
 	doc.on( 'update', ( update, origin ) => {
 		// Change received from peer, or triggered by self undo/redo
 		if ( origin !== identity ) {
 			const newData = postDocToObject( doc );
 			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
+			relativePositionManager.setAbsolutePosition( doc );
 		}
 
 		const isLocalOrigin =
@@ -72,24 +72,6 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 			destination,
 			isReply,
 		} );
-	};
-
-	const setRelativePosition = () => {
-		const selectionStart = getSelectionStart();
-		const { clientId, attributeKey, offset } = selectionStart || {};
-		const richTexts = doc.getMap( 'post' )?.get( 'blocks' )?.get( 'richTexts' );
-
-		if ( richTexts?.get( clientId )?.has( attributeKey ) ) {
-			const xmlText = richTexts.get( clientId ).get( attributeKey ).get( 'xmlText' );
-			const relPos = yjs.createRelativePositionFromTypeIndex( xmlText, offset, -1 );
-			return () => {
-				// @ts-ignore Types are wrong
-				const absPos = yjs.createAbsolutePositionFromRelativePosition( relPos, doc, -1 );
-				return absPos ? { previousSelection: selectionStart, adjustedIndex: absPos.index } : undefined;
-			};
-		}
-
-		return undefined;
 	};
 
 	return {
@@ -164,7 +146,7 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 					setState( 'on' );
 					break;
 				case 'syncUpdate':
-					relativePosition = setRelativePosition();
+					relativePositionManager.saveRelativePosition( doc );
 					mutex( () => yjs.applyUpdate( doc, decodeArray( content.update ), origin ) );
 					break;
 			}
@@ -192,10 +174,6 @@ export function createDocument( { identity, getSelectionStart, sendMessage } ) {
 
 		getPostMap() {
 			return doc.getMap( 'post' );
-		},
-
-		setRelativePosition() {
-			return relativePosition?.();
 		},
 	};
 }
