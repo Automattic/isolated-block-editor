@@ -18,7 +18,6 @@ export function getUndoManager( state ) {
  * e.g. `<RichText identifier="myAttributeKey" />`. If the block developer has neglected to do this,
  * the selection.attributeKey will fall back to a `number`, and we can't tell which attribute it's
  * actually associated with. This happens a lot because the `identifier` prop is undocumented.
- * Having an `identifier` is also a requirement for us to be able to show peer carets.
  */
 export const selectionIsInRichText = createRegistrySelector( ( select ) => ( state ) => {
 	const selectionStart = select( 'core/block-editor' ).getSelectionStart();
