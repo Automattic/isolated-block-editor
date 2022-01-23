@@ -107,19 +107,15 @@ describe( 'CollaborativeEditing', () => {
 		expect( bobScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello' );
 		expect( bobScreen.getByTitle( 'Alice' ) ).toHaveTextContent( 'o' ); // peer caret
 
-		userEvent.keyboard( 'world' );
+		userEvent.keyboard( '!' );
 
-		expect( aliceScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'helloworld' );
-		expect( bobScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'helloworld' );
+		expect( aliceScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello!' );
+		expect( bobScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'hello!' );
 
-		expect( aliceScreen.getByTitle( 'Bob' ) ).toHaveTextContent( 'd' ); // peer caret
+		expect( aliceScreen.getByTitle( 'Bob' ) ).toHaveTextContent( '!' ); // peer caret
 
-		expect( onSave1 ).toHaveBeenLastCalledWith(
-			'<!-- wp:paragraph -->\n<p>helloworld</p>\n<!-- /wp:paragraph -->'
-		);
-		expect( onSave2 ).toHaveBeenLastCalledWith(
-			'<!-- wp:paragraph -->\n<p>helloworld</p>\n<!-- /wp:paragraph -->'
-		);
+		expect( onSave1 ).toHaveBeenLastCalledWith( '<!-- wp:paragraph -->\n<p>hello!</p>\n<!-- /wp:paragraph -->' );
+		expect( onSave2 ).toHaveBeenLastCalledWith( '<!-- wp:paragraph -->\n<p>hello!</p>\n<!-- /wp:paragraph -->' );
 	} );
 
 	it( 'should work with initial onLoad content', async () => {
