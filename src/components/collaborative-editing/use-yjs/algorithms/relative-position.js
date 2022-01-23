@@ -3,14 +3,21 @@
  */
 import * as yjs from 'yjs';
 
+/**
+ * @typedef WPBlockSelection
+ * @property {string} [clientId]
+ * @property {string} [attributeKey]
+ * @property {number} [offset]
+ */
+
 export class RelativePosition {
-	/** @param {Object} registry - Redux data registry. */
-	constructor( registry ) {
-		this.getSelection = () => ( {
-			start: registry.select( 'core/block-editor' ).getSelectionStart(),
-			end: registry.select( 'core/block-editor' ).getSelectionEnd(),
-		} );
-		this.selectionChange = registry.dispatch( 'core/block-editor' ).selectionChange;
+	/**
+	 * @param {() => {start: WPBlockSelection, end: WPBlockSelection}} getSelection - Function to get block editor selection.
+	 * @param {(clientId: string, attributeKey: string, startOffset: number, endOffset: number) => void} selectionChange - Function to set block editor selection.
+	 */
+	constructor( getSelection, selectionChange ) {
+		this.getSelection = getSelection;
+		this.selectionChange = selectionChange;
 	}
 
 	/**
@@ -25,7 +32,11 @@ export class RelativePosition {
 		const { clientId, attributeKey } = start || {};
 		const richTexts = doc.getMap( 'post' )?.get( 'blocks' )?.get( 'richTexts' );
 
-		if ( richTexts?.get( clientId )?.has( attributeKey ) ) {
+		if (
+			richTexts?.get( clientId )?.has( attributeKey ) &&
+			typeof start.offset === 'number' &&
+			typeof end.offset === 'number'
+		) {
 			const xmlText = richTexts.get( clientId ).get( attributeKey ).get( 'xmlText' );
 			this.relPos = {
 				clientId,
@@ -45,14 +56,18 @@ export class RelativePosition {
 	 * @param {yjs.Doc} doc
 	 */
 	setAbsolutePosition( doc ) {
-		if ( this.relPos ) {
-			const { clientId, attributeKey, startOffset, endOffset } = this.relPos;
-			this.selectionChange(
-				clientId,
-				attributeKey,
-				yjs.createAbsolutePositionFromRelativePosition( startOffset, doc )?.index,
-				yjs.createAbsolutePositionFromRelativePosition( endOffset, doc )?.index
-			);
+		if ( ! this.relPos?.clientId || ! this.relPos?.attributeKey ) {
+			return;
 		}
+
+		const { clientId, attributeKey, startOffset, endOffset } = this.relPos;
+		const absStartOffset = yjs.createAbsolutePositionFromRelativePosition( startOffset, doc )?.index;
+		const absEndOffset = yjs.createAbsolutePositionFromRelativePosition( endOffset, doc )?.index;
+
+		if ( typeof absStartOffset !== 'number' || typeof absEndOffset !== 'number' ) {
+			return;
+		}
+
+		this.selectionChange( clientId, attributeKey, absStartOffset, absEndOffset );
 	}
 }

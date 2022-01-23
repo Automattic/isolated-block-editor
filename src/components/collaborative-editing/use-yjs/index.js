@@ -45,7 +45,13 @@ async function initYDoc( { settings, registry } ) {
 
 	const doc = createDocument( {
 		identity,
-		relativePositionManager: new RelativePosition( registry ),
+		relativePositionManager: new RelativePosition(
+			() => ( {
+				start: select( 'core/block-editor' ).getSelectionStart(),
+				end: select( 'core/block-editor' ).getSelectionEnd(),
+			} ),
+			dispatch( 'core/block-editor' ).selectionChange
+		),
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
