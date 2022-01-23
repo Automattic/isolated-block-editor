@@ -15,13 +15,25 @@ import { RelativePosition } from '../../components/collaborative-editing/use-yjs
 
 const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
 
-/** @returns {import('../../components/collaborative-editing').RichTextHint|undefined} */
+// TODO: Unsolved problem
+/**
+ * Return the clientId and block attribute key if the current selection can be
+ * associated with a RichText attribute.
+ *
+ * Caution: This won't return false positives, but it will return false negatives.
+ * Currently the only way of telling whether a given block attribute is associated with a `<RichText>`
+ * in the editor is for it to be passed an `identifier` prop with the block attribute key,
+ * e.g. `<RichText identifier="myAttributeKey" />`. If the block developer has neglected to do this,
+ * the selection.attributeKey will fall back to a `number`, and we can't tell which attribute it's
+ * actually associated with. This happens a lot because the `identifier` prop is undocumented.
+ *
+ * @returns {import('../../components/collaborative-editing').RichTextHint|undefined}
+ */
 const getRichTextHint = ( registry ) => {
-	if ( registry.select( 'isolated/editor' ).selectionIsInRichText() ) {
-		const { clientId, attributeKey } = registry.select( 'core/block-editor' ).getSelectionStart();
-		return { clientId, attributeKey };
-	}
-	return undefined;
+	const { clientId, attributeKey } = registry.select( 'core/block-editor' ).getSelectionStart();
+
+	// If the selection has an attribute key that is a string, we can deduce that the attribute is a RichText
+	return typeof attributeKey === 'string' ? { clientId, attributeKey } : undefined;
 };
 
 const initRelativePositionForPeer = ( peer, registry ) =>
