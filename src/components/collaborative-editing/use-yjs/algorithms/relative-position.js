@@ -29,7 +29,7 @@ export class RelativePosition {
 	 */
 	saveRelativePosition( doc ) {
 		const { start, end } = this.getSelection();
-		const { clientId, attributeKey } = start || {};
+		const { clientId, attributeKey } = start ?? {};
 		const richTexts = doc.getMap( 'post' )?.get( 'blocks' )?.get( 'richTexts' );
 
 		if (

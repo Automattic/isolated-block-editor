@@ -172,6 +172,10 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 			return state;
 		},
 
+		getDoc() {
+			return doc;
+		},
+
 		getPostMap() {
 			return doc.getMap( 'post' );
 		},

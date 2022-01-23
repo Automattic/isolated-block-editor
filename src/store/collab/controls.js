@@ -1,6 +1,17 @@
+/**
+ * External dependencies
+ */
 import { ActionCreators } from 'redux-undo';
 
+/**
+ * WordPress dependencies
+ */
 import { createRegistryControl } from '@wordpress/data';
+
+/**
+ * Internal dependencies
+ */
+import { RelativePosition } from '../../components/collaborative-editing/use-yjs/algorithms/relative-position';
 
 const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
 
@@ -13,10 +24,25 @@ const getRichTextHint = ( registry ) => {
 	return undefined;
 };
 
+const initRelativePositionForPeer = ( peer, registry ) =>
+	new RelativePosition(
+		() => ( { start: peer.start ?? {}, end: peer.end ?? {} } ),
+		( clientId, attributeKey, startOffset, endOffset ) =>
+			registry.dispatch( 'isolated/editor' ).setCollabPeerSelection( peer.id, {
+				start: { clientId, attributeKey, offset: startOffset },
+				end: { clientId, attributeKey, offset: endOffset },
+			} )
+	);
+
 const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => {
 	const doc = registry.select( 'isolated/editor' ).getYDoc();
 
 	if ( doc && ! action.isTriggeredByYDoc ) {
+		const peerRelativePositions = Object.values(
+			registry.select( 'isolated/editor' ).getCollabPeers()
+		).map( ( peer ) => initRelativePositionForPeer( peer, registry ) );
+		peerRelativePositions.forEach( ( relPos ) => relPos.saveRelativePosition( doc.getDoc() ) );
+
 		doc.applyLocalChangesToYDoc(
 			{ blocks: action.blocks },
 			{
@@ -24,6 +50,8 @@ const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => 
 				richTextHint: getRichTextHint( registry ),
 			}
 		);
+
+		peerRelativePositions.forEach( ( relPos ) => relPos.setAbsolutePosition( doc.getDoc() ) );
 	}
 
 	return action;
