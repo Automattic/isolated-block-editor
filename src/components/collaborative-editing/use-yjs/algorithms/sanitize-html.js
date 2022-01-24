@@ -1,5 +1,15 @@
 import { remove } from '@wordpress/dom';
 
+// TODO: Unsolved problem
+// The limitation in our sanitization strategy is that it does not match the
+// server-side wp_kses rules, which should be considered the canonical config
+// of how unsafe the site owner is willing to be. On sites that do allow script tags,
+// this crude sanitization strategy could wipe out those tags if a peer joined
+// and re-saved their sanitized content.
+//
+// The ideal solution would be for block authors to make sure that any arbitrary code
+// is run through wp_kses before executing.
+
 /**
  * Strips scripts and on* attributes from HTML.
  *
