@@ -36,11 +36,11 @@ const getRichTextHint = ( registry ) => {
 	return typeof attributeKey === 'string' ? { clientId, attributeKey } : undefined;
 };
 
-const initRelativePositionForPeer = ( peer, registry ) =>
+const initRelativePositionForPeer = ( peerId, peer, registry ) =>
 	new RelativePosition(
 		() => ( { start: peer.start ?? {}, end: peer.end ?? {} } ),
 		( clientId, attributeKey, startOffset, endOffset ) =>
-			registry.dispatch( 'isolated/editor' ).setCollabPeerSelection( peer.id, {
+			registry.dispatch( 'isolated/editor' ).setCollabPeerSelection( peerId, {
 				start: { clientId, attributeKey, offset: startOffset },
 				end: { clientId, attributeKey, offset: endOffset },
 			} )
@@ -52,9 +52,9 @@ const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => 
 	// If the change is triggered locally from the editor (i.e. is neither a remote change nor an undo/redo),
 	// apply those changes to the Yjs doc. Also shift the peer carets if appropriate.
 	if ( doc && ! action.isTriggeredByYDoc ) {
-		const peerRelativePositions = Object.values(
+		const peerRelativePositions = Object.entries(
 			registry.select( 'isolated/editor' ).getCollabPeers()
-		).map( ( peer ) => initRelativePositionForPeer( peer, registry ) );
+		).map( ( [ peerId, peer ] ) => initRelativePositionForPeer( peerId, peer, registry ) );
 		peerRelativePositions.forEach( ( relPos ) => relPos.saveRelativePosition( doc.getDoc() ) );
 
 		doc.applyLocalChangesToYDoc(
