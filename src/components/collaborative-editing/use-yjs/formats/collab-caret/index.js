@@ -36,7 +36,7 @@ export function applyCarets( record, carets = [] ) {
 		// @ts-ignore Intl.Segmenter is not in spec yet
 		const lastGrapheme = Intl.Segmenter
 			? // @ts-ignore Intl.Segmenter is not in spec yet
-			  [ ...new Intl.Segmenter().segment( record.text ) ].at( -1 )?.segment
+			  [ ...new Intl.Segmenter().segment( record.text ) ].pop()?.segment
 			: undefined;
 		const offset = lastGrapheme?.length ?? 1; // fall back to 1 if we can't accurately segment the last grapheme
 
