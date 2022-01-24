@@ -10,6 +10,13 @@ import * as yjs from 'yjs';
  * @property {number} [offset]
  */
 
+/**
+ * Handle the conversion between a Yjs relative position and a Gutenberg absolute position.
+ *
+ * This is used to maintain a user's caret position so it doesn't look like it's pushed around by remote changes.
+ * For example, if my caret is at `ab|c` and a remote user changes the text to `aabc`, I want my
+ * caret to "stay" relative to the `b` (`aab|c`) instead of staying at the same absolute index (`aa|bc`).
+ */
 export class RelativePosition {
 	/**
 	 * @param {() => {start: WPBlockSelection, end: WPBlockSelection}} getSelection - Function to get block editor selection.
@@ -21,9 +28,9 @@ export class RelativePosition {
 	}
 
 	/**
-	 * Get the current block editor selection and convert it to a Y.RelativePosition.
+	 * Get the current block editor selection, convert it to a Y.RelativePosition, and remember it.
 	 *
-	 * Does not mutate the Y.Doc.
+	 * Call this method _before_ the Y.Doc is mutated.
 	 *
 	 * @param {yjs.Doc} doc
 	 */
@@ -52,6 +59,8 @@ export class RelativePosition {
 	/**
 	 * If a saved Y.RelativePosition exists, convert it to an absolute position and
 	 * dispatch it as a selection change to the block editor.
+	 *
+	 * Call this method _after_ the Y.Doc is mutated.
 	 *
 	 * @param {yjs.Doc} doc
 	 */

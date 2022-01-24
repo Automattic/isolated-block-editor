@@ -72,8 +72,9 @@ export function namedGutenFormatToStandardTags( format ) {
 // This is an imperfect inferral, so ideally we want to get this information
 // from Gutenberg's internal representation of the RichText.
 function getInferredMultilineTag( html ) {
-	if ( /^<li>/.test( html ) ) return 'li';
-	if ( /^<p>/.test( html ) ) return 'p';
+	const trimmedHtml = html.trim();
+	if ( /^<li>/.test( trimmedHtml ) ) return 'li';
+	if ( /^<p>/.test( trimmedHtml ) ) return 'p';
 	return undefined;
 }
 
@@ -140,6 +141,8 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 }
 
 /**
+ * Convert the RichText back from our Yjs representation to an HTML string.
+ *
  * @param {import("yjs").Map} richTextMap
  * @returns {string}
  */
@@ -154,9 +157,8 @@ export function richTextMapToHTML( richTextMap ) {
 	} );
 
 	const multilineTag = richTextMap.get( 'multilineTag' );
-	text = multilineTag ? stringAsMultiline( text, multilineTag ) : text;
 
-	return text;
+	return multilineTag ? stringAsMultiline( text, multilineTag ) : text;
 }
 
 /**

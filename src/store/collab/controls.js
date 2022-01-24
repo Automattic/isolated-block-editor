@@ -49,6 +49,8 @@ const initRelativePositionForPeer = ( peer, registry ) =>
 const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => {
 	const doc = registry.select( 'isolated/editor' ).getYDoc();
 
+	// If the change is triggered locally from the editor (i.e. is neither a remote change nor an undo/redo),
+	// apply those changes to the Yjs doc. Also shift the peer carets if appropriate.
 	if ( doc && ! action.isTriggeredByYDoc ) {
 		const peerRelativePositions = Object.values(
 			registry.select( 'isolated/editor' ).getCollabPeers()

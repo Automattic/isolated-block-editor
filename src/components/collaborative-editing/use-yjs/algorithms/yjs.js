@@ -59,9 +59,8 @@ export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = ''
 
 		if ( ! isPreexisting || ! isEqual( byClientId.get( block.clientId ), block ) ) {
 			const richTexts = yDocBlocks.get( 'richTexts' );
-			const knownRichTextAttributes = getKnownRichTextAttributes( block.clientId, richTextHint, richTexts );
 
-			knownRichTextAttributes.forEach( ( attributeKey ) => {
+			getKnownRichTextAttributes( block.clientId, richTextHint, richTexts ).forEach( ( attributeKey ) => {
 				updateRichText( {
 					newBlock: block,
 					attributeKey,
