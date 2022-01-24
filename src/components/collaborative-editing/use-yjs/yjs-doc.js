@@ -36,7 +36,7 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 
 		// Change received from peer, or triggered by self undo/redo
 		if ( origin !== identity ) {
-			const newData = postDocToObject( doc );
+			const newData = postDocToObject( doc, { sanitize: true } );
 			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
 			relativePositionManager.self.setAbsolutePosition( doc );
 		}
