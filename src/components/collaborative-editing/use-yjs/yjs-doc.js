@@ -2,7 +2,6 @@
  * External dependencies
  */
 import * as yjs from 'yjs';
-import { createMutex } from 'lib0/mutex';
 
 /**
  * Internal dependencies
@@ -26,7 +25,6 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  */
 export function createDocument( { identity, relativePositionManager, sendMessage } ) {
 	const doc = new yjs.Doc();
-	const mutex = createMutex();
 	/** @type {'off'|'connecting'|'on'} */
 	let state = 'off';
 
@@ -88,11 +86,9 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 
 			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
 
-			mutex( () =>
-				doc.transact( () => {
-					updatePostDoc( doc, data, richTextHint );
-				}, transactionOrigin )
-			);
+			doc.transact( () => {
+				updatePostDoc( doc, data, richTextHint );
+			}, transactionOrigin );
 		},
 
 		connect() {
@@ -142,12 +138,12 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 					if ( content.destination !== identity ) {
 						return;
 					}
-					mutex( () => yjs.applyUpdate( doc, decodeArray( content.update ), origin ) );
+					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
 					setState( 'on' );
 					break;
 				case 'syncUpdate':
 					relativePositionManager.saveRelativePosition( doc );
-					mutex( () => yjs.applyUpdate( doc, decodeArray( content.update ), origin ) );
+					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
 					break;
 			}
 		},
