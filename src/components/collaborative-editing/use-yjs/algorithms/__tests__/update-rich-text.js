@@ -8,12 +8,9 @@ import * as yjs from 'yjs';
  */
 import { updateRichText } from '../yjs';
 import { applyHTMLDelta } from '../rich-text';
+import * as RichText from '../rich-text';
 
-jest.mock( '../rich-text', () => ( {
-	__esModule: true,
-	...jest.requireActual( '../rich-text' ),
-	applyHTMLDelta: jest.fn(),
-} ) );
+jest.spyOn( RichText, 'applyHTMLDelta' );
 
 describe( 'yjs: updateRichText', () => {
 	afterEach( () => {
@@ -39,36 +36,18 @@ describe( 'yjs: updateRichText', () => {
 		const richTexts = doc.getMap( 'richTexts' );
 
 		updateRichText( {
-			oldText: 'abc',
+			newBlock: { clientId: 'cid', attributes: { foo: 'abc' } },
+			attributeKey: 'foo',
+			richTexts,
+		} );
+
+		updateRichText( {
 			newBlock: { clientId: 'cid', attributes: { foo: 'abbc' } },
 			attributeKey: 'foo',
 			richTexts,
 		} );
 
 		const yxmlText = richTexts.get( 'cid' ).get( 'foo' );
-		expect( applyHTMLDelta ).toHaveBeenCalledWith( 'abc', 'abbc', yxmlText );
-	} );
-
-	it( 'should not call applyHTMLDelta() if rich text strings have not changed', () => {
-		const doc = new yjs.Doc();
-		const richTexts = doc.getMap( 'richTexts' );
-
-		updateRichText( {
-			oldText: 'abc',
-			newBlock: { clientId: 'cid', attributes: { foo: 'abc' } },
-			attributeKey: 'foo',
-			richTexts,
-		} );
-
-		expect( applyHTMLDelta ).not.toHaveBeenCalled();
-
-		updateRichText( {
-			oldText: '',
-			newBlock: { clientId: 'cid', attributes: { foo: '' } },
-			attributeKey: 'foo',
-			richTexts,
-		} );
-
-		expect( applyHTMLDelta ).not.toHaveBeenCalled();
+		expect( applyHTMLDelta ).toHaveBeenLastCalledWith( 'abc', 'abbc', yxmlText );
 	} );
 } );
