@@ -28,10 +28,11 @@ export function applyCarets( record, carets = [] ) {
 	carets.forEach( ( caret ) => {
 		let { start, end, id, color, label } = caret;
 		const isCollapsed = start === end;
-		const { isListItemEdge, listItemText } = record.multiline.isListItemEdge( end );
-		const isShifted = isCollapsed && ( record.multiline.isListItem ? isListItemEdge : end >= record.text.length );
+		const { isAtMultilineItemEnd, multilineItemText } = record.multiline.checkOffset( end );
+		const isShifted =
+			isCollapsed && ( record.multiline.isMultiline ? isAtMultilineItemEnd : end >= record.text.length );
 
-		const text = isListItemEdge ? listItemText : record.text;
+		const text = isAtMultilineItemEnd ? multilineItemText : record.text;
 
 		// Try to accurately get the `length` of the last character (i.e. grapheme) in case
 		// the last character is an emoji, where "<emoji>".length can be more than 1.
@@ -108,29 +109,37 @@ export const settings = {
 		return null;
 	},
 	__experimentalGetPropsForEditableTreePreparation( select, { richTextIdentifier, blockClientId } ) {
-		const isListItem = select( 'core/block-editor' ).getBlockName( blockClientId ) === 'core/list';
+		// Adds special handling for certain block attributes that are known to be multiline,
+		// e.g. the `values` attribute of the List block.
+		const MULTILINE_ATTRIBUTES = {
+			'core/list': { values: { multilineTag: 'li' } },
+		};
+
+		const blockName = select( 'core/block-editor' ).getBlockName( blockClientId );
+		const multilineTag = MULTILINE_ATTRIBUTES[ blockName ]?.[ richTextIdentifier ]?.multilineTag;
+		const multilineItems = multilineTag
+			? ( () => {
+					const attributeValue = select( 'core/block-editor' ).getBlockAttributes( blockClientId )[
+						richTextIdentifier
+					];
+					return create( { html: attributeValue, multilineTag } )?.text?.split?.( __UNSTABLE_LINE_SEPARATOR );
+			  } )()
+			: [];
 
 		return {
 			carets: getCarets( select( 'isolated/editor' ).getCollabPeers(), richTextIdentifier, blockClientId ),
 			multiline: {
-				isListItem,
-				isListItemEdge: ( offset ) => {
-					if ( isListItem ) {
-						const { values } = select( 'core/block-editor' ).getBlockAttributes( blockClientId );
-						const items = create( { html: values, multilineTag: 'li' } )?.text?.split?.(
-							__UNSTABLE_LINE_SEPARATOR
-						);
-
-						let count = 0;
-						for ( const item of items ) {
-							count += item.length;
-							if ( offset === count ) {
-								return { isListItemEdge: true, listItemText: item };
-							}
-							count += 1; // line separator character
+				isMultiline: !! multilineTag,
+				checkOffset: ( offset ) => {
+					let count = 0;
+					for ( const itemText of multilineItems ) {
+						count += itemText.length;
+						if ( offset === count ) {
+							return { isAtMultilineItemEnd: true, multilineItemText: itemText };
 						}
+						count += 1; // line separator character
 					}
-					return { isListItemEdge: false };
+					return { isAtMultilineItemEnd: false };
 				},
 			},
 		};
