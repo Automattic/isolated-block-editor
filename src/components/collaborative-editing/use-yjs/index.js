@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { createMutex } from 'lib0/mutex';
 import { v4 as uuidv4 } from 'uuid';
 import { noop, once, sample } from 'lodash';
 
@@ -37,6 +38,7 @@ export const defaultColors = [ '#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6
 async function initYDoc( { settings, registry } ) {
 	const { channelId, transport } = settings;
 	const { dispatch, select } = registry;
+	const mutex = createMutex();
 
 	/** @type {string} */
 	const identity = uuidv4();
@@ -90,7 +92,10 @@ async function initYDoc( { settings, registry } ) {
 
 			switch ( data.type ) {
 				case 'doc': {
-					doc.receiveMessage( data.message );
+					// The mutex wrapper prevents a remote change from triggering a selection change message
+					mutex( () => {
+						doc.receiveMessage( data.message );
+					} );
 					break;
 				}
 				case 'selection': {
@@ -128,14 +133,17 @@ async function initYDoc( { settings, registry } ) {
 
 	return {
 		sendSelection: ( start, end ) => {
-			debug( 'sendSelection', start, end );
-			transport.sendMessage( {
-				type: 'selection',
-				identity,
-				selection: {
-					start,
-					end,
-				},
+			// The mutex wrapper prevents a remote change from triggering a selection change message
+			mutex( () => {
+				debug( 'sendSelection', start, end );
+				transport.sendMessage( {
+					type: 'selection',
+					identity,
+					selection: {
+						start,
+						end,
+					},
+				} );
 			} );
 		},
 		disconnect: () => {
