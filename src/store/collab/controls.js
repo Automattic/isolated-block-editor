@@ -8,11 +8,6 @@ import { ActionCreators } from 'redux-undo';
  */
 import { createRegistryControl } from '@wordpress/data';
 
-/**
- * Internal dependencies
- */
-import { RelativePosition } from '../../components/collaborative-editing/use-yjs/algorithms/relative-position';
-
 const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
 
 // TODO: Unsolved problem
@@ -36,27 +31,12 @@ const getRichTextHint = ( registry ) => {
 	return typeof attributeKey === 'string' ? { clientId, attributeKey } : undefined;
 };
 
-const initRelativePositionForPeer = ( peerId, peer, registry ) =>
-	new RelativePosition(
-		() => ( { start: peer.start ?? {}, end: peer.end ?? {} } ),
-		( clientId, attributeKey, startOffset, endOffset ) =>
-			registry.dispatch( 'isolated/editor' ).setCollabPeerSelection( peerId, {
-				start: { clientId, attributeKey, offset: startOffset },
-				end: { clientId, attributeKey, offset: endOffset },
-			} )
-	);
-
 const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => {
 	const doc = registry.select( 'isolated/editor' ).getYDoc();
 
 	// If the change is triggered locally from the editor (i.e. is neither a remote change nor an undo/redo),
-	// apply those changes to the Yjs doc. Also shift the peer carets if appropriate.
+	// apply those changes to the Yjs doc.
 	if ( doc && ! action.isTriggeredByYDoc ) {
-		const peerRelativePositions = Object.entries(
-			registry.select( 'isolated/editor' ).getCollabPeers()
-		).map( ( [ peerId, peer ] ) => initRelativePositionForPeer( peerId, peer, registry ) );
-		peerRelativePositions.forEach( ( relPos ) => relPos.saveRelativePosition( doc.getDoc() ) );
-
 		doc.applyLocalChangesToYDoc(
 			{ blocks: action.blocks },
 			{
@@ -64,8 +44,6 @@ const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => 
 				richTextHint: getRichTextHint( registry ),
 			}
 		);
-
-		peerRelativePositions.forEach( ( relPos ) => relPos.setAbsolutePosition( doc.getDoc() ) );
 	}
 
 	return action;

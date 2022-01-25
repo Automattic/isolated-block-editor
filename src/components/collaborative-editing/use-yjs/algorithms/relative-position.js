@@ -11,9 +11,15 @@ import * as yjs from 'yjs';
  */
 
 /**
+ * @typedef SelectionRange
+ * @property {WPBlockSelection} start
+ * @property {WPBlockSelection} end
+ */
+
+/**
  * @typedef RelativePositionManager
- * @property {(doc: yjs.Doc) => void} saveRelativePosition
- * @property {(doc: yjs.Doc) => void} setAbsolutePosition
+ * @property {RelativePosition} self
+ * @property {PeerRelativePosition} peers
  */
 
 /**
@@ -25,7 +31,7 @@ import * as yjs from 'yjs';
  */
 export class RelativePosition {
 	/**
-	 * @param {() => {start: WPBlockSelection, end: WPBlockSelection}} getSelection - Function to get block editor selection.
+	 * @param {() => SelectionRange} getSelection - Function to get block editor selection.
 	 * @param {(clientId: string, attributeKey: string, startOffset: number, endOffset: number) => void} selectionChange - Function to set block editor selection.
 	 */
 	constructor( getSelection, selectionChange ) {
@@ -84,5 +90,58 @@ export class RelativePosition {
 		}
 
 		this.selectionChange( clientId, attributeKey, absStartOffset, absEndOffset );
+	}
+}
+
+export class PeerRelativePosition {
+	/**
+	 * @private
+	 * @type {RelativePosition[]}
+	 */
+	_peerRelativePositions = [];
+
+	/**
+	 * @param {() => Record<string, Partial<SelectionRange>>} getPeers
+	 * @param {(peerId: string, selection: SelectionRange) => void} setPeerSelection
+	 */
+	constructor( getPeers, setPeerSelection ) {
+		/** @private */
+		this._getPeers = getPeers;
+		/** @private */
+		this._setPeerSelection = setPeerSelection;
+	}
+
+	/**
+	 * @private
+	 * @param {string} peerId
+	 * @param {Partial<SelectionRange>} peer
+	 * @returns {RelativePosition}
+	 */
+	_initRelativePositionForPeer( peerId, peer ) {
+		return new RelativePosition(
+			() => ( { start: peer.start ?? {}, end: peer.end ?? {} } ),
+			( clientId, attributeKey, startOffset, endOffset ) =>
+				this._setPeerSelection( peerId, {
+					start: { clientId, attributeKey, offset: startOffset },
+					end: { clientId, attributeKey, offset: endOffset },
+				} )
+		);
+	}
+
+	/**
+	 * @param {yjs.Doc} doc
+	 */
+	saveRelativePositions( doc ) {
+		this._peerRelativePositions = Object.entries( this._getPeers() ).map( ( [ peerId, peer ] ) =>
+			this._initRelativePositionForPeer( peerId, peer )
+		);
+		this._peerRelativePositions.forEach( ( relPos ) => relPos.saveRelativePosition( doc ) );
+	}
+
+	/**
+	 * @param {yjs.Doc} doc
+	 */
+	setAbsolutePositions( doc ) {
+		this._peerRelativePositions.forEach( ( relPos ) => relPos.setAbsolutePosition( doc ) );
 	}
 }

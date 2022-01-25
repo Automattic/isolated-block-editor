@@ -32,11 +32,13 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 	let connectionReadyListeners = [];
 
 	doc.on( 'update', ( update, origin ) => {
+		relativePositionManager.peers.setAbsolutePositions( doc );
+
 		// Change received from peer, or triggered by self undo/redo
 		if ( origin !== identity ) {
 			const newData = postDocToObject( doc );
 			yDocTriggeredChangeListeners.forEach( ( listener ) => listener( newData ) );
-			relativePositionManager.setAbsolutePosition( doc );
+			relativePositionManager.self.setAbsolutePosition( doc );
 		}
 
 		const isLocalOrigin =
@@ -83,6 +85,8 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 			if ( state !== 'on' ) {
 				throw 'wrong state';
 			}
+
+			relativePositionManager.peers.saveRelativePositions( doc );
 
 			const transactionOrigin = isInitialContent ? `no-undo--${ identity }` : identity;
 
@@ -142,7 +146,8 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 					setState( 'on' );
 					break;
 				case 'syncUpdate':
-					relativePositionManager.saveRelativePosition( doc );
+					relativePositionManager.self.saveRelativePosition( doc );
+					relativePositionManager.peers.saveRelativePositions( doc );
 					yjs.applyUpdate( doc, decodeArray( content.update ), origin );
 					break;
 			}

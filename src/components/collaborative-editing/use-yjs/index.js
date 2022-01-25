@@ -21,7 +21,7 @@ import { useEffect, useRef } from '@wordpress/element';
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
 import { setupUndoManager } from './yjs-undo';
-import { RelativePosition } from './algorithms/relative-position';
+import { PeerRelativePosition, RelativePosition } from './algorithms/relative-position';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
@@ -45,13 +45,19 @@ async function initYDoc( { settings, registry } ) {
 
 	const doc = createDocument( {
 		identity,
-		relativePositionManager: new RelativePosition(
-			() => ( {
-				start: select( 'core/block-editor' ).getSelectionStart(),
-				end: select( 'core/block-editor' ).getSelectionEnd(),
-			} ),
-			dispatch( 'core/block-editor' ).selectionChange
-		),
+		relativePositionManager: {
+			self: new RelativePosition(
+				() => ( {
+					start: select( 'core/block-editor' ).getSelectionStart(),
+					end: select( 'core/block-editor' ).getSelectionEnd(),
+				} ),
+				dispatch( 'core/block-editor' ).selectionChange
+			),
+			peers: new PeerRelativePosition(
+				select( 'isolated/editor' ).getCollabPeers,
+				dispatch( 'isolated/editor' ).setCollabPeerSelection
+			),
+		},
 		/** @param {Object} message */
 		sendMessage: ( message ) => {
 			debug( 'sendDocMessage', message );
