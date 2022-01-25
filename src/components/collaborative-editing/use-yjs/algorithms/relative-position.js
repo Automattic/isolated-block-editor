@@ -11,6 +11,12 @@ import * as yjs from 'yjs';
  */
 
 /**
+ * @typedef RelativePositionManager
+ * @property {(doc: yjs.Doc) => void} saveRelativePosition
+ * @property {(doc: yjs.Doc) => void} setAbsolutePosition
+ */
+
+/**
  * Handle the conversion between a Yjs relative position and a Gutenberg absolute position.
  *
  * This is used to maintain a user's caret position so it doesn't look like it's pushed around by remote changes.

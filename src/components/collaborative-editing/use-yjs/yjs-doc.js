@@ -9,7 +9,7 @@ import * as yjs from 'yjs';
 import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 
 /** @typedef {import('./algorithms/yjs').PostObject} PostObject */
-/** @typedef {import('./algorithms/relative-position').RelativePosition} RelativePosition */
+/** @typedef {import('./algorithms/relative-position').RelativePositionManager} RelativePositionManager */
 /** @typedef {import('..').RichTextHint} RichTextHint */
 
 const encodeArray = ( array ) => array.toString();
@@ -19,7 +19,7 @@ const decodeArray = ( string ) => new Uint8Array( string.split( ',' ) );
  * Create a Yjs document.
  *
  * @param {Object} opts
- * @param {RelativePosition} opts.relativePositionManager - Module to coordinate conversions between the block editor selection and Y.RelativePosition.
+ * @param {RelativePositionManager} opts.relativePositionManager - Module to coordinate conversions between the block editor selection and Y.RelativePosition.
  * @param {string} opts.identity - Client identifier.
  * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
