@@ -7,7 +7,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { applyFormat, registerFormatType } from '@wordpress/rich-text';
+import { applyFormat, create, registerFormatType, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
 
 /**
  * Internal dependencies
@@ -28,7 +28,10 @@ export function applyCarets( record, carets = [] ) {
 	carets.forEach( ( caret ) => {
 		let { start, end, id, color, label } = caret;
 		const isCollapsed = start === end;
-		const isShifted = isCollapsed && end >= record.text.length;
+		const { isListItemEdge, listItemText } = record.multiline.isListItemEdge( end );
+		const isShifted = isCollapsed && ( record.multiline.isListItem ? isListItemEdge : end >= record.text.length );
+
+		const text = isListItemEdge ? listItemText : record.text;
 
 		// Try to accurately get the `length` of the last character (i.e. grapheme) in case
 		// the last character is an emoji, where "<emoji>".length can be more than 1.
@@ -36,12 +39,12 @@ export function applyCarets( record, carets = [] ) {
 		// @ts-ignore Intl.Segmenter is not in spec yet
 		const lastGrapheme = Intl.Segmenter
 			? // @ts-ignore Intl.Segmenter is not in spec yet
-			  [ ...new Intl.Segmenter().segment( record.text ) ].pop()?.segment
+			  [ ...new Intl.Segmenter().segment( text ) ].pop()?.segment
 			: undefined;
 		const offset = lastGrapheme?.length ?? 1; // fall back to 1 if we can't accurately segment the last grapheme
 
 		if ( isShifted ) {
-			start = record.text.length - offset;
+			start = end - offset;
 		}
 
 		if ( isCollapsed ) {
@@ -105,17 +108,40 @@ export const settings = {
 		return null;
 	},
 	__experimentalGetPropsForEditableTreePreparation( select, { richTextIdentifier, blockClientId } ) {
+		const isListItem = select( 'core/block-editor' ).getBlockName( blockClientId ) === 'core/list';
+
 		return {
 			carets: getCarets( select( 'isolated/editor' ).getCollabPeers(), richTextIdentifier, blockClientId ),
+			multiline: {
+				isListItem,
+				isListItemEdge: ( offset ) => {
+					if ( isListItem ) {
+						const { values } = select( 'core/block-editor' ).getBlockAttributes( blockClientId );
+						const items = create( { html: values, multilineTag: 'li' } )?.text?.split?.(
+							__UNSTABLE_LINE_SEPARATOR
+						);
+
+						let count = 0;
+						for ( const item of items ) {
+							count += item.length;
+							if ( offset === count ) {
+								return { isListItemEdge: true, listItemText: item };
+							}
+							count += 1; // line separator character
+						}
+					}
+					return { isListItemEdge: false };
+				},
+			},
 		};
 	},
-	__experimentalCreatePrepareEditableTree( { carets } ) {
+	__experimentalCreatePrepareEditableTree( { carets, multiline } ) {
 		return ( formats, text ) => {
 			if ( ! carets?.length ) {
 				return formats;
 			}
 
-			let record = { formats, text };
+			let record = { formats, multiline, text };
 			record = applyCarets( record, carets );
 			return record.formats;
 		};
