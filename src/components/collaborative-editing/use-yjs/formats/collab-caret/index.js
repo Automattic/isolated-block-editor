@@ -15,22 +15,28 @@ import { applyFormat, create, registerFormatType, __UNSTABLE_LINE_SEPARATOR } fr
 import { shouldUseWhiteText } from './color-utils';
 import './style.scss';
 
+/**
+ * @typedef MultilineData
+ * @property {boolean} isMultiline - Whether this is a multiline attribute.
+ * @property {(offset: number) => {isAtMultilineItemEnd: boolean, multilineItemText?: string}} checkOffset - Determine whether a given caret index is at the end of a multiline segment.
+ */
+
 export const FORMAT_NAME = 'isolated/collab-caret';
 
 /**
  * Applies given carets to the given record.
  *
  * @param {Object} record The record to apply carets to.
+ * @param {MultilineData} multiline
  * @param {Array} carets The carets to apply.
  * @return {Object} A record with the carets applied.
  */
-export function applyCarets( record, carets = [] ) {
+export function applyCarets( record, multiline, carets = [] ) {
 	carets.forEach( ( caret ) => {
 		let { start, end, id, color, label } = caret;
 		const isCollapsed = start === end;
-		const { isAtMultilineItemEnd, multilineItemText } = record.multiline.checkOffset( end );
-		const isShifted =
-			isCollapsed && ( record.multiline.isMultiline ? isAtMultilineItemEnd : end >= record.text.length );
+		const { isAtMultilineItemEnd, multilineItemText } = multiline.checkOffset( end );
+		const isShifted = isCollapsed && ( multiline.isMultiline ? isAtMultilineItemEnd : end >= record.text.length );
 
 		const text = isAtMultilineItemEnd ? multilineItemText : record.text;
 
@@ -97,6 +103,36 @@ const getCarets = memoize( ( peers, richTextIdentifier, blockClientId ) => {
 		} ) );
 } );
 
+/**
+ * @param {string} multilineTag
+ * @param {string} attributeValue
+ * @returns {MultilineData}
+ * */
+const getMultilineData = ( multilineTag, attributeValue ) => {
+	const multilineItems = multilineTag
+		? create( { html: attributeValue, multilineTag } )?.text?.split?.( __UNSTABLE_LINE_SEPARATOR )
+		: [];
+
+	return {
+		isMultiline: !! multilineTag,
+		checkOffset: ( offset ) => {
+			let count = 0;
+			for ( const itemText of multilineItems ) {
+				count += itemText.length;
+				if ( offset === count ) {
+					return { isAtMultilineItemEnd: true, multilineItemText: itemText };
+				}
+				count += 1; // line separator character
+			}
+			return { isAtMultilineItemEnd: false };
+		},
+	};
+};
+
+const getStableBlockAttributeSelector = memoize( ( getBlockAttributes, blockClientId, attributeKey ) => () =>
+	getBlockAttributes( blockClientId )[ attributeKey ]
+);
+
 export const settings = {
 	title: 'Collaboration peer caret',
 	tagName: 'mark',
@@ -117,41 +153,28 @@ export const settings = {
 
 		const blockName = select( 'core/block-editor' ).getBlockName( blockClientId );
 		const multilineTag = MULTILINE_ATTRIBUTES[ blockName ]?.[ richTextIdentifier ]?.multilineTag;
-		const multilineItems = multilineTag
-			? ( () => {
-					const attributeValue = select( 'core/block-editor' ).getBlockAttributes( blockClientId )[
-						richTextIdentifier
-					];
-					return create( { html: attributeValue, multilineTag } )?.text?.split?.( __UNSTABLE_LINE_SEPARATOR );
-			  } )()
-			: [];
 
+		// The properties in this return object need to be as stable as possible.
+		// See https://github.com/WordPress/gutenberg/issues/23428
 		return {
 			carets: getCarets( select( 'isolated/editor' ).getCollabPeers(), richTextIdentifier, blockClientId ),
-			multiline: {
-				isMultiline: !! multilineTag,
-				checkOffset: ( offset ) => {
-					let count = 0;
-					for ( const itemText of multilineItems ) {
-						count += itemText.length;
-						if ( offset === count ) {
-							return { isAtMultilineItemEnd: true, multilineItemText: itemText };
-						}
-						count += 1; // line separator character
-					}
-					return { isAtMultilineItemEnd: false };
-				},
-			},
+			multilineTag,
+			blockAttributeSelector: getStableBlockAttributeSelector(
+				select( 'core/block-editor' ).getBlockAttributes,
+				blockClientId,
+				richTextIdentifier
+			),
 		};
 	},
-	__experimentalCreatePrepareEditableTree( { carets, multiline } ) {
+	__experimentalCreatePrepareEditableTree( { carets, multilineTag, blockAttributeSelector } ) {
 		return ( formats, text ) => {
 			if ( ! carets?.length ) {
 				return formats;
 			}
 
-			let record = { formats, multiline, text };
-			record = applyCarets( record, carets );
+			const multiline = getMultilineData( multilineTag, blockAttributeSelector() );
+			const record = applyCarets( { formats, text }, multiline, carets );
+
 			return record.formats;
 		};
 	},
