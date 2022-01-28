@@ -11,6 +11,8 @@ exports.settings = exports.registerFormatCollabCaret = void 0;
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
 var _memize = _interopRequireDefault(require("memize"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
@@ -46,20 +48,29 @@ exports.FORMAT_NAME = FORMAT_NAME;
 function applyCarets(record) {
   var carets = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   carets.forEach(function (caret) {
+    var _pop, _lastGrapheme$length;
+
     var start = caret.start,
         end = caret.end,
         id = caret.id,
         color = caret.color,
         label = caret.label;
     var isCollapsed = start === end;
-    var isShifted = isCollapsed && end >= record.text.length;
+    var isShifted = isCollapsed && end >= record.text.length; // Try to accurately get the `length` of the last character (i.e. grapheme) in case
+    // the last character is an emoji, where "<emoji>".length can be more than 1.
+    // For example, "👩‍👩‍👧‍👦".length === 11. (Intl.Segementer is still unsupported in Firefox)
+    // @ts-ignore Intl.Segmenter is not in spec yet
+
+    var lastGrapheme = Intl.Segmenter ? // @ts-ignore Intl.Segmenter is not in spec yet
+    (_pop = (0, _toConsumableArray2["default"])(new Intl.Segmenter().segment(record.text)).pop()) === null || _pop === void 0 ? void 0 : _pop.segment : undefined;
+    var offset = (_lastGrapheme$length = lastGrapheme === null || lastGrapheme === void 0 ? void 0 : lastGrapheme.length) !== null && _lastGrapheme$length !== void 0 ? _lastGrapheme$length : 1; // fall back to 1 if we can't accurately segment the last grapheme
 
     if (isShifted) {
-      start = record.text.length - 1;
+      start = record.text.length - offset;
     }
 
     if (isCollapsed) {
-      end = start + 1;
+      end = start + offset;
     }
 
     record = (0, _richText.applyFormat)(record, {
