@@ -26,6 +26,8 @@ export const FORMAT_NAME = 'isolated/collab-caret';
 export function applyCarets(record) {
   let carets = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   carets.forEach(caret => {
+    var _pop, _lastGrapheme$length;
+
     let {
       start,
       end,
@@ -34,14 +36,21 @@ export function applyCarets(record) {
       label
     } = caret;
     const isCollapsed = start === end;
-    const isShifted = isCollapsed && end >= record.text.length;
+    const isShifted = isCollapsed && end >= record.text.length; // Try to accurately get the `length` of the last character (i.e. grapheme) in case
+    // the last character is an emoji, where "<emoji>".length can be more than 1.
+    // For example, "👩‍👩‍👧‍👦".length === 11. (Intl.Segementer is still unsupported in Firefox)
+    // @ts-ignore Intl.Segmenter is not in spec yet
+
+    const lastGrapheme = Intl.Segmenter ? // @ts-ignore Intl.Segmenter is not in spec yet
+    (_pop = [...new Intl.Segmenter().segment(record.text)].pop()) === null || _pop === void 0 ? void 0 : _pop.segment : undefined;
+    const offset = (_lastGrapheme$length = lastGrapheme === null || lastGrapheme === void 0 ? void 0 : lastGrapheme.length) !== null && _lastGrapheme$length !== void 0 ? _lastGrapheme$length : 1; // fall back to 1 if we can't accurately segment the last grapheme
 
     if (isShifted) {
-      start = record.text.length - 1;
+      start = record.text.length - offset;
     }
 
     if (isCollapsed) {
-      end = start + 1;
+      end = start + offset;
     }
 
     record = applyFormat(record, {
