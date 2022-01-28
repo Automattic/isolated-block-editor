@@ -44,7 +44,7 @@ it( 'should sanitize HTML received from peer', async () => {
 	const bobScreen = within( screen.getByTestId( 'bob' ) );
 
 	userEvent.click( aliceScreen.getByText( /^Start writing.+/ ) );
-	userEvent.keyboard( '/custom{Enter}foo' );
+	userEvent.keyboard( '/custom{Enter}' );
 	userEvent.click( aliceScreen.getByRole( 'textbox', { name: 'HTML' } ) );
 	userEvent.keyboard( 'hi<s' );
 
