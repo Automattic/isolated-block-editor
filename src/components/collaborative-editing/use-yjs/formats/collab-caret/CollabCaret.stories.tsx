@@ -13,9 +13,9 @@ export default {
 	component: CollabCaret,
 };
 
-const mockRecord = {
-	formats: [],
-	multiline: { checkOffset: () => ( {} ) },
+const mockMultiline = {
+	isMultiline: false,
+	checkOffset: () => ( { isAtMultilineItemEnd: false } ),
 };
 
 function cssStringToObject( cssString ) {
@@ -27,7 +27,9 @@ function cssStringToObject( cssString ) {
 }
 
 function CollabCaret( { label, color } ) {
-	const { activeFormats } = applyCarets( { ...mockRecord, text: 'foo' }, [ { label, color, start: 0, end: 0 } ] );
+	const { activeFormats } = applyCarets( { formats: [], text: 'foo' }, mockMultiline, [
+		{ label, color, start: 0, end: 0 },
+	] );
 	const { class: additionalClasses, style, ...attributes } = activeFormats[ 0 ].attributes;
 
 	return (
@@ -44,7 +46,9 @@ function CollabCaret( { label, color } ) {
 }
 
 function CollabCaretMultiLine( { label, color } ) {
-	const { activeFormats } = applyCarets( { ...mockRecord, text: 'foo' }, [ { label, color, start: 21, end: 381 } ] );
+	const { activeFormats } = applyCarets( { formats: [], text: 'foo' }, mockMultiline, [
+		{ label, color, start: 21, end: 381 },
+	] );
 	const { class: additionalClasses, style, ...attributes } = activeFormats[ 0 ].attributes;
 
 	return (
