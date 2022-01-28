@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - In collab mode, prevent emojis from being separated by a peer caret when the emoji consists of more than one Unicode code point.
+- In collab mode, prevent peer carets from disappearing when at the end of List block items.
 
 ## [2.9.0] - 2021-12-09
 
