@@ -42,13 +42,16 @@ var _blocks = require("@wordpress/blocks");
  */
 function PatternMonitor(props) {
   var currentPattern = props.currentPattern,
-      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo; // Monitor the current pattern and update the editor content if it changes
+      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo;
+  var previous = (0, _element.useRef)(); // Monitor the current pattern and update the editor content if it changes
 
   (0, _element.useEffect)(function () {
-    if (currentPattern === null) {
+    if (currentPattern === null || !previous.current) {
       return;
-    }
+    } // @ts-ignore
 
+
+    previous.current = currentPattern.name;
     updateBlocksWithoutUndo((0, _blocks.parse)(currentPattern.content));
   }, [currentPattern]);
   return null;
