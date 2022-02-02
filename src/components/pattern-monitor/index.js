@@ -3,7 +3,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { parse } from '@wordpress/blocks';
@@ -30,13 +30,15 @@ import { parse } from '@wordpress/blocks';
  */
 function PatternMonitor( props ) {
 	const { currentPattern, updateBlocksWithoutUndo } = props;
+	const previous = useRef();
 
 	// Monitor the current pattern and update the editor content if it changes
 	useEffect( () => {
-		if ( currentPattern === null ) {
+		if ( currentPattern === null || ! previous.current ) {
 			return;
 		}
 
+		previous.current = currentPattern.name;
 		updateBlocksWithoutUndo( parse( currentPattern.content ) );
 	}, [ currentPattern ] );
 
