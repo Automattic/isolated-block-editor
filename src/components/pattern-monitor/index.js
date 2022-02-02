@@ -38,6 +38,7 @@ function PatternMonitor( props ) {
 			return;
 		}
 
+		// @ts-ignore
 		previous.current = currentPattern.name;
 		updateBlocksWithoutUndo( parse( currentPattern.content ) );
 	}, [ currentPattern ] );
