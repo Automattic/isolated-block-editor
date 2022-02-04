@@ -8,6 +8,7 @@ import userEvent from '@testing-library/user-event';
  * Internal dependencies
  */
 import IsolatedBlockEditor, { CollaborativeEditing } from '../../../../index';
+import registerApiHandlers from '../../../../components/api-fetch';
 import { getTransports, pauseTyping } from '../__test-helpers__/utils';
 
 const collabSettings = {
@@ -17,6 +18,11 @@ const collabSettings = {
 };
 
 describe( 'CollaborativeEditing: Undo/Redo', () => {
+	beforeAll( () => {
+		// Gutenberg issues an apiFetch at some point
+		registerApiHandlers();
+	} );
+
 	beforeEach( () => {
 		// Real timers are used so Yjs can merge undo stack items
 		jest.useRealTimers();
