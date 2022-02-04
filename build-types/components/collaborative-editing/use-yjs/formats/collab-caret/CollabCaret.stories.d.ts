@@ -15,6 +15,6 @@ declare type Props = {
     label: string;
     color: string;
 };
-export declare const Default: Story<Props>;
+export declare const Default: any;
 export declare const MultiLine: Story<Props>;
 //# sourceMappingURL=CollabCaret.stories.d.ts.map

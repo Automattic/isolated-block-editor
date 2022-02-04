@@ -241,7 +241,7 @@ function initializeIsoEditor() {
  * @param {OnError} props.onError - Error callback
  * @param {OnLoad} [props.onLoad] - Initial blocks
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {object} props.children - Child content
+ * @param {object} [props.children] - Child content
  * @param {string} [props.className] - Additional class name
  * @param {OnMore} [props.renderMoreMenu] - Callback to render additional items in the more menu
  */

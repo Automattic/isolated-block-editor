@@ -68,7 +68,16 @@
  */
 export function initializeEditor(): void;
 export function initializeIsoEditor(): void;
-declare var _default: import("react").ComponentType<any>;
+declare var _default: import("react").ComponentType<{
+    onSaveBlocks?: OnSaveBlocks | undefined;
+    onSaveContent?: OnSaveContent | undefined;
+    onError: OnError;
+    onLoad?: OnLoad | undefined;
+    settings: BlockEditorSettings;
+    children?: object;
+    className?: string | undefined;
+    renderMoreMenu?: import("./components/block-editor-toolbar/more-menu").OnMore | undefined;
+}>;
 export default _default;
 export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
 export type Pattern = import('./store/editor/reducer').Pattern;
