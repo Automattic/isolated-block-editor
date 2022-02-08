@@ -34,7 +34,7 @@ function PatternMonitor( props ) {
 
 	// Monitor the current pattern and update the editor content if it changes
 	useEffect( () => {
-		if ( currentPattern === null || ! previous.current ) {
+		if ( currentPattern === null && previous.current === undefined ) {
 			return;
 		}
 
