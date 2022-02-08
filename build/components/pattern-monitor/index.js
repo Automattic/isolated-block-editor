@@ -43,16 +43,20 @@ var _blocks = require("@wordpress/blocks");
 function PatternMonitor(props) {
   var currentPattern = props.currentPattern,
       updateBlocksWithoutUndo = props.updateBlocksWithoutUndo;
-  var previous = (0, _element.useRef)(); // Monitor the current pattern and update the editor content if it changes
+  var previous = (0, _element.useRef)(null); // Monitor the current pattern and update the editor content if it changes
 
   (0, _element.useEffect)(function () {
-    if (currentPattern === null && previous.current === undefined) {
+    if (currentPattern === null || previous.current === currentPattern) {
+      // @ts-ignore
+      previous.current = currentPattern;
       return;
     } // @ts-ignore
 
 
     previous.current = currentPattern.name;
-    updateBlocksWithoutUndo((0, _blocks.parse)(currentPattern.content));
+    setTimeout(function () {
+      updateBlocksWithoutUndo((0, _blocks.parse)(currentPattern.content));
+    }, 0);
   }, [currentPattern]);
   return null;
 }
