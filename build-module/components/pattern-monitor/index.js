@@ -36,7 +36,7 @@ function PatternMonitor(props) {
   const previous = useRef(); // Monitor the current pattern and update the editor content if it changes
 
   useEffect(() => {
-    if (currentPattern === null || !previous.current) {
+    if (currentPattern === null && previous.current === undefined) {
       return;
     } // @ts-ignore
 

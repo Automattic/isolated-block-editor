@@ -67,6 +67,7 @@ var SIZE_MEDIUM = 480;
  * @param {object} props.children - Child components
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
+ * @param {boolean} props.isPreview - Whether preview mode is enabled
  * @param {boolean} props.hasFixedToolbar - Has fixed toolbar
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
@@ -78,6 +79,8 @@ var SIZE_MEDIUM = 480;
  */
 
 function BlockEditorContainer(props) {
+  var _classnames;
+
   var children = props.children,
       settings = props.settings,
       className = props.className,
@@ -88,14 +91,15 @@ function BlockEditorContainer(props) {
       editorMode = props.editorMode,
       isEditing = props.isEditing,
       setEditing = props.setEditing,
-      hasFixedToolbar = props.hasFixedToolbar;
+      hasFixedToolbar = props.hasFixedToolbar,
+      isPreview = props.isPreview;
 
   var _useResizeObserver = (0, _compose.useResizeObserver)(),
       _useResizeObserver2 = (0, _slicedToArray2["default"])(_useResizeObserver, 2),
       resizeListener = _useResizeObserver2[0],
       width = _useResizeObserver2[1].width;
 
-  var classes = (0, _classnames2["default"])(className, (0, _defineProperty2["default"])({
+  var classes = (0, _classnames2["default"])(className, (_classnames = {
     'iso-editor': true,
     'is-large': width ? width >= SIZE_LARGE : false,
     'is-medium': width ? width >= SIZE_MEDIUM && width < SIZE_LARGE : true,
@@ -106,7 +110,7 @@ function BlockEditorContainer(props) {
     'block-editor': true,
     'edit-post-layout': true,
     'has-fixed-toolbar': hasFixedToolbar
-  }, 'is-mode-' + editorMode, true));
+  }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
   return createElement("div", {
     className: classes
   }, createElement(_editor.ErrorBoundary, {
@@ -130,13 +134,15 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
       isEditorReady = _select.isEditorReady,
       getEditorMode = _select.getEditorMode,
       isEditing = _select.isEditing,
-      isFeatureActive = _select.isFeatureActive;
+      isFeatureActive = _select.isFeatureActive,
+      isOptionActive = _select.isOptionActive;
 
   return {
     isEditorReady: isEditorReady(),
     editorMode: getEditorMode(),
     isEditing: isEditing(),
-    hasFixedToolbar: isFeatureActive('fixedToolbar')
+    hasFixedToolbar: isFeatureActive('fixedToolbar'),
+    isPreview: isOptionActive('preview')
   };
 }), (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),

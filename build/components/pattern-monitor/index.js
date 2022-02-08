@@ -46,7 +46,7 @@ function PatternMonitor(props) {
   var previous = (0, _element.useRef)(); // Monitor the current pattern and update the editor content if it changes
 
   (0, _element.useEffect)(function () {
-    if (currentPattern === null || !previous.current) {
+    if (currentPattern === null && previous.current === undefined) {
       return;
     } // @ts-ignore
 
