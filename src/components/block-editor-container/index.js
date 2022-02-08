@@ -42,6 +42,7 @@ const SIZE_MEDIUM = 480;
  * @param {object} props.children - Child components
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
+ * @param {boolean} props.isPreview - Whether preview mode is enabled
  * @param {boolean} props.hasFixedToolbar - Has fixed toolbar
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
@@ -53,7 +54,7 @@ const SIZE_MEDIUM = 480;
  */
 function BlockEditorContainer( props ) {
 	const { children, settings, className, onError, renderMoreMenu, onLoad } = props;
-	const { isEditorReady, editorMode, isEditing, setEditing, hasFixedToolbar } = props;
+	const { isEditorReady, editorMode, isEditing, setEditing, hasFixedToolbar, isPreview } = props;
 	const [ resizeListener, { width } ] = useResizeObserver();
 	const classes = classnames( className, {
 		'iso-editor': true,
@@ -70,6 +71,7 @@ function BlockEditorContainer( props ) {
 		'edit-post-layout': true,
 		'has-fixed-toolbar': hasFixedToolbar,
 		[ 'is-mode-' + editorMode ]: true,
+		'is-preview-mode': isPreview,
 	} );
 
 	return (
@@ -98,13 +100,14 @@ function BlockEditorContainer( props ) {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const { isEditorReady, getEditorMode, isEditing, isFeatureActive } = select( 'isolated/editor' );
+		const { isEditorReady, getEditorMode, isEditing, isFeatureActive, isOptionActive } = select( 'isolated/editor' );
 
 		return {
 			isEditorReady: isEditorReady(),
 			editorMode: getEditorMode(),
 			isEditing: isEditing(),
 			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
+			isPreview: isOptionActive( 'preview' )
 		};
 	} ),
 	withDispatch( ( dispatch ) => {
