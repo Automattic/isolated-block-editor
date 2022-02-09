@@ -30,17 +30,21 @@ import { parse } from '@wordpress/blocks';
  */
 function PatternMonitor( props ) {
 	const { currentPattern, updateBlocksWithoutUndo } = props;
-	const previous = useRef();
+	const previous = useRef( null );
 
 	// Monitor the current pattern and update the editor content if it changes
 	useEffect( () => {
-		if ( currentPattern === null || ! previous.current ) {
+		if ( currentPattern === null || previous.current === currentPattern ) {
+			// @ts-ignore
+			previous.current = currentPattern;
 			return;
 		}
 
 		// @ts-ignore
 		previous.current = currentPattern.name;
-		updateBlocksWithoutUndo( parse( currentPattern.content ) );
+		setTimeout( () => {
+			updateBlocksWithoutUndo( parse( currentPattern.content ) );
+		}, 0 );
 	}, [ currentPattern ] );
 
 	return null;
