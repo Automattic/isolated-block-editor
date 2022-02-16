@@ -57,7 +57,9 @@ function createDocument(_ref) {
     relativePositionManager.peers.setAbsolutePositions(doc); // Change received from peer, or triggered by self undo/redo
 
     if (origin !== identity) {
-      var newData = (0, _yjs2.postDocToObject)(doc);
+      var newData = (0, _yjs2.postDocToObject)(doc, {
+        sanitize: true
+      });
       yDocTriggeredChangeListeners.forEach(function (listener) {
         return listener(newData);
       });

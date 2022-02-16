@@ -28,7 +28,9 @@ var diff = _interopRequireWildcard(require("lib0/diff"));
 
 var _lodash = require("lodash");
 
-var _richText = require("../algorithms/rich-text");
+var _richText = require("./rich-text");
+
+var _sanitizeHtml = _interopRequireDefault(require("./sanitize-html"));
 
 var _excluded = ["innerBlocks"];
 
@@ -307,7 +309,10 @@ function commentsDocToArray(commentsDoc) {
  * Converts the block doc into a block list.
  *
  * @param {yjs.Map} yDocBlocks Block doc.
- * @param {string}  clientId   Current block clientId.
+ * @param {Object} [opts]
+ * @param {string}  [opts.clientId] Current block clientId.
+ * @param {boolean}  [opts.sanitize] Whether to sanitize the block attribute values.
+ *
  * @return {Array} Block list.
  */
 
@@ -315,7 +320,11 @@ function commentsDocToArray(commentsDoc) {
 function blocksDocToArray(yDocBlocks) {
   var _order$get;
 
-  var clientId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref6$clientId = _ref6.clientId,
+      clientId = _ref6$clientId === void 0 ? '' : _ref6$clientId,
+      _ref6$sanitize = _ref6.sanitize,
+      sanitize = _ref6$sanitize === void 0 ? false : _ref6$sanitize;
 
   if (!yDocBlocks) {
     return [];
@@ -327,16 +336,28 @@ function blocksDocToArray(yDocBlocks) {
   var byClientId = yDocBlocks.get('byClientId');
   return order.map(function (_clientId) {
     var richTextMap = yDocBlocks.get('richTexts').get(_clientId) || new yjs.Map();
-    var richTextsAsStrings = Array.from(richTextMap.entries()).reduce(function (acc, _ref6) {
-      var _ref7 = (0, _slicedToArray2["default"])(_ref6, 2),
-          key = _ref7[0],
-          value = _ref7[1];
+    var richTextsAsStrings = Array.from(richTextMap.entries()).reduce(function (acc, _ref7) {
+      var _ref8 = (0, _slicedToArray2["default"])(_ref7, 2),
+          key = _ref8[0],
+          value = _ref8[1];
 
       return _objectSpread(_objectSpread({}, acc), {}, (0, _defineProperty2["default"])({}, key, (0, _richText.richTextMapToHTML)(value)));
     }, {});
+
+    var attributes = _objectSpread(_objectSpread({}, byClientId.get(_clientId).attributes), richTextsAsStrings);
+
+    if (sanitize) {
+      for (var key in attributes) {
+        attributes[key] = (0, _sanitizeHtml["default"])(attributes[key]);
+      }
+    }
+
     return _objectSpread(_objectSpread({}, byClientId.get(_clientId)), {}, {
-      attributes: _objectSpread(_objectSpread({}, byClientId.get(_clientId).attributes), richTextsAsStrings),
-      innerBlocks: blocksDocToArray(yDocBlocks, _clientId)
+      attributes: attributes,
+      innerBlocks: blocksDocToArray(yDocBlocks, {
+        clientId: _clientId,
+        sanitize: sanitize
+      })
     });
   });
 }
@@ -344,13 +365,22 @@ function blocksDocToArray(yDocBlocks) {
  * Converts the post doc into a post object.
  *
  * @param {yjs.Doc} doc Shared doc.
+ * @param {Object} [opts]
+ * @param {boolean} [opts.sanitize]
+ *
  * @return {PostObject} Post object.
  */
 
 
 function postDocToObject(doc) {
+  var _ref9 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref9$sanitize = _ref9.sanitize,
+      sanitize = _ref9$sanitize === void 0 ? false : _ref9$sanitize;
+
   var postDoc = doc.getMap('post');
-  var blocks = blocksDocToArray(postDoc.get('blocks'));
+  var blocks = blocksDocToArray(postDoc.get('blocks'), {
+    sanitize: sanitize
+  });
   var comments = commentsDocToArray(postDoc.get('comments'));
   return {
     title: postDoc.get('title') || '',

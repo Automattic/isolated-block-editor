@@ -8,7 +8,8 @@ import { isEqual } from 'lodash';
 /**
  * Internal dependencies
  */
-import { applyHTMLDelta, richTextMapToHTML } from '../algorithms/rich-text';
+import { applyHTMLDelta, richTextMapToHTML } from './rich-text';
+import sanitizeHTML from './sanitize-html';
 
 /**
  * @typedef {Object} PostObject
@@ -230,10 +231,13 @@ export function commentsDocToArray( commentsDoc ) {
  * Converts the block doc into a block list.
  *
  * @param {yjs.Map} yDocBlocks Block doc.
- * @param {string}  clientId   Current block clientId.
+ * @param {Object} [opts]
+ * @param {string}  [opts.clientId] Current block clientId.
+ * @param {boolean}  [opts.sanitize] Whether to sanitize the block attribute values.
+ *
  * @return {Array} Block list.
  */
-export function blocksDocToArray( yDocBlocks, clientId = '' ) {
+export function blocksDocToArray( yDocBlocks, { clientId = '', sanitize = false } = {} ) {
 	if ( ! yDocBlocks ) {
 		return [];
 	}
@@ -251,13 +255,21 @@ export function blocksDocToArray( yDocBlocks, clientId = '' ) {
 			};
 		}, {} );
 
+		const attributes = {
+			...byClientId.get( _clientId ).attributes,
+			...richTextsAsStrings,
+		};
+
+		if ( sanitize ) {
+			for ( const key in attributes ) {
+				attributes[ key ] = sanitizeHTML( attributes[ key ] );
+			}
+		}
+
 		return {
 			...byClientId.get( _clientId ),
-			attributes: {
-				...byClientId.get( _clientId ).attributes,
-				...richTextsAsStrings,
-			},
-			innerBlocks: blocksDocToArray( yDocBlocks, _clientId ),
+			attributes,
+			innerBlocks: blocksDocToArray( yDocBlocks, { clientId: _clientId, sanitize } ),
 		};
 	} );
 }
@@ -266,11 +278,14 @@ export function blocksDocToArray( yDocBlocks, clientId = '' ) {
  * Converts the post doc into a post object.
  *
  * @param {yjs.Doc} doc Shared doc.
+ * @param {Object} [opts]
+ * @param {boolean} [opts.sanitize]
+ *
  * @return {PostObject} Post object.
  */
-export function postDocToObject( doc ) {
+export function postDocToObject( doc, { sanitize = false } = {} ) {
 	const postDoc = doc.getMap( 'post' );
-	const blocks = blocksDocToArray( postDoc.get( 'blocks' ) );
+	const blocks = blocksDocToArray( postDoc.get( 'blocks' ), { sanitize } );
 	const comments = commentsDocToArray( postDoc.get( 'comments' ) );
 
 	return {

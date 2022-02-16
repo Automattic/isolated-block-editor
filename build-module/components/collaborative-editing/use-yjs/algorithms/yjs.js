@@ -8,7 +8,8 @@ import { isEqual } from 'lodash';
  * Internal dependencies
  */
 
-import { applyHTMLDelta, richTextMapToHTML } from '../algorithms/rich-text';
+import { applyHTMLDelta, richTextMapToHTML } from './rich-text';
+import sanitizeHTML from './sanitize-html';
 /**
  * @typedef {Object} PostObject
  * @property {string} title
@@ -244,14 +245,20 @@ export function commentsDocToArray(commentsDoc) {
  * Converts the block doc into a block list.
  *
  * @param {yjs.Map} yDocBlocks Block doc.
- * @param {string}  clientId   Current block clientId.
+ * @param {Object} [opts]
+ * @param {string}  [opts.clientId] Current block clientId.
+ * @param {boolean}  [opts.sanitize] Whether to sanitize the block attribute values.
+ *
  * @return {Array} Block list.
  */
 
 export function blocksDocToArray(yDocBlocks) {
   var _order$get;
 
-  let clientId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  let {
+    clientId = '',
+    sanitize = false
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   if (!yDocBlocks) {
     return [];
@@ -269,11 +276,22 @@ export function blocksDocToArray(yDocBlocks) {
         [key]: richTextMapToHTML(value)
       };
     }, {});
+    const attributes = { ...byClientId.get(_clientId).attributes,
+      ...richTextsAsStrings
+    };
+
+    if (sanitize) {
+      for (const key in attributes) {
+        attributes[key] = sanitizeHTML(attributes[key]);
+      }
+    }
+
     return { ...byClientId.get(_clientId),
-      attributes: { ...byClientId.get(_clientId).attributes,
-        ...richTextsAsStrings
-      },
-      innerBlocks: blocksDocToArray(yDocBlocks, _clientId)
+      attributes,
+      innerBlocks: blocksDocToArray(yDocBlocks, {
+        clientId: _clientId,
+        sanitize
+      })
     };
   });
 }
@@ -281,12 +299,20 @@ export function blocksDocToArray(yDocBlocks) {
  * Converts the post doc into a post object.
  *
  * @param {yjs.Doc} doc Shared doc.
+ * @param {Object} [opts]
+ * @param {boolean} [opts.sanitize]
+ *
  * @return {PostObject} Post object.
  */
 
 export function postDocToObject(doc) {
+  let {
+    sanitize = false
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   const postDoc = doc.getMap('post');
-  const blocks = blocksDocToArray(postDoc.get('blocks'));
+  const blocks = blocksDocToArray(postDoc.get('blocks'), {
+    sanitize
+  });
   const comments = commentsDocToArray(postDoc.get('comments'));
   return {
     title: postDoc.get('title') || '',

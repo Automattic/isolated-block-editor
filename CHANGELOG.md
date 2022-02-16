@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - In collab mode, add support for same-block concurrent editing.
 
+### Fixed
+
+- Sanitize HTML in block attributes received from collab peers.
+
 ## [2.10.0] - 2022-02-09
 
 ### Added
