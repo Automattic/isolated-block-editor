@@ -2,7 +2,16 @@
  * External dependencies
  */
 import * as yjs from 'yjs';
+/**
+ * Internal dependencies
+ */
+
+import { postDocToObject, updatePostDoc } from './algorithms/yjs';
 /** @typedef {import('./algorithms/yjs').PostObject} PostObject */
+
+/** @typedef {import('./algorithms/relative-position').RelativePositionManager} RelativePositionManager */
+
+/** @typedef {import('..').RichTextHint} RichTextHint */
 
 const encodeArray = array => array.toString();
 
@@ -11,18 +20,16 @@ const decodeArray = string => new Uint8Array(string.split(','));
  * Create a Yjs document.
  *
  * @param {Object} opts
+ * @param {RelativePositionManager} opts.relativePositionManager - Module to coordinate conversions between the block editor selection and Y.RelativePosition.
  * @param {string} opts.identity - Client identifier.
- * @param {function(yjs.Doc, PostObject): void} opts.applyChangesToYDoc - Function to apply changes to the Yjs doc.
- * @param {function(yjs.Doc): PostObject} opts.getPostFromYDoc - Function to get post object data from the Yjs doc.
- * @param {function(any): void} opts.sendMessage
+ * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
 
 
 export function createDocument(_ref) {
   let {
     identity,
-    applyChangesToYDoc,
-    getPostFromYDoc,
+    relativePositionManager,
     sendMessage
   } = _ref;
   const doc = new yjs.Doc();
@@ -32,10 +39,12 @@ export function createDocument(_ref) {
   let yDocTriggeredChangeListeners = [];
   let connectionReadyListeners = [];
   doc.on('update', (update, origin) => {
-    // Change received from peer, or triggered by self undo/redo
+    relativePositionManager.peers.setAbsolutePositions(doc); // Change received from peer, or triggered by self undo/redo
+
     if (origin !== identity) {
-      const newData = getPostFromYDoc(doc);
+      const newData = postDocToObject(doc);
       yDocTriggeredChangeListeners.forEach(listener => listener(newData));
+      relativePositionManager.self.setAbsolutePosition(doc);
     }
 
     const isLocalOrigin = origin === identity || origin === `no-undo--${identity}` || origin instanceof yjs.UndoManager; // Change should be broadcast to peers
@@ -70,18 +79,26 @@ export function createDocument(_ref) {
   };
 
   return {
-    applyChangesToYDoc(data) {
+    /**
+     * @param {PostObject} data
+     * @param {Object} [opts]
+     * @param {boolean} [opts.isInitialContent] Whether this is the initial content loaded from the editor onLoad.
+     * @param {RichTextHint} [opts.richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
+     */
+    applyLocalChangesToYDoc(data) {
       let {
-        isInitialContent = false
+        isInitialContent = false,
+        richTextHint
       } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       if (state !== 'on') {
         throw 'wrong state';
       }
 
+      relativePositionManager.peers.saveRelativePositions(doc);
       const transactionOrigin = isInitialContent ? `no-undo--${identity}` : identity;
       doc.transact(() => {
-        applyChangesToYDoc(doc, data);
+        updatePostDoc(doc, data, richTextHint);
       }, transactionOrigin);
     },
 
@@ -104,7 +121,7 @@ export function createDocument(_ref) {
       }
 
       setState('on');
-      this.applyChangesToYDoc(data, {
+      this.applyLocalChangesToYDoc(data, {
         isInitialContent: true
       });
     },
@@ -150,6 +167,8 @@ export function createDocument(_ref) {
           break;
 
         case 'syncUpdate':
+          relativePositionManager.self.saveRelativePosition(doc);
+          relativePositionManager.peers.saveRelativePositions(doc);
           yjs.applyUpdate(doc, decodeArray(content.update), origin);
           break;
       }
@@ -171,6 +190,10 @@ export function createDocument(_ref) {
 
     getState() {
       return state;
+    },
+
+    getDoc() {
+      return doc;
     },
 
     getPostMap() {

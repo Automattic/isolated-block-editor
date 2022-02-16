@@ -73,6 +73,10 @@ export type EditorSelection = {
     start: any;
     end: any;
 };
+export type RichTextHint = {
+    clientId: string;
+    attributeKey: string;
+};
 /**
  * Real-time collaboration settings
  *
@@ -129,6 +133,11 @@ export type EditorSelection = {
  * @typedef EditorSelection
  * @property {Object} start
  * @property {Object} end
+ */
+/**
+ * @typedef RichTextHint
+ * @property {string} clientId
+ * @property {string} attributeKey
  */
 /**
  * @param {Object} props

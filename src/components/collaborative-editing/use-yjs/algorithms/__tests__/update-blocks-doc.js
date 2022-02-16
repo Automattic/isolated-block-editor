@@ -31,7 +31,20 @@ function applyYjsUpdate( yDoc, update ) {
 	} );
 }
 
-async function getUpdatedBlocksUsingYjsAlgo( originalBlocks, updatedLocalBlocks, updatedRemoteBlocks ) {
+/** @typedef {import('../../..').RichTextHint} RichTextHint */
+
+/**
+ * @param {Object} [richTextHints]
+ * @param {RichTextHint} [richTextHints.original]
+ * @param {RichTextHint} [richTextHints.updateLocal]
+ * @param {RichTextHint} [richTextHints.updateRemote]
+ */
+async function getUpdatedBlocksUsingYjsAlgo(
+	originalBlocks,
+	updatedLocalBlocks,
+	updatedRemoteBlocks,
+	richTextHints = {}
+) {
 	// Local doc.
 	const localYDoc = new yjs.Doc();
 	const localYBlocks = localYDoc.getMap( 'blocks' );
@@ -44,7 +57,7 @@ async function getUpdatedBlocksUsingYjsAlgo( originalBlocks, updatedLocalBlocks,
 	await applyYjsTransaction(
 		localYDoc,
 		() => {
-			updateBlocksDoc( localYBlocks, originalBlocks );
+			updateBlocksDoc( localYBlocks, originalBlocks, richTextHints.original );
 		},
 		1
 	);
@@ -55,7 +68,7 @@ async function getUpdatedBlocksUsingYjsAlgo( originalBlocks, updatedLocalBlocks,
 		await applyYjsTransaction(
 			localYDoc,
 			() => {
-				updateBlocksDoc( localYBlocks, updatedLocalBlocks );
+				updateBlocksDoc( localYBlocks, updatedLocalBlocks, richTextHints.updateLocal );
 			},
 			1
 		);
@@ -66,7 +79,7 @@ async function getUpdatedBlocksUsingYjsAlgo( originalBlocks, updatedLocalBlocks,
 		await applyYjsTransaction(
 			remoteYDoc,
 			() => {
-				updateBlocksDoc( remoteYBlocks, updatedRemoteBlocks );
+				updateBlocksDoc( remoteYBlocks, updatedRemoteBlocks, richTextHints.updateRemote );
 			},
 			2
 		);
@@ -358,6 +371,41 @@ syncAlgorithms.forEach( ( { name, algo } ) => {
 			];
 
 			expect( await algo( originalBlocks, updatedLocalBlocks, updateRemoteBlocks ) ).toEqual( expectedMerge );
+		} );
+	} );
+
+	describe( name + ' RichText Handling', () => {
+		const blockWithContent = ( content ) => ( {
+			clientId: '1',
+			attributes: { content },
+			innerBlocks: [],
+		} );
+		const richTextHint = { clientId: '1', attributeKey: 'content' };
+
+		it( 'should merge intelligently when known RichText attribute gets updated simultaneously', async () => {
+			const originalBlocks = [ blockWithContent( 'two' ) ];
+			const updatedLocalBlocks = [ blockWithContent( 'one two' ) ];
+			const updatedRemoteBlocks = [ blockWithContent( 'two three' ) ];
+
+			expect(
+				await algo( originalBlocks, updatedLocalBlocks, updatedRemoteBlocks, { original: richTextHint } )
+				// Without RichText handling, this would simply converge on either 'one two' or 'two three'
+			).toEqual( [ blockWithContent( 'one two three' ) ] );
+		} );
+
+		it( 'should converge on either update when previously unknown RichText attribute gets updated simultaneously', async () => {
+			const originalBlocks = [ blockWithContent( 'two' ) ];
+			const updatedLocalBlocks = [ blockWithContent( 'one two' ) ];
+			const updatedRemoteBlocks = [ blockWithContent( 'two three' ) ];
+
+			// Both clients discovered this RichText simultaneously so the updates can't be merged intelligently,
+			// but it should still converge on either of the updates
+			expect( [ updatedLocalBlocks, updatedRemoteBlocks ] ).toContainEqual(
+				await algo( originalBlocks, updatedLocalBlocks, updatedRemoteBlocks, {
+					updateLocal: richTextHint,
+					updateRemote: richTextHint,
+				} )
+			);
 		} );
 	} );
 } );

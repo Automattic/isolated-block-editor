@@ -71,6 +71,12 @@ import CollaborativeEditingAvatars from './components/avatars';
  */
 
 /**
+ * @typedef RichTextHint
+ * @property {string} clientId
+ * @property {string} attributeKey
+ */
+
+/**
  * @param {Object} props
  * @param {CollaborationSettings} props.settings
  */

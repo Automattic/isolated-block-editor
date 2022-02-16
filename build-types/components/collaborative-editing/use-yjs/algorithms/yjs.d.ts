@@ -1,11 +1,32 @@
 /**
+ * @typedef {Object} PostObject
+ * @property {string} title
+ * @property {Object[]} blocks
+ * @property {Object[]} comments
+ */
+/** @typedef {import('../yjs-doc').RichTextHint} RichTextHint */
+/**
  * Updates the block doc with the local blocks block changes.
  *
  * @param {yjs.Map} yDocBlocks Blocks doc.
  * @param {Array}   blocks     Updated blocks.
+ * @param {RichTextHint} [richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
  * @param {string}  clientId   Current clientId.
  */
-export function updateBlocksDoc(yDocBlocks: yjs.Map<any>, blocks: any[], clientId?: string): void;
+export function updateBlocksDoc(yDocBlocks: yjs.Map<any>, blocks: any[], richTextHint?: import("../..").RichTextHint | undefined, clientId?: string): void;
+/**
+ * Updates the RichText value in the richTexts yMap using index-based manipulation.
+ *
+ * @param {Object} args
+ * @param {Object} args.newBlock
+ * @param {string} args.attributeKey
+ * @param {yjs.Map} args.richTexts
+ */
+export function updateRichText({ newBlock, attributeKey, richTexts }: {
+    newBlock: any;
+    attributeKey: string;
+    richTexts: yjs.Map<any>;
+}): void;
 /**
  * Updates the comments doc with the local comments changes.
  *
@@ -25,8 +46,9 @@ export function updateCommentRepliesDoc(repliesDoc: yjs.Map<any>, replies?: any[
  *
  * @param {yjs.Doc} doc     Shared doc.
  * @param {PostObject}  newPost Updated post.
+ * @param {RichTextHint} [richTextHint]
  */
-export function updatePostDoc(doc: yjs.Doc, newPost: PostObject): void;
+export function updatePostDoc(doc: yjs.Doc, newPost: PostObject, richTextHint?: import("../..").RichTextHint | undefined): void;
 /**
  * Converts the comments doc into a comment list.
  *
@@ -54,5 +76,6 @@ export type PostObject = {
     blocks: any[];
     comments: any[];
 };
+export type RichTextHint = import('../yjs-doc').RichTextHint;
 import * as yjs from "yjs";
 //# sourceMappingURL=yjs.d.ts.map

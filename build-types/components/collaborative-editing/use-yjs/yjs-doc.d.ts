@@ -2,20 +2,25 @@
  * Create a Yjs document.
  *
  * @param {Object} opts
+ * @param {RelativePositionManager} opts.relativePositionManager - Module to coordinate conversions between the block editor selection and Y.RelativePosition.
  * @param {string} opts.identity - Client identifier.
- * @param {function(yjs.Doc, PostObject): void} opts.applyChangesToYDoc - Function to apply changes to the Yjs doc.
- * @param {function(yjs.Doc): PostObject} opts.getPostFromYDoc - Function to get post object data from the Yjs doc.
- * @param {function(any): void} opts.sendMessage
+ * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
-export function createDocument({ identity, applyChangesToYDoc, getPostFromYDoc, sendMessage }: {
+export function createDocument({ identity, relativePositionManager, sendMessage }: {
+    relativePositionManager: RelativePositionManager;
     identity: string;
-    applyChangesToYDoc: (arg0: yjs.Doc, arg1: PostObject) => void;
-    getPostFromYDoc: (arg0: yjs.Doc) => PostObject;
-    sendMessage: (arg0: any) => void;
+    sendMessage: (arg0: Record<string, unknown>) => void;
 }): {
-    applyChangesToYDoc(data: any, { isInitialContent }?: {
+    /**
+     * @param {PostObject} data
+     * @param {Object} [opts]
+     * @param {boolean} [opts.isInitialContent] Whether this is the initial content loaded from the editor onLoad.
+     * @param {RichTextHint} [opts.richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
+     */
+    applyLocalChangesToYDoc(data: PostObject, { isInitialContent, richTextHint }?: {
         isInitialContent?: boolean | undefined;
-    }): void;
+        richTextHint?: import("..").RichTextHint | undefined;
+    } | undefined): void;
     connect(): void;
     disconnect(): void;
     startSharing(data: any): void;
@@ -28,8 +33,11 @@ export function createDocument({ identity, applyChangesToYDoc, getPostFromYDoc, 
     onYDocTriggeredChange(listener: any): () => void;
     onConnectionReady(listener: any): () => void;
     getState(): "off" | "connecting" | "on";
+    getDoc(): yjs.Doc;
     getPostMap(): yjs.Map<any>;
 };
 export type PostObject = import('./algorithms/yjs').PostObject;
+export type RelativePositionManager = import('./algorithms/relative-position').RelativePositionManager;
+export type RichTextHint = import('..').RichTextHint;
 import * as yjs from "yjs";
 //# sourceMappingURL=yjs-doc.d.ts.map

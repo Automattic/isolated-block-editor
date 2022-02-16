@@ -2,7 +2,13 @@
  * External dependencies
  */
 import * as yjs from 'yjs';
+import * as diff from 'lib0/diff';
 import { isEqual } from 'lodash';
+
+/**
+ * Internal dependencies
+ */
+import { applyHTMLDelta, richTextMapToHTML } from '../algorithms/rich-text';
 
 /**
  * @typedef {Object} PostObject
@@ -11,44 +17,17 @@ import { isEqual } from 'lodash';
  * @property {Object[]} comments
  */
 
-/**
- * Returns information for splicing array `a` into array `b`,
- * by swapping the minimum slice of disagreement.
- *
- * @param {Array} a
- * @param {Array} b
- * @return {Object} diff.
- */
-function simpleDiff( a, b ) {
-	let left = 0;
-	let right = 0;
-	while ( left < a.length && left < b.length && a[ left ] === b[ left ] ) {
-		left++;
-	}
-	if ( left !== a.length || left !== b.length ) {
-		while (
-			right + left < a.length &&
-			right + left < b.length &&
-			a[ a.length - right - 1 ] === b[ b.length - right - 1 ]
-		) {
-			right++;
-		}
-	}
-	return {
-		index: left,
-		remove: a.length - left - right,
-		insert: b.slice( left, b.length - right ),
-	};
-}
+/** @typedef {import('../yjs-doc').RichTextHint} RichTextHint */
 
 /**
  * Updates the block doc with the local blocks block changes.
  *
  * @param {yjs.Map} yDocBlocks Blocks doc.
  * @param {Array}   blocks     Updated blocks.
+ * @param {RichTextHint} [richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
  * @param {string}  clientId   Current clientId.
  */
-export function updateBlocksDoc( yDocBlocks, blocks, clientId = '' ) {
+export function updateBlocksDoc( yDocBlocks, blocks, richTextHint, clientId = '' ) {
 	if ( ! yDocBlocks.has( 'order' ) ) {
 		yDocBlocks.set( 'order', new yjs.Map() );
 	}
@@ -60,7 +39,7 @@ export function updateBlocksDoc( yDocBlocks, blocks, clientId = '' ) {
 	}
 	const byClientId = yDocBlocks.get( 'byClientId' );
 	const currentOrder = order.toArray();
-	const orderDiff = simpleDiff(
+	const orderDiff = diff.simpleDiffArray(
 		currentOrder,
 		blocks.map( ( block ) => block.clientId )
 	);
@@ -70,14 +49,71 @@ export function updateBlocksDoc( yDocBlocks, blocks, clientId = '' ) {
 	order.delete( orderDiff.index, orderDiff.remove );
 	order.insert( orderDiff.index, orderDiff.insert );
 
+	if ( ! yDocBlocks.has( 'richTexts' ) ) {
+		yDocBlocks.set( 'richTexts', new yjs.Map() );
+	}
+
 	for ( const _block of blocks ) {
 		const { innerBlocks, ...block } = _block;
-		if ( ! byClientId.has( block.clientId ) || ! isEqual( byClientId.get( block.clientId ), block ) ) {
+		const isPreexisting = byClientId.has( block.clientId );
+
+		if ( ! isPreexisting || ! isEqual( byClientId.get( block.clientId ), block ) ) {
+			const richTexts = yDocBlocks.get( 'richTexts' );
+
+			getKnownRichTextAttributes( block.clientId, richTextHint, richTexts ).forEach( ( attributeKey ) => {
+				updateRichText( {
+					newBlock: block,
+					attributeKey,
+					richTexts,
+				} );
+			} );
+
 			byClientId.set( block.clientId, block );
 		}
 
-		updateBlocksDoc( yDocBlocks, innerBlocks, block.clientId );
+		updateBlocksDoc( yDocBlocks, innerBlocks, richTextHint, block.clientId );
 	}
+}
+
+/** @returns {Set<string>} */
+function getKnownRichTextAttributes( clientId, richTextHint, richTexts ) {
+	const knownRichTextAttributes = richTexts.has( clientId ) && richTexts.get( clientId );
+	const attributeSet = knownRichTextAttributes ? new Set( knownRichTextAttributes.keys() ) : new Set();
+	if ( richTextHint && clientId === richTextHint.clientId ) {
+		attributeSet.add( richTextHint.attributeKey );
+	}
+	return attributeSet;
+}
+
+/**
+ * Updates the RichText value in the richTexts yMap using index-based manipulation.
+ *
+ * @param {Object} args
+ * @param {Object} args.newBlock
+ * @param {string} args.attributeKey
+ * @param {yjs.Map} args.richTexts
+ */
+export function updateRichText( { newBlock, attributeKey, richTexts } ) {
+	const newText = newBlock.attributes[ attributeKey ];
+
+	if ( ! richTexts.has( newBlock.clientId ) ) {
+		richTexts.set( newBlock.clientId, new yjs.Map() );
+	}
+	const blockWithRichTexts = richTexts.get( newBlock.clientId );
+	if ( ! blockWithRichTexts.has( attributeKey ) ) {
+		blockWithRichTexts.set(
+			attributeKey,
+			new yjs.Map( [
+				[ 'xmlText', new yjs.XmlText() ],
+				[ 'multilineTag', undefined ],
+				[ 'replacements', new yjs.Array() ],
+			] )
+		);
+	}
+
+	const richTextMap = blockWithRichTexts.get( attributeKey );
+	const oldText = richTextMapToHTML( blockWithRichTexts.get( attributeKey ) );
+	applyHTMLDelta( oldText, newText, richTextMap );
 }
 
 /**
@@ -136,8 +172,9 @@ export function updateCommentRepliesDoc( repliesDoc, replies = [] ) {
  *
  * @param {yjs.Doc} doc     Shared doc.
  * @param {PostObject}  newPost Updated post.
+ * @param {RichTextHint} [richTextHint]
  */
-export function updatePostDoc( doc, newPost ) {
+export function updatePostDoc( doc, newPost, richTextHint ) {
 	const postDoc = doc.getMap( 'post' );
 	if ( postDoc.get( 'title' ) !== newPost.title ) {
 		postDoc.set( 'title', newPost.title );
@@ -145,7 +182,7 @@ export function updatePostDoc( doc, newPost ) {
 	if ( ! postDoc.get( 'blocks' ) ) {
 		postDoc.set( 'blocks', new yjs.Map() );
 	}
-	updateBlocksDoc( postDoc.get( 'blocks' ), newPost.blocks || [] );
+	updateBlocksDoc( postDoc.get( 'blocks' ), newPost.blocks || [], richTextHint );
 	if ( ! postDoc.get( 'comments' ) ) {
 		postDoc.set( 'comments', new yjs.Map() );
 	}
@@ -205,10 +242,24 @@ export function blocksDocToArray( yDocBlocks, clientId = '' ) {
 	if ( ! order ) return [];
 	const byClientId = yDocBlocks.get( 'byClientId' );
 
-	return order.map( ( _clientId ) => ( {
-		...byClientId.get( _clientId ),
-		innerBlocks: blocksDocToArray( yDocBlocks, _clientId ),
-	} ) );
+	return order.map( ( _clientId ) => {
+		const richTextMap = yDocBlocks.get( 'richTexts' ).get( _clientId ) || new yjs.Map();
+		const richTextsAsStrings = Array.from( richTextMap.entries() ).reduce( ( acc, [ key, value ] ) => {
+			return {
+				...acc,
+				[ key ]: richTextMapToHTML( value ),
+			};
+		}, {} );
+
+		return {
+			...byClientId.get( _clientId ),
+			attributes: {
+				...byClientId.get( _clientId ).attributes,
+				...richTextsAsStrings,
+			},
+			innerBlocks: blocksDocToArray( yDocBlocks, _clientId ),
+		};
+	} );
 }
 
 /**

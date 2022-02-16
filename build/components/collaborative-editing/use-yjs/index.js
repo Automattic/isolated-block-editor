@@ -12,13 +12,13 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
+var _mutex = require("lib0/mutex");
+
 var _uuid = require("uuid");
 
 var _lodash = require("lodash");
 
 var _yjsDoc = require("./yjs-doc");
-
-var _yjs = require("./algorithms/yjs");
 
 var _data = require("@wordpress/data");
 
@@ -29,6 +29,8 @@ var _filters = require("./filters");
 var _formats = require("./formats");
 
 var _yjsUndo = require("./yjs-undo");
+
+var _relativePosition = require("./algorithms/relative-position");
 
 /**
  * External dependencies
@@ -69,7 +71,7 @@ function initYDoc(_x) {
 
 function _initYDoc() {
   _initYDoc = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(_ref) {
-    var settings, registry, channelId, transport, dispatch, select, identity, doc, _yield$transport$conn, isFirstInChannel, _disconnect;
+    var settings, registry, channelId, transport, dispatch, select, mutex, identity, doc, _yield$transport$conn, isFirstInChannel, _disconnect;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -78,14 +80,22 @@ function _initYDoc() {
             settings = _ref.settings, registry = _ref.registry;
             channelId = settings.channelId, transport = settings.transport;
             dispatch = registry.dispatch, select = registry.select;
+            mutex = (0, _mutex.createMutex)();
             /** @type {string} */
 
             identity = (0, _uuid.v4)();
             debug("initYDoc (identity: ".concat(identity, ")"));
             doc = (0, _yjsDoc.createDocument)({
               identity: identity,
-              applyChangesToYDoc: _yjs.updatePostDoc,
-              getPostFromYDoc: _yjs.postDocToObject,
+              relativePositionManager: {
+                self: new _relativePosition.RelativePosition(function () {
+                  return {
+                    start: select('core/block-editor').getSelectionStart(),
+                    end: select('core/block-editor').getSelectionEnd()
+                  };
+                }, dispatch('core/block-editor').selectionChange),
+                peers: new _relativePosition.PeerRelativePosition(select('isolated/editor').getCollabPeers, dispatch('isolated/editor').setCollabPeerSelection)
+              },
 
               /** @param {Object} message */
               sendMessage: function sendMessage(message) {
@@ -107,7 +117,7 @@ function _initYDoc() {
                 isTriggeredByYDoc: true
               });
             });
-            _context.next = 10;
+            _context.next = 11;
             return transport.connect({
               user: {
                 identity: identity,
@@ -123,7 +133,10 @@ function _initYDoc() {
                 switch (data.type) {
                   case 'doc':
                     {
-                      doc.receiveMessage(data.message);
+                      // The mutex wrapper prevents a remote change from triggering a selection change message
+                      mutex(function () {
+                        doc.receiveMessage(data.message);
+                      });
                       break;
                     }
 
@@ -141,7 +154,7 @@ function _initYDoc() {
               channelId: channelId
             });
 
-          case 10:
+          case 11:
             _yield$transport$conn = _context.sent;
             isFirstInChannel = _yield$transport$conn.isFirstInChannel;
             debug("connected (channelId: ".concat(channelId, ")"));
@@ -169,14 +182,17 @@ function _initYDoc() {
             });
             return _context.abrupt("return", {
               sendSelection: function sendSelection(start, end) {
-                debug('sendSelection', start, end);
-                transport.sendMessage({
-                  type: 'selection',
-                  identity: identity,
-                  selection: {
-                    start: start,
-                    end: end
-                  }
+                // The mutex wrapper prevents a remote change from triggering a selection change message
+                mutex(function () {
+                  debug('sendSelection', start, end);
+                  transport.sendMessage({
+                    type: 'selection',
+                    identity: identity,
+                    selection: {
+                      start: start,
+                      end: end
+                    }
+                  });
                 });
               },
               disconnect: function disconnect() {
@@ -186,7 +202,7 @@ function _initYDoc() {
               }
             });
 
-          case 17:
+          case 18:
           case "end":
             return _context.stop();
         }
