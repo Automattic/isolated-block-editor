@@ -85,6 +85,12 @@ import { createElement } from "@wordpress/element";
  */
 
 /**
+ * @typedef RichTextHint
+ * @property {string} clientId
+ * @property {string} attributeKey
+ */
+
+/**
  * @param {Object} props
  * @param {CollaborationSettings} props.settings
  */
