@@ -60,17 +60,28 @@ export function commentsDocToArray(commentsDoc: yjs.Map<any>): any[];
  * Converts the block doc into a block list.
  *
  * @param {yjs.Map} yDocBlocks Block doc.
- * @param {string}  clientId   Current block clientId.
+ * @param {Object} [opts]
+ * @param {string}  [opts.clientId] Current block clientId.
+ * @param {boolean}  [opts.sanitize] Whether to sanitize the block attribute values.
+ *
  * @return {Array} Block list.
  */
-export function blocksDocToArray(yDocBlocks: yjs.Map<any>, clientId?: string): any[];
+export function blocksDocToArray(yDocBlocks: yjs.Map<any>, { clientId, sanitize }?: {
+    clientId?: string | undefined;
+    sanitize?: boolean | undefined;
+} | undefined): any[];
 /**
  * Converts the post doc into a post object.
  *
  * @param {yjs.Doc} doc Shared doc.
+ * @param {Object} [opts]
+ * @param {boolean} [opts.sanitize]
+ *
  * @return {PostObject} Post object.
  */
-export function postDocToObject(doc: yjs.Doc): PostObject;
+export function postDocToObject(doc: yjs.Doc, { sanitize }?: {
+    sanitize?: boolean | undefined;
+} | undefined): PostObject;
 export type PostObject = {
     title: string;
     blocks: any[];
