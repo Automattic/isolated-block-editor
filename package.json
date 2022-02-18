@@ -1,6 +1,6 @@
 {
 	"name": "@automattic/isolated-block-editor",
-	"version": "2.10.0",
+	"version": "2.11.0",
 	"description": "Repackages Gutenberg's editor playground as multi-instance editor.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
