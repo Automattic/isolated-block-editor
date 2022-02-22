@@ -45,7 +45,7 @@ function PluginSidebarEditPost(_ref) {
 
 const SettingsSidebar = _ref2 => {
   let {
-    hasDocument
+    documentInspector
   } = _ref2;
   const {
     sidebarName,
@@ -72,7 +72,7 @@ const SettingsSidebar = _ref2 => {
     identifier: sidebarName,
     header: createElement(SettingsHeader, {
       sidebarName: sidebarName,
-      hasDocument: hasDocument
+      documentInspector: documentInspector
     }),
     closeLabel: __('Close settings'),
     headerClassName: "edit-post-sidebar__panel-tabs"

@@ -2,8 +2,8 @@ export default SettingsHeader;
 /**
  * Internal dependencies
  */
-declare function SettingsHeader({ sidebarName, hasDocument }: {
+declare function SettingsHeader({ sidebarName, documentInspector }: {
     sidebarName: any;
-    hasDocument: any;
+    documentInspector: any;
 }): JSX.Element;
 //# sourceMappingURL=sidebar-heading.d.ts.map

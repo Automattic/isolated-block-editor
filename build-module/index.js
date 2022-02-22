@@ -47,7 +47,7 @@ import './style.scss';
  * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
  * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
  * @property {boolean} [selectorTool] - Enable or disable the selector tool
- * @property {boolean} [documentInspector] - Enable or disable the document inspector
+ * @property {boolean|string} [documentInspector] - Enable or disable the document inspector or enable with custom label
  */
 
 /**

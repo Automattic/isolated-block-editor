@@ -56,7 +56,7 @@ function PluginSidebarEditPost(_ref) {
 }
 
 var SettingsSidebar = function SettingsSidebar(_ref2) {
-  var hasDocument = _ref2.hasDocument;
+  var documentInspector = _ref2.documentInspector;
 
   var _useSelect2 = (0, _data.useSelect)(function (select) {
     var sidebar = select(_interface.store).getActiveComplementaryArea('isolated/editor');
@@ -83,7 +83,7 @@ var SettingsSidebar = function SettingsSidebar(_ref2) {
     identifier: sidebarName,
     header: createElement(_sidebarHeading["default"], {
       sidebarName: sidebarName,
-      hasDocument: hasDocument
+      documentInspector: documentInspector
     }),
     closeLabel: (0, _i18n.__)('Close settings'),
     headerClassName: "edit-post-sidebar__panel-tabs"
