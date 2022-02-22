@@ -9,15 +9,16 @@ import { useDispatch, useSelect } from '@wordpress/data';
  * Internal dependencies
  */
 
-const SettingsHeader = ( { sidebarName, hasDocument } ) => {
+const SettingsHeader = ( { sidebarName, documentInspector } ) => {
 	const { openGeneralSidebar } = useDispatch( 'isolated/editor' );
 	const openDocumentSettings = () => openGeneralSidebar( 'edit-post/document' );
 	const openBlockSettings = () => openGeneralSidebar( 'edit-post/block' );
 
 	const { documentLabel } = useSelect( ( select ) => {
+		const hasCustomLabel = documentInspector && typeof documentInspector === 'string';
 		return {
 			// translators: Default label for the Document sidebar tab, not selected.
-			documentLabel: _x( 'Document', 'noun' ),
+			documentLabel: hasCustomLabel ? documentInspector : _x( 'Document', 'noun' ),
 		};
 	}, [] );
 
@@ -37,7 +38,7 @@ const SettingsHeader = ( { sidebarName, hasDocument } ) => {
 	/* Use a list so screen readers will announce how many tabs there are. */
 	return (
 		<ul>
-			{ hasDocument && (
+			{ !!documentInspector && (
 				<li>
 					<Button
 						onClick={ openDocumentSettings }
