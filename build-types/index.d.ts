@@ -9,7 +9,7 @@
  * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
  * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
  * @property {boolean} [selectorTool] - Enable or disable the selector tool
- * @property {boolean} [documentInspector] - Enable or disable the document inspector
+ * @property {boolean|string} [documentInspector] - Enable or disable the document inspector or enable with custom label
  */
 /**
  * More menu settings
@@ -110,9 +110,9 @@ export type ToolbarSettings = {
      */
     selectorTool?: boolean | undefined;
     /**
-     * - Enable or disable the document inspector
+     * - Enable or disable the document inspector or enable with custom label
      */
-    documentInspector?: boolean | undefined;
+    documentInspector?: string | boolean | undefined;
 };
 /**
  * More menu settings

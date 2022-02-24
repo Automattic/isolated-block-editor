@@ -26,7 +26,7 @@ import { createElement } from "@wordpress/element";
  */
 var SettingsHeader = function SettingsHeader(_ref) {
   var sidebarName = _ref.sidebarName,
-      hasDocument = _ref.hasDocument;
+      documentInspector = _ref.documentInspector;
 
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
       openGeneralSidebar = _useDispatch.openGeneralSidebar;
@@ -40,9 +40,10 @@ var SettingsHeader = function SettingsHeader(_ref) {
   };
 
   var _useSelect = (0, _data.useSelect)(function (select) {
+    var hasCustomLabel = documentInspector && typeof documentInspector === 'string';
     return {
       // translators: Default label for the Document sidebar tab, not selected.
-      documentLabel: (0, _i18n._x)('Document', 'noun')
+      documentLabel: hasCustomLabel ? documentInspector : (0, _i18n._x)('Document', 'noun')
     };
   }, []),
       documentLabel = _useSelect.documentLabel;
@@ -62,7 +63,7 @@ var SettingsHeader = function SettingsHeader(_ref) {
   /* Use a list so screen readers will announce how many tabs there are. */
 
 
-  return createElement("ul", null, hasDocument && createElement("li", null, createElement(_components.Button, {
+  return createElement("ul", null, !!documentInspector && createElement("li", null, createElement(_components.Button, {
     onClick: openDocumentSettings,
     className: "edit-post-sidebar__panel-tab ".concat(documentActiveClass),
     "aria-label": documentAriaLabel,

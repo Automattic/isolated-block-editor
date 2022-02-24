@@ -13,7 +13,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 const SettingsHeader = _ref => {
   let {
     sidebarName,
-    hasDocument
+    documentInspector
   } = _ref;
   const {
     openGeneralSidebar
@@ -26,9 +26,10 @@ const SettingsHeader = _ref => {
   const {
     documentLabel
   } = useSelect(select => {
+    const hasCustomLabel = documentInspector && typeof documentInspector === 'string';
     return {
       // translators: Default label for the Document sidebar tab, not selected.
-      documentLabel: _x('Document', 'noun')
+      documentLabel: hasCustomLabel ? documentInspector : _x('Document', 'noun')
     };
   }, []);
   const [documentAriaLabel, documentActiveClass] = sidebarName === 'edit-post/document' ? // translators: ARIA label for the Document sidebar tab, selected. %s: Document label.
@@ -38,7 +39,7 @@ const SettingsHeader = _ref => {
   [__('Block'), ''];
   /* Use a list so screen readers will announce how many tabs there are. */
 
-  return createElement("ul", null, hasDocument && createElement("li", null, createElement(Button, {
+  return createElement("ul", null, !!documentInspector && createElement("li", null, createElement(Button, {
     onClick: openDocumentSettings,
     className: `edit-post-sidebar__panel-tab ${documentActiveClass}`,
     "aria-label": documentAriaLabel,

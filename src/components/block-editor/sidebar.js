@@ -38,7 +38,7 @@ function PluginSidebarEditPost( { className, ...props } ) {
 	);
 }
 
-const SettingsSidebar = ( { hasDocument }) => {
+const SettingsSidebar = ( { documentInspector }) => {
 	const { sidebarName, keyboardShortcut } = useSelect( ( select ) => {
 		let sidebar = select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' );
 
@@ -61,7 +61,7 @@ const SettingsSidebar = ( { hasDocument }) => {
 		<PluginSidebarEditPost
 			className="iso-sidebar"
 			identifier={ sidebarName }
-			header={ <SettingsHeader sidebarName={ sidebarName } hasDocument={ hasDocument } /> }
+			header={ <SettingsHeader sidebarName={ sidebarName } documentInspector={ documentInspector } /> }
 			closeLabel={ __( 'Close settings' ) }
 			headerClassName="edit-post-sidebar__panel-tabs"
 			/* translators: button label text should, if possible, be under 16 characters. */

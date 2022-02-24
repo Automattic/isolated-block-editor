@@ -32,11 +32,12 @@ export function createDocument({ identity, relativePositionManager, sendMessage 
     }): void;
     onYDocTriggeredChange(listener: any): () => void;
     onConnectionReady(listener: any): () => void;
-    getState(): "on" | "off" | "connecting";
+    getState(): "off" | "connecting" | "on";
     getDoc(): yjs.Doc;
     getPostMap(): yjs.Map<any>;
 };
 export type PostObject = import('./algorithms/yjs').PostObject;
 export type RelativePositionManager = import('./algorithms/relative-position').RelativePositionManager;
 export type RichTextHint = import('..').RichTextHint;
+import * as yjs from "yjs";
 //# sourceMappingURL=yjs-doc.d.ts.map
