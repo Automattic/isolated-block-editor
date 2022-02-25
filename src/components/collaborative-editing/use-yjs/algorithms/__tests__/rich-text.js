@@ -176,7 +176,7 @@ describe( 'conflict merging', () => {
 	} );
 
 	// TODO: Unsolved problem
-	// We won't be able to solve this until Yjs solves the "nested tag structure fidelity" problem
+	// We might not be able to solve this until Yjs solves the "nested tag structure fidelity" problem
 	// that Y.XmlText has (https://github.com/yjs/yjs/issues/337)
 	it.skip( 'should handle nested lists', () => {
 		const htmlA = '<li>#outer<ul><li>inner</li></ul></li>';
