@@ -113,7 +113,7 @@ export function updateRichText(_ref) {
   const blockWithRichTexts = richTexts.get(newBlock.clientId);
 
   if (!blockWithRichTexts.has(attributeKey)) {
-    blockWithRichTexts.set(attributeKey, new yjs.Map([['xmlText', new yjs.XmlText()], ['multilineTag', undefined], ['replacements', new yjs.Array()]]));
+    blockWithRichTexts.set(attributeKey, new yjs.Map([['xmlText', new yjs.XmlText()], ['multilineTag', undefined], ['replacements', new yjs.Array()], ['multilineWrapperReplacements', new yjs.Array()]]));
   }
 
   const richTextMap = blockWithRichTexts.get(attributeKey);

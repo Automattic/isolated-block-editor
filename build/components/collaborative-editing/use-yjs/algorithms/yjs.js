@@ -165,7 +165,7 @@ function updateRichText(_ref) {
   var blockWithRichTexts = richTexts.get(newBlock.clientId);
 
   if (!blockWithRichTexts.has(attributeKey)) {
-    blockWithRichTexts.set(attributeKey, new yjs.Map([['xmlText', new yjs.XmlText()], ['multilineTag', undefined], ['replacements', new yjs.Array()]]));
+    blockWithRichTexts.set(attributeKey, new yjs.Map([['xmlText', new yjs.XmlText()], ['multilineTag', undefined], ['replacements', new yjs.Array()], ['multilineWrapperReplacements', new yjs.Array()]]));
   }
 
   var richTextMap = blockWithRichTexts.get(attributeKey);
