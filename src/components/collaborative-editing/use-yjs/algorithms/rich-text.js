@@ -58,7 +58,10 @@ export function gutenFormatsToYFormats( formats ) {
  * For example, `core/bold` will be converted back to `strong`.
  */
 export function namedGutenFormatToStandardTags( format ) {
-	const { tagName, attributes = {} } = select( 'core/rich-text' ).getFormatType( format.type );
+	const formatTypeRecord = select( 'core/rich-text' ).getFormatType( format.type );
+	if ( ! formatTypeRecord ) return { [ format.type ]: true };
+
+	const { tagName, attributes = {} } = formatTypeRecord;
 	if ( ! format.attributes ) return { [ tagName ]: true };
 
 	const remappedEntries = Object.entries( format.attributes ).map( ( [ key, value ] ) => [
