@@ -108,6 +108,7 @@ export function updateRichText( { newBlock, attributeKey, richTexts } ) {
 				[ 'xmlText', new yjs.XmlText() ],
 				[ 'multilineTag', undefined ],
 				[ 'replacements', new yjs.Array() ],
+				[ 'multilineWrapperReplacements', new yjs.Array() ],
 			] )
 		);
 	}

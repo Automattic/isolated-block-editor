@@ -156,6 +156,36 @@ describe( 'conflict merging', () => {
 		expect( a ).toBe( '<code><em>foo</em></code>' );
 		expect( a ).toBe( b );
 	} );
+
+	it( 'should handle inline images', () => {
+		const htmlA = '<li>a<img src="#"></li>';
+		const htmlB = '<li><img src="#">b</li>';
+		const [ a, b ] = updateSimultaneously( '<li><img src="#"></li>', htmlA, htmlB );
+
+		expect( a ).toBe( '<li>a<img src="#">b</li>' );
+		expect( a ).toBe( b );
+	} );
+
+	it( 'should handle lists', () => {
+		const htmlA = '<li>#one</li><li>two</li>';
+		const htmlB = '<li>one</li><li>two#</li>';
+		const [ a, b ] = updateSimultaneously( '<li>one</li><li>two</li>', htmlA, htmlB );
+
+		expect( a ).toBe( '<li>#one</li><li>two#</li>' );
+		expect( a ).toBe( b );
+	} );
+
+	// TODO: Unsolved problem
+	// We might not be able to solve this until Yjs solves the "nested tag structure fidelity" problem
+	// that Y.XmlText has (https://github.com/yjs/yjs/issues/337)
+	it.skip( 'should handle nested lists', () => {
+		const htmlA = '<li>#outer<ul><li>inner</li></ul></li>';
+		const htmlB = '<li>outer<ul><li>inner#</li></ul></li>';
+		const [ a, b ] = updateSimultaneously( '<li>outer<ul><li>inner</li></ul></li>', htmlA, htmlB );
+
+		expect( a ).toBe( '<li>#outer<ul><li>inner#</li></ul></li>' );
+		expect( a ).toBe( b );
+	} );
 } );
 
 describe( 'multiline', () => {
@@ -170,6 +200,55 @@ describe( 'multiline', () => {
 	it( 'should support multiline tags with nested tags', () => {
 		const before = '<li><em>foo</em></li><li>foo</li>';
 		const after = '<li>foo</li><li><em>bar</em></li>';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should support nested lists 1', () => {
+		const before = '<li>outer<ol><li>inner<ul><li>innermost</li></ul></li><li>inner</li></ol></li><li>outer</li>';
+		const after =
+			'<li>outer<ol><li>inner<ul><li>innermost edit</li></ul></li><li>inner</li></ol></li><li>outer</li>';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should support nested lists 2', () => {
+		const before = '<li>outer<ol><li>inner</li><li>inner<ul><li>innermost</li></ul></li></ol></li>';
+		const after = '<li>outer<ol><li>inner</li><li>inner<ul><li>innermost edit</li></ul></li></ol></li>';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should support nested lists with inner formatting', () => {
+		const before = '<li>list item<ul><li><strong>nested</strong> item</li></ul></li>';
+		const after = '<li>list item<ul><li><strong>nested</strong> list item</li></ul></li>';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should support indenting a list', () => {
+		const before = '<li>outer</li>';
+		const after = '<li>outer<ul><li></li></ul></li>';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should support nested lists with empty item', () => {
+		const before = '<li>outer<ul><li></li></ul></li><li>outer</li>';
+		const after = '<li>#outer<ul><li></li></ul></li><li>outer</li>';
+		const richTextMap = richTextMapFrom( before );
+		applyHTMLDelta( before, after, richTextMap );
+		expect( richTextMapToHTML( richTextMap ) ).toBe( after );
+	} );
+
+	it( 'should support nested lists with inline image', () => {
+		const before = '<li>outer<ul><li><img src="#"></li></ul></li><li>outer</li>';
+		const after = '<li>#outer<ul><li><img src="#"></li></ul></li><li>outer</li>';
 		const richTextMap = richTextMapFrom( before );
 		applyHTMLDelta( before, after, richTextMap );
 		expect( richTextMapToHTML( richTextMap ) ).toBe( after );

@@ -58,7 +58,10 @@ export function gutenFormatsToYFormats( formats ) {
  * For example, `core/bold` will be converted back to `strong`.
  */
 export function namedGutenFormatToStandardTags( format ) {
-	const { tagName, attributes = {} } = select( 'core/rich-text' ).getFormatType( format.type );
+	const formatTypeRecord = select( 'core/rich-text' ).getFormatType( format.type );
+	if ( ! formatTypeRecord ) return { [ format.type ]: true };
+
+	const { tagName, attributes = {} } = formatTypeRecord;
 	if ( ! format.attributes ) return { [ tagName ]: true };
 
 	const remappedEntries = Object.entries( format.attributes ).map( ( [ key, value ] ) => [
@@ -79,6 +82,36 @@ function getInferredMultilineTag( html ) {
 }
 
 /**
+ * Massage the Gutenberg replacements into Yjs-friendly structures.
+ *
+ * @param {array} a The `replacements` array of a Gutenberg RichText.
+ * @param {array} b The `replacements` array of another Gutenberg RichText.
+ */
+function prepareReplacementsForTransaction( a, b ) {
+	const partitionReplacementTypes = ( arr ) => {
+		let multilineWrapperReplacements = {};
+		let normalReplacements = [];
+
+		arr.forEach( ( r, index ) => {
+			if ( Array.isArray( r ) ) {
+				// If it's an array, it's a multiline wrapper tag (e.g. ul/ol) and not a normal replacement.
+				multilineWrapperReplacements[ index ] = r;
+			} else if ( r ) {
+				// Since normal replacements do not rely on an index-based mapping
+				// with the full text, let's condense the sparse array.
+				normalReplacements.push( r );
+			}
+		} );
+		return { multilineWrapperReplacements, normalReplacements };
+	};
+
+	const { normalReplacements: na } = partitionReplacementTypes( a );
+	const { multilineWrapperReplacements, normalReplacements: nb } = partitionReplacementTypes( b );
+
+	return { multilineWrapperReplacements, replacementsDiff: diff.simpleDiffArray( na, nb ) };
+}
+
+/**
  * Apply the delta between two HTML strings to a Y.XmlText.
  *
  * @param {string} htmlA
@@ -89,8 +122,10 @@ function getInferredMultilineTag( html ) {
 export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 	const [ multilineTagA, multilineTagB ] = [ htmlA, htmlB ].map( getInferredMultilineTag );
 	const inferredMultilineTag = multilineTagA || multilineTagB;
+	const inferredMultilineWrapperTags = inferredMultilineTag === 'li' ? [ 'ul', 'ol' ] : [];
 	const mergedRichTextOpts = {
 		...( inferredMultilineTag ? { multilineTag: inferredMultilineTag } : {} ),
+		multilineWrapperTags: inferredMultilineWrapperTags,
 		...richTextOpts,
 	};
 
@@ -112,10 +147,10 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 		{}
 	);
 
-	// Yjs can't do insertion operations on sparse arrays. Since replacements do not rely on
-	// an index-based mapping with the full text, let's condense the arrays here.
-	const toDenseArray = ( arr ) => arr.filter( ( x ) => x );
-	const replacementsDiff = diff.simpleDiffArray( toDenseArray( a.replacements ), toDenseArray( b.replacements ) );
+	const { multilineWrapperReplacements, replacementsDiff } = prepareReplacementsForTransaction(
+		a.replacements,
+		b.replacements
+	);
 
 	richTextMap.doc?.transact( () => {
 		richTextMap.get( 'xmlText' ).delete( stringDiff.index, stringDiff.remove );
@@ -137,6 +172,7 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 
 		richTextMap.get( 'replacements' ).delete( replacementsDiff.index, replacementsDiff.remove );
 		richTextMap.get( 'replacements' ).insert( replacementsDiff.index, replacementsDiff.insert );
+		richTextMap.set( 'multilineWrapperReplacements', multilineWrapperReplacements );
 	} );
 }
 
@@ -149,16 +185,62 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
 export function richTextMapToHTML( richTextMap ) {
 	let text = richTextMap.get( 'xmlText' ).toString();
 
+	// Process multiline tags
+	const multilineTag = richTextMap.get( 'multilineTag' );
+	text = multilineTag
+		? stringAsMultiline( text, multilineTag, richTextMap.get( 'multilineWrapperReplacements' ) )
+		: text;
+
+	// Process replacements (e.g. inline images)
 	richTextMap.get( 'replacements' ).forEach( ( replacement ) => {
 		const replacementHTML = toHTMLString( {
-			value: { replacements: [ replacement ], formats: Array( 1 ), text: OBJECT_REPLACEMENT_CHARACTER },
+			value: {
+				replacements: [ replacement ],
+				formats: Array( 1 ),
+				text: OBJECT_REPLACEMENT_CHARACTER,
+			},
 		} );
 		text = text.replace( OBJECT_REPLACEMENT_CHARACTER, replacementHTML );
 	} );
 
-	const multilineTag = richTextMap.get( 'multilineTag' );
+	return text;
+}
 
-	return multilineTag ? stringAsMultiline( text, multilineTag ) : text;
+/**
+ * Get HTML replacements for each multiline wrapper tag replacement.
+ *
+ * @param {string} str
+ * @param {Record<number, {type: string}[]>} replacements
+ */
+function getMultilineWrapperTagHTMLReplacements( str, replacements ) {
+	let replacementsHTML = [];
+	let currentMultilineWrappers = [];
+	let foundLineSeparatorIndex = -1;
+
+	do {
+		foundLineSeparatorIndex = str.indexOf( __UNSTABLE_LINE_SEPARATOR, foundLineSeparatorIndex + 1 );
+		const multilineWrappers = replacements[ foundLineSeparatorIndex ] ?? [];
+		const d = diff.simpleDiffArray( currentMultilineWrappers, multilineWrappers, isEqual );
+		let html = '';
+
+		// Closing multiline wrapper tags
+		currentMultilineWrappers
+			.slice( d.index, d.index + d.remove )
+			.reverse()
+			.forEach( ( multilineWrapper ) => {
+				html += `</${ multilineWrapper.type }></li>`;
+			} );
+
+		// Opening multiline wrapper tags
+		d.insert.forEach( ( multilineWrapper ) => {
+			html += `<${ multilineWrapper.type }>`;
+		} );
+
+		replacementsHTML.push( { isOpeningTag: !! d.insert.length, html } );
+		currentMultilineWrappers = multilineWrappers;
+	} while ( foundLineSeparatorIndex !== -1 );
+
+	return replacementsHTML;
 }
 
 /**
@@ -166,11 +248,20 @@ export function richTextMapToHTML( richTextMap ) {
  *
  * @param {string} str A multiline string delimited by __UNSTABLE_LINE_SEPARATOR.
  * @param {string} multilineTag The tag name to wrap each line with.
- * @returns
+ * @param {Record<number, {type: string}[]>} replacements Multiline wrapper replacements.
+ * @returns {string} The string reconstructed with multiline considerations.
  */
-function stringAsMultiline( str, multilineTag ) {
+function stringAsMultiline( str, multilineTag, replacements ) {
+	const wrapperTagReplacements = getMultilineWrapperTagHTMLReplacements( str, replacements );
+
 	return str
 		.split( __UNSTABLE_LINE_SEPARATOR )
-		.map( ( str ) => `<${ multilineTag }>${ str }</${ multilineTag }>` )
+		.map( ( line, i ) => {
+			const { isOpeningTag, html } = wrapperTagReplacements[ i ];
+
+			return isOpeningTag
+				? `<${ multilineTag }>${ line }${ html }`
+				: `<${ multilineTag }>${ line }</${ multilineTag }>${ html }`;
+		} )
 		.join( '' );
 }
