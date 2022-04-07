@@ -80,7 +80,32 @@ function attachEditor( textarea ) {
 		editor
 	);
 }
+function attachEditorWithSettings( textarea, userSettings) {
+	// Check it's a textarea
+	if ( textarea.type.toLowerCase() !== 'textarea' ) {
+		return;
+	}
 
+	// Create a node after the textarea
+	const editor = document.createElement( 'div' );
+	editor.classList.add( 'editor' );
+
+	// Insert after the textarea, and hide it
+	// @ts-ignore
+	textarea.parentNode.insertBefore( editor, textarea.nextSibling );
+	textarea.style.display = 'none';
+
+	// Render the editor
+	render(
+		<IsolatedBlockEditor
+			settings={ userSettings }
+			onLoad={ ( parser, rawHandler ) => onLoad( textarea.value, parser, rawHandler ) }
+			onSaveContent={ ( content ) => saveBlocks( content, textarea ) }
+			onError={ () => document.location.reload() }
+		></IsolatedBlockEditor>,
+		editor
+	);
+}
 /**
  * Remove IsolatedBlockEditor from a textarea node
  * @param {HTMLTextAreaElement} textarea Textarea node
@@ -105,5 +130,6 @@ function detachEditor( textarea ) {
 // This adds the functions to the WP global, making it easier for the example to work.
 window.wp = {
 	attachEditor,
+	attachEditorWithSettings,
 	detachEditor,
 };
