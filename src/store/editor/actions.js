@@ -51,7 +51,7 @@ const actions = {
 	},
 	/**
 	 * Mark the block inserter as open or closed
-	 * @param {boolean} name
+	 * @param {boolean} isOpen
 	 */
 	setIsInserterOpened( isOpen ) {
 		return {
