@@ -52,9 +52,9 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             pattern: string;
         };
-        setIsInserterOpened(isOpen: any): {
+        setIsInserterOpened(isOpen: boolean): {
             type: string;
-            isOpen: any;
+            isOpen: boolean;
         };
         setDeviceType(deviceType: string): {
             type: string;

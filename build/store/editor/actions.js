@@ -67,7 +67,7 @@ var actions = {
 
   /**
    * Mark the block inserter as open or closed
-   * @param {boolean} name
+   * @param {boolean} isOpen
    */
   setIsInserterOpened: function setIsInserterOpened(isOpen) {
     return {

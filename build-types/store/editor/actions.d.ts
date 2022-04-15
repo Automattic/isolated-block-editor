@@ -68,19 +68,19 @@ declare namespace actions {
     };
     /**
      * Mark the block inserter as open or closed
-     * @param {boolean} name
+     * @param {boolean} isOpen
      */
-    function setIsInserterOpened(isOpen: any): {
+    function setIsInserterOpened(isOpen: boolean): {
         type: string;
-        isOpen: any;
+        isOpen: boolean;
     };
     /**
      * Mark the block inserter as open or closed
-     * @param {boolean} name
+     * @param {boolean} isOpen
      */
-    function setIsInserterOpened(isOpen: any): {
+    function setIsInserterOpened(isOpen: boolean): {
         type: string;
-        isOpen: any;
+        isOpen: boolean;
     };
     /**
      * Set the current device type

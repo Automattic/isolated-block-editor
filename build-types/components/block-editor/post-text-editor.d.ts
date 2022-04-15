@@ -22,6 +22,8 @@ export class PostTextEditor extends Component<any, any, any> {
      * callback and resetting dirty state.
      */
     stopEditing(): void;
+    state: {};
+    render(): JSX.Element;
 }
 declare var _default: any;
 export default _default;
