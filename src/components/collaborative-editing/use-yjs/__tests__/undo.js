@@ -134,7 +134,7 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 		expect( screen.queryByText( 'hello' ) ).not.toBeInTheDocument();
 
 		userEvent.click( bobScreen.getByRole( 'button', { name: 'Redo' } ) );
-		expect( screen.getByText( 'bob:' ) ).toBeInTheDocument();
+		expect( bobScreen.getByText( 'bob:' ) ).toBeInTheDocument();
 
 		// Both editors should have the same content
 		expect( onSave1 ).toHaveBeenLastCalledWith( onSave2.mock.calls[ onSave2.mock.calls.length - 1 ][ 0 ] );
