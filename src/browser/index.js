@@ -53,8 +53,9 @@ function onLoad( content, parser, rawHandler ) {
 /**
  * Attach IsolatedBlockEditor to a textarea
  * @param {HTMLTextAreaElement} textarea Textarea node
+ * @param {BlockEditorSettings} userSettings Settings object
  */
-function attachEditor( textarea ) {
+function attachEditor( textarea, userSettings = {} ) {
 	// Check it's a textarea
 	if ( textarea.type.toLowerCase() !== 'textarea' ) {
 		return;
@@ -72,7 +73,7 @@ function attachEditor( textarea ) {
 	// Render the editor
 	render(
 		<IsolatedBlockEditor
-			settings={ settings }
+			settings={ { ...settings, ...userSettings } }
 			onLoad={ ( parser, rawHandler ) => onLoad( textarea.value, parser, rawHandler ) }
 			onSaveContent={ ( content ) => saveBlocks( content, textarea ) }
 			onError={ () => document.location.reload() }
