@@ -23,15 +23,6 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 		registerApiHandlers();
 	} );
 
-	beforeEach( () => {
-		// Real timers are used so Yjs can merge undo stack items
-		jest.useRealTimers();
-	} );
-
-	afterEach( () => {
-		jest.useFakeTimers();
-	} );
-
 	it( 'should undo/redo single user edits', async () => {
 		const [ transport ] = getTransports( 1 );
 		const onSave = jest.fn();
