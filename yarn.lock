@@ -4130,6 +4130,11 @@
   resolved "https://registry.yarnpkg.com/@wordpress/babel-plugin-import-jsx-pragma/-/babel-plugin-import-jsx-pragma-3.1.0.tgz#0a1be89a64bb938f91b733c31bfebd89519c2548"
   integrity sha512-518mL3goaSeXtJCQcPK9OYHUUiA0sjXuoGWHBwRalkyTIQZZy5ZZzlwrlSc9ESZcOw9BZ+Uo8CJRjV2OWnx+Zw==
 
+"@wordpress/babel-plugin-import-jsx-pragma@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@wordpress/babel-plugin-import-jsx-pragma/-/babel-plugin-import-jsx-pragma-3.1.2.tgz#71596ae30b390ddb23680147011a26dce11f88e1"
+  integrity sha512-oMJnM3cJlu1hQMO4XmTFDhNPclj0cLRIeV5Y6uIF/9oNhhSfaMFu+ty0B4zBYodqwes/vbndwRg4j2q2bhG/Dg==
+
 "@wordpress/babel-preset-default@^6.4.1":
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/@wordpress/babel-preset-default/-/babel-preset-default-6.4.1.tgz#cb1a0c1c6cecd8ae9aa0a6cc9129c73eb513afe9"
@@ -4145,6 +4150,24 @@
     "@wordpress/browserslist-config" "^4.1.0"
     "@wordpress/element" "^4.0.4"
     "@wordpress/warning" "^2.2.2"
+    browserslist "^4.17.6"
+    core-js "^3.19.1"
+
+"@wordpress/babel-preset-default@^6.8.0":
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/babel-preset-default/-/babel-preset-default-6.8.0.tgz#76a6ae40d2fd866e8b72504d4a5f783e414b0962"
+  integrity sha512-faEt3UqDNsUyF/047/vNB4dqF4RPk2T0W5ztvn0TTGPBP/pMOtmVPJoP/Op3bX9Dpv60o913u/NoVHt1F/fcDQ==
+  dependencies:
+    "@babel/core" "^7.16.0"
+    "@babel/plugin-transform-react-jsx" "^7.16.0"
+    "@babel/plugin-transform-runtime" "^7.16.0"
+    "@babel/preset-env" "^7.16.0"
+    "@babel/preset-typescript" "^7.16.0"
+    "@babel/runtime" "^7.16.0"
+    "@wordpress/babel-plugin-import-jsx-pragma" "^3.1.2"
+    "@wordpress/browserslist-config" "^4.1.2"
+    "@wordpress/element" "^4.4.0"
+    "@wordpress/warning" "^2.6.0"
     browserslist "^4.17.6"
     core-js "^3.19.1"
 
@@ -4296,6 +4319,11 @@
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@wordpress/browserslist-config/-/browserslist-config-4.1.0.tgz#d6ae9d43709b2355eaccc4131fb47a0f2ae072c1"
   integrity sha512-RSJhgY2xmz6yAdDNhz/NvAO6JS+91vv9cVL7VDG2CftbyjTXBef05vWt3FzZhfeF0xUrYdpZL1PVpxmJiKvbEg==
+
+"@wordpress/browserslist-config@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@wordpress/browserslist-config/-/browserslist-config-4.1.2.tgz#3d33e6316af269f2478bd6b0923aadd73cb08612"
+  integrity sha512-UH0Ifmm4tEjVPOtiqH6yxDvk2EKtqSAhnyhyfSIb0wUnEoGsWTjREZjzuhgjt/I2nTqfg+0gUSzL5D0yQH6wDQ==
 
 "@wordpress/components@19.8.0", "@wordpress/components@^19.8.0":
   version "19.8.0"
