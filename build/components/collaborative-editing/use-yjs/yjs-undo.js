@@ -61,11 +61,9 @@ function setupUndoManager(typeScope, identity, registry) {
     if (event.type === 'undo' && undoManager.undoStack.length === 0) {
       debugUndoWithStackSizes("undo stack item popped (last item, no caret position to restore)");
       return;
-    } // For undos, we want to get the caret position associated with the next item in the stack
+    }
 
-
-    var selectionReferenceItem = event.type === 'undo' ? undoManager.undoStack[undoManager.undoStack.length - 1] : event.stackItem;
-    var selection = selectionReferenceItem.meta.get('caret-location');
+    var selection = event.stackItem.meta.get('caret-location');
 
     if (selection !== null && selection !== void 0 && selection.start) {
       setSelection(selection);
