@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix caret position when undoing in collab mode.
+- Revert @wordpress/interface to 4.4.0 to restore block inspector functionality.
 
 ## [2.12.0] - 2022-04-15
 
