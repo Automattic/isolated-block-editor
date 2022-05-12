@@ -17,7 +17,7 @@ const test = base.extend( {
 	},
 } );
 
-test.describe( 'Editor content', () => {
+test.describe.parallel( 'Editor content', () => {
 	test( 'should allow typing', async ( { page } ) => {
 		await page.goto( '?path=/story/isolated-block-editor--default' );
 		const iframe = page.frameLocator( '#storybook-preview-iframe' );
