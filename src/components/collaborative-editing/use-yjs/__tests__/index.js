@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 /**
@@ -41,27 +41,25 @@ describe( 'CollaborativeEditing', () => {
 
 	it( "should show the connected peer's avatar in each editor", async () => {
 		const [ transport1, transport2 ] = getTransports( 2 );
-		await act( async () => {
-			render(
-				<>
-					<div data-testid="alice">
-						<IsolatedBlockEditor settings={ {} }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-					<div data-testid="bob">
-						<IsolatedBlockEditor settings={ {} }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-				</>
-			);
-		} );
-		const aliceScreen = within( screen.getByTestId( 'alice' ) );
+		render(
+			<>
+				<div data-testid="alice">
+					<IsolatedBlockEditor settings={ {} }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+				<div data-testid="bob">
+					<IsolatedBlockEditor settings={ {} }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+			</>
+		);
+		const aliceScreen = within( await screen.findByTestId( 'alice' ) );
 		const bobScreen = within( screen.getByTestId( 'bob' ) );
 
 		expect( aliceScreen.getByLabelText( 'Bob' ) ).toBeVisible();
@@ -75,28 +73,26 @@ describe( 'CollaborativeEditing', () => {
 		const onSave1 = jest.fn();
 		const onSave2 = jest.fn();
 
-		await act( async () => {
-			render(
-				<>
-					<div data-testid="alice">
-						<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave1 }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-					<div data-testid="bob">
-						<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave2 }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-				</>
-			);
-		} );
+		render(
+			<>
+				<div data-testid="alice">
+					<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave1 }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+				<div data-testid="bob">
+					<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave2 }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+			</>
+		);
 
-		const aliceScreen = within( screen.getByTestId( 'alice' ) );
+		const aliceScreen = within( await screen.findByTestId( 'alice' ) );
 		const bobScreen = within( screen.getByTestId( 'bob' ) );
 
 		userEvent.click( aliceScreen.getByText( /^Start writing.+/ ) );
@@ -120,34 +116,32 @@ describe( 'CollaborativeEditing', () => {
 
 	it( 'should work with initial onLoad content', async () => {
 		const [ transport1, transport2 ] = getTransports( 2 );
-		await act( async () => {
-			render(
-				<>
-					<div data-testid="alice">
-						<IsolatedBlockEditor
-							settings={ {} }
-							onLoad={ ( parse ) => parse( `<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->` ) }
-						>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-					<div data-testid="bob">
-						<IsolatedBlockEditor
-							settings={ {} }
-							onLoad={ ( parse ) => parse( `<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->` ) }
-						>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-				</>
-			);
-		} );
+		render(
+			<>
+				<div data-testid="alice">
+					<IsolatedBlockEditor
+						settings={ {} }
+						onLoad={ ( parse ) => parse( `<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->` ) }
+					>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+				<div data-testid="bob">
+					<IsolatedBlockEditor
+						settings={ {} }
+						onLoad={ ( parse ) => parse( `<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->` ) }
+					>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+			</>
+		);
 
-		const aliceScreen = within( screen.getByTestId( 'alice' ) );
+		const aliceScreen = within( await screen.findByTestId( 'alice' ) );
 		const bobScreen = within( screen.getByTestId( 'bob' ) );
 
 		expect( aliceScreen.getByRole( 'document', { name: 'Paragraph block' } ) ).toHaveTextContent( 'initial' );

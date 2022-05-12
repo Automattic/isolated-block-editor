@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 /**
@@ -27,15 +27,13 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 		const [ transport ] = getTransports( 1 );
 		const onSave = jest.fn();
 
-		await act( async () => {
-			render(
-				<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave }>
-					<CollaborativeEditing settings={ { ...collabSettings, transport } } />
-				</IsolatedBlockEditor>
-			);
-		} );
+		render(
+			<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave }>
+				<CollaborativeEditing settings={ { ...collabSettings, transport } } />
+			</IsolatedBlockEditor>
+		);
 
-		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
+		expect( await screen.findByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
 		expect( screen.getByRole( 'button', { name: 'Redo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
 
 		userEvent.click( screen.getByText( /^Start writing.+/ ) );
@@ -75,27 +73,25 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 	it( 'should only undo/redo own edits', async () => {
 		const [ transport1, transport2 ] = getTransports( 2 );
 		const [ onSave1, onSave2 ] = [ jest.fn(), jest.fn() ];
-		await act( async () => {
-			render(
-				<>
-					<div data-testid="alice">
-						<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave1 }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-					<div data-testid="bob">
-						<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave2 }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-				</>
-			);
-		} );
-		const aliceScreen = within( screen.getByTestId( 'alice' ) );
+		render(
+			<>
+				<div data-testid="alice">
+					<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave1 }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+				<div data-testid="bob">
+					<IsolatedBlockEditor settings={ {} } onSaveContent={ onSave2 }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+			</>
+		);
+		const aliceScreen = within( await screen.findByTestId( 'alice' ) );
 		const bobScreen = within( screen.getByTestId( 'bob' ) );
 
 		userEvent.click( aliceScreen.getByText( /^Start writing.+/ ) );
@@ -134,18 +130,16 @@ describe( 'CollaborativeEditing: Undo/Redo', () => {
 	it( 'should not put the initial load content in the undo stack', async () => {
 		const [ transport ] = getTransports( 1 );
 
-		await act( async () =>
-			render(
-				<IsolatedBlockEditor
-					settings={ {} }
-					onLoad={ ( parse ) => parse( '<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->' ) }
-				>
-					<CollaborativeEditing settings={ { ...collabSettings, transport } } />
-				</IsolatedBlockEditor>
-			)
+		render(
+			<IsolatedBlockEditor
+				settings={ {} }
+				onLoad={ ( parse ) => parse( '<!-- wp:paragraph --><p>initial</p><!-- /wp:paragraph -->' ) }
+			>
+				<CollaborativeEditing settings={ { ...collabSettings, transport } } />
+			</IsolatedBlockEditor>
 		);
 
-		expect( screen.getByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
+		expect( await screen.findByRole( 'button', { name: 'Undo' } ) ).toHaveAttribute( 'aria-disabled', 'true' );
 
 		userEvent.click( screen.getByRole( 'document', { name: 'Paragraph block' } ) );
 		userEvent.keyboard( 'hello' );

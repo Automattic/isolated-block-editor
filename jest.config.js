@@ -7,4 +7,5 @@ module.exports = {
 	...baseConfig,
 	setupFilesAfterEnv: [ ...( baseConfig.setupFilesAfterEnv || [] ), '<rootDir>/.jest/jest-setup.js' ],
 	transformIgnorePatterns: [ '/node_modules/(?!(lib0)/)', '\\.pnp\\.[^\\/]+$' ],
+	testPathIgnorePatterns: [ '/node_modules/', 'e2e/' ],
 };
