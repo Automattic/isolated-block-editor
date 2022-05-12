@@ -28,7 +28,7 @@
     "format": "wp-scripts format",
     "lint:js": "wp-scripts lint-js",
     "storybook": "start-storybook -p 6006",
-    "e2e": "yarn playwright test",
+    "e2e": "PLAYWRIGHT_EXPERIMENTAL_FEATURES=1 yarn playwright test",
     "test": "BUILD_ENV=es6 wp-scripts test-unit-js"
   },
   "sideEffects": [
