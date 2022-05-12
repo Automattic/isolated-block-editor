@@ -10,7 +10,7 @@ jobs:
     playwright:
         timeout-minutes: 10
         runs-on: ubuntu-latest
-        uses: ./.github/nodejs.yml
+        uses: ./.github/workflows/nodejs.yml
         steps:
             - name: Install Playwright
               run: npx playwright install --with-deps
