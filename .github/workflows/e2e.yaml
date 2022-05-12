@@ -3,15 +3,20 @@ name: E2E test
 on: pull_request
 
 jobs:
-  test:
-  needs: build
-  timeout-minutes: 10
-  steps:    
-    - name: Install Playwright
-    - run: npx playwright install --with-deps
-  
-    - name: Serve Storybook and run tests
-      uses: ./.github/nodejs.yml
-      run: | 
-        yarn run storybook --ci
-        npx wait-on tcp:6000 && yarn run e2e
+    playwright:
+        needs: build
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Playwright
+              run: npx playwright install --with-deps
+            - name: Serve Storybook and run tests
+              uses: ./.github/nodejs.yml
+              run: yarn e2e
+            - name: Upload results
+              uses: actions/upload-artifact@v2
+              if: always()
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30
