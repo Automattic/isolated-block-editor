@@ -66,8 +66,8 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
  *
  * The original is not exported, and contains code for post titles
  *
- * @param root0
- * @param root0.styles
+ * @param {Object} args
+ * @param args.styles
  */
 const VisualEditor = ( { styles } ) => {
 	const themeSupportsLayout = useSelect( ( select ) => {

@@ -36,7 +36,7 @@ import getInitialEditorContent from './editor-content';
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
  * @param settings
- * @param loader
+ * @param [loader]
  * @param {Object} [options]
  */
 async function getInitialContent( settings, loader ) {
