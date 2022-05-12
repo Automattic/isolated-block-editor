@@ -39,3 +39,19 @@ jobs:
 
             - run: yarn build
 
+    playwright:
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Install Playwright
+            run: npx playwright install --with-deps
+          - name: Serve Storybook and run tests
+            run: yarn e2e
+          - name: Upload results
+            uses: actions/upload-artifact@v2
+            if: always()
+            with:
+              name: playwright-report
+              path: playwright-report/
+              retention-days: 30
