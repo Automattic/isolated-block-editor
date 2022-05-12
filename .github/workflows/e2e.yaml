@@ -1,6 +1,10 @@
 name: E2E test
 
-on: pull_request
+on:
+    push:
+        branches: [trunk]
+    pull_request:
+        branches: [trunk]
 
 jobs:
     playwright:
