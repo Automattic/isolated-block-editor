@@ -13,8 +13,9 @@ jobs:
         steps:
             - name: Install Playwright
               run: npx playwright install --with-deps
-            - name: Serve Storybook and run tests
+            - name: Build editor
               uses: ./.github/workflows/nodejs.yml
+            - name: Serve Storybook and run tests
               run: yarn e2e
             - name: Upload results
               uses: actions/upload-artifact@v2
