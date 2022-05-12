@@ -38,12 +38,19 @@ jobs:
             - run: yarn test
 
             - run: yarn build
-    test:
+    e2e:
         needs: build
         timeout-minutes: 10
-        steps:    
+        runs-on: ubuntu-latest
+        steps:
             - name: Install Playwright
-            - run: npx playwright install --with-deps
+              run: npx playwright install --with-deps
             - name: Serve Storybook and run tests
-            - run: yarn storybook
-            - run: npx wait-on tcp:6000 && yarn e2e
+              run: yarn e2e
+            - name: Upload results
+              uses: actions/upload-artifact@v2
+              if: always()
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30
