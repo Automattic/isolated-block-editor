@@ -38,7 +38,7 @@ function PluginSidebarEditPost( { className, ...props } ) {
 	);
 }
 
-const SettingsSidebar = ( { documentInspector }) => {
+const SettingsSidebar = ( { documentInspector } ) => {
 	const { sidebarName, keyboardShortcut } = useSelect( ( select ) => {
 		let sidebar = select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' );
 

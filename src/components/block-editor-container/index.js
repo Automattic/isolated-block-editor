@@ -28,6 +28,7 @@ import './style.scss';
 
 /**
  * Set editing callback
+ *
  * @callback OnSetEditing
  * @param {boolean} isEditing
  */
@@ -38,8 +39,8 @@ const SIZE_MEDIUM = 480;
 /**
  * Contains the block contents. Handles the hot-swapping of the redux stores, as well as applying the root CSS classes
  *
- * @param {object} props - Component props
- * @param {object} props.children - Child components
+ * @param {Object} props - Component props
+ * @param {Object} props.children - Child components
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
  * @param {boolean} props.isPreview - Whether preview mode is enabled
@@ -85,11 +86,7 @@ function BlockEditorContainer( props ) {
 					onOutside={ () => setEditing( false ) }
 					onFocus={ () => ! isEditing && setEditing( true ) }
 				>
-					<BlockEditorContents
-						settings={ settings }
-						renderMoreMenu={ renderMoreMenu }
-						onLoad={ onLoad }
-					>
+					<BlockEditorContents settings={ settings } renderMoreMenu={ renderMoreMenu } onLoad={ onLoad }>
 						{ children }
 					</BlockEditorContents>
 				</ClickOutsideWrapper>
@@ -100,14 +97,16 @@ function BlockEditorContainer( props ) {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const { isEditorReady, getEditorMode, isEditing, isFeatureActive, isOptionActive } = select( 'isolated/editor' );
+		const { isEditorReady, getEditorMode, isEditing, isFeatureActive, isOptionActive } = select(
+			'isolated/editor'
+		);
 
 		return {
 			isEditorReady: isEditorReady(),
 			editorMode: getEditorMode(),
 			isEditing: isEditing(),
 			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
-			isPreview: isOptionActive( 'preview' )
+			isPreview: isOptionActive( 'preview' ),
 		};
 	} ),
 	withDispatch( ( dispatch ) => {

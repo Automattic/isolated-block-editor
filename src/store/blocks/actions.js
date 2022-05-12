@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { ActionCreators } from 'redux-undo';
 
 const actions = {
@@ -9,8 +12,9 @@ const actions = {
 	},
 	/**
 	 * Update blocks without undo history
+	 *
 	 * @param {object[]} blocks
-	 * @param {object} options
+	 * @param {Object} options
 	 */
 	*updateBlocksWithUndo( blocks, options = {} ) {
 		return yield {
@@ -21,8 +25,9 @@ const actions = {
 	},
 	/**
 	 * Update blocks without undo history
+	 *
 	 * @param {object[]} blocks
-	 * @param {object} options
+	 * @param {Object} options
 	 */
 	*updateBlocksWithoutUndo( blocks, options = {} ) {
 		return yield {

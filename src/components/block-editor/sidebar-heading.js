@@ -38,7 +38,7 @@ const SettingsHeader = ( { sidebarName, documentInspector } ) => {
 	/* Use a list so screen readers will announce how many tabs there are. */
 	return (
 		<ul>
-			{ !!documentInspector && (
+			{ !! documentInspector && (
 				<li>
 					<Button
 						onClick={ openDocumentSettings }

@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { registerCoreBlocks } from '@wordpress/block-library';
+
+/**
+ * Internal dependencies
+ */
 import reducer from '../reducer';
 
 beforeAll( () => {

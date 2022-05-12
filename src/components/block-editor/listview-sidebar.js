@@ -1,17 +1,9 @@
 /**
  * WordPress dependencies
  */
- import {
-	__experimentalListView as ListView,
-	store as blockEditorStore,
-} from '@wordpress/block-editor';
+import { __experimentalListView as ListView, store as blockEditorStore } from '@wordpress/block-editor';
 import { Button } from '@wordpress/components';
-import {
-	useFocusOnMount,
-	useFocusReturn,
-	useInstanceId,
-	useMergeRefs,
-} from '@wordpress/compose';
+import { useFocusOnMount, useFocusReturn, useInstanceId, useMergeRefs } from '@wordpress/compose';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { closeSmall } from '@wordpress/icons';
@@ -40,11 +32,7 @@ export default function ListViewSidebar() {
 
 	return (
 		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
-		<div
-			aria-labelledby={ labelId }
-			className="edit-post-editor__list-view-panel"
-			onKeyDown={ closeOnEscape }
-		>
+		<div aria-labelledby={ labelId } className="edit-post-editor__list-view-panel" onKeyDown={ closeOnEscape }>
 			<div className="edit-post-editor__list-view-panel-header">
 				<strong id={ labelId }>{ __( 'List view' ) }</strong>
 				<Button
@@ -57,11 +45,7 @@ export default function ListViewSidebar() {
 				className="edit-post-editor__list-view-panel-content"
 				ref={ useMergeRefs( [ focusReturnRef, focusOnMountRef ] ) }
 			>
-				<ListView
-					onSelect={ selectEditorBlock }
-					showNestedBlocks
-					__experimentalPersistentListViewFeatures
-				/>
+				<ListView onSelect={ selectEditorBlock } showNestedBlocks __experimentalPersistentListViewFeatures />
 			</div>
 		</div>
 	);

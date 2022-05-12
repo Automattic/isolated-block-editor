@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 const path = require( 'path' );
 const webpack = require( 'webpack' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
@@ -5,7 +8,7 @@ const TerserJSPlugin = require( 'terser-webpack-plugin' );
 
 const config = {
 	entry: {
-		[ 'isolated-block-editor' ]: './src/browser/index.js',
+		'isolated-block-editor': './src/browser/index.js',
 		core: './src/browser/core.js',
 	},
 	output: {

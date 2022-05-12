@@ -1,7 +1,14 @@
-import storeHotSwapPlugin from '../../store/plugins/store-hot-swap';
+/**
+ * WordPress dependencies
+ */
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
+import storeHotSwapPlugin from '../../store/plugins/store-hot-swap';
 
 function HotSwapper( { isEditing, hotSwap } ) {
 	useEffect( () => {

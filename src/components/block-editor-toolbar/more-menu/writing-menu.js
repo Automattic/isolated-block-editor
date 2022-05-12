@@ -17,7 +17,7 @@ import OptionToggle from '../toggle-option';
 /**
  * Writing menu
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {OnClose} props.onClose - Close the menu
  * @param {BlockEditorSettings} props.settings - Settings
  */

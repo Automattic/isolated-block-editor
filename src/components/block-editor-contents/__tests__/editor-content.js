@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { registerCoreBlocks } from '@wordpress/block-library';
+
+/**
+ * Internal dependencies
+ */
 import getInitialEditorContent from '../editor-content';
 
 beforeAll( () => {
@@ -7,7 +14,6 @@ beforeAll( () => {
 
 describe( 'BlockEditorContents', () => {
 	const patterns = [ { name: 'test', content: '<!-- wp:paragraph --><p>test</p><!-- /wp:paragraph -->' } ];
-
 
 	describe( 'getInitialEditorContent', () => {
 		it( 'returns initial content if undefined patterns', () => {

@@ -16,8 +16,9 @@ import { store as interfaceStore } from '@wordpress/interface';
 
 /**
  * Get current editor mode
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {EditorMode}
+ * @return {EditorMode}
  */
 export function getEditorMode( state ) {
 	return state.editor.editorMode;
@@ -25,8 +26,9 @@ export function getEditorMode( state ) {
 
 /**
  * Get current editor settings
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {IsoSettings}
+ * @return {IsoSettings}
  */
 export function getEditorSettings( state ) {
 	return state.editor.settings;
@@ -34,8 +36,9 @@ export function getEditorSettings( state ) {
 
 /**
  * Is the editor ready for use?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isEditorReady( state ) {
 	return state.editor.isReady;
@@ -43,8 +46,9 @@ export function isEditorReady( state ) {
 
 /**
  * Get current pattern name
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string|null}
+ * @return {string|null}
  */
 export function getCurrentPatternName( state ) {
 	return state.editor.currentPattern;
@@ -52,15 +56,16 @@ export function getCurrentPatternName( state ) {
 
 /**
  * Get current pattern
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern|null}
+ * @return {Pattern|null}
  */
 export function getCurrentPattern( state ) {
 	const { currentPattern, patterns } = state.editor;
 
 	if ( currentPattern && patterns ) {
 		for ( let index = 0; index < patterns.length; index++ ) {
-			if ( patterns[ index ][ 'name' ] === currentPattern ) {
+			if ( patterns[ index ].name === currentPattern ) {
 				return patterns[ index ];
 			}
 		}
@@ -71,8 +76,9 @@ export function getCurrentPattern( state ) {
 
 /**
  * Get all ignored content
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string[]}
+ * @return {string[]}
  */
 export function getIgnoredContent( state ) {
 	return state.editor.ignoredContent;
@@ -80,8 +86,10 @@ export function getIgnoredContent( state ) {
 
 /**
  * Get the pattern for a given name
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern|null}
+ * @param patternName
+ * @return {Pattern|null}
  */
 export function getNamedPattern( state, patternName ) {
 	const { patterns = [] } = state.editor;
@@ -103,30 +111,25 @@ export function getNamedPattern( state, patternName ) {
 
 /**
  * Is the block inserter open?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isInserterOpened( state ) {
 	return state.editor.isInserterOpened;
 }
 
-export const isEditorSidebarOpened = createRegistrySelector(
-	( select ) => () => {
-		const activeGeneralSidebar = select(
-			interfaceStore
-		).getActiveComplementaryArea( 'isolated/editor' );
+export const isEditorSidebarOpened = createRegistrySelector( ( select ) => () => {
+	const activeGeneralSidebar = select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' );
 
-		return includes(
-			[ 'edit-post/document', 'edit-post/block' ],
-			activeGeneralSidebar
-		);
-	}
-);
+	return includes( [ 'edit-post/document', 'edit-post/block' ], activeGeneralSidebar );
+} );
 
 /**
  * Are we editing this editor?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isEditing( state ) {
 	return state.editor.isEditing;
@@ -134,8 +137,9 @@ export function isEditing( state ) {
 
 /**
  * Get all patterns
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern[]}
+ * @return {Pattern[]}
  */
 export function getPatterns( state ) {
 	return state.editor.patterns;
@@ -143,8 +147,9 @@ export function getPatterns( state ) {
 
 /**
  * Determine if the list viewer is open
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isListViewOpened( state ) {
 	return state.editor.isListViewOpened;
@@ -152,8 +157,9 @@ export function isListViewOpened( state ) {
 
 /**
  * Return current device type
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string}
+ * @return {string}
  */
 export function getPreviewDeviceType( state ) {
 	return state.editor.deviceType;
