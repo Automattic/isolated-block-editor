@@ -138,7 +138,7 @@ module.exports = {
 			],
 		},
 		{
-			files: [ 'packages/jest*/**/*.js' ],
+			files: [ '**/@(__tests__|__test-helpers__)/**/*.js' ],
 			extends: [ 'plugin:@wordpress/eslint-plugin/test-unit' ],
 		},
 		{

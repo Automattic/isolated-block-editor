@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 /**
@@ -20,28 +20,26 @@ describe( 'Collaborative Editing: Sanitize', () => {
 	it( 'should sanitize HTML received from peer', async () => {
 		const [ transport1, transport2 ] = getTransports( 2 );
 
-		await act( async () => {
-			render(
-				<>
-					<div data-testid="alice">
-						<IsolatedBlockEditor settings={ {} }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-					<div data-testid="bob">
-						<IsolatedBlockEditor settings={ {} }>
-							<CollaborativeEditing
-								settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
-							/>
-						</IsolatedBlockEditor>
-					</div>
-				</>
-			);
-		} );
+		render(
+			<>
+				<div data-testid="alice">
+					<IsolatedBlockEditor settings={ {} }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport1, username: 'Alice' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+				<div data-testid="bob">
+					<IsolatedBlockEditor settings={ {} }>
+						<CollaborativeEditing
+							settings={ { ...collabSettings, transport: transport2, username: 'Bob' } }
+						/>
+					</IsolatedBlockEditor>
+				</div>
+			</>
+		);
 
-		const aliceScreen = within( screen.getByTestId( 'alice' ) );
+		const aliceScreen = within( await screen.findByTestId( 'alice' ) );
 		const bobScreen = within( screen.getByTestId( 'bob' ) );
 
 		userEvent.click( aliceScreen.getByText( /^Start writing.+/ ) );
