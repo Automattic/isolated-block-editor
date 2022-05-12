@@ -10,11 +10,11 @@ jobs:
     playwright:
         timeout-minutes: 10
         runs-on: ubuntu-latest
-        uses: ./.github/workflows/nodejs.yml
         steps:
             - name: Install Playwright
               run: npx playwright install --with-deps
             - name: Serve Storybook and run tests
+              uses: ./.github/workflows/nodejs.yml
               run: yarn e2e
             - name: Upload results
               uses: actions/upload-artifact@v2
