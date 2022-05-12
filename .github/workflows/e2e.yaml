@@ -1,0 +1,17 @@
+name: E2E test
+
+on: pull_request
+
+jobs:
+  test:
+  needs: build
+  timeout-minutes: 10
+  steps:    
+    - name: Install Playwright
+    - run: npx playwright install --with-deps
+  
+    - name: Serve Storybook and run tests
+      uses: ./.github/nodejs.yml
+      run: | 
+        yarn run storybook --ci
+        npx wait-on tcp:6000 && yarn run e2e
