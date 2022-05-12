@@ -38,7 +38,6 @@
 	"author": "Automattic",
 	"license": "GPL-2.0-or-later",
 	"dependencies": {
-		"@playwright/test": "^1.21.1",
 		"@wordpress/a11y": "3.6.0",
 		"@wordpress/annotations": "2.6.0",
 		"@wordpress/api-fetch": "6.3.0",
@@ -111,6 +110,7 @@
 		"@babel/preset-env": "^7.16.4",
 		"@babel/preset-react": "^7.16.0",
 		"@emotion/styled": "^11.8.1",
+		"@playwright/test": "^1.21.1",
 		"@shopify/polyfills": "^3.1.12",
 		"@storybook/addon-actions": "^6.4.22",
 		"@storybook/addon-essentials": "^6.4.22",
