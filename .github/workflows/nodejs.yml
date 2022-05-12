@@ -43,8 +43,7 @@ jobs:
         timeout-minutes: 10
         steps:    
             - name: Install Playwright
-            run: npx playwright install --with-deps
+            - run: npx playwright install --with-deps
             - name: Serve Storybook and run tests
-            run: |
-                yarn storybook \
-                "npx wait-on tcp:6000 && yarn e2e"
+            - run: yarn storybook
+            - run: npx wait-on tcp:6000 && yarn e2e
