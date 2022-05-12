@@ -7,11 +7,7 @@ import { __ } from '@wordpress/i18n';
 const { Fill, Slot } = createSlotFill( 'PluginDocumentSettingPanel' );
 
 const DocumentSection = ( { children } ) => {
-	return (
-		<Fill>
-			{ children }
-		</Fill>
-	);
+	return <Fill>{ children }</Fill>;
 };
 
 DocumentSection.Slot = function ( props ) {

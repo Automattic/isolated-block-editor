@@ -18,7 +18,7 @@ const OBJECT_REPLACEMENT_CHARACTER = '\ufffc'; // defined in @wordpress/rich-tex
  * Convert an array of Gutenberg RichText formats to an array of range-based Y.Text formats.
  *
  * @param {Object[]} formats
- * @returns {Object[]} Y.Text formats
+ * @return {Object[]} Y.Text formats
  */
 export function gutenFormatsToYFormats( formats ) {
 	const findIndexOfEqualFormat = ( needle, haystack = [] ) => haystack.findIndex( ( f ) => needle === f );
@@ -56,6 +56,8 @@ export function gutenFormatsToYFormats( formats ) {
  * Converts registered formats back to their standard tag/attribute names.
  *
  * For example, `core/bold` will be converted back to `strong`.
+ *
+ * @param format
  */
 export function namedGutenFormatToStandardTags( format ) {
 	const formatTypeRecord = select( 'core/rich-text' ).getFormatType( format.type );
@@ -84,13 +86,13 @@ function getInferredMultilineTag( html ) {
 /**
  * Massage the Gutenberg replacements into Yjs-friendly structures.
  *
- * @param {array} a The `replacements` array of a Gutenberg RichText.
- * @param {array} b The `replacements` array of another Gutenberg RichText.
+ * @param {Array} a The `replacements` array of a Gutenberg RichText.
+ * @param {Array} b The `replacements` array of another Gutenberg RichText.
  */
 function prepareReplacementsForTransaction( a, b ) {
 	const partitionReplacementTypes = ( arr ) => {
-		let multilineWrapperReplacements = {};
-		let normalReplacements = [];
+		const multilineWrapperReplacements = {};
+		const normalReplacements = [];
 
 		arr.forEach( ( r, index ) => {
 			if ( Array.isArray( r ) ) {
@@ -180,7 +182,7 @@ export function applyHTMLDelta( htmlA, htmlB, richTextMap, richTextOpts = {} ) {
  * Convert the RichText back from our Yjs representation to an HTML string.
  *
  * @param {import("yjs").Map} richTextMap
- * @returns {string}
+ * @return {string}
  */
 export function richTextMapToHTML( richTextMap ) {
 	let text = richTextMap.get( 'xmlText' ).toString();
@@ -213,7 +215,7 @@ export function richTextMapToHTML( richTextMap ) {
  * @param {Record<number, {type: string}[]>} replacements
  */
 function getMultilineWrapperTagHTMLReplacements( str, replacements ) {
-	let replacementsHTML = [];
+	const replacementsHTML = [];
 	let currentMultilineWrappers = [];
 	let foundLineSeparatorIndex = -1;
 
@@ -249,7 +251,7 @@ function getMultilineWrapperTagHTMLReplacements( str, replacements ) {
  * @param {string} str A multiline string delimited by __UNSTABLE_LINE_SEPARATOR.
  * @param {string} multilineTag The tag name to wrap each line with.
  * @param {Record<number, {type: string}[]>} replacements Multiline wrapper replacements.
- * @returns {string} The string reconstructed with multiline considerations.
+ * @return {string} The string reconstructed with multiline considerations.
  */
 function stringAsMultiline( str, multilineTag, replacements ) {
 	const wrapperTagReplacements = getMultilineWrapperTagHTMLReplacements( str, replacements );

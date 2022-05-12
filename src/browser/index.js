@@ -26,6 +26,7 @@ const settings = {
 
 /**
  * Saves content to the textarea
+ *
  * @param {string} content Serialized block content
  * @param {HTMLTextAreaElement} textarea Textarea node
  */
@@ -35,6 +36,7 @@ function saveBlocks( content, textarea ) {
 
 /**
  * Initial content loader. Determine if the textarea contains blocks or raw HTML
+ *
  * @param {string} content Text area content
  * @param {*} parser Gutenberg `parse` function
  * @param {*} rawHandler Gutenberg `rawHandler` function
@@ -52,6 +54,7 @@ function onLoad( content, parser, rawHandler ) {
 
 /**
  * Attach IsolatedBlockEditor to a textarea
+ *
  * @param {HTMLTextAreaElement} textarea Textarea node
  * @param {BlockEditorSettings} userSettings Settings object
  */
@@ -84,6 +87,7 @@ function attachEditor( textarea, userSettings = {} ) {
 
 /**
  * Remove IsolatedBlockEditor from a textarea node
+ *
  * @param {HTMLTextAreaElement} textarea Textarea node
  */
 function detachEditor( textarea ) {

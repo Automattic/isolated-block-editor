@@ -9,9 +9,9 @@ const { Fill, Slot } = createSlotFill( 'IsolatedToolbar' );
 /**
  * A Toolbar slot/fill
  *
- * @param {object} props Component props
- * @param {object} props.children Child components to insert in the toolbar slot
- * @returns object
+ * @param {Object} props Component props
+ * @param {Object} props.children Child components to insert in the toolbar slot
+ * @return object
  */
 const ToolbarSlot = ( { children } ) => {
 	return <Fill>{ children }</Fill>;

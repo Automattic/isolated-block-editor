@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import sanitizeHTML from '../sanitize-html';
 
 describe( 'sanitizeHTML', () => {

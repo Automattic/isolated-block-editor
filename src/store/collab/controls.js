@@ -22,7 +22,8 @@ const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
  * the selection.attributeKey will fall back to a `number`, and we can't tell which attribute it's
  * actually associated with. This happens a lot because the `identifier` prop is undocumented.
  *
- * @returns {import('../../components/collaborative-editing').RichTextHint|undefined}
+ * @param registry
+ * @return {import('../../components/collaborative-editing').RichTextHint|undefined}
  */
 const getRichTextHint = ( registry ) => {
 	const { clientId, attributeKey } = registry.select( 'core/block-editor' ).getSelectionStart();
@@ -62,7 +63,7 @@ export default {
 
 		debugUndo( 'undo' );
 		undoManager.undo();
-		return; // prevent default action
+		return undefined; // prevent default action
 	} ),
 
 	[ ActionCreators.redo().type ]: createRegistryControl( ( registry ) => ( action ) => {
@@ -74,6 +75,6 @@ export default {
 
 		debugUndo( 'redo' );
 		registry.select( 'isolated/editor' ).getUndoManager().redo();
-		return; // prevent default action
+		return undefined; // prevent default action
 	} ),
 };

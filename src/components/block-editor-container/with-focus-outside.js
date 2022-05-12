@@ -111,10 +111,7 @@ export default createHigherOrderComponent( ( WrappedComponent ) => {
 		normalizeButtonFocus( event ) {
 			const { type, target } = event;
 
-			const isInteractionEnd = includes(
-				[ 'mouseup', 'touchend' ],
-				type
-			);
+			const isInteractionEnd = includes( [ 'mouseup', 'touchend' ], type );
 
 			if ( isInteractionEnd ) {
 				this.preventBlurCheck = false;

@@ -65,6 +65,9 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
  * The original is not exported, and contains code for post titles
+ *
+ * @param root0
+ * @param root0.styles
  */
 const VisualEditor = ( { styles } ) => {
 	const themeSupportsLayout = useSelect( ( select ) => {

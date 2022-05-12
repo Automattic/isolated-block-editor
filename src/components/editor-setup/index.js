@@ -18,6 +18,7 @@ import getEditorSettings from './editor-settings';
 
 /**
  * Settings callback
+ *
  * @callback OnSettings
  * @param {BlockEditorSettings} settings
  */
@@ -28,7 +29,7 @@ import getEditorSettings from './editor-settings';
  * An initial setup is performed, and is then reset each time the editor is focussed. This ensures we are applying the right
  * settings for this particular editor.
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.currentSettings - Modified settings
  * @param {OnSettings} props.updateSettings - Update settings
  * @param {OnSettings} props.setupEditor - Set up the Gutenberg editor
@@ -45,7 +46,7 @@ function EditorSetup( props ) {
 		// @ts-ignore
 		if ( typeof window.__editorAssets === undefined ) {
 			// @ts-ignore
-			window.__editorAssets = { styles: '', scripts: '' }
+			window.__editorAssets = { styles: '', scripts: '' };
 		}
 
 		// Setup the Isolated Editor & Gutenberg
@@ -55,10 +56,13 @@ function EditorSetup( props ) {
 		updateSettings( currentSettings );
 
 		// Set up the post entities with some dummy data, ensuring that anything that uses post entities can work
-		setupCoreEditor( {
-			id: 0,
-			type: 'post',
-		}, [] );
+		setupCoreEditor(
+			{
+				id: 0,
+				type: 'post',
+			},
+			[]
+		);
 	}, [] );
 
 	// Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change
@@ -95,7 +99,9 @@ export default compose( [
 							settings.iso,
 							blockTypes,
 							// Use the default preference, if set, otherwise use the feature
-							settings.iso?.defaultPreferences?.fixedToolbar !== undefined ? settings.iso?.defaultPreferences?.fixedToolbar : hasFixedToolbar
+							settings.iso?.defaultPreferences?.fixedToolbar !== undefined
+								? settings.iso?.defaultPreferences?.fixedToolbar
+								: hasFixedToolbar
 						),
 
 						// Reusable blocks

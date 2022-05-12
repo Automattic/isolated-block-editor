@@ -6,6 +6,9 @@ import { serialize } from '@wordpress/blocks';
 
 /**
  * Override the default `core/editor` store with functions that return data from `core/block-editor` instead of the post in `core/editor`
+ *
+ * @param existingSelectors
+ * @param newSelect
  */
 export default function ( existingSelectors, newSelect ) {
 	return {

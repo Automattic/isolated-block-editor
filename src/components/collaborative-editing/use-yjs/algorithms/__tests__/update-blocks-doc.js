@@ -34,6 +34,9 @@ function applyYjsUpdate( yDoc, update ) {
 /** @typedef {import('../../..').RichTextHint} RichTextHint */
 
 /**
+ * @param originalBlocks
+ * @param updatedLocalBlocks
+ * @param updatedRemoteBlocks
  * @param {Object} [richTextHints]
  * @param {RichTextHint} [richTextHints.original]
  * @param {RichTextHint} [richTextHints.updateLocal]
