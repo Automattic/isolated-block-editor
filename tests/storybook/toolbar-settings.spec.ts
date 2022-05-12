@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test('Inspector button works', async ({ page }) => {
-    await page.goto('http://localhost:6006/?path=/story/isolated-block-editor--toolbar-settings');
+test('Toolbar settings botton', async ({ page }) => {
+    await page.goto('/?path=/story/isolated-block-editor--toolbar-settings');
     const editor = page.frameLocator('#storybook-preview-iframe');
      
     await editor.locator('[aria-label="Settings"]').click();
