@@ -1,8 +1,11 @@
 /**
+ * External dependencies
+ */
+import undoable from 'redux-undo';
+
+/**
  * WordPress dependencies
  */
-
-import undoable from 'redux-undo';
 import isShallowEqual from '@wordpress/is-shallow-equal';
 
 const DEFAULT_STATE = {

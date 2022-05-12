@@ -1,8 +1,17 @@
+/**
+ * External dependencies
+ */
 import * as Y from 'yjs';
 
+/**
+ * WordPress dependencies
+ */
 import { create, toHTMLString } from '@wordpress/rich-text';
 import '@wordpress/format-library';
 
+/**
+ * Internal dependencies
+ */
 import { applyHTMLDelta, gutenFormatsToYFormats, richTextMapToHTML } from '../rich-text';
 
 const richTextMapFrom = ( html ) => {

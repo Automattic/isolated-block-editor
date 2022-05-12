@@ -5,8 +5,8 @@
  * Note that store plugins are currently marked as deprecated. It's unknown what will replace them, and this will need to be updated
  * once that happens.
  *
- * @param {object} registry
- * @param {object} pluginOptions
+ * @param {Object} registry
+ * @param {Object} pluginOptions
  */
 function storeHotSwapPlugin( registry, pluginOptions ) {
 	const hotStores = [ 'core/block-editor', 'core/editor' ];
@@ -33,14 +33,14 @@ function storeHotSwapPlugin( registry, pluginOptions ) {
 storeHotSwapPlugin.targetSelect = null;
 storeHotSwapPlugin.targetDispatch = null;
 
-storeHotSwapPlugin.setEditor = function( select, dispatch ) {
+storeHotSwapPlugin.setEditor = function ( select, dispatch ) {
 	this.targetSelect = select;
 	this.targetDispatch = dispatch;
-}
+};
 
-storeHotSwapPlugin.resetEditor = function() {
+storeHotSwapPlugin.resetEditor = function () {
 	this.targetSelect = null;
 	this.targetDispatch = null;
-}
+};
 
 export default storeHotSwapPlugin;

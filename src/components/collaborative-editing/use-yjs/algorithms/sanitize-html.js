@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { remove } from '@wordpress/dom';
 
 // TODO: Unsolved problem

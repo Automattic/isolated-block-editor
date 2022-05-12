@@ -31,7 +31,9 @@ const Footer = ( { editorMode } ) => {
 
 	return (
 		<div className="edit-post-layout__footer">
-			{ showBlockBreadcrumbs && !isMobileViewport && editorMode === 'visual' && <BlockBreadcrumb rootLabelText={ documentLabel } /> }
+			{ showBlockBreadcrumbs && ! isMobileViewport && editorMode === 'visual' && (
+				<BlockBreadcrumb rootLabelText={ documentLabel } />
+			) }
 
 			<FooterSection.Slot />
 		</div>

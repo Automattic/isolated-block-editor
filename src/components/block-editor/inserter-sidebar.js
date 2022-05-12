@@ -18,17 +18,16 @@ export default function InserterSidebar() {
 
 	return (
 		<div
-// @ts-ignore
-		ref={ inserterDialogRef } { ...inserterDialogProps } className="edit-post-editor__inserter-panel">
+			// @ts-ignore
+			ref={ inserterDialogRef }
+			{ ...inserterDialogProps }
+			className="edit-post-editor__inserter-panel"
+		>
 			<div className="edit-post-editor__inserter-panel-header">
 				<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
 			</div>
 			<div className="edit-post-editor__inserter-panel-content">
-				<Library
-					showMostUsedBlocks={ false }
-					showInserterHelpPanel
-					shouldFocusBlock={ isMobileViewport }
-				/>
+				<Library showMostUsedBlocks={ false } showInserterHelpPanel shouldFocusBlock={ isMobileViewport } />
 			</div>
 		</div>
 	);

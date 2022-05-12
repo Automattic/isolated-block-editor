@@ -10,7 +10,7 @@ import { MenuItem, ExternalLink } from '@wordpress/components';
 /**
  * Link menu
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  */
 function LinkMenu( { settings } ) {

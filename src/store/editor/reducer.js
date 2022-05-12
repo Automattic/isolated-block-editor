@@ -11,6 +11,7 @@ const getPattern = ( patterns, currentPattern ) =>
 
 /**
  * Pattern type.
+ *
  * @typedef Pattern
  * @property {string} name - Name of the pattern.
  * @property {string} content - Content for the pattern.
@@ -18,6 +19,7 @@ const getPattern = ( patterns, currentPattern ) =>
 
 /**
  * Editor mode
+ *
  * @typedef {('visual'|'text')} EditorMode
  */
 
@@ -96,7 +98,7 @@ const DEFAULT_STATE = {
  * @param {Pattern[]} patterns - Array of patterns.
  * @param {string} currentPattern - Selected pattern name.
  * @param {object|null} gutenbergTemplate - Gutenberg template.
- * @returns {string[]} Array of ignored HTML strings.
+ * @return {string[]} Array of ignored HTML strings.
  */
 function getIgnoredContent( patterns, currentPattern, gutenbergTemplate ) {
 	const ignored = [

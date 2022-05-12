@@ -1,6 +1,7 @@
 const actions = {
 	/**
 	 * Toggle the feature
+	 *
 	 * @param {string} feature - Feature name
 	 */
 	toggleFeature( feature ) {

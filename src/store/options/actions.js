@@ -1,6 +1,7 @@
 const actions = {
 	/**
 	 * Toggle the option
+	 *
 	 * @param {string} option Option name
 	 */
 	toggleOption( option ) {

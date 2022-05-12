@@ -4,7 +4,7 @@
 import React from 'react';
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
 import PostTextEditor from './post-text-editor';
 
