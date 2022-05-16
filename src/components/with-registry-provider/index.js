@@ -15,6 +15,7 @@ import applyMiddlewares from '../../store/middlewares';
 import reusableStore from './reusable-store';
 import applyDefaultSettings from '../default-settings';
 import decoratedEditor from '../../store/core-editor';
+import interfaceStore from './interface-store';
 
 // Keep track of the registries we create so we can release them after the editor instance is removed
 let registries = [];
@@ -43,6 +44,7 @@ const withRegistryProvider = createHigherOrderComponent(
 				const newRegistry = createRegistry(
 					{
 						'core/reusable-blocks': reusableStore,
+						'core/interface': interfaceStore,
 					},
 					registry
 				);
