@@ -170,6 +170,7 @@ The `IsolatedBlockEditor` also exports the following support components:
 - `DocumentSection` - Wrap up a component to appear in the document tab of the inspector
 - `ToolbarSlot` - Insert content into the toolbar
 - `FooterSlot` - Insert content into the footer
+- `EditorHeadingSlot` - Insert content at the beginning of the editor area. Suitable for titles.
 - [`CollaborativeEditing`](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/collaborative-editing) - Enable real-time collaborative editing
 
 ```js

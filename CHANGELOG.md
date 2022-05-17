@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.13.0] - Unreleased
 
+### Added
+
+- Add EditorHeadingSlot to allow content to be inserted before the editor. For example, a title.
+
 ### Fixed
 
 - Duplicate interface store to fix problem with different context stopping block inspector from working
