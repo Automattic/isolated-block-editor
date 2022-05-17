@@ -134,9 +134,9 @@ export default function applyDefaultSettings( settings ) {
 
 			// Default to no link suggestions
 			// @ts-ignore */}
-			__experimentalFetchLinkSuggestions: editor?.__experimentalFetchLinkSuggestions
+			fetchLinkSuggestions: editor?.fetchLinkSuggestions ?? editor?.__experimentalFetchLinkSuggestions
 				? // @ts-ignore */}
-				  editor?.__experimentalFetchLinkSuggestions
+				  editor?.fetchLinkSuggestions ?? editor?.__experimentalFetchLinkSuggestions
 				: () => [],
 		},
 	};
