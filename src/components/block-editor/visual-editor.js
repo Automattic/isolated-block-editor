@@ -28,6 +28,11 @@ import { __unstableMotion as motion } from '@wordpress/components';
 import { useRef, useMemo } from '@wordpress/element';
 import { useMergeRefs } from '@wordpress/compose';
 
+/**
+ * Internal dependencies
+ */
+import EditorHeading from '../editor-heading-slot';
+
 function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	const ref = useMouseMoveTypingReset();
 
@@ -137,6 +142,7 @@ const VisualEditor = ( { styles } ) => {
 							selector=".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container"
 							layout={ defaultLayout }
 						/>
+						<EditorHeading.Slot mode="visual" />
 						<BlockList className={ undefined } __experimentalLayout={ layout } />
 					</MaybeIframe>
 				</motion.div>

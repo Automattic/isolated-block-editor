@@ -31,6 +31,7 @@ import FooterSlot from './components/footer-slot';
 
 // Export library components
 import EditorLoaded from './components/editor-loaded';
+import EditorHeadingSlot from './components/editor-heading-slot';
 
 // A fake edit-post store is needed
 import './store/edit-post';
@@ -225,4 +226,4 @@ function IsolatedBlockEditor( props ) {
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot };
