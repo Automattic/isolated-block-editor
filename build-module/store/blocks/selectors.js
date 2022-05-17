@@ -1,8 +1,12 @@
+/**
+ * Internal dependencies
+ */
 import { getEditorMode } from '../editor/selectors';
 /**
  * Get blocks from edit history
- * @param {object} state - Current state
- * @returns {object[]}
+ *
+ * @param {Object} state - Current state
+ * @return {object[]}
  */
 
 export function getBlocks(state) {
@@ -10,8 +14,9 @@ export function getBlocks(state) {
 }
 /**
  * Get selection
- * @param {object} state - Current state
- * @returns {object}
+ *
+ * @param {Object} state - Current state
+ * @return {Object}
  */
 
 export function getEditorSelection(state) {
@@ -19,8 +24,9 @@ export function getEditorSelection(state) {
 }
 /**
  * Is undo possible?
- * @param {object} state - Current state
- * @returns {boolean}
+ *
+ * @param {Object} state - Current state
+ * @return {boolean}
  */
 
 export function hasEditorUndo(state) {
@@ -36,8 +42,9 @@ export function hasEditorUndo(state) {
 }
 /**
  * Is redo possible?
- * @param {object} state - Current state
- * @returns {boolean}
+ *
+ * @param {Object} state - Current state
+ * @return {boolean}
  */
 
 export function hasEditorRedo(state) {
@@ -53,8 +60,9 @@ export function hasEditorRedo(state) {
 }
 /**
  * Get current edit count
- * @param {object} state - Current state
- * @returns {number}
+ *
+ * @param {Object} state - Current state
+ * @return {number}
  */
 
 export function getEditCount(state) {

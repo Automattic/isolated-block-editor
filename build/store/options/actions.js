@@ -7,6 +7,7 @@ exports["default"] = void 0;
 var actions = {
   /**
    * Toggle the option
+   *
    * @param {string} option Option name
    */
   toggleOption: function toggleOption(option) {

@@ -13,6 +13,11 @@ import { useSelect } from '@wordpress/data';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useRef, useMemo } from '@wordpress/element';
 import { useMergeRefs } from '@wordpress/compose';
+/**
+ * Internal dependencies
+ */
+
+import EditorHeading from '../editor-heading-slot';
 
 function MaybeIframe(_ref) {
   let {
@@ -57,6 +62,9 @@ function MaybeIframe(_ref) {
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
  * The original is not exported, and contains code for post titles
+ *
+ * @param {Object} args
+ * @param args.styles
  */
 
 
@@ -128,6 +136,8 @@ const VisualEditor = _ref2 => {
   }, createElement(LayoutStyle, {
     selector: ".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container",
     layout: defaultLayout
+  }), createElement(EditorHeading.Slot, {
+    mode: "visual"
   }), createElement(BlockList, {
     className: undefined,
     __experimentalLayout: layout

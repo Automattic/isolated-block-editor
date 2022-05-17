@@ -100,8 +100,8 @@ const getCarets = memoize((peers, richTextIdentifier, blockClientId) => {
 /**
  * @param {string} multilineTag
  * @param {string} attributeValue
- * @returns {MultilineData}
- * */
+ * @return {MultilineData}
+ */
 
 const getMultilineData = (multilineTag, attributeValue) => {
   var _create, _create$text, _create$text$split;

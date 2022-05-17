@@ -131,7 +131,7 @@ export class PeerRelativePosition {
    * @private
    * @param {string} peerId
    * @param {Partial<SelectionRange>} peer
-   * @returns {RelativePosition}
+   * @return {RelativePosition}
    */
 
 

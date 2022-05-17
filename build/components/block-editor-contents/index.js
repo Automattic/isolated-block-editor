@@ -53,14 +53,18 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Get editor selection
+ *
  * @callback OnSelection
  */
 
 /**
  * Update callback
+ *
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
- * @param {object} [options]
+ * @param settings
+ * @param [loader]
+ * @param {Object} [options]
  */
 function getInitialContent(_x, _x2) {
   return _getInitialContent.apply(this, arguments);
@@ -68,13 +72,13 @@ function getInitialContent(_x, _x2) {
 /**
  * The editor itself, including toolbar
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {object[]} props.blocks
  * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
  * @param {OnUpdate} props.updateBlocksWithUndo - Callback to update blocks
  * @param {boolean} props.isEditing - Are we editing in this editor?
  * @param {EditorMode} props.editorMode - Visual or code?
- * @param {object} props.children - Child components
+ * @param {Object} props.children - Child components
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSelection} props.selection

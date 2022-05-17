@@ -28,7 +28,8 @@ var debugUndo = require('debug')('iso-editor:collab:undo'); // TODO: Unsolved pr
  * the selection.attributeKey will fall back to a `number`, and we can't tell which attribute it's
  * actually associated with. This happens a lot because the `identifier` prop is undocumented.
  *
- * @returns {import('../../components/collaborative-editing').RichTextHint|undefined}
+ * @param registry
+ * @return {import('../../components/collaborative-editing').RichTextHint|undefined}
  */
 
 
@@ -75,7 +76,7 @@ var _default = (_UPDATE_BLOCKS_WITH_U = {
 
     debugUndo('undo');
     undoManager.undo();
-    return; // prevent default action
+    return undefined; // prevent default action
   };
 })), (0, _defineProperty2["default"])(_UPDATE_BLOCKS_WITH_U, _reduxUndo.ActionCreators.redo().type, (0, _data.createRegistryControl)(function (registry) {
   return function (action) {
@@ -87,7 +88,7 @@ var _default = (_UPDATE_BLOCKS_WITH_U = {
 
     debugUndo('redo');
     registry.select('isolated/editor').getUndoManager().redo();
-    return; // prevent default action
+    return undefined; // prevent default action
   };
 })), _UPDATE_BLOCKS_WITH_U);
 

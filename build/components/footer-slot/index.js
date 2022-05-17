@@ -9,6 +9,9 @@ var _components = require("@wordpress/components");
 
 import { createElement } from "@wordpress/element";
 
+/**
+ * WordPress dependencies
+ */
 var _createSlotFill = (0, _components.createSlotFill)('IsolatedFooter'),
     Fill = _createSlotFill.Fill,
     Slot = _createSlotFill.Slot;

@@ -11,5 +11,5 @@ export type OnSelection = () => any;
 /**
  * Update callback
  */
-export type OnUpdate = (blocks: object[], options?: object) => any;
+export type OnUpdate = (blocks: object[], settings: any, loader?: any, options?: any) => any;
 //# sourceMappingURL=index.d.ts.map

@@ -11,9 +11,9 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/de
 
 var _i18n = require("@wordpress/i18n");
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 function getMenu(current, defaultMenu) {
@@ -27,12 +27,12 @@ function getMenu(current, defaultMenu) {
  * Apply default settings to the user supplied settings, ensuring we have a full and valid set of settings
  *
  * @param {BlockEditorSettings} settings - Settings
- * @returns {BlockEditorSettings}
- **/
+ * @return {BlockEditorSettings}
+ */
 
 
 function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
 
   var iso = settings.iso,
       editor = settings.editor;
@@ -123,8 +123,8 @@ function applyDefaultSettings(settings) {
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
       // @ts-ignore */}
-      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? // @ts-ignore */}
-      editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : function () {
+      fetchLinkSuggestions: ((_editor$fetchLinkSugg = editor === null || editor === void 0 ? void 0 : editor.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg !== void 0 ? _editor$fetchLinkSugg : editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions) ? // @ts-ignore */}
+      (_editor$fetchLinkSugg2 = editor === null || editor === void 0 ? void 0 : editor.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg2 !== void 0 ? _editor$fetchLinkSugg2 : editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : function () {
         return [];
       }
     })

@@ -17,11 +17,13 @@ import LinkMenu from './link-menu';
 
 /**
  * Close dropdown callback
+ *
  * @callback OnClose
  */
 
 /**
  * More menu render callback
+ *
  * @callback OnMore
  * @param {BlockEditorSettings} settings - Settings
  * @param {OnClose} onClose - Callback to close the menu
@@ -37,7 +39,7 @@ const TOGGLE_PROPS = {
 /**
  * More menu
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnClose} props.onClick
  * @param {OnMore} props.renderMoreMenu

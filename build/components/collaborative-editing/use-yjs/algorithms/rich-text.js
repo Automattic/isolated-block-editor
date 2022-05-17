@@ -28,9 +28,9 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var OBJECT_REPLACEMENT_CHARACTER = "\uFFFC"; // defined in @wordpress/rich-text special-characters
 
@@ -38,7 +38,7 @@ var OBJECT_REPLACEMENT_CHARACTER = "\uFFFC"; // defined in @wordpress/rich-text 
  * Convert an array of Gutenberg RichText formats to an array of range-based Y.Text formats.
  *
  * @param {Object[]} formats
- * @returns {Object[]} Y.Text formats
+ * @return {Object[]} Y.Text formats
  */
 
 function gutenFormatsToYFormats(formats) {
@@ -78,6 +78,8 @@ function gutenFormatsToYFormats(formats) {
  * Converts registered formats back to their standard tag/attribute names.
  *
  * For example, `core/bold` will be converted back to `strong`.
+ *
+ * @param format
  */
 
 
@@ -110,8 +112,8 @@ function getInferredMultilineTag(html) {
 /**
  * Massage the Gutenberg replacements into Yjs-friendly structures.
  *
- * @param {array} a The `replacements` array of a Gutenberg RichText.
- * @param {array} b The `replacements` array of another Gutenberg RichText.
+ * @param {Array} a The `replacements` array of a Gutenberg RichText.
+ * @param {Array} b The `replacements` array of another Gutenberg RichText.
  */
 
 
@@ -225,7 +227,7 @@ function applyHTMLDelta(htmlA, htmlB, richTextMap) {
  * Convert the RichText back from our Yjs representation to an HTML string.
  *
  * @param {import("yjs").Map} richTextMap
- * @returns {string}
+ * @return {string}
  */
 
 
@@ -290,7 +292,7 @@ function getMultilineWrapperTagHTMLReplacements(str, replacements) {
  * @param {string} str A multiline string delimited by __UNSTABLE_LINE_SEPARATOR.
  * @param {string} multilineTag The tag name to wrap each line with.
  * @param {Record<number, {type: string}[]>} replacements Multiline wrapper replacements.
- * @returns {string} The string reconstructed with multiline considerations.
+ * @return {string} The string reconstructed with multiline considerations.
  */
 
 

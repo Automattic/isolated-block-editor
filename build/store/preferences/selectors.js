@@ -7,7 +7,8 @@ exports.isFeatureActive = isFeatureActive;
 
 /**
  * Is the feature active?
- * @param {object} state - Current state
+ *
+ * @param {Object} state - Current state
  * @param {string} feature - Feature name
  */
 function isFeatureActive(state, feature) {

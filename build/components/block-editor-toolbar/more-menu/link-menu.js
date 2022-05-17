@@ -20,7 +20,7 @@ import { createElement } from "@wordpress/element";
 /**
  * Link menu
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  */
 function LinkMenu(_ref) {

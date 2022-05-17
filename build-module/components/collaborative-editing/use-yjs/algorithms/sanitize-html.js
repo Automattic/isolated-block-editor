@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { remove } from '@wordpress/dom'; // TODO: Unsolved problem
 // The limitation in our sanitization strategy is that it does not match the
 // server-side wp_kses rules, which should be considered the canonical config

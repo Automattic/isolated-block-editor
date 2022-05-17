@@ -23,6 +23,7 @@ var _interface = require("@wordpress/interface");
 var actions = {
   /**
    * Set whether the editor is ready for editing
+   *
    * @param {boolean} isReady
    */
   setReady: function setReady(isReady) {
@@ -34,6 +35,7 @@ var actions = {
 
   /**
    * Set the current editor mode
+   *
    * @param {EditorMode} editorMode Editor mode
    */
   setEditorMode: function setEditorMode(editorMode) {
@@ -45,6 +47,7 @@ var actions = {
 
   /**
    * Set up the editor
+   *
    * @param {BlockEditorSettings} settings
    */
   setupEditor: function setupEditor(settings) {
@@ -56,6 +59,7 @@ var actions = {
 
   /**
    * Set the current pattern name
+   *
    * @param {string} pattern Pattern name
    */
   setCurrentPattern: function setCurrentPattern(pattern) {
@@ -67,6 +71,7 @@ var actions = {
 
   /**
    * Mark the block inserter as open or closed
+   *
    * @param {boolean} isOpen
    */
   setIsInserterOpened: function setIsInserterOpened(isOpen) {
@@ -78,6 +83,7 @@ var actions = {
 
   /**
    * Set the current device type
+   *
    * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
    */
   setDeviceType: function setDeviceType(deviceType) {
@@ -89,6 +95,7 @@ var actions = {
 
   /**
    * Mark this editor as in-use or not
+   *
    * @param {boolean} isEditing
    */
   setEditing: function setEditing(isEditing) {
@@ -100,6 +107,7 @@ var actions = {
 
   /**
    * Open the named sidebar
+   *
    * @param {string} name Name of sidebar section
    */
   openGeneralSidebar: /*#__PURE__*/_regenerator["default"].mark(function openGeneralSidebar(name) {
@@ -139,6 +147,7 @@ var actions = {
 
   /**
    * Set the status of the listview sidebar section
+   *
    * @param {boolean} isOpen
    */
   setIsListViewOpened: function setIsListViewOpened(isOpen) {

@@ -9,9 +9,9 @@ exports["default"] = getEditorSettings;
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /** @typedef {import('../../index').EditorSettings} EditorSettings */
 
@@ -22,7 +22,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  *
  * @param {{allowBlocks: string[]}} blockSettings - settings for available blocks
  * @param {object[]} allBlockTypes - All available blocks
- * @returns {string[]}
+ * @return {string[]}
  */
 function getAllowedBlockTypes(blockSettings, allBlockTypes) {
   if (blockSettings && blockSettings.allowBlocks && blockSettings.allowBlocks.length > 0) {
@@ -38,7 +38,7 @@ function getAllowedBlockTypes(blockSettings, allBlockTypes) {
  * Get all the disallowed block types, either from the settings, or all available blocks
  *
  * @param {{disallowBlocks: string[]}} blockSettings - settings for disallowed blocks
- * @returns {string[]}
+ * @return {string[]}
  */
 
 
@@ -57,7 +57,7 @@ function getDisallowedBlocks(blockSettings) {
  * @param {IsoSettings} isoSettings
  * @param {object[]} allBlockTypes - All available blocks
  * @param {boolean} hasFixedToolbar - Do we need a fixed toolbar?
- * @returns {EditorSettings}
+ * @return {EditorSettings}
  */
 
 

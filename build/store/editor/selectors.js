@@ -41,16 +41,18 @@ var _interface = require("@wordpress/interface");
 
 /**
  * Get current editor mode
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {EditorMode}
+ * @return {EditorMode}
  */
 function getEditorMode(state) {
   return state.editor.editorMode;
 }
 /**
  * Get current editor settings
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {IsoSettings}
+ * @return {IsoSettings}
  */
 
 
@@ -59,8 +61,9 @@ function getEditorSettings(state) {
 }
 /**
  * Is the editor ready for use?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 
 
@@ -69,8 +72,9 @@ function isEditorReady(state) {
 }
 /**
  * Get current pattern name
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string|null}
+ * @return {string|null}
  */
 
 
@@ -79,8 +83,9 @@ function getCurrentPatternName(state) {
 }
 /**
  * Get current pattern
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern|null}
+ * @return {Pattern|null}
  */
 
 
@@ -91,7 +96,7 @@ function getCurrentPattern(state) {
 
   if (currentPattern && patterns) {
     for (var index = 0; index < patterns.length; index++) {
-      if (patterns[index]['name'] === currentPattern) {
+      if (patterns[index].name === currentPattern) {
         return patterns[index];
       }
     }
@@ -101,8 +106,9 @@ function getCurrentPattern(state) {
 }
 /**
  * Get all ignored content
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string[]}
+ * @return {string[]}
  */
 
 
@@ -111,8 +117,10 @@ function getIgnoredContent(state) {
 }
 /**
  * Get the pattern for a given name
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern|null}
+ * @param patternName
+ * @return {Pattern|null}
  */
 
 
@@ -140,8 +148,9 @@ function getNamedPattern(state, patternName) {
 }
 /**
  * Is the block inserter open?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 
 
@@ -157,8 +166,9 @@ var isEditorSidebarOpened = (0, _data.createRegistrySelector)(function (select) 
 });
 /**
  * Are we editing this editor?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 
 exports.isEditorSidebarOpened = isEditorSidebarOpened;
@@ -168,8 +178,9 @@ function isEditing(state) {
 }
 /**
  * Get all patterns
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern[]}
+ * @return {Pattern[]}
  */
 
 
@@ -178,8 +189,9 @@ function getPatterns(state) {
 }
 /**
  * Determine if the list viewer is open
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 
 
@@ -188,8 +200,9 @@ function isListViewOpened(state) {
 }
 /**
  * Return current device type
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string}
+ * @return {string}
  */
 
 

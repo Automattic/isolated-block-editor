@@ -25,6 +25,7 @@ var _blocks = require("@wordpress/blocks");
 
 /**
  * Update callback
+ *
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
  */
@@ -35,7 +36,7 @@ var _blocks = require("@wordpress/blocks");
  * An initial setup is performed, and is then reset each time the editor is focussed. This ensures we are applying the right
  * settings for this particular editor.
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {Pattern} props.currentPattern - Currently selected pattern
  * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks

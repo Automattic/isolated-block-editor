@@ -13,6 +13,9 @@ var _blocks = require("@wordpress/blocks");
 
 /**
  * Override the default `core/editor` store with functions that return data from `core/block-editor` instead of the post in `core/editor`
+ *
+ * @param existingSelectors
+ * @param newSelect
  */
 function _default(existingSelectors, newSelect) {
   return {

@@ -69,6 +69,7 @@ import { createElement, Fragment } from "@wordpress/element";
 
 /**
  * Undo/redo
+ *
  * @callback OnHistory
  */
 var interfaceLabels = {
@@ -94,11 +95,11 @@ var interfaceLabels = {
  *
  * Note: the keyboard handling is specific to this editor and *not* global
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {boolean} props.isEditing - Are we editing in this editor?
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {object} props.children - Child components
+ * @param {Object} props.children - Child components
  * @param {OnHistory} props.undo
  * @param {OnHistory} props.redo
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu

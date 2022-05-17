@@ -12,8 +12,8 @@ exports["default"] = void 0;
  * Note that store plugins are currently marked as deprecated. It's unknown what will replace them, and this will need to be updated
  * once that happens.
  *
- * @param {object} registry
- * @param {object} pluginOptions
+ * @param {Object} registry
+ * @param {Object} pluginOptions
  */
 function storeHotSwapPlugin(registry, pluginOptions) {
   var hotStores = ['core/block-editor', 'core/editor']; // Switch select and dispatch

@@ -55,6 +55,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Set editing callback
+ *
  * @callback OnSetEditing
  * @param {boolean} isEditing
  */
@@ -63,8 +64,8 @@ var SIZE_MEDIUM = 480;
 /**
  * Contains the block contents. Handles the hot-swapping of the redux stores, as well as applying the root CSS classes
  *
- * @param {object} props - Component props
- * @param {object} props.children - Child components
+ * @param {Object} props - Component props
+ * @param {Object} props.children - Child components
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
  * @param {boolean} props.isPreview - Whether preview mode is enabled

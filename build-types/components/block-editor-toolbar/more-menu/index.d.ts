@@ -11,7 +11,7 @@ export type OnMore = (settings: BlockEditorSettings, onClose: OnClose) => any;
 /**
  * More menu
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnClose} props.onClick
  * @param {OnMore} props.renderMoreMenu

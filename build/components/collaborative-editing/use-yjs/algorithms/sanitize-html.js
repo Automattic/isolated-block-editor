@@ -7,6 +7,9 @@ exports["default"] = sanitizeHTML;
 
 var _dom = require("@wordpress/dom");
 
+/**
+ * WordPress dependencies
+ */
 // TODO: Unsolved problem
 // The limitation in our sanitization strategy is that it does not match the
 // server-side wp_kses rules, which should be considered the canonical config
