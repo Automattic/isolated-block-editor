@@ -76,7 +76,12 @@ export function updateBlocksDoc(yDocBlocks, blocks, richTextHint) {
     updateBlocksDoc(yDocBlocks, innerBlocks, richTextHint, block.clientId);
   }
 }
-/** @returns {Set<string>} */
+/**
+ * @param clientId
+ * @param richTextHint
+ * @param richTexts
+ * @return {Set<string>}
+ */
 
 function getKnownRichTextAttributes(clientId, richTextHint, richTexts) {
   const knownRichTextAttributes = richTexts.has(clientId) && richTexts.get(clientId);

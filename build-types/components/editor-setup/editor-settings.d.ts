@@ -5,7 +5,7 @@
  * @param {IsoSettings} isoSettings
  * @param {object[]} allBlockTypes - All available blocks
  * @param {boolean} hasFixedToolbar - Do we need a fixed toolbar?
- * @returns {EditorSettings}
+ * @return {EditorSettings}
  */
 export default function getEditorSettings(editorSettings: EditorSettings, isoSettings: IsoSettings, allBlockTypes: object[], hasFixedToolbar: boolean): EditorSettings;
 export type EditorSettings = import('../../index').EditorSettings;

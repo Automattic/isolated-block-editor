@@ -121,8 +121,8 @@ var getCarets = (0, _memize["default"])(function (peers, richTextIdentifier, blo
 /**
  * @param {string} multilineTag
  * @param {string} attributeValue
- * @returns {MultilineData}
- * */
+ * @return {MultilineData}
+ */
 
 var getMultilineData = function getMultilineData(multilineTag, attributeValue) {
   var _create, _create$text, _create$text$split;

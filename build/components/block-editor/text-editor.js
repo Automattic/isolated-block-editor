@@ -13,6 +13,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _postTextEditor = _interopRequireDefault(require("./post-text-editor"));
 
+var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
+
 import { createElement } from "@wordpress/element";
 
 /**
@@ -20,7 +22,7 @@ import { createElement } from "@wordpress/element";
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
 
 /**
@@ -34,7 +36,9 @@ function TextEditor(_ref) {
     className: "edit-post-text-editor"
   }, createElement("div", {
     className: "edit-post-text-editor__body"
-  }, createElement(_postTextEditor["default"], null)));
+  }, createElement(_editorHeadingSlot["default"].Slot, {
+    mode: "text"
+  }), createElement(_postTextEditor["default"], null)));
 }
 
 var _default = TextEditor;

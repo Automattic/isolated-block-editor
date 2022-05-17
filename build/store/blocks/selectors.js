@@ -12,17 +12,23 @@ exports.hasEditorUndo = hasEditorUndo;
 var _selectors = require("../editor/selectors");
 
 /**
+ * Internal dependencies
+ */
+
+/**
  * Get blocks from edit history
- * @param {object} state - Current state
- * @returns {object[]}
+ *
+ * @param {Object} state - Current state
+ * @return {object[]}
  */
 function getBlocks(state) {
   return state.blocks.present.blocks;
 }
 /**
  * Get selection
- * @param {object} state - Current state
- * @returns {object}
+ *
+ * @param {Object} state - Current state
+ * @return {Object}
  */
 
 
@@ -31,8 +37,9 @@ function getEditorSelection(state) {
 }
 /**
  * Is undo possible?
- * @param {object} state - Current state
- * @returns {boolean}
+ *
+ * @param {Object} state - Current state
+ * @return {boolean}
  */
 
 
@@ -49,8 +56,9 @@ function hasEditorUndo(state) {
 }
 /**
  * Is redo possible?
- * @param {object} state - Current state
- * @returns {boolean}
+ *
+ * @param {Object} state - Current state
+ * @return {boolean}
  */
 
 
@@ -67,8 +75,9 @@ function hasEditorRedo(state) {
 }
 /**
  * Get current edit count
- * @param {object} state - Current state
- * @returns {number}
+ *
+ * @param {Object} state - Current state
+ * @return {number}
  */
 
 

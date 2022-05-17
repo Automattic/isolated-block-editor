@@ -2,6 +2,7 @@
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
 /**
  * Toolbar settings
+ *
  * @typedef ToolbarSettings
  * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
  * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
@@ -13,6 +14,7 @@
  */
 /**
  * More menu settings
+ *
  * @typedef MoreMenuSettings
  * @property {boolean} [editor] - Enable or disable the editor sub menu (visual/code editing)
  * @property {boolean} [fullscreen] - Enable or disable the fullscreen option
@@ -21,12 +23,14 @@
  */
 /**
  * Sidebar settings
+ *
  * @typedef SidebarSettings
  * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
  */
 /**
  * Isolated Editor Settings
+ *
  * @typedef IsoSettings
  * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
  * @property {string|null} [persistenceKey] - Persistence key. Set to null to disable
@@ -39,21 +43,23 @@
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
  * @property {string|null} [currentPattern] - The pattern to start with
  * @property {Pattern[]} [patterns] - List of patterns
- * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
+ * @property {Object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 /**
  * Block Editor Settings
+ *
  * @typedef BlockEditorSettings
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
  */
 /**
  * Gutenberg Editor Settings - this isn't the complete object, but just enough for linting here
+ *
  * @typedef EditorSettings
  * @property {boolean} hasUploadPermissions
- * @property {object} allowedMimeTypes
+ * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
  * @property {boolean} hasFixedToolbar
  * @property {null|object} mediaUpload
@@ -74,7 +80,7 @@ declare var _default: import("react").ComponentType<{
     onError: OnError;
     onLoad?: OnLoad | undefined;
     settings: BlockEditorSettings;
-    children?: object;
+    children?: any;
     className?: string | undefined;
     renderMoreMenu?: import("./components/block-editor-toolbar/more-menu").OnMore | undefined;
 }>;
@@ -205,7 +211,7 @@ export type IsoSettings = {
     /**
      * - Default preferences if nothing in localStorage
      */
-    defaultPreferences?: object;
+    defaultPreferences?: any;
     /**
      * - Allow API requests
      */
@@ -233,7 +239,7 @@ export type BlockEditorSettings = {
  */
 export type EditorSettings = {
     hasUploadPermissions: boolean;
-    allowedMimeTypes: object;
+    allowedMimeTypes: any;
     allowedBlockTypes: string[];
     hasFixedToolbar: boolean;
     mediaUpload: null | object;
@@ -268,5 +274,6 @@ import DocumentSection from "./components/document";
 import ToolbarSlot from "./components/block-editor-toolbar/slot";
 import CollaborativeEditing from "./components/collaborative-editing";
 import FooterSlot from "./components/footer-slot";
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };
+import EditorHeadingSlot from "./components/editor-heading-slot";
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot };
 //# sourceMappingURL=index.d.ts.map

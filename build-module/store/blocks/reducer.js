@@ -1,7 +1,11 @@
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import undoable from 'redux-undo';
+/**
+ * WordPress dependencies
+ */
+
 import isShallowEqual from '@wordpress/is-shallow-equal';
 const DEFAULT_STATE = {
   editCount: 0,

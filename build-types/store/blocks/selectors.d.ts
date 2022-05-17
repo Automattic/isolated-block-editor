@@ -1,31 +1,36 @@
 /**
  * Get blocks from edit history
- * @param {object} state - Current state
- * @returns {object[]}
+ *
+ * @param {Object} state - Current state
+ * @return {object[]}
  */
-export function getBlocks(state: object): object[];
+export function getBlocks(state: any): object[];
 /**
  * Get selection
- * @param {object} state - Current state
- * @returns {object}
+ *
+ * @param {Object} state - Current state
+ * @return {Object}
  */
-export function getEditorSelection(state: object): object;
+export function getEditorSelection(state: any): any;
 /**
  * Is undo possible?
- * @param {object} state - Current state
- * @returns {boolean}
+ *
+ * @param {Object} state - Current state
+ * @return {boolean}
  */
-export function hasEditorUndo(state: object): boolean;
+export function hasEditorUndo(state: any): boolean;
 /**
  * Is redo possible?
- * @param {object} state - Current state
- * @returns {boolean}
+ *
+ * @param {Object} state - Current state
+ * @return {boolean}
  */
-export function hasEditorRedo(state: object): boolean;
+export function hasEditorRedo(state: any): boolean;
 /**
  * Get current edit count
- * @param {object} state - Current state
- * @returns {number}
+ *
+ * @param {Object} state - Current state
+ * @return {number}
  */
-export function getEditCount(state: object): number;
+export function getEditCount(state: any): number;
 //# sourceMappingURL=selectors.d.ts.map

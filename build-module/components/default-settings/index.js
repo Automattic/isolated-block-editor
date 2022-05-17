@@ -15,12 +15,12 @@ function getMenu(current, defaultMenu) {
  * Apply default settings to the user supplied settings, ensuring we have a full and valid set of settings
  *
  * @param {BlockEditorSettings} settings - Settings
- * @returns {BlockEditorSettings}
- **/
+ * @return {BlockEditorSettings}
+ */
 
 
 export default function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
 
   const {
     iso,
@@ -117,8 +117,8 @@ export default function applyDefaultSettings(settings) {
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
       // @ts-ignore */}
-      __experimentalFetchLinkSuggestions: editor !== null && editor !== void 0 && editor.__experimentalFetchLinkSuggestions ? // @ts-ignore */}
-      editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
+      fetchLinkSuggestions: ((_editor$fetchLinkSugg = editor === null || editor === void 0 ? void 0 : editor.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg !== void 0 ? _editor$fetchLinkSugg : editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions) ? // @ts-ignore */}
+      (_editor$fetchLinkSugg2 = editor === null || editor === void 0 ? void 0 : editor.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg2 !== void 0 ? _editor$fetchLinkSugg2 : editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
     }
   };
 }

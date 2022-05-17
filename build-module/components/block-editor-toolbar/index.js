@@ -27,7 +27,7 @@ import './style.scss';
 /**
  * Block editor toolbar
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu

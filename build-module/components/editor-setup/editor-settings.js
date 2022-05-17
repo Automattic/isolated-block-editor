@@ -7,7 +7,7 @@
  *
  * @param {{allowBlocks: string[]}} blockSettings - settings for available blocks
  * @param {object[]} allBlockTypes - All available blocks
- * @returns {string[]}
+ * @return {string[]}
  */
 function getAllowedBlockTypes(blockSettings, allBlockTypes) {
   if (blockSettings && blockSettings.allowBlocks && blockSettings.allowBlocks.length > 0) {
@@ -21,7 +21,7 @@ function getAllowedBlockTypes(blockSettings, allBlockTypes) {
  * Get all the disallowed block types, either from the settings, or all available blocks
  *
  * @param {{disallowBlocks: string[]}} blockSettings - settings for disallowed blocks
- * @returns {string[]}
+ * @return {string[]}
  */
 
 
@@ -40,7 +40,7 @@ function getDisallowedBlocks(blockSettings) {
  * @param {IsoSettings} isoSettings
  * @param {object[]} allBlockTypes - All available blocks
  * @param {boolean} hasFixedToolbar - Do we need a fixed toolbar?
- * @returns {EditorSettings}
+ * @return {EditorSettings}
  */
 
 

@@ -27,6 +27,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Close dropdown callback
+ *
  * @callback OnSetMode
  * @param {string} mode
  */
@@ -34,7 +35,7 @@ import { createElement } from "@wordpress/element";
 /**
  * The 'more menu' editor section
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {boolean} props.isCodeEditingEnabled
  * @param {string} props.editorMode
  * @param {OnClose} props.onClose - Callback to close the menu

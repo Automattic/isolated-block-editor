@@ -4,6 +4,7 @@ export type EditorMode = import('./reducer').EditorMode;
 declare namespace actions {
     /**
      * Set whether the editor is ready for editing
+     *
      * @param {boolean} isReady
      */
     function setReady(isReady: boolean): {
@@ -12,6 +13,7 @@ declare namespace actions {
     };
     /**
      * Set whether the editor is ready for editing
+     *
      * @param {boolean} isReady
      */
     function setReady(isReady: boolean): {
@@ -20,6 +22,7 @@ declare namespace actions {
     };
     /**
      * Set the current editor mode
+     *
      * @param {EditorMode} editorMode Editor mode
      */
     function setEditorMode(editorMode: import("./reducer").EditorMode): {
@@ -28,6 +31,7 @@ declare namespace actions {
     };
     /**
      * Set the current editor mode
+     *
      * @param {EditorMode} editorMode Editor mode
      */
     function setEditorMode(editorMode: import("./reducer").EditorMode): {
@@ -36,6 +40,7 @@ declare namespace actions {
     };
     /**
      * Set up the editor
+     *
      * @param {BlockEditorSettings} settings
      */
     function setupEditor(settings: import("../../index").BlockEditorSettings): {
@@ -44,6 +49,7 @@ declare namespace actions {
     };
     /**
      * Set up the editor
+     *
      * @param {BlockEditorSettings} settings
      */
     function setupEditor(settings: import("../../index").BlockEditorSettings): {
@@ -52,6 +58,7 @@ declare namespace actions {
     };
     /**
      * Set the current pattern name
+     *
      * @param {string} pattern Pattern name
      */
     function setCurrentPattern(pattern: string): {
@@ -60,6 +67,7 @@ declare namespace actions {
     };
     /**
      * Set the current pattern name
+     *
      * @param {string} pattern Pattern name
      */
     function setCurrentPattern(pattern: string): {
@@ -68,6 +76,7 @@ declare namespace actions {
     };
     /**
      * Mark the block inserter as open or closed
+     *
      * @param {boolean} isOpen
      */
     function setIsInserterOpened(isOpen: boolean): {
@@ -76,6 +85,7 @@ declare namespace actions {
     };
     /**
      * Mark the block inserter as open or closed
+     *
      * @param {boolean} isOpen
      */
     function setIsInserterOpened(isOpen: boolean): {
@@ -84,6 +94,7 @@ declare namespace actions {
     };
     /**
      * Set the current device type
+     *
      * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
      */
     function setDeviceType(deviceType: string): {
@@ -92,6 +103,7 @@ declare namespace actions {
     };
     /**
      * Set the current device type
+     *
      * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
      */
     function setDeviceType(deviceType: string): {
@@ -100,6 +112,7 @@ declare namespace actions {
     };
     /**
      * Mark this editor as in-use or not
+     *
      * @param {boolean} isEditing
      */
     function setEditing(isEditing: boolean): {
@@ -108,6 +121,7 @@ declare namespace actions {
     };
     /**
      * Mark this editor as in-use or not
+     *
      * @param {boolean} isEditing
      */
     function setEditing(isEditing: boolean): {
@@ -116,11 +130,13 @@ declare namespace actions {
     };
     /**
      * Open the named sidebar
+     *
      * @param {string} name Name of sidebar section
      */
     function openGeneralSidebar(name: string): Generator<any, void, unknown>;
     /**
      * Open the named sidebar
+     *
      * @param {string} name Name of sidebar section
      */
     function openGeneralSidebar(name: string): Generator<any, void, unknown>;
@@ -134,6 +150,7 @@ declare namespace actions {
     function closeGeneralSidebar(): Generator<any, void, unknown>;
     /**
      * Set the status of the listview sidebar section
+     *
      * @param {boolean} isOpen
      */
     function setIsListViewOpened(isOpen: boolean): {
@@ -142,6 +159,7 @@ declare namespace actions {
     };
     /**
      * Set the status of the listview sidebar section
+     *
      * @param {boolean} isOpen
      */
     function setIsListViewOpened(isOpen: boolean): {

@@ -17,6 +17,12 @@ Object.defineProperty(exports, "DocumentSection", {
     return _document["default"];
   }
 });
+Object.defineProperty(exports, "EditorHeadingSlot", {
+  enumerable: true,
+  get: function get() {
+    return _editorHeadingSlot["default"];
+  }
+});
 Object.defineProperty(exports, "EditorLoaded", {
   enumerable: true,
   get: function get() {
@@ -87,6 +93,8 @@ var _footerSlot = _interopRequireDefault(require("./components/footer-slot"));
 
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 
+var _editorHeadingSlot = _interopRequireDefault(require("./components/editor-heading-slot"));
+
 require("./store/edit-post");
 
 require("./style.scss");
@@ -100,6 +108,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Toolbar settings
+ *
  * @typedef ToolbarSettings
  * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
  * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
@@ -112,6 +121,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * More menu settings
+ *
  * @typedef MoreMenuSettings
  * @property {boolean} [editor] - Enable or disable the editor sub menu (visual/code editing)
  * @property {boolean} [fullscreen] - Enable or disable the fullscreen option
@@ -121,6 +131,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Sidebar settings
+ *
  * @typedef SidebarSettings
  * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
@@ -128,6 +139,7 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Isolated Editor Settings
+ *
  * @typedef IsoSettings
  * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
  * @property {string|null} [persistenceKey] - Persistence key. Set to null to disable
@@ -140,13 +152,14 @@ import { createElement } from "@wordpress/element";
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
  * @property {string|null} [currentPattern] - The pattern to start with
  * @property {Pattern[]} [patterns] - List of patterns
- * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
+ * @property {Object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 
 /**
  * Block Editor Settings
+ *
  * @typedef BlockEditorSettings
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
@@ -154,9 +167,10 @@ import { createElement } from "@wordpress/element";
 
 /**
  * Gutenberg Editor Settings - this isn't the complete object, but just enough for linting here
+ *
  * @typedef EditorSettings
  * @property {boolean} hasUploadPermissions
- * @property {object} allowedMimeTypes
+ * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
  * @property {boolean} hasFixedToolbar
  * @property {null|object} mediaUpload
@@ -198,6 +212,7 @@ function initializeIsoEditor() {
 }
 /**
  * Save blocks callback
+ *
  * @callback OnSaveBlocks
  * @param {object[]} blocks - Editor content to save
  * @param {string[]} ignoredContent - Possible content to ignore
@@ -205,27 +220,31 @@ function initializeIsoEditor() {
 
 /**
  * Save HTML content callback
+ *
  * @callback OnSaveContent
  * @param {string} content - Serialized content
  */
 
 /**
  * Parser callback
+ *
  * @callback OnParse
  * @param {string} content - HTML content
- * @returns {object[]}
+ * @return {object[]}
  */
 
 /**
  * Initial load blocks callback
+ *
  * @callback OnLoad
  * @param {OnParse} parse - Current block parser
  * @param {OnParse} rawHandler - Current raw handler
- * @returns {object[]|Promise}
+ * @return {object[]|Promise}
  */
 
 /**
  * Error callback
+ *
  * @callback OnError
  */
 
@@ -235,13 +254,13 @@ function initializeIsoEditor() {
  * This wraps up the Gutenberg editor along with a customised store. The contents of the editor are unique, and multiple instances
  * can be created.
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {OnSaveBlocks} [props.onSaveBlocks] - Save callback
  * @param {OnSaveContent} [props.onSaveContent] - Save callback
  * @param {OnError} props.onError - Error callback
  * @param {OnLoad} [props.onLoad] - Initial blocks
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {object} [props.children] - Child content
+ * @param {Object} [props.children] - Child content
  * @param {string} [props.className] - Additional class name
  * @param {OnMore} [props.renderMoreMenu] - Callback to render additional items in the more menu
  */

@@ -17,7 +17,8 @@ import storeConfig from '../../store';
 import applyMiddlewares from '../../store/middlewares';
 import reusableStore from './reusable-store';
 import applyDefaultSettings from '../default-settings';
-import decoratedEditor from '../../store/core-editor'; // Keep track of the registries we create so we can release them after the editor instance is removed
+import decoratedEditor from '../../store/core-editor';
+import interfaceStore from './interface-store'; // Keep track of the registries we create so we can release them after the editor instance is removed
 
 let registries = [];
 const STORE_NAME = 'isolated/editor';
@@ -48,7 +49,8 @@ const withRegistryProvider = createHigherOrderComponent(WrappedComponent => with
     // Create a new registry for this editor. We have the STORE_NAME for storing blocks and other data
     // and a duplicate of `core/block-editor` for storing block selections
     const newRegistry = createRegistry({
-      'core/reusable-blocks': reusableStore
+      'core/reusable-blocks': reusableStore,
+      'core/interface': interfaceStore
     }, registry); // Enable the persistence plugin so we use settings in `localStorage`
 
     if (persistenceKey) {

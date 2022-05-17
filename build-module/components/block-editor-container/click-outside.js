@@ -2,6 +2,10 @@
  * WordPress dependencies
  */
 import { Component } from '@wordpress/element';
+/**
+ * Internal dependencies
+ */
+
 import withFocusOutside from './with-focus-outside.js';
 const ClickOutsideWrapper = withFocusOutside(class extends Component {
   handleFocus(ev) {

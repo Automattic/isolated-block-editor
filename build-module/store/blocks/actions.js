@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { ActionCreators } from 'redux-undo';
 const actions = {
   *undo() {
@@ -10,8 +13,9 @@ const actions = {
 
   /**
    * Update blocks without undo history
+   *
    * @param {object[]} blocks
-   * @param {object} options
+   * @param {Object} options
    */
   *updateBlocksWithUndo(blocks) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -24,8 +28,9 @@ const actions = {
 
   /**
    * Update blocks without undo history
+   *
    * @param {object[]} blocks
-   * @param {object} options
+   * @param {Object} options
    */
   *updateBlocksWithoutUndo(blocks) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};

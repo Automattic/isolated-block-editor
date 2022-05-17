@@ -15,6 +15,7 @@ import getEditorSettings from './editor-settings';
 
 /**
  * Settings callback
+ *
  * @callback OnSettings
  * @param {BlockEditorSettings} settings
  */
@@ -25,7 +26,7 @@ import getEditorSettings from './editor-settings';
  * An initial setup is performed, and is then reset each time the editor is focussed. This ensures we are applying the right
  * settings for this particular editor.
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.currentSettings - Modified settings
  * @param {OnSettings} props.updateSettings - Update settings
  * @param {OnSettings} props.setupEditor - Set up the Gutenberg editor

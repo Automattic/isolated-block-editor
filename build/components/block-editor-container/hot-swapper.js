@@ -7,14 +7,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _storeHotSwap = _interopRequireDefault(require("../../store/plugins/store-hot-swap"));
-
 var _data = require("@wordpress/data");
 
 var _compose = require("@wordpress/compose");
 
 var _element = require("@wordpress/element");
 
+var _storeHotSwap = _interopRequireDefault(require("../../store/plugins/store-hot-swap"));
+
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
 function HotSwapper(_ref) {
   var isEditing = _ref.isEditing,
       hotSwap = _ref.hotSwap;

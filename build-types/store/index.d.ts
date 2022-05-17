@@ -131,6 +131,9 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             editor: import("./editor/reducer").EditorState;
         }): string;
         isEditorSidebarOpened: any;
+        /**
+         * Internal dependencies
+         */
         getBlocks(state: any): any[];
         getEditorSelection(state: any): any;
         hasEditorUndo(state: any): boolean;

@@ -1,1 +1,1 @@
-{"version":3,"file":"editor-menu.d.ts","sourceRoot":"","sources":["../../../../src/components/block-editor-toolbar/more-menu/editor-menu.js"],"names":[],"mappings":";;sBASc,OAAO,SAAS,EAAE,OAAO;kCACzB,OAAO,gBAAgB,EAAE,mBAAmB;;;;+BAK/C,MAAM"}
+{"version":3,"file":"editor-menu.d.ts","sourceRoot":"","sources":["../../../../src/components/block-editor-toolbar/more-menu/editor-menu.js"],"names":[],"mappings":";;sBASc,OAAO,SAAS,EAAE,OAAO;kCACzB,OAAO,gBAAgB,EAAE,mBAAmB;;;;+BAM/C,MAAM"}

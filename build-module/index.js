@@ -30,7 +30,8 @@ import ToolbarSlot from './components/block-editor-toolbar/slot';
 import CollaborativeEditing from './components/collaborative-editing';
 import FooterSlot from './components/footer-slot'; // Export library components
 
-import EditorLoaded from './components/editor-loaded'; // A fake edit-post store is needed
+import EditorLoaded from './components/editor-loaded';
+import EditorHeadingSlot from './components/editor-heading-slot'; // A fake edit-post store is needed
 
 import './store/edit-post';
 import './style.scss';
@@ -40,6 +41,7 @@ import './style.scss';
 
 /**
  * Toolbar settings
+ *
  * @typedef ToolbarSettings
  * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
  * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
@@ -52,6 +54,7 @@ import './style.scss';
 
 /**
  * More menu settings
+ *
  * @typedef MoreMenuSettings
  * @property {boolean} [editor] - Enable or disable the editor sub menu (visual/code editing)
  * @property {boolean} [fullscreen] - Enable or disable the fullscreen option
@@ -61,6 +64,7 @@ import './style.scss';
 
 /**
  * Sidebar settings
+ *
  * @typedef SidebarSettings
  * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
@@ -68,6 +72,7 @@ import './style.scss';
 
 /**
  * Isolated Editor Settings
+ *
  * @typedef IsoSettings
  * @property {string|null} [preferencesKey] - Preferences key. Set to null to disable
  * @property {string|null} [persistenceKey] - Persistence key. Set to null to disable
@@ -80,13 +85,14 @@ import './style.scss';
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
  * @property {string|null} [currentPattern] - The pattern to start with
  * @property {Pattern[]} [patterns] - List of patterns
- * @property {object} [defaultPreferences] - Default preferences if nothing in localStorage
+ * @property {Object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 
 /**
  * Block Editor Settings
+ *
  * @typedef BlockEditorSettings
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
@@ -94,9 +100,10 @@ import './style.scss';
 
 /**
  * Gutenberg Editor Settings - this isn't the complete object, but just enough for linting here
+ *
  * @typedef EditorSettings
  * @property {boolean} hasUploadPermissions
- * @property {object} allowedMimeTypes
+ * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
  * @property {boolean} hasFixedToolbar
  * @property {null|object} mediaUpload
@@ -136,6 +143,7 @@ export function initializeIsoEditor() {
 }
 /**
  * Save blocks callback
+ *
  * @callback OnSaveBlocks
  * @param {object[]} blocks - Editor content to save
  * @param {string[]} ignoredContent - Possible content to ignore
@@ -143,27 +151,31 @@ export function initializeIsoEditor() {
 
 /**
  * Save HTML content callback
+ *
  * @callback OnSaveContent
  * @param {string} content - Serialized content
  */
 
 /**
  * Parser callback
+ *
  * @callback OnParse
  * @param {string} content - HTML content
- * @returns {object[]}
+ * @return {object[]}
  */
 
 /**
  * Initial load blocks callback
+ *
  * @callback OnLoad
  * @param {OnParse} parse - Current block parser
  * @param {OnParse} rawHandler - Current raw handler
- * @returns {object[]|Promise}
+ * @return {object[]|Promise}
  */
 
 /**
  * Error callback
+ *
  * @callback OnError
  */
 
@@ -173,13 +185,13 @@ export function initializeIsoEditor() {
  * This wraps up the Gutenberg editor along with a customised store. The contents of the editor are unique, and multiple instances
  * can be created.
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {OnSaveBlocks} [props.onSaveBlocks] - Save callback
  * @param {OnSaveContent} [props.onSaveContent] - Save callback
  * @param {OnError} props.onError - Error callback
  * @param {OnLoad} [props.onLoad] - Initial blocks
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {object} [props.children] - Child content
+ * @param {Object} [props.children] - Child content
  * @param {string} [props.className] - Additional class name
  * @param {OnMore} [props.renderMoreMenu] - Callback to render additional items in the more menu
  */
@@ -204,5 +216,5 @@ function IsolatedBlockEditor(props) {
 }
 
 export default withRegistryProvider(IsolatedBlockEditor);
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot };
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot };
 //# sourceMappingURL=index.js.map

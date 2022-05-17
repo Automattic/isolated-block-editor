@@ -10,6 +10,7 @@ import { store as interfaceStore } from '@wordpress/interface';
 const actions = {
   /**
    * Set whether the editor is ready for editing
+   *
    * @param {boolean} isReady
    */
   setReady(isReady) {
@@ -21,6 +22,7 @@ const actions = {
 
   /**
    * Set the current editor mode
+   *
    * @param {EditorMode} editorMode Editor mode
    */
   setEditorMode(editorMode) {
@@ -32,6 +34,7 @@ const actions = {
 
   /**
    * Set up the editor
+   *
    * @param {BlockEditorSettings} settings
    */
   setupEditor(settings) {
@@ -43,6 +46,7 @@ const actions = {
 
   /**
    * Set the current pattern name
+   *
    * @param {string} pattern Pattern name
    */
   setCurrentPattern(pattern) {
@@ -54,6 +58,7 @@ const actions = {
 
   /**
    * Mark the block inserter as open or closed
+   *
    * @param {boolean} isOpen
    */
   setIsInserterOpened(isOpen) {
@@ -65,6 +70,7 @@ const actions = {
 
   /**
    * Set the current device type
+   *
    * @param {string} deviceType 'Mobile', 'Desktop', or 'Tablet'
    */
   setDeviceType(deviceType) {
@@ -76,6 +82,7 @@ const actions = {
 
   /**
    * Mark this editor as in-use or not
+   *
    * @param {boolean} isEditing
    */
   setEditing(isEditing) {
@@ -87,6 +94,7 @@ const actions = {
 
   /**
    * Open the named sidebar
+   *
    * @param {string} name Name of sidebar section
    */
   *openGeneralSidebar(name) {
@@ -102,6 +110,7 @@ const actions = {
 
   /**
    * Set the status of the listview sidebar section
+   *
    * @param {boolean} isOpen
    */
   setIsListViewOpened(isOpen) {

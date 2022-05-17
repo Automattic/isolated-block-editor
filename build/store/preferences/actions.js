@@ -7,6 +7,7 @@ exports["default"] = void 0;
 var actions = {
   /**
    * Toggle the feature
+   *
    * @param {string} feature - Feature name
    */
   toggleFeature: function toggleFeature(feature) {

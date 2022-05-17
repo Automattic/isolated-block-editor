@@ -30,14 +30,18 @@ import getInitialEditorContent from './editor-content';
 
 /**
  * Get editor selection
+ *
  * @callback OnSelection
  */
 
 /**
  * Update callback
+ *
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
- * @param {object} [options]
+ * @param settings
+ * @param [loader]
+ * @param {Object} [options]
  */
 
 async function getInitialContent(settings, loader) {
@@ -51,13 +55,13 @@ async function getInitialContent(settings, loader) {
 /**
  * The editor itself, including toolbar
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {object[]} props.blocks
  * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
  * @param {OnUpdate} props.updateBlocksWithUndo - Callback to update blocks
  * @param {boolean} props.isEditing - Are we editing in this editor?
  * @param {EditorMode} props.editorMode - Visual or code?
- * @param {object} props.children - Child components
+ * @param {Object} props.children - Child components
  * @param {BlockEditorSettings} props.settings - Settings
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSelection} props.selection

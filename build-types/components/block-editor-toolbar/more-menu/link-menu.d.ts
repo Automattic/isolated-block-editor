@@ -4,7 +4,7 @@ export type BlockEditorSettings = import('../../../index').BlockEditorSettings;
 /**
  * Link menu
  *
- * @param {object} props - Component props
+ * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  */
 declare function LinkMenu({ settings }: {

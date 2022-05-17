@@ -4,96 +4,109 @@
 /** @typedef {import('./reducer').EditorState} EditorState */
 /**
  * Get current editor mode
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {EditorMode}
+ * @return {EditorMode}
  */
 export function getEditorMode(state: {
     editor: EditorState;
 }): EditorMode;
 /**
  * Get current editor settings
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {IsoSettings}
+ * @return {IsoSettings}
  */
 export function getEditorSettings(state: {
     editor: EditorState;
 }): IsoSettings;
 /**
  * Is the editor ready for use?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isEditorReady(state: {
     editor: EditorState;
 }): boolean;
 /**
  * Get current pattern name
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string|null}
+ * @return {string|null}
  */
 export function getCurrentPatternName(state: {
     editor: EditorState;
 }): string | null;
 /**
  * Get current pattern
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern|null}
+ * @return {Pattern|null}
  */
 export function getCurrentPattern(state: {
     editor: EditorState;
 }): Pattern | null;
 /**
  * Get all ignored content
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string[]}
+ * @return {string[]}
  */
 export function getIgnoredContent(state: {
     editor: EditorState;
 }): string[];
 /**
  * Get the pattern for a given name
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern|null}
+ * @param patternName
+ * @return {Pattern|null}
  */
 export function getNamedPattern(state: {
     editor: EditorState;
 }, patternName: any): Pattern | null;
 /**
  * Is the block inserter open?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isInserterOpened(state: {
     editor: EditorState;
 }): boolean;
 /**
  * Are we editing this editor?
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isEditing(state: {
     editor: EditorState;
 }): boolean;
 /**
  * Get all patterns
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {Pattern[]}
+ * @return {Pattern[]}
  */
 export function getPatterns(state: {
     editor: EditorState;
 }): Pattern[];
 /**
  * Determine if the list viewer is open
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isListViewOpened(state: {
     editor: EditorState;
 }): boolean;
 /**
  * Return current device type
+ *
  * @param {{editor: EditorState}} state - Current state
- * @returns {string}
+ * @return {string}
  */
 export function getPreviewDeviceType(state: {
     editor: EditorState;

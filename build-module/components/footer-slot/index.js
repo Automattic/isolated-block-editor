@@ -1,4 +1,8 @@
 import { createElement } from "@wordpress/element";
+
+/**
+ * WordPress dependencies
+ */
 import { createSlotFill } from '@wordpress/components';
 const {
   Fill,

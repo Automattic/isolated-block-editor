@@ -5,10 +5,11 @@ import { createElement } from "@wordpress/element";
  */
 import React from 'react';
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
 
 import PostTextEditor from './post-text-editor';
+import EditorHeading from '../editor-heading-slot';
 /**
  * This is a copy of packages/edit-post/src/components/text-editor/index.js
  *
@@ -21,7 +22,9 @@ function TextEditor(_ref) {
     className: "edit-post-text-editor"
   }, createElement("div", {
     className: "edit-post-text-editor__body"
-  }, createElement(PostTextEditor, null)));
+  }, createElement(EditorHeading.Slot, {
+    mode: "text"
+  }), createElement(PostTextEditor, null)));
 }
 
 export default TextEditor;
