@@ -21,7 +21,6 @@ import { useEffect, useRef } from '@wordpress/element';
  */
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
-import { setupUndoManager } from './yjs-undo';
 import { PeerRelativePosition, RelativePosition } from './algorithms/relative-position';
 
 const debug = require( 'debug' )( 'iso-editor:collab' );
@@ -70,13 +69,12 @@ async function initYDoc( { settings, registry } ) {
 	doc.onConnectionReady(
 		once( () => {
 			dispatch( 'isolated/editor' ).setYDoc( doc );
-			setupUndoManager( doc.getPostMap(), identity, registry );
 		} )
 	);
 
 	doc.onYDocTriggeredChange( ( changes ) => {
 		debug( 'changes triggered by ydoc, applying to editor state', changes );
-		dispatch( 'isolated/editor' ).updateBlocksWithUndo( changes.blocks, { isTriggeredByYDoc: true } );
+		dispatch( 'isolated/editor' ).updateBlocksWithoutUndo( changes.blocks, { isTriggeredByYDoc: true } );
 	} );
 
 	const { isFirstInChannel } = await transport.connect( {

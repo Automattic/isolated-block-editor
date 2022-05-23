@@ -1,14 +1,11 @@
 /**
- * External dependencies
- */
-import { ActionCreators } from 'redux-undo';
-
-/**
  * WordPress dependencies
  */
 import { createRegistryControl } from '@wordpress/data';
-
-const debugUndo = require( 'debug' )( 'iso-editor:collab:undo' );
+/**
+ * External dependencies
+ */
+import { ActionCreators } from 'redux-undo';
 
 // TODO: Unsolved problem
 /**
@@ -35,8 +32,7 @@ const getRichTextHint = ( registry ) => {
 const applyChangesToYDoc = createRegistryControl( ( registry ) => ( action ) => {
 	const doc = registry.select( 'isolated/editor' ).getYDoc();
 
-	// If the change is triggered locally from the editor (i.e. is neither a remote change nor an undo/redo),
-	// apply those changes to the Yjs doc.
+	// If the change is triggered locally apply those changes to the Yjs doc.
 	if ( doc && ! action.isTriggeredByYDoc ) {
 		doc.applyLocalChangesToYDoc(
 			{ blocks: action.blocks },
@@ -55,26 +51,26 @@ export default {
 	UPDATE_BLOCKS_WITHOUT_UNDO: applyChangesToYDoc,
 
 	[ ActionCreators.undo().type ]: createRegistryControl( ( registry ) => ( action ) => {
-		const undoManager = registry.select( 'isolated/editor' ).getUndoManager();
+		const pastBlocks = registry.select( 'isolated/editor' ).getPastBlocks();
+		const doc = registry.select( 'isolated/editor' ).getYDoc();
 
-		if ( ! undoManager ) {
-			return action;
+		if ( doc && pastBlocks ) {
+			doc.applyLocalChangesToYDoc( { blocks: pastBlocks } );
 		}
 
-		debugUndo( 'undo' );
-		undoManager.undo();
-		return undefined; // prevent default action
+		// Return action so that redux-undo undoes locally.
+		return action;
 	} ),
 
 	[ ActionCreators.redo().type ]: createRegistryControl( ( registry ) => ( action ) => {
-		const undoManager = registry.select( 'isolated/editor' ).getUndoManager();
+		const futureBlocks = registry.select( 'isolated/editor' ).getFutureBlocks();
+		const doc = registry.select( 'isolated/editor' ).getYDoc();
 
-		if ( ! undoManager ) {
-			return action;
+		if ( doc && futureBlocks ) {
+			doc.applyLocalChangesToYDoc( { blocks: futureBlocks } );
 		}
 
-		debugUndo( 'redo' );
-		registry.select( 'isolated/editor' ).getUndoManager().redo();
-		return undefined; // prevent default action
+		// Return action so that redux-undo re-does locally.
+		return action;
 	} ),
 };

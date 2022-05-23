@@ -4,10 +4,3 @@ export function setYDoc( doc ) {
 		doc,
 	};
 }
-
-export function setUndoManager( undoManager ) {
-	return {
-		type: 'SET_COLLAB_UNDO_MANAGER',
-		undoManager,
-	};
-}

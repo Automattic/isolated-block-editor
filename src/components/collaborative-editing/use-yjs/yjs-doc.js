@@ -41,8 +41,7 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 			relativePositionManager.self.setAbsolutePosition( doc );
 		}
 
-		const isLocalOrigin =
-			origin === identity || origin === `no-undo--${ identity }` || origin instanceof yjs.UndoManager;
+		const isLocalOrigin = origin === identity || origin === `no-undo--${ identity }`;
 
 		// Change should be broadcast to peers
 		if ( isLocalOrigin && state === 'on' ) {

@@ -62,5 +62,5 @@ export function getTransports( count ) {
  */
 export async function pauseTyping( screen ) {
 	screen.getAllByRole( 'document' ).forEach( ( el ) => el.blur() );
-	await waitFor( () => new Promise( ( resolve ) => setTimeout( resolve, 550 ) ) );
+	await waitFor( () => new Promise( ( resolve ) => setTimeout( resolve, 1500 ) ), { timeout: 2000 } );
 }
