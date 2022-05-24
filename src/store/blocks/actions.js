@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { ActionCreators, ActionTypes } from 'redux-undo';
+import { ActionCreators } from 'redux-undo';
 
 const actions = {
 	*undo() {
@@ -9,11 +9,6 @@ const actions = {
 	},
 	*redo() {
 		return yield ActionCreators.redo();
-	},
-	clearHisastory() {
-		return {
-			type: ActionTypes.CLEAR_HISTORY,
-		};
 	},
 	/**
 	 * Update blocks without undo history

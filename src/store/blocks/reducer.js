@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import undoable, { includeAction } from 'redux-undo';
+import undoable from 'redux-undo';
 
 const DEFAULT_STATE = {
 	editCount: 0,
@@ -9,8 +9,18 @@ const DEFAULT_STATE = {
 	blocks: null,
 };
 
+let initialized = false;
+
+const filter = ( action ) => {
+	if ( action.type === 'UPDATE_BLOCKS_WITHOUT_UNDO' && ! initialized ) {
+		initialized = true;
+		return true;
+	}
+
+	return action.type === 'UPDATE_BLOCKS_WITH_UNDO';
+};
+
 const reducer = ( state = DEFAULT_STATE, action ) => {
-	// console.log( 'DEBUG', action );
 	switch ( action.type ) {
 		case 'UPDATE_BLOCKS_WITHOUT_UNDO':
 			return {
@@ -33,5 +43,5 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 
 export default undoable( reducer, {
 	ignoreInitialState: true,
-	filter: includeAction( 'UPDATE_BLOCKS_WITH_UNDO' ),
+	filter,
 } );

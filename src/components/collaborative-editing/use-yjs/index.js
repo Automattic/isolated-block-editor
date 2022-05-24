@@ -43,7 +43,6 @@ async function initYDoc( { settings, registry } ) {
 	const identity = uuidv4();
 
 	debug( `initYDoc (identity: ${ identity })` );
-
 	const doc = createDocument( {
 		identity,
 		relativePositionManager: {

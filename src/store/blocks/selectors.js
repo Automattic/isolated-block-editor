@@ -10,7 +10,6 @@ import { getEditorMode } from '../editor/selectors';
  * @return {object[]} - Present blocks
  */
 export function getBlocks( state ) {
-	// console.log( 'DEBUG', state.blocks );
 	return state.blocks.present.blocks;
 }
 
