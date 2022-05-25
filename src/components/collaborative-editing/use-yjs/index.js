@@ -69,6 +69,7 @@ async function initYDoc( { settings, registry } ) {
 
 	doc.onConnectionReady(
 		once( () => {
+			debug( 'Connection ready. Setting up ydoc document and undo manager' );
 			dispatch( 'isolated/editor' ).setYDoc( doc );
 			setupUndoManager( doc.getPostMap(), identity, registry );
 		} )

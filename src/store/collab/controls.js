@@ -58,8 +58,10 @@ export default {
 		const undoManager = registry.select( 'isolated/editor' ).getUndoManager();
 
 		if ( ! undoManager ) {
+			debugUndo( 'Undoing from redux-undo state' );
 			return action;
 		}
+		debugUndo( 'Undoing from yjs undoManager' );
 
 		debugUndo( 'undo' );
 		undoManager.undo();
