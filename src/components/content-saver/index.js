@@ -30,8 +30,8 @@ function ContentSaver( props ) {
 
 	function saveBlocks() {
 		// Save the content in the format wanted by the user
-		onSaveBlocks && onSaveBlocks( blocks, ignoredContent );
-		onSaveContent && onSaveContent( serialize( blocks ) );
+		onSaveBlocks?.( blocks, ignoredContent );
+		onSaveContent?.( serialize( blocks ) );
 	}
 
 	useEffect( () => {
