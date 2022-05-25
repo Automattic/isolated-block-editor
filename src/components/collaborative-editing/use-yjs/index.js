@@ -3,7 +3,7 @@
  */
 import { createMutex } from 'lib0/mutex';
 import { v4 as uuidv4 } from 'uuid';
-import { noop, once, sample } from 'lodash';
+import { noop, sample } from 'lodash';
 
 /**
  * Internal dependencies
@@ -67,13 +67,9 @@ async function initYDoc( { settings, registry } ) {
 		},
 	} );
 
-	doc.onConnectionReady(
-		once( () => {
-			debug( 'Connection ready. Setting up ydoc document and undo manager' );
-			dispatch( 'isolated/editor' ).setYDoc( doc );
-			setupUndoManager( doc.getPostMap(), identity, registry );
-		} )
-	);
+	debug( 'Collab enabled. Setting up ydoc document and undo manager' );
+	dispatch( 'isolated/editor' ).setYDoc( doc );
+	setupUndoManager( doc.getPostMap(), identity, registry );
 
 	doc.onYDocTriggeredChange( ( changes ) => {
 		debug( 'changes triggered by ydoc, applying to editor state', changes );
