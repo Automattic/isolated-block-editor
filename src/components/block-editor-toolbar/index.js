@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { cog } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
@@ -31,9 +31,10 @@ import './style.scss';
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 const BlockEditorToolbar = ( props ) => {
+	const ref = useRef();
 	const { settings, editorMode, renderMoreMenu } = props;
 	const isHugeViewport = useViewportMatch( 'huge', '>=' );
-	const { inspector, documentInspector } = settings.iso?.toolbar || {};
+	const { inspector } = settings.iso?.toolbar || {};
 	const { moreMenu } = settings.iso || {};
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
 	const { openGeneralSidebar, closeGeneralSidebar } = useDispatch( 'isolated/editor' );
@@ -91,7 +92,11 @@ const BlockEditorToolbar = ( props ) => {
 					<HeaderToolbar settings={ settings } />
 				</div>
 
-				<div className="edit-post-header__settings">
+				<div
+					className="edit-post-header__settings"
+					// @ts-ignore
+					ref={ ref }
+				>
 					<ToolbarSlot.Slot />
 
 					{ inspector && (
@@ -106,7 +111,7 @@ const BlockEditorToolbar = ( props ) => {
 					) }
 
 					{ isEditorSidebarOpened && ! inspectorInSidebar && (
-						<Inspector documentInspector={ documentInspector } blockSelected={ isBlockSelected } />
+						<Inspector button={ ref } onToggle={ toggleSidebar } />
 					) }
 
 					{ moreMenu && (
