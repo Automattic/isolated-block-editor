@@ -50,8 +50,8 @@ const BlockEditorToolbar = ( props ) => {
 		[]
 	);
 
-	function toggleSidebar() {
-		if ( isEditorSidebarOpened ) {
+	function toggleSidebar( isOpen ) {
+		if ( ! isOpen ) {
 			closeGeneralSidebar();
 		} else {
 			openGeneralSidebar( hasBlockSelected ? 'edit-post/block' : 'edit-post/document' );
@@ -99,7 +99,7 @@ const BlockEditorToolbar = ( props ) => {
 						<Button
 							icon={ cog }
 							label={ __( 'Settings' ) }
-							onClick={ toggleSidebar }
+							onClick={ () => toggleSidebar( ! isEditorSidebarOpened ) }
 							isPressed={ isEditorSidebarOpened }
 							aria-expanded={ isEditorSidebarOpened }
 							disabled={ editorMode === 'text' }
