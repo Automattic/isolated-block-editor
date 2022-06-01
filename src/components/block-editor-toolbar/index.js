@@ -31,7 +31,7 @@ import './style.scss';
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 const BlockEditorToolbar = ( props ) => {
-	const ref = useRef();
+	const ref = useRef( null );
 	const { settings, editorMode, renderMoreMenu } = props;
 	const isHugeViewport = useViewportMatch( 'huge', '>=' );
 	const { inspector } = settings.iso?.toolbar || {};
@@ -92,11 +92,7 @@ const BlockEditorToolbar = ( props ) => {
 					<HeaderToolbar settings={ settings } />
 				</div>
 
-				<div
-					className="edit-post-header__settings"
-					// @ts-ignore
-					ref={ ref }
-				>
+				<div className="edit-post-header__settings" ref={ ref }>
 					<ToolbarSlot.Slot />
 
 					{ inspector && (
