@@ -56,7 +56,7 @@ import { createElement } from "@wordpress/element";
 var BlockEditorToolbar = function BlockEditorToolbar(props) {
   var _settings$iso, _settings$iso2, _settings$iso2$sideba;
 
-  var ref = (0, _element.useRef)();
+  var ref = (0, _element.useRef)(null);
   var settings = props.settings,
       editorMode = props.editorMode,
       renderMoreMenu = props.renderMoreMenu;
@@ -92,8 +92,8 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
       isInserterOpened = _useSelect.isInserterOpened,
       isEditing = _useSelect.isEditing;
 
-  function toggleSidebar() {
-    if (isEditorSidebarOpened) {
+  function toggleSidebar(isOpen) {
+    if (!isOpen) {
       closeGeneralSidebar();
     } else {
       openGeneralSidebar(hasBlockSelected ? 'edit-post/block' : 'edit-post/document');
@@ -135,13 +135,14 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
   }, createElement(_headerToolbar["default"], {
     settings: settings
   })), createElement("div", {
-    className: "edit-post-header__settings" // @ts-ignore
-    ,
+    className: "edit-post-header__settings",
     ref: ref
   }, createElement(_slot["default"].Slot, null), inspector && createElement(_components.Button, {
     icon: _icons.cog,
     label: (0, _i18n.__)('Settings'),
-    onClick: toggleSidebar,
+    onClick: function onClick() {
+      return toggleSidebar(!isEditorSidebarOpened);
+    },
     isPressed: isEditorSidebarOpened,
     "aria-expanded": isEditorSidebarOpened,
     disabled: editorMode === 'text'

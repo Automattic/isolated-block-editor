@@ -36,7 +36,7 @@ import './style.scss';
 const BlockEditorToolbar = props => {
   var _settings$iso, _settings$iso2, _settings$iso2$sideba;
 
-  const ref = useRef();
+  const ref = useRef(null);
   const {
     settings,
     editorMode,
@@ -71,8 +71,8 @@ const BlockEditorToolbar = props => {
     isInserterOpened: select('isolated/editor').isInserterOpened()
   }), []);
 
-  function toggleSidebar() {
-    if (isEditorSidebarOpened) {
+  function toggleSidebar(isOpen) {
+    if (!isOpen) {
       closeGeneralSidebar();
     } else {
       openGeneralSidebar(hasBlockSelected ? 'edit-post/block' : 'edit-post/document');
@@ -114,13 +114,12 @@ const BlockEditorToolbar = props => {
   }, createElement(HeaderToolbar, {
     settings: settings
   })), createElement("div", {
-    className: "edit-post-header__settings" // @ts-ignore
-    ,
+    className: "edit-post-header__settings",
     ref: ref
   }, createElement(ToolbarSlot.Slot, null), inspector && createElement(Button, {
     icon: cog,
     label: __('Settings'),
-    onClick: toggleSidebar,
+    onClick: () => toggleSidebar(!isEditorSidebarOpened),
     isPressed: isEditorSidebarOpened,
     "aria-expanded": isEditorSidebarOpened,
     disabled: editorMode === 'text'
