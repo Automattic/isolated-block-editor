@@ -11,10 +11,23 @@ import { Popover } from '@wordpress/components';
 
 import './style.scss';
 
-function Inspector(props) {
+function Inspector(_ref) {
+  let {
+    button,
+    onToggle
+  } = _ref;
+
+  function onOutside(ev) {
+    if (ev.target.closest('.block-editor-block-inspector') === null) {
+      onToggle();
+    }
+  }
+
   return createElement(Popover, {
-    position: "bottom",
-    className: "iso-inspector"
+    position: "bottom left",
+    className: "iso-inspector",
+    anchorRef: button,
+    onFocusOutside: onOutside
   }, createElement(ComplementaryArea.Slot, {
     scope: "isolated/editor"
   }));

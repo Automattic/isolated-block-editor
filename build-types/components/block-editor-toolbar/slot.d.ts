@@ -2,12 +2,12 @@ export default ToolbarSlot;
 /**
  * A Toolbar slot/fill
  *
- * @param {object} props Component props
- * @param {object} props.children Child components to insert in the toolbar slot
- * @returns object
+ * @param {Object} props Component props
+ * @param {Object} props.children Child components to insert in the toolbar slot
+ * @return object
  */
 declare function ToolbarSlot({ children }: {
-    children: object;
+    children: any;
 }): JSX.Element;
 declare namespace ToolbarSlot {
     function Slot(props: any): JSX.Element;

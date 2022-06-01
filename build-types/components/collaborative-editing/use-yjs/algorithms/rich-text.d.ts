@@ -2,13 +2,15 @@
  * Convert an array of Gutenberg RichText formats to an array of range-based Y.Text formats.
  *
  * @param {Object[]} formats
- * @returns {Object[]} Y.Text formats
+ * @return {Object[]} Y.Text formats
  */
 export function gutenFormatsToYFormats(formats: any[]): any[];
 /**
  * Converts registered formats back to their standard tag/attribute names.
  *
  * For example, `core/bold` will be converted back to `strong`.
+ *
+ * @param format
  */
 export function namedGutenFormatToStandardTags(format: any): {
     [x: number]: any;
@@ -26,7 +28,7 @@ export function applyHTMLDelta(htmlA: string, htmlB: string, richTextMap: import
  * Convert the RichText back from our Yjs representation to an HTML string.
  *
  * @param {import("yjs").Map} richTextMap
- * @returns {string}
+ * @return {string}
  */
 export function richTextMapToHTML(richTextMap: import("yjs").Map<any>): string;
 export namespace Y {

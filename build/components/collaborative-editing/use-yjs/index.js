@@ -108,6 +108,7 @@ function _initYDoc() {
               }
             });
             doc.onConnectionReady((0, _lodash.once)(function () {
+              debug('Connection ready. Setting up ydoc document and undo manager');
               dispatch('isolated/editor').setYDoc(doc);
               (0, _yjsUndo.setupUndoManager)(doc.getPostMap(), identity, registry);
             }));

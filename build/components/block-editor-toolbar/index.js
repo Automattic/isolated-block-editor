@@ -56,14 +56,14 @@ import { createElement } from "@wordpress/element";
 var BlockEditorToolbar = function BlockEditorToolbar(props) {
   var _settings$iso, _settings$iso2, _settings$iso2$sideba;
 
+  var ref = (0, _element.useRef)();
   var settings = props.settings,
       editorMode = props.editorMode,
       renderMoreMenu = props.renderMoreMenu;
   var isHugeViewport = (0, _compose.useViewportMatch)('huge', '>=');
 
   var _ref = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {},
-      inspector = _ref.inspector,
-      documentInspector = _ref.documentInspector;
+      inspector = _ref.inspector;
 
   var _ref2 = settings.iso || {},
       moreMenu = _ref2.moreMenu;
@@ -135,7 +135,9 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
   }, createElement(_headerToolbar["default"], {
     settings: settings
   })), createElement("div", {
-    className: "edit-post-header__settings"
+    className: "edit-post-header__settings" // @ts-ignore
+    ,
+    ref: ref
   }, createElement(_slot["default"].Slot, null), inspector && createElement(_components.Button, {
     icon: _icons.cog,
     label: (0, _i18n.__)('Settings'),
@@ -144,8 +146,8 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     "aria-expanded": isEditorSidebarOpened,
     disabled: editorMode === 'text'
   }), isEditorSidebarOpened && !inspectorInSidebar && createElement(_inspector["default"], {
-    documentInspector: documentInspector,
-    blockSelected: isBlockSelected
+    button: ref,
+    onToggle: toggleSidebar
   }), moreMenu && createElement(_moreMenu["default"], {
     settings: settings,
     onClick: function onClick() {

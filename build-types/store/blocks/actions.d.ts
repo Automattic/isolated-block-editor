@@ -6,26 +6,30 @@ declare namespace actions {
     function redo(): Generator<import("redux").Action<any>, any, unknown>;
     /**
      * Update blocks without undo history
+     *
      * @param {object[]} blocks
-     * @param {object} options
+     * @param {Object} options
      */
     function updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
+     *
      * @param {object[]} blocks
-     * @param {object} options
+     * @param {Object} options
      */
     function updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
+     *
      * @param {object[]} blocks
-     * @param {object} options
+     * @param {Object} options
      */
     function updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
+     *
      * @param {object[]} blocks
-     * @param {object} options
+     * @param {Object} options
      */
     function updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
 }
