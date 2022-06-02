@@ -71,9 +71,11 @@ var _default = (_UPDATE_BLOCKS_WITH_U = {
     var undoManager = registry.select('isolated/editor').getUndoManager();
 
     if (!undoManager) {
+      debugUndo('Undoing from redux-undo state');
       return action;
     }
 
+    debugUndo('Undoing from yjs undoManager');
     debugUndo('undo');
     undoManager.undo();
     return undefined; // prevent default action

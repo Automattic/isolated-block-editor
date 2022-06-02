@@ -1,9 +1,9 @@
 /**
  * Get the option value
  *
- * @param {object} state - Current state
+ * @param {Object} state - Current state
  * @param {string} option - Option name
- * @returns {boolean}
+ * @return {boolean}
  */
-export function isOptionActive(state: object, option: string): boolean;
+export function isOptionActive(state: any, option: string): boolean;
 //# sourceMappingURL=selectors.d.ts.map

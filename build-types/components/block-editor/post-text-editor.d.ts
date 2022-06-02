@@ -25,7 +25,7 @@ export class PostTextEditor extends Component<any, any, any> {
     state: {};
     render(): JSX.Element;
 }
-declare var _default: any;
+declare const _default: any;
 export default _default;
 import { Component } from "@wordpress/element/build-types/react";
 //# sourceMappingURL=post-text-editor.d.ts.map
