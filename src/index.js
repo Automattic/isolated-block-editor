@@ -83,7 +83,6 @@ import './style.scss';
  * @property {string[]} [disallowEmbed] - List of embed names to remove
  * @property {object[]} [customStores] - Array of custom stores
  * @property {boolean} [footer] - Show footer component
- * @property {history} [history] - Enable hisotry undo/redo functionality
  * @property {ToolbarSettings} [toolbar] - Toolbar settings
  * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
