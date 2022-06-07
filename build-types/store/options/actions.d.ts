@@ -2,6 +2,7 @@ export default actions;
 declare namespace actions {
     /**
      * Toggle the option
+     *
      * @param {string} option Option name
      */
     function toggleOption(option: string): {
@@ -10,6 +11,7 @@ declare namespace actions {
     };
     /**
      * Toggle the option
+     *
      * @param {string} option Option name
      */
     function toggleOption(option: string): {

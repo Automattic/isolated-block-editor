@@ -2,6 +2,7 @@ export default actions;
 declare namespace actions {
     /**
      * Toggle the feature
+     *
      * @param {string} feature - Feature name
      */
     function toggleFeature(feature: string): {
@@ -10,6 +11,7 @@ declare namespace actions {
     };
     /**
      * Toggle the feature
+     *
      * @param {string} feature - Feature name
      */
     function toggleFeature(feature: string): {

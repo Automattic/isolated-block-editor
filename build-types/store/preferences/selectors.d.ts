@@ -1,7 +1,8 @@
 /**
  * Is the feature active?
- * @param {object} state - Current state
+ *
+ * @param {Object} state - Current state
  * @param {string} feature - Feature name
  */
-export function isFeatureActive(state: object, feature: string): any;
+export function isFeatureActive(state: any, feature: string): any;
 //# sourceMappingURL=selectors.d.ts.map

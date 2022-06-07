@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { cog } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
@@ -35,9 +35,10 @@ import './style.scss';
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 const BlockEditorToolbar = ( props ) => {
-	const { settings, editorMode, renderMoreMenu, onUndo, onRedo } = props;
+	const ref = useRef( null );
+	const { settings, editorMode, renderMoreMenu } = props;
 	const isHugeViewport = useViewportMatch( 'huge', '>=' );
-	const { inspector, documentInspector } = settings.iso?.toolbar || {};
+	const { inspector } = settings.iso?.toolbar || {};
 	const { moreMenu } = settings.iso || {};
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
 	const { openGeneralSidebar, closeGeneralSidebar } = useDispatch( 'isolated/editor' );
@@ -53,8 +54,8 @@ const BlockEditorToolbar = ( props ) => {
 		[]
 	);
 
-	function toggleSidebar() {
-		if ( isEditorSidebarOpened ) {
+	function toggleSidebar( isOpen ) {
+		if ( ! isOpen ) {
 			closeGeneralSidebar();
 		} else {
 			openGeneralSidebar( hasBlockSelected ? 'edit-post/block' : 'edit-post/document' );
@@ -92,17 +93,17 @@ const BlockEditorToolbar = ( props ) => {
 		<div className="edit-post-editor-regions__header" role="region" tabIndex={ -1 }>
 			<div className="edit-post-header">
 				<div className="edit-post-header__toolbar">
-					<HeaderToolbar onUndo={ onUndo } onRedo={ onRedo } settings={ settings } />
+					<HeaderToolbar settings={ settings } />
 				</div>
 
-				<div className="edit-post-header__settings">
+				<div className="edit-post-header__settings" ref={ ref }>
 					<ToolbarSlot.Slot />
 
 					{ inspector && (
 						<Button
 							icon={ cog }
 							label={ __( 'Settings' ) }
-							onClick={ toggleSidebar }
+							onClick={ () => toggleSidebar( ! isEditorSidebarOpened ) }
 							isPressed={ isEditorSidebarOpened }
 							aria-expanded={ isEditorSidebarOpened }
 							disabled={ editorMode === 'text' }
@@ -110,7 +111,7 @@ const BlockEditorToolbar = ( props ) => {
 					) }
 
 					{ isEditorSidebarOpened && ! inspectorInSidebar && (
-						<Inspector documentInspector={ documentInspector } blockSelected={ isBlockSelected } />
+						<Inspector button={ ref } onToggle={ toggleSidebar } />
 					) }
 
 					{ moreMenu && (

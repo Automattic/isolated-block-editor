@@ -1,4 +1,4 @@
-declare var _default: any;
+declare const _default: any;
 export default _default;
 export type EditorMode = import('../../store/editor/reducer').EditorMode;
 export type BlockEditorSettings = import('../../index').BlockEditorSettings;

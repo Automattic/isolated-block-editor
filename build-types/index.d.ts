@@ -74,7 +74,7 @@
  */
 export function initializeEditor(): void;
 export function initializeIsoEditor(): void;
-declare var _default: import("react").ComponentType<{
+declare const _default: import("react").ComponentType<{
     onSaveBlocks?: OnSaveBlocks | undefined;
     onSaveContent?: OnSaveContent | undefined;
     onError: OnError;

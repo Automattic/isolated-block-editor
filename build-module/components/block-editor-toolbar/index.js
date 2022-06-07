@@ -3,7 +3,7 @@ import { createElement } from "@wordpress/element";
 /**
  * WordPress dependencies
  */
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { cog } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
@@ -36,6 +36,7 @@ import './style.scss';
 const BlockEditorToolbar = props => {
   var _settings$iso, _settings$iso2, _settings$iso2$sideba;
 
+  const ref = useRef(null);
   const {
     settings,
     editorMode,
@@ -43,8 +44,7 @@ const BlockEditorToolbar = props => {
   } = props;
   const isHugeViewport = useViewportMatch('huge', '>=');
   const {
-    inspector,
-    documentInspector
+    inspector
   } = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {};
   const {
     moreMenu
@@ -71,8 +71,8 @@ const BlockEditorToolbar = props => {
     isInserterOpened: select('isolated/editor').isInserterOpened()
   }), []);
 
-  function toggleSidebar() {
-    if (isEditorSidebarOpened) {
+  function toggleSidebar(isOpen) {
+    if (!isOpen) {
       closeGeneralSidebar();
     } else {
       openGeneralSidebar(hasBlockSelected ? 'edit-post/block' : 'edit-post/document');
@@ -114,17 +114,18 @@ const BlockEditorToolbar = props => {
   }, createElement(HeaderToolbar, {
     settings: settings
   })), createElement("div", {
-    className: "edit-post-header__settings"
+    className: "edit-post-header__settings",
+    ref: ref
   }, createElement(ToolbarSlot.Slot, null), inspector && createElement(Button, {
     icon: cog,
     label: __('Settings'),
-    onClick: toggleSidebar,
+    onClick: () => toggleSidebar(!isEditorSidebarOpened),
     isPressed: isEditorSidebarOpened,
     "aria-expanded": isEditorSidebarOpened,
     disabled: editorMode === 'text'
   }), isEditorSidebarOpened && !inspectorInSidebar && createElement(Inspector, {
-    documentInspector: documentInspector,
-    blockSelected: isBlockSelected
+    button: ref,
+    onToggle: toggleSidebar
   }), moreMenu && createElement(MoreMenu, {
     settings: settings,
     onClick: () => closeGeneralSidebar(),

@@ -1,1 +1,1 @@
-{"version":3,"file":"store-hot-swap.d.ts","sourceRoot":"","sources":["../../../src/store/plugins/store-hot-swap.js"],"names":[],"mappings":";AAAA;;;;;;;;;GASG;AACH,8CAHW,MAAM,iBACN,MAAM;;;EAsBhB;;;;IAKD,qDAGC;IAED,6BAGC"}
+{"version":3,"file":"store-hot-swap.d.ts","sourceRoot":"","sources":["../../../src/store/plugins/store-hot-swap.js"],"names":[],"mappings":";AAAA;;;;;;;;;GASG;AACH;;;EAoBC;;;;IAKD,qDAGC;IAED,6BAGC"}
