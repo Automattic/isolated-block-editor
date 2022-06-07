@@ -21,16 +21,12 @@ import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../index').OnMore} OnMore */
-/** @typedef {import('../../index').OnUndo} OnUndo */
-/** @typedef {import('../../index').OnRedo} OnRedo */
 
 /**
  * Block editor toolbar
  *
  * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
- * @param {OnUndo} props.onUndo - Undo callback
- * @param {OnRedo} props.onRedo - Redo callback
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
