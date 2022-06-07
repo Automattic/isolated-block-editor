@@ -39,6 +39,8 @@ import './style.scss';
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
+/** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
+/** @typedef {import('./components/block-editor-container').UndoManager} UndoManager */
 
 /**
  * Toolbar settings
@@ -81,6 +83,7 @@ import './style.scss';
  * @property {string[]} [disallowEmbed] - List of embed names to remove
  * @property {object[]} [customStores] - Array of custom stores
  * @property {boolean} [footer] - Show footer component
+ * @property {history} [history] - Enable hisotry undo/redo functionality
  * @property {ToolbarSettings} [toolbar] - Toolbar settings
  * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
@@ -201,6 +204,10 @@ export function initializeIsoEditor() {
  * @param {Object} [props.children] - Child content
  * @param {string} [props.className] - Additional class name
  * @param {OnMore} [props.renderMoreMenu] - Callback to render additional items in the more menu
+ * @param {UndoManager} [props.undoManager] - Undo manager
+ * @param {OnUpdate} [props.onInput] - Gutenberg's onInput callback
+ * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
+ * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
 function IsolatedBlockEditor( props ) {
 	const { children, onSaveContent, onSaveBlocks, settings, ...params } = props;

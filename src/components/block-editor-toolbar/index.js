@@ -21,17 +21,21 @@ import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../index').OnMore} OnMore */
+/** @typedef {import('../../index').OnUndo} OnUndo */
+/** @typedef {import('../../index').OnRedo} OnRedo */
 
 /**
  * Block editor toolbar
  *
  * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
+ * @param {OnUndo} props.onUndo - Undo callback
+ * @param {OnRedo} props.onRedo - Redo callback
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 const BlockEditorToolbar = ( props ) => {
-	const { settings, editorMode, renderMoreMenu } = props;
+	const { settings, editorMode, renderMoreMenu, onUndo, onRedo } = props;
 	const isHugeViewport = useViewportMatch( 'huge', '>=' );
 	const { inspector, documentInspector } = settings.iso?.toolbar || {};
 	const { moreMenu } = settings.iso || {};
@@ -88,7 +92,7 @@ const BlockEditorToolbar = ( props ) => {
 		<div className="edit-post-editor-regions__header" role="region" tabIndex={ -1 }>
 			<div className="edit-post-header">
 				<div className="edit-post-header__toolbar">
-					<HeaderToolbar settings={ settings } />
+					<HeaderToolbar onUndo={ onUndo } onRedo={ onRedo } settings={ settings } />
 				</div>
 
 				<div className="edit-post-header__settings">

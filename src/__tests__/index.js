@@ -44,4 +44,125 @@ describe( 'IsolatedBlockEditor', () => {
 		expect( onSave1 ).toHaveBeenLastCalledWith( '<!-- wp:paragraph -->\n<p>hello</p>\n<!-- /wp:paragraph -->' );
 		expect( onSave2 ).toHaveBeenLastCalledWith( '<!-- wp:paragraph -->\n<p>world</p>\n<!-- /wp:paragraph -->' );
 	} );
+
+	describe( 'Externally managed content', () => {
+		let onInputMock;
+		let onChangeMock;
+		let undoManager;
+
+		beforeEach( () => {
+			onInputMock = jest.fn();
+			onChangeMock = jest.fn();
+			undoManager = {
+				undo: jest.fn(),
+				redo: jest.fn(),
+				redoStack: [],
+				undoStack: [],
+			};
+		} );
+
+		it( 'should call onInput when content changes', () => {
+			render(
+				<IsolatedBlockEditor
+					blocks={ [] }
+					onInput={ onInputMock }
+					onChange={ onChangeMock }
+					undoManager={ undoManager }
+					settings={ {} }
+				/>
+			);
+
+			const input = screen.getByText( /^Start writing.+/ );
+			userEvent.click( input );
+			userEvent.keyboard( 'test' );
+
+			expect( onInputMock ).toHaveBeenCalledWith( expect.any( Array ), expect.any( Object ) );
+		} );
+
+		it( 'should call onChange when content changes', () => {
+			render(
+				<IsolatedBlockEditor
+					blocks={ [] }
+					onInput={ onInputMock }
+					onChange={ onChangeMock }
+					undoManager={ undoManager }
+					settings={ {} }
+				/>
+			);
+
+			const input = screen.getByText( /^Start writing.+/ );
+			userEvent.click( input );
+			userEvent.keyboard( 'test' );
+
+			expect( onChangeMock ).toHaveBeenCalledWith( expect.any( Array ), expect.any( Object ) );
+		} );
+
+		it( "should call undo when undoManager's undo is requested", async () => {
+			render(
+				<IsolatedBlockEditor
+					blocks={ [] }
+					onInput={ onInputMock }
+					onChange={ onChangeMock }
+					undoManager={ { ...undoManager, undoStack: [ {} ] } }
+					settings={ {} }
+				/>
+			);
+
+			const undo = screen.getByLabelText( 'Undo' );
+			userEvent.click( undo );
+
+			expect( undoManager.undo ).toHaveBeenCalled();
+		} );
+
+		it( "should not call undoManager's undo when undo is requested but there is no stack", async () => {
+			render(
+				<IsolatedBlockEditor
+					blocks={ [] }
+					onInput={ onInputMock }
+					onChange={ onChangeMock }
+					undoManager={ { ...undoManager, undoStack: [] } }
+					settings={ {} }
+				/>
+			);
+
+			const undo = screen.getByLabelText( 'Undo' );
+			userEvent.click( undo );
+
+			expect( undoManager.undo ).not.toHaveBeenCalled();
+		} );
+
+		it( "should call undoManager's redo when redo is requested", async () => {
+			render(
+				<IsolatedBlockEditor
+					blocks={ [] }
+					onInput={ onInputMock }
+					onChange={ onChangeMock }
+					undoManager={ { ...undoManager, redoStack: [ {} ] } }
+					settings={ {} }
+				/>
+			);
+
+			const redo = screen.getByLabelText( 'Redo' );
+			userEvent.click( redo );
+
+			expect( undoManager.redo ).toHaveBeenCalled();
+		} );
+
+		it( "should not call undoManager's redo when redo is requested but there is no stack", async () => {
+			render(
+				<IsolatedBlockEditor
+					blocks={ [] }
+					onInput={ onInputMock }
+					onChange={ onChangeMock }
+					undoManager={ { ...undoManager, redoStack: [] } }
+					settings={ {} }
+				/>
+			);
+
+			const redo = screen.getByLabelText( 'Redo' );
+			userEvent.click( redo );
+
+			expect( undoManager.redo ).not.toHaveBeenCalled();
+		} );
+	} );
 } );

@@ -3,6 +3,12 @@
  */
 import IsolatedBlockEditor, { DocumentSection } from '../src/index';
 
+/**
+ * WordPress dependencies
+ */
+import { registerCoreBlocks } from '@wordpress/block-library';
+import { useMemo, useEffect, useState } from '@wordpress/element';
+
 export default {
 	title: 'Isolated Block Editor',
 	component: IsolatedBlockEditor,
@@ -10,6 +16,62 @@ export default {
 
 export const Default = () => {
 	return <IsolatedBlockEditor settings={ {} } />;
+};
+
+export const Managed = ( { onInput, onChange, onUndo, onRedo } ) => {
+	const [ blocks, setBlocks ] = useState( [] );
+	const [ log, setLog ] = useState( [] );
+
+	useEffect( () => {
+		registerCoreBlocks();
+	}, [] );
+
+	const handleOnInput = ( newBlocks ) => {
+		onInput( newBlocks );
+		setBlocks( newBlocks );
+	};
+
+	const handleOnChange = ( newBlocks ) => {
+		onChange( newBlocks );
+		setBlocks( newBlocks );
+	};
+
+	const undoManager = useMemo( () => {
+		return {
+			undo: onUndo,
+			redo: onRedo,
+			undoStack: [ {} ],
+			redoStack: [ {} ],
+		};
+	}, [ onUndo, onRedo ] );
+
+	return (
+		<>
+			<IsolatedBlockEditor
+				blocks={ blocks }
+				onInput={ handleOnInput }
+				onChange={ handleOnChange }
+				undoManager={ undoManager }
+				settings={ {} }
+			/>
+			<div className="log">{ log.join( ',' ) }</div>
+		</>
+	);
+};
+
+Managed.args = {
+	inserter: true,
+	inspector: true,
+	navigation: true,
+	toc: true,
+	documentInspector: 'Document',
+};
+
+Managed.argTypes = {
+	onInput: { action: 'input' },
+	onChange: { action: 'change' },
+	onUndo: { action: 'undo' },
+	onRedo: { action: 'redo' },
 };
 
 export const ToolbarSettings = ( toolbarSettings ) => {
