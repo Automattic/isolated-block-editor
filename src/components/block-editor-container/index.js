@@ -7,11 +7,9 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { compose, useResizeObserver } from '@wordpress/compose';
 import { ErrorBoundary } from '@wordpress/editor';
-import { withDispatch, useDispatch, withSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { withDispatch, withSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -27,16 +25,6 @@ import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').OnLoad} OnLoad */
 /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
-
-/**
- * Undo Manager
- *
- * @typedef UndoManager
- * @property {Function} undo - Undo callback
- * @property {Function} redo - redoCallback
- * @property {Array} undoStack - Undo stack
- * @property {Array} redoStack - Redo stack
- */
 
 /**
  * Set editing callback
@@ -64,24 +52,12 @@ const SIZE_MEDIUM = 480;
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
  * @param {OnLoad} props.onLoad - Load initial blocks
- * @param {UndoManager} [props.undoManager] - Undo manager
  * @param {OnUpdate} [props.onInput] - Gutenberg's onInput callback
  * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
  * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
 function BlockEditorContainer( props ) {
-	const {
-		children,
-		settings,
-		className,
-		onError,
-		renderMoreMenu,
-		onLoad,
-		undoManager,
-		onInput,
-		onChange,
-		blocks,
-	} = props;
+	const { children, settings, className, onError, renderMoreMenu, onLoad, onInput, onChange, blocks } = props;
 	const { isEditorReady, editorMode, isEditing, setEditing, hasFixedToolbar, isPreview } = props;
 	const [ resizeListener, { width } ] = useResizeObserver();
 	const classes = classnames( className, {
@@ -101,12 +77,6 @@ function BlockEditorContainer( props ) {
 		[ 'is-mode-' + editorMode ]: true,
 		'is-preview-mode': isPreview,
 	} );
-
-	const { setUndoManager } = useDispatch( 'isolated/editor' );
-
-	useEffect( () => {
-		setUndoManager( undoManager );
-	}, [ undoManager ] );
 
 	return (
 		<div className={ classes }>

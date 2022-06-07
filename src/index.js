@@ -4,12 +4,12 @@
 
 import '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
-import { StrictMode } from '@wordpress/element';
+import { StrictMode, useEffect } from '@wordpress/element';
 import { SlotFillProvider } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { addFilter } from '@wordpress/hooks';
-import { use } from '@wordpress/data';
+import { use, useDispatch } from '@wordpress/data';
 import '@wordpress/format-library';
 import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
 
@@ -40,7 +40,16 @@ import './style.scss';
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
-/** @typedef {import('./components/block-editor-container').UndoManager} UndoManager */
+
+/**
+ * Undo Manager
+ *
+ * @typedef UndoManager
+ * @property {Function} undo - Undo callback
+ * @property {Function} redo - redoCallback
+ * @property {Array} undoStack - Undo stack
+ * @property {Array} redoStack - Redo stack
+ */
 
 /**
  * Toolbar settings
@@ -131,7 +140,13 @@ export function initializeEditor() {
 	window.isoInitialised = true;
 }
 
-export function initializeIsoEditor() {
+export function useInitializeIsoEditor( { undoManager } ) {
+	const { setUndoManager } = useDispatch( 'isolated/editor' );
+
+	useEffect( () => {
+		setUndoManager( undoManager );
+	}, [ undoManager ] );
+
 	if ( window.isoInitialisedBlocks ) {
 		return;
 	}
@@ -209,9 +224,9 @@ export function initializeIsoEditor() {
  * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
 function IsolatedBlockEditor( props ) {
-	const { children, onSaveContent, onSaveBlocks, settings, ...params } = props;
+	const { children, onSaveContent, onSaveBlocks, settings, undoManager, ...params } = props;
 
-	initializeIsoEditor();
+	useInitializeIsoEditor( { undoManager } );
 
 	return (
 		<StrictMode>
