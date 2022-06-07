@@ -6,8 +6,7 @@ import IsolatedBlockEditor, { DocumentSection } from '../src/index';
 /**
  * WordPress dependencies
  */
-import { registerCoreBlocks } from '@wordpress/block-library';
-import { useMemo, useEffect, useState } from '@wordpress/element';
+import { useMemo, useCallback, useState } from '@wordpress/element';
 
 export default {
 	title: 'Isolated Block Editor',
@@ -20,7 +19,6 @@ export const Default = () => {
 
 export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
 	const [ blocks, setBlocks ] = useState( [] );
-	const [ log, setLog ] = useState( [] );
 
 	const handleOnInput = ( newBlocks ) => {
 		onInput( newBlocks );
@@ -42,16 +40,13 @@ export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
 	}, [ onUndo, onRedo ] );
 
 	return (
-		<>
-			<IsolatedBlockEditor
-				blocks={ blocks }
-				onInput={ handleOnInput }
-				onChange={ handleOnChange }
-				undoManager={ undoManager }
-				settings={ {} }
-			/>
-			<div className="log">{ log.join( ',' ) }</div>
-		</>
+		<IsolatedBlockEditor
+			blocks={ blocks }
+			onInput={ handleOnInput }
+			onChange={ handleOnChange }
+			undoManager={ undoManager }
+			settings={ {} }
+		/>
 	);
 };
 
