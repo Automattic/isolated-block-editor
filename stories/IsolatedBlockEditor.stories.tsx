@@ -18,7 +18,7 @@ export const Default = () => {
 	return <IsolatedBlockEditor settings={ {} } />;
 };
 
-export const Managed = ( { onInput, onChange, onUndo, onRedo } ) => {
+export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
 	const [ blocks, setBlocks ] = useState( [] );
 	const [ log, setLog ] = useState( [] );
 
@@ -59,7 +59,7 @@ export const Managed = ( { onInput, onChange, onUndo, onRedo } ) => {
 	);
 };
 
-Managed.args = {
+Controlled.args = {
 	inserter: true,
 	inspector: true,
 	navigation: true,
@@ -67,7 +67,7 @@ Managed.args = {
 	documentInspector: 'Document',
 };
 
-Managed.argTypes = {
+Controlled.argTypes = {
 	onInput: { action: 'input' },
 	onChange: { action: 'change' },
 	onUndo: { action: 'undo' },
