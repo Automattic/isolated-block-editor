@@ -45,7 +45,7 @@ describe( 'IsolatedBlockEditor', () => {
 		expect( onSave2 ).toHaveBeenLastCalledWith( '<!-- wp:paragraph -->\n<p>world</p>\n<!-- /wp:paragraph -->' );
 	} );
 
-	describe( 'Externally managed content', () => {
+	describe( 'Externally controlled content', () => {
 		let onInputMock;
 		let onChangeMock;
 		let undoManager;
