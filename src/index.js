@@ -218,15 +218,25 @@ export function useInitializeIsoEditor( { undoManager } ) {
  * @param {Object} [props.children] - Child content
  * @param {string} [props.className] - Additional class name
  * @param {OnMore} [props.renderMoreMenu] - Callback to render additional items in the more menu
- * @param {UndoManager} [props.undoManager] - Undo manager
- * @param {OnUpdate} [props.onInput] - Gutenberg's onInput callback
- * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
- * @param {object[]} [props.blocks] - Gutenberg's blocks
+ * @param {UndoManager} [props.__experimentalUndoManager] - Undo manager
+ * @param {OnUpdate} [props.__experimentalOnInput] - Gutenberg's onInput callback
+ * @param {OnUpdate} [props.__experimentalOnChange] - Gutenberg's onChange callback
+ * @param {object[]} [props.__experimentalValue] - Gutenberg's value
  */
 function IsolatedBlockEditor( props ) {
-	const { children, onSaveContent, onSaveBlocks, settings, undoManager, ...params } = props;
+	const {
+		children,
+		onSaveContent,
+		onSaveBlocks,
+		settings,
+		__experimentalUndoManager,
+		__experimentalOnInput,
+		__experimentalOnChange,
+		__experimentalValue,
+		...params
+	} = props;
 
-	useInitializeIsoEditor( { undoManager } );
+	useInitializeIsoEditor( { undoManager: __experimentalUndoManager } );
 
 	return (
 		<StrictMode>
@@ -236,7 +246,13 @@ function IsolatedBlockEditor( props ) {
 				<PatternMonitor />
 
 				<SlotFillProvider>
-					<BlockEditorContainer { ...params } settings={ settings }>
+					<BlockEditorContainer
+						{ ...params }
+						onInput={ __experimentalOnInput }
+						onChange={ __experimentalOnChange }
+						blocks={ __experimentalValue }
+						settings={ settings }
+					>
 						{ children }
 					</BlockEditorContainer>
 				</SlotFillProvider>

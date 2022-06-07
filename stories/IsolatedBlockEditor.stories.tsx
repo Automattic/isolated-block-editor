@@ -41,10 +41,10 @@ export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
 
 	return (
 		<IsolatedBlockEditor
-			blocks={ blocks }
-			onInput={ handleOnInput }
-			onChange={ handleOnChange }
-			undoManager={ undoManager }
+			__experimentalValue={ blocks }
+			__experimentalOnInput={ handleOnInput }
+			__experimentalOnChange={ handleOnChange }
+			__experimentalUndoManager={ undoManager }
 			settings={ {} }
 		/>
 	);

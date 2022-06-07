@@ -64,10 +64,10 @@ describe( 'IsolatedBlockEditor', () => {
 		it( 'should call onInput when content changes', () => {
 			render(
 				<IsolatedBlockEditor
-					blocks={ [] }
-					onInput={ onInputMock }
-					onChange={ onChangeMock }
-					undoManager={ undoManager }
+					__experimentalValue={ [] }
+					__experimentalOnInput={ onInputMock }
+					__experimentalOnChange={ onChangeMock }
+					__experimentalUndoManager={ undoManager }
 					settings={ {} }
 				/>
 			);
@@ -82,10 +82,10 @@ describe( 'IsolatedBlockEditor', () => {
 		it( 'should call onChange when content changes', () => {
 			render(
 				<IsolatedBlockEditor
-					blocks={ [] }
-					onInput={ onInputMock }
-					onChange={ onChangeMock }
-					undoManager={ undoManager }
+					__experimentalValue={ [] }
+					__experimentalOnInput={ onInputMock }
+					__experimentalOnChange={ onChangeMock }
+					__experimentalUndoManager={ undoManager }
 					settings={ {} }
 				/>
 			);
@@ -100,10 +100,10 @@ describe( 'IsolatedBlockEditor', () => {
 		it( "should call undo when undoManager's undo is requested", async () => {
 			render(
 				<IsolatedBlockEditor
-					blocks={ [] }
-					onInput={ onInputMock }
-					onChange={ onChangeMock }
-					undoManager={ { ...undoManager, undoStack: [ {} ] } }
+					__experimentalValue={ [] }
+					__experimentalOnInput={ onInputMock }
+					__experimentalOnChange={ onChangeMock }
+					__experimentalUndoManager={ { ...undoManager, undoStack: [ {} ] } }
 					settings={ {} }
 				/>
 			);
@@ -117,10 +117,10 @@ describe( 'IsolatedBlockEditor', () => {
 		it( "should not call undoManager's undo when undo is requested but there is no stack", async () => {
 			render(
 				<IsolatedBlockEditor
-					blocks={ [] }
-					onInput={ onInputMock }
-					onChange={ onChangeMock }
-					undoManager={ { ...undoManager, undoStack: [] } }
+					__experimentalValue={ [] }
+					__experimentalOnInput={ onInputMock }
+					__experimentalOnChange={ onChangeMock }
+					__experimentalUndoManager={ { ...undoManager, undoStack: [] } }
 					settings={ {} }
 				/>
 			);
@@ -134,10 +134,10 @@ describe( 'IsolatedBlockEditor', () => {
 		it( "should call undoManager's redo when redo is requested", async () => {
 			render(
 				<IsolatedBlockEditor
-					blocks={ [] }
-					onInput={ onInputMock }
-					onChange={ onChangeMock }
-					undoManager={ { ...undoManager, redoStack: [ {} ] } }
+					__experimentalValue={ [] }
+					__experimentalOnInput={ onInputMock }
+					__experimentalOnChange={ onChangeMock }
+					__experimentalUndoManager={ { ...undoManager, redoStack: [ {} ] } }
 					settings={ {} }
 				/>
 			);
@@ -151,10 +151,10 @@ describe( 'IsolatedBlockEditor', () => {
 		it( "should not call undoManager's redo when redo is requested but there is no stack", async () => {
 			render(
 				<IsolatedBlockEditor
-					blocks={ [] }
-					onInput={ onInputMock }
-					onChange={ onChangeMock }
-					undoManager={ { ...undoManager, redoStack: [] } }
+					__experimentalValue={ [] }
+					__experimentalOnInput={ onInputMock }
+					__experimentalOnChange={ onChangeMock }
+					__experimentalUndoManager={ { ...undoManager, redoStack: [] } }
 					settings={ {} }
 				/>
 			);
