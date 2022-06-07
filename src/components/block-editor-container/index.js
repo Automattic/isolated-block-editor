@@ -10,8 +10,7 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { compose, useResizeObserver } from '@wordpress/compose';
 import { ErrorBoundary } from '@wordpress/editor';
-import { withDispatch, withSelect } from '@wordpress/data';
-import { useDispatch } from '@wordpress/data';
+import { withDispatch, useDispatch, withSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 /**
