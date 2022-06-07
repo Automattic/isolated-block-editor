@@ -22,10 +22,6 @@ export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
 	const [ blocks, setBlocks ] = useState( [] );
 	const [ log, setLog ] = useState( [] );
 
-	useEffect( () => {
-		registerCoreBlocks();
-	}, [] );
-
 	const handleOnInput = ( newBlocks ) => {
 		onInput( newBlocks );
 		setBlocks( newBlocks );
