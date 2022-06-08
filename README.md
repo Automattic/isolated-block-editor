@@ -272,7 +272,7 @@ An optional callback that will be passed down to the Gutenberg editor if provide
 
 #### __experimentalValue
 
-An optional value (blocks) for the editor to show. If provided, it will be passed down to the Gutenberg editor and override any internally managed blocks.This property is experimental and can change or be removed at any time.
+An optional value (blocks) for the editor to show. If provided, it will be used as the internal value/blocks to display.This property is experimental and can change or be removed at any time.
 
 #### onError
 
