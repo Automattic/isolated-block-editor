@@ -258,6 +258,22 @@ if you are using a template then it will appear in the `ignoredContent`, and you
 Load the initial content into the editor. This is a callback that runs after the editor has been created, and is supplied with a `parse` function that is specific to this editor instance. This should
 be used so that the appropriate blocks are available.
 
+#### __experimentalUndoManager
+
+An alternative history undo/redo manager to be used by the editor. The passed in object must contain an `undo` and a `redo` methods, as well as a `undoStack` and a `redoStack` array properties containing the corresponding history. If not provided, the default history management will be used. This property is experimental and can change or be removed at any time.
+
+#### __experimentalOnInput
+
+An optional callback that will be passed down to the Gutenberg editor if provided.This property is experimental and can change or be removed at any time.
+
+#### __experimentalOnChange
+
+An optional callback that will be passed down to the Gutenberg editor if provided.This property is experimental and can change or be removed at any time.
+
+#### __experimentalValue
+
+An optional value (blocks) for the editor to show. If provided, it will be passed down to the Gutenberg editor and override any internally managed blocks.This property is experimental and can change or be removed at any time.
+
 #### onError
 
 Callback if an error occurs.
