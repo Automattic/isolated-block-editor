@@ -139,8 +139,11 @@ export function initializeEditor() {
 
 	window.isoInitialised = true;
 }
-
-export function useInitializeIsoEditor( { undoManager } ) {
+/**
+ * @param {Object} props - Component props
+ * @param {UndoManager} [props.undoManager]
+ */
+export function useInitializeIsoEditor( { undoManager } = {} ) {
 	const { setUndoManager } = useDispatch( 'isolated/editor' );
 
 	useEffect( () => {

@@ -113,12 +113,11 @@ function BlockEditorContents( props ) {
 }
 
 export default compose( [
-	withSelect( ( select, ownProps ) => {
+	withSelect( ( select ) => {
 		const { getBlocks, getEditorSelection, getEditorMode, isEditing } = select( 'isolated/editor' );
-		const { blocks } = ownProps;
 
 		return {
-			blocks: blocks ?? getBlocks(),
+			blocks: getBlocks(),
 			selection: getEditorSelection(),
 			isEditing: isEditing(),
 			editorMode: getEditorMode(),
