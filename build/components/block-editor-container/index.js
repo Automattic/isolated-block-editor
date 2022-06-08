@@ -13,13 +13,13 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _classnames2 = _interopRequireDefault(require("classnames"));
 
-var _i18n = require("@wordpress/i18n");
-
 var _compose = require("@wordpress/compose");
 
 var _editor = require("@wordpress/editor");
 
 var _data = require("@wordpress/data");
+
+var _element = require("@wordpress/element");
 
 var _clickOutside = _interopRequireDefault(require("./click-outside"));
 
@@ -53,6 +53,8 @@ import { createElement } from "@wordpress/element";
 
 /** @typedef {import('../../index').OnLoad} OnLoad */
 
+/** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
+
 /**
  * Set editing callback
  *
@@ -77,6 +79,10 @@ var SIZE_MEDIUM = 480;
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
  * @param {OnLoad} props.onLoad - Load initial blocks
+ * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
+ * @param {OnUpdate} [props.onInput] - Gutenberg's onInput callback
+ * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
+ * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
 
 function BlockEditorContainer(props) {
@@ -87,7 +93,11 @@ function BlockEditorContainer(props) {
       className = props.className,
       onError = props.onError,
       renderMoreMenu = props.renderMoreMenu,
-      onLoad = props.onLoad;
+      onLoad = props.onLoad,
+      onInput = props.onInput,
+      onChange = props.onChange,
+      blocks = props.blocks,
+      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo;
   var isEditorReady = props.isEditorReady,
       editorMode = props.editorMode,
       isEditing = props.isEditing,
@@ -112,6 +122,12 @@ function BlockEditorContainer(props) {
     'edit-post-layout': true,
     'has-fixed-toolbar': hasFixedToolbar
   }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
+  (0, _element.useEffect)(function () {
+    // If blocks are externally provided, update the internal state
+    if (blocks) {
+      updateBlocksWithoutUndo(blocks, {});
+    }
+  }, [blocks]);
   return createElement("div", {
     className: classes
   }, createElement(_editor.ErrorBoundary, {
@@ -126,7 +142,9 @@ function BlockEditorContainer(props) {
   }, createElement(_blockEditorContents["default"], {
     settings: settings,
     renderMoreMenu: renderMoreMenu,
-    onLoad: onLoad
+    onLoad: onLoad,
+    onInput: onInput,
+    onChange: onChange
   }, children))));
 }
 
@@ -147,10 +165,12 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   };
 }), (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),
-      setEditing = _dispatch.setEditing;
+      setEditing = _dispatch.setEditing,
+      updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
 
   return {
-    setEditing: setEditing
+    setEditing: setEditing,
+    updateBlocksWithoutUndo: updateBlocksWithoutUndo
   };
 })])(BlockEditorContainer);
 

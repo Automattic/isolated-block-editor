@@ -43,7 +43,7 @@ Object.defineProperty(exports, "ToolbarSlot", {
 });
 exports["default"] = void 0;
 exports.initializeEditor = initializeEditor;
-exports.initializeIsoEditor = initializeIsoEditor;
+exports.useInitializeIsoEditor = useInitializeIsoEditor;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
@@ -99,12 +99,24 @@ require("./store/edit-post");
 
 require("./style.scss");
 
-var _excluded = ["children", "onSaveContent", "onSaveBlocks", "settings"];
+var _excluded = ["children", "onSaveContent", "onSaveBlocks", "settings", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue"];
 import { createElement } from "@wordpress/element";
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
+
+/** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
+
+/**
+ * Undo Manager
+ *
+ * @typedef UndoManager
+ * @property {Function} undo - Undo callback
+ * @property {Function} redo - redoCallback
+ * @property {Array} undoStack - Undo stack
+ * @property {Array} redoStack - Redo stack
+ */
 
 /**
  * Toolbar settings
@@ -193,8 +205,23 @@ function initializeEditor() {
   (0, _blockLibrary.registerCoreBlocks)();
   window.isoInitialised = true;
 }
+/**
+ * @param {Object} props - Component props
+ * @param {UndoManager} [props.undoManager]
+ */
 
-function initializeIsoEditor() {
+
+function useInitializeIsoEditor() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      undoManager = _ref.undoManager;
+
+  var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
+      setUndoManager = _useDispatch.setUndoManager;
+
+  (0, _element.useEffect)(function () {
+    setUndoManager(undoManager);
+  }, [undoManager]);
+
   if (window.isoInitialisedBlocks) {
     return;
   }
@@ -263,6 +290,10 @@ function initializeIsoEditor() {
  * @param {Object} [props.children] - Child content
  * @param {string} [props.className] - Additional class name
  * @param {OnMore} [props.renderMoreMenu] - Callback to render additional items in the more menu
+ * @param {UndoManager} [props.__experimentalUndoManager] - Undo manager
+ * @param {OnUpdate} [props.__experimentalOnInput] - Gutenberg's onInput callback
+ * @param {OnUpdate} [props.__experimentalOnChange] - Gutenberg's onChange callback
+ * @param {object[]} [props.__experimentalValue] - Gutenberg's value
  */
 
 
@@ -271,14 +302,23 @@ function IsolatedBlockEditor(props) {
       onSaveContent = props.onSaveContent,
       onSaveBlocks = props.onSaveBlocks,
       settings = props.settings,
+      __experimentalUndoManager = props.__experimentalUndoManager,
+      __experimentalOnInput = props.__experimentalOnInput,
+      __experimentalOnChange = props.__experimentalOnChange,
+      __experimentalValue = props.__experimentalValue,
       params = (0, _objectWithoutProperties2["default"])(props, _excluded);
-  initializeIsoEditor();
+  useInitializeIsoEditor({
+    undoManager: __experimentalUndoManager
+  });
   return createElement(_element.StrictMode, null, createElement(_keyboardShortcuts.ShortcutProvider, null, createElement(_contentSaver["default"], {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
   }), createElement(_editorSetup["default"], {
     settings: settings
   }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], (0, _extends2["default"])({}, params, {
+    onInput: __experimentalOnInput,
+    onChange: __experimentalOnChange,
+    blocks: __experimentalValue,
     settings: settings
   }), children))));
 }

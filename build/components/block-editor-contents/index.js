@@ -74,8 +74,8 @@ function getInitialContent(_x, _x2) {
  *
  * @param {Object} props - Component props
  * @param {object[]} props.blocks
- * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
- * @param {OnUpdate} props.updateBlocksWithUndo - Callback to update blocks
+ * @param {OnUpdate} props.onInput - Callback to update blocks
+ * @param {OnUpdate} props.onChange - Callback to update blocks
  * @param {boolean} props.isEditing - Are we editing in this editor?
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {Object} props.children - Child components
@@ -112,8 +112,8 @@ function _getInitialContent() {
 
 function BlockEditorContents(props) {
   var blocks = props.blocks,
-      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo,
-      updateBlocksWithUndo = props.updateBlocksWithUndo,
+      onInput = props.onInput,
+      onChange = props.onChange,
       selection = props.selection,
       isEditing = props.isEditing,
       editorMode = props.editorMode;
@@ -137,7 +137,7 @@ function BlockEditorContents(props) {
                 initialContent = _context.sent;
 
                 if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
-                  updateBlocksWithoutUndo(initialContent, {
+                  onInput(initialContent, {
                     isInitialContent: true
                   });
                 }
@@ -159,8 +159,8 @@ function BlockEditorContents(props) {
   }, []);
   return createElement(_blockEditor.BlockEditorProvider, {
     value: blocks || [],
-    onInput: updateBlocksWithoutUndo,
-    onChange: updateBlocksWithUndo,
+    onInput: onInput,
+    onChange: onChange,
     useSubRegistry: false,
     selection: selection,
     settings: settings.editor
@@ -185,14 +185,16 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     isEditing: isEditing(),
     editorMode: getEditorMode()
   };
-}), (0, _data.withDispatch)(function (dispatch) {
+}), (0, _data.withDispatch)(function (dispatch, ownProps) {
   var _dispatch = dispatch('isolated/editor'),
       updateBlocksWithUndo = _dispatch.updateBlocksWithUndo,
       updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
 
+  var onInput = ownProps.onInput,
+      onChange = ownProps.onChange;
   return {
-    updateBlocksWithUndo: updateBlocksWithUndo,
-    updateBlocksWithoutUndo: updateBlocksWithoutUndo
+    onChange: onChange !== null && onChange !== void 0 ? onChange : updateBlocksWithUndo,
+    onInput: onInput !== null && onInput !== void 0 ? onInput : updateBlocksWithoutUndo
   };
 })])(BlockEditorContents);
 
