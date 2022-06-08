@@ -3,6 +3,11 @@
  */
 import IsolatedBlockEditor, { DocumentSection } from '../src/index';
 
+/**
+ * WordPress dependencies
+ */
+import { useMemo, useCallback, useState } from '@wordpress/element';
+
 export default {
 	title: 'Isolated Block Editor',
 	component: IsolatedBlockEditor,
@@ -10,6 +15,54 @@ export default {
 
 export const Default = () => {
 	return <IsolatedBlockEditor settings={ {} } />;
+};
+
+export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
+	const [ blocks, setBlocks ] = useState( [] );
+
+	const handleOnInput = ( newBlocks ) => {
+		onInput( newBlocks );
+		setBlocks( newBlocks );
+	};
+
+	const handleOnChange = ( newBlocks ) => {
+		onChange( newBlocks );
+		setBlocks( newBlocks );
+	};
+
+	const undoManager = useMemo( () => {
+		return {
+			undo: onUndo,
+			redo: onRedo,
+			undoStack: [ {} ],
+			redoStack: [ {} ],
+		};
+	}, [ onUndo, onRedo ] );
+
+	return (
+		<IsolatedBlockEditor
+			__experimentalValue={ blocks }
+			__experimentalOnInput={ handleOnInput }
+			__experimentalOnChange={ handleOnChange }
+			__experimentalUndoManager={ undoManager }
+			settings={ {} }
+		/>
+	);
+};
+
+Controlled.args = {
+	inserter: true,
+	inspector: true,
+	navigation: true,
+	toc: true,
+	documentInspector: 'Document',
+};
+
+Controlled.argTypes = {
+	onInput: { action: 'input' },
+	onChange: { action: 'change' },
+	onUndo: { action: 'undo' },
+	onRedo: { action: 'redo' },
 };
 
 export const ToolbarSettings = ( toolbarSettings ) => {
