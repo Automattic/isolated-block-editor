@@ -10,7 +10,6 @@ import classnames from 'classnames';
 import { compose, useResizeObserver } from '@wordpress/compose';
 import { ErrorBoundary } from '@wordpress/editor';
 import { withDispatch, withSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
