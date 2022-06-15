@@ -18,6 +18,7 @@ import { parse, rawHandler } from '@wordpress/blocks';
 import { BlockEditorProvider } from '@wordpress/block-editor';
 import BlockEditor from '../block-editor';
 import getInitialEditorContent from './editor-content';
+import getEditorSettings from '../editor-setup';
 
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
@@ -96,7 +97,7 @@ function BlockEditorContents( props ) {
 			onChange={ onChange }
 			useSubRegistry={ false }
 			selection={ selection }
-			settings={ settings.editor }
+			settings={ getEditorSettings( settings.editor ) }
 		>
 			<BlockEditor
 				isEditing={ isEditing }
