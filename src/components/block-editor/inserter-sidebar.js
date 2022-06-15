@@ -15,6 +15,7 @@ export default function InserterSidebar() {
 	// @ts-ignore
 	const [ inserterDialogRef, inserterDialogProps ] = useDialog( {
 		onClose: () => setIsInserterOpened( false ),
+		// @ts-ignore copied from Gutenberg
 		focusOnMount: null,
 	} );
 
