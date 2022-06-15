@@ -125,16 +125,20 @@ function BlockEditor( props ) {
 
 	// For back-compat with older iso-editor
 	useEffect( () => {
+		const html = document.querySelector( 'html' );
+
 		if ( isFullscreenActive ) {
 			// @ts-ignore
-			document.querySelector( 'html' ).classList.add( 'is-fullscreen-mode' );
+			html.classList.add( 'is-fullscreen-mode' );
 		} else {
 			// @ts-ignore
-			document.querySelector( 'html' ).classList.remove( 'is-fullscreen-mode' );
+			html.classList.remove( 'is-fullscreen-mode' );
 		}
 
 		return () => {
-			document.querySelector( 'html' ).classList.remove( 'is-fullscreen-mode' );
+			if ( html ) {
+				html.classList.remove( 'is-fullscreen-mode' );
+			}
 		};
 	}, [ isFullscreenActive ] );
 
