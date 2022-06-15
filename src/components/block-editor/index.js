@@ -132,6 +132,10 @@ function BlockEditor( props ) {
 			// @ts-ignore
 			document.querySelector( 'html' ).classList.remove( 'is-fullscreen-mode' );
 		}
+
+		return () => {
+			document.querySelector( 'html' ).classList.remove( 'is-fullscreen-mode' );
+		};
 	}, [ isFullscreenActive ] );
 
 	return (
