@@ -1,4 +1,4 @@
-declare const _default: {
+declare var _default: {
     [x: number]: any;
     UPDATE_BLOCKS_WITH_UNDO: any;
     UPDATE_BLOCKS_WITHOUT_UNDO: any;

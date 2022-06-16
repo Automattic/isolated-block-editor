@@ -172,7 +172,9 @@ function BlockEditorContents(props) {
   }, children), createElement(_components.Popover.Slot, null));
 }
 
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, ownProps) {
+  var _ownProps$blocks;
+
   var _select = select('isolated/editor'),
       getBlocks = _select.getBlocks,
       getEditorSelection = _select.getEditorSelection,
@@ -180,7 +182,7 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
       isEditing = _select.isEditing;
 
   return {
-    blocks: getBlocks(),
+    blocks: (_ownProps$blocks = ownProps.blocks) !== null && _ownProps$blocks !== void 0 ? _ownProps$blocks : getBlocks(),
     selection: getEditorSelection(),
     isEditing: isEditing(),
     editorMode: getEditorMode()
@@ -190,11 +192,25 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
       updateBlocksWithUndo = _dispatch.updateBlocksWithUndo,
       updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
 
-  var onInput = ownProps.onInput,
-      onChange = ownProps.onChange;
+  var _onInput = ownProps.onInput,
+      _onChange = ownProps.onChange;
   return {
-    onChange: onChange !== null && onChange !== void 0 ? onChange : updateBlocksWithUndo,
-    onInput: onInput !== null && onInput !== void 0 ? onInput : updateBlocksWithoutUndo
+    onChange: function onChange() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _onChange === null || _onChange === void 0 ? void 0 : _onChange.apply(void 0, args);
+      updateBlocksWithUndo.apply(void 0, args);
+    },
+    onInput: function onInput() {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      _onInput === null || _onInput === void 0 ? void 0 : _onInput.apply(void 0, args);
+      updateBlocksWithoutUndo.apply(void 0, args);
+    }
   };
 })])(BlockEditorContents);
 

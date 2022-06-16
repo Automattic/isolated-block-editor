@@ -173,13 +173,21 @@ function BlockEditor(props) {
 
 
   (0, _element.useEffect)(function () {
+    var html = document.querySelector('html');
+
     if (isFullscreenActive) {
       // @ts-ignore
-      document.querySelector('html').classList.add('is-fullscreen-mode');
+      html.classList.add('is-fullscreen-mode');
     } else {
       // @ts-ignore
-      document.querySelector('html').classList.remove('is-fullscreen-mode');
+      html.classList.remove('is-fullscreen-mode');
     }
+
+    return function () {
+      if (html) {
+        html.classList.remove('is-fullscreen-mode');
+      }
+    };
   }, [isFullscreenActive]);
   return createElement(Fragment, null, createElement(_sidebar["default"], {
     documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : (_settings$iso4$toolba = _settings$iso4.toolbar) === null || _settings$iso4$toolba === void 0 ? void 0 : _settings$iso4$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false

@@ -19,8 +19,6 @@ var _editor = require("@wordpress/editor");
 
 var _data = require("@wordpress/data");
 
-var _element = require("@wordpress/element");
-
 var _clickOutside = _interopRequireDefault(require("./click-outside"));
 
 var _blockEditorContents = _interopRequireDefault(require("../block-editor-contents"));
@@ -79,7 +77,6 @@ var SIZE_MEDIUM = 480;
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
  * @param {OnLoad} props.onLoad - Load initial blocks
- * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
  * @param {OnUpdate} [props.onInput] - Gutenberg's onInput callback
  * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
  * @param {object[]} [props.blocks] - Gutenberg's blocks
@@ -96,8 +93,7 @@ function BlockEditorContainer(props) {
       onLoad = props.onLoad,
       onInput = props.onInput,
       onChange = props.onChange,
-      blocks = props.blocks,
-      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo;
+      blocks = props.blocks;
   var isEditorReady = props.isEditorReady,
       editorMode = props.editorMode,
       isEditing = props.isEditing,
@@ -122,12 +118,6 @@ function BlockEditorContainer(props) {
     'edit-post-layout': true,
     'has-fixed-toolbar': hasFixedToolbar
   }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
-  (0, _element.useEffect)(function () {
-    // If blocks are externally provided, update the internal state
-    if (blocks) {
-      updateBlocksWithoutUndo(blocks, {});
-    }
-  }, [blocks]);
   return createElement("div", {
     className: classes
   }, createElement(_editor.ErrorBoundary, {
@@ -140,6 +130,7 @@ function BlockEditorContainer(props) {
       return !isEditing && setEditing(true);
     }
   }, createElement(_blockEditorContents["default"], {
+    blocks: blocks,
     settings: settings,
     renderMoreMenu: renderMoreMenu,
     onLoad: onLoad,
@@ -165,12 +156,10 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   };
 }), (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),
-      setEditing = _dispatch.setEditing,
-      updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
+      setEditing = _dispatch.setEditing;
 
   return {
-    setEditing: setEditing,
-    updateBlocksWithoutUndo: updateBlocksWithoutUndo
+    setEditing: setEditing
   };
 })])(BlockEditorContainer);
 

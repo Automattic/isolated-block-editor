@@ -1,5 +1,15 @@
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
+/** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
+/**
+ * Undo Manager
+ *
+ * @typedef UndoManager
+ * @property {Function} undo - Undo callback
+ * @property {Function} redo - redoCallback
+ * @property {Array} undoStack - Undo stack
+ * @property {Array} redoStack - Redo stack
+ */
 /**
  * Toolbar settings
  *
@@ -73,8 +83,14 @@
  * Initialize Gutenberg
  */
 export function initializeEditor(): void;
-export function initializeIsoEditor(): void;
-declare const _default: import("react").ComponentType<{
+/**
+ * @param {Object} props - Component props
+ * @param {UndoManager} [props.undoManager]
+ */
+export function useInitializeIsoEditor({ undoManager }?: {
+    undoManager?: UndoManager | undefined;
+}): void;
+declare var _default: import("react").ComponentType<{
     onSaveBlocks?: OnSaveBlocks | undefined;
     onSaveContent?: OnSaveContent | undefined;
     onError: OnError;
@@ -83,10 +99,36 @@ declare const _default: import("react").ComponentType<{
     children?: any;
     className?: string | undefined;
     renderMoreMenu?: import("./components/block-editor-toolbar/more-menu").OnMore | undefined;
+    __experimentalUndoManager?: UndoManager | undefined;
+    __experimentalOnInput?: import("./components/block-editor-contents/index").OnUpdate | undefined;
+    __experimentalOnChange?: import("./components/block-editor-contents/index").OnUpdate | undefined;
+    __experimentalValue?: any[] | undefined;
 }>;
 export default _default;
 export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
 export type Pattern = import('./store/editor/reducer').Pattern;
+export type OnUpdate = import('./components/block-editor-contents/index').OnUpdate;
+/**
+ * Undo Manager
+ */
+export type UndoManager = {
+    /**
+     * - Undo callback
+     */
+    undo: Function;
+    /**
+     * - redoCallback
+     */
+    redo: Function;
+    /**
+     * - Undo stack
+     */
+    undoStack: any[];
+    /**
+     * - Redo stack
+     */
+    redoStack: any[];
+};
 /**
  * Toolbar settings
  */
