@@ -14,7 +14,7 @@
 		"url": "https://github.com/Automattic/isolated-block-editor/issues"
 	},
 	"engines": {
-		"node": ">=12"
+		"node": ">=14"
 	},
 	"scripts": {
 		"start": "BUILD_ENV=es6 babel src --out-dir build-module --source-maps --ignore 'src/**/__tests__/*.js' --copy-files --no-copy-ignored --watch",
