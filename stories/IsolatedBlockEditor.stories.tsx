@@ -17,7 +17,7 @@ export const Default = () => {
 	return <IsolatedBlockEditor settings={ {} } />;
 };
 
-export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
+export const Controlled = ( { onInput, onChange, onUndo, onRedo, onSelection } ) => {
 	const [ blocks, setBlocks ] = useState( [] );
 
 	const handleOnInput = ( newBlocks ) => {
@@ -41,6 +41,7 @@ export const Controlled = ( { onInput, onChange, onUndo, onRedo } ) => {
 
 	return (
 		<IsolatedBlockEditor
+			__experimentalOnSelection={ onSelection }
 			__experimentalValue={ blocks }
 			__experimentalOnInput={ handleOnInput }
 			__experimentalOnChange={ handleOnChange }
@@ -63,6 +64,7 @@ Controlled.argTypes = {
 	onChange: { action: 'change' },
 	onUndo: { action: 'undo' },
 	onRedo: { action: 'redo' },
+	onSelection: { action: 'selection' },
 };
 
 export const ToolbarSettings = ( toolbarSettings ) => {

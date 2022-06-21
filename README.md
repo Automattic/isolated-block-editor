@@ -3,6 +3,7 @@
 Repackages Gutenberg's editor playground as a full-featured multi-instance editor that does not require WordPress.
 
 The key features are:
+
 - Extends the Gutenberg playground editor to match a full editor
 - Allows multiple onscreen instances with seperate data stores and keyboard handlers
 - Undo history
@@ -26,6 +27,7 @@ And a full list of features:
 - Re-routing of WordPress API requests
 
 The Isolated Block Editor is provided in three forms:
+
 - ES6 module
 - CommonJS module
 - Standalone JavaScript file, for inclusion on any browser page
@@ -33,6 +35,7 @@ The Isolated Block Editor is provided in three forms:
 Requires: Gutenberg 13.3.0
 
 Examples:
+
 - [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/blob/trunk/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor
 - [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
 - [Gutenberg Chrome Extension](https://github.com/Automattic/gutenberg-everywhere-chrome/) - a Chrome extension that allows Gutenberg to be used on any page
@@ -65,7 +68,7 @@ They key difference is in the Webpack config. If you don't want to bundle Gutenb
 
 ```js
 plugins: [
-	new DependencyExtractionWebpackPlugin( { injectPolyfill: true } )
+ new DependencyExtractionWebpackPlugin( { injectPolyfill: true } )
 ]
 ```
 
@@ -87,11 +90,11 @@ You can use the provided `isolated-block-editor.js`, `core.css`, and `isolated-b
 <link rel="stylesheet" href="isolated-block-editor.css" />
 
 <body>
-	<textarea id="editor" />
+ <textarea id="editor" />
 
-	<script>
-		wp.attachEditor( document.getElementById( 'editor' ) );
-	</script>
+ <script>
+  wp.attachEditor( document.getElementById( 'editor' ) );
+ </script>
 </body>
 
 ```
@@ -135,6 +138,7 @@ The module is currently only available on Github and can be added with:
 ## Future
 
 The code here deals with two kinds of problems:
+
 - Adding features to the Gutenberg playground - these are already provided by Gutenberg, but are packaged up here for you
 - Adding workarounds to Gutenberg - these are situations where Gutenberg doesn't provide a feature, or doesn't export a feature, and so a workaround is needed.
 
@@ -153,14 +157,14 @@ Include the `IsolatedBlockEditor` module and then create an instance:
 import IsolatedBlockEditor from 'isolated-block-editor';
 
 render(
-	<IsolatedBlockEditor
-		settings={ settings }
-		onSaveContent={ ( html ) => saveContent( html ) }
-		onLoad={ ( parse ) => loadInitialContent( parse ) }
-		onError={ () => document.location.reload() }
-	>
-	</IsolatedBlockEditor>,
-	document.querySelector( '#editor' )
+ <IsolatedBlockEditor
+  settings={ settings }
+  onSaveContent={ ( html ) => saveContent( html ) }
+  onLoad={ ( parse ) => loadInitialContent( parse ) }
+  onError={ () => document.location.reload() }
+ >
+ </IsolatedBlockEditor>,
+ document.querySelector( '#editor' )
 );
 ```
 
@@ -178,21 +182,21 @@ The `IsolatedBlockEditor` also exports the following support components:
 import IsolatedBlockEditor, { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing } from 'isolated-block-editor';
 
 render(
-	<IsolatedBlockEditor
-		settings={ settings }
-		onSaveContent={ ( html ) => saveContent( html ) }
-		onLoad={ ( parse ) => loadInitialContent( parse ) }
-		onError={ () => document.location.reload() }
-	>
-		<EditorLoaded onLoaded={ () => {} } onLoading={ () => {} } />
-		<DocumentSection>Extra Information</DocumentSection>
-		<CollaborativeEditing settings={ collabSettings } />
+ <IsolatedBlockEditor
+  settings={ settings }
+  onSaveContent={ ( html ) => saveContent( html ) }
+  onLoad={ ( parse ) => loadInitialContent( parse ) }
+  onError={ () => document.location.reload() }
+ >
+  <EditorLoaded onLoaded={ () => {} } onLoading={ () => {} } />
+  <DocumentSection>Extra Information</DocumentSection>
+  <CollaborativeEditing settings={ collabSettings } />
 
-		<ToolbarSlot>
-			<button>Beep!</button>
-		</ToolbarSlot>
-	</IsolatedBlockEditor>,
-	document.querySelector( '#editor' )
+  <ToolbarSlot>
+   <button>Beep!</button>
+  </ToolbarSlot>
+ </IsolatedBlockEditor>,
+ document.querySelector( '#editor' )
 );
 ```
 
@@ -234,6 +238,7 @@ The following function is also provided:
 A settings object that contains all settings for the IsolatedBlockEditor, as well as for Gutenberg. Any settings not provided will use defaults.
 
 The block allow and disallow list works as follows:
+
 - All blocks are allowed, unless the `allowBlocks` option is set which defines the list of allowed blocks
 - Anything in the `disallowBlocks` list is removed from the list of allowed blocks.
 
@@ -273,6 +278,10 @@ An optional callback that will be passed down to the Gutenberg editor if provide
 #### __experimentalValue
 
 An optional value (blocks) for the editor to show. If provided, it will be used as the internal value/blocks to display.This property is experimental and can change or be removed at any time.
+
+#### __experimentalOnSelection
+
+An optional callback that will be called when the selection changes in the editor. The only parameter passed to the callback will be the new selection value.
 
 #### onError
 

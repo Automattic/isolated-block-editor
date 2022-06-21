@@ -9,7 +9,7 @@ import { SlotFillProvider } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { addFilter } from '@wordpress/hooks';
-import { use, useDispatch } from '@wordpress/data';
+import { use, useDispatch, useSelect } from '@wordpress/data';
 import '@wordpress/format-library';
 import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
 
@@ -127,6 +127,13 @@ import './style.scss';
  */
 
 /**
+ * OnSelect callback
+ *
+ * @callback OnSelect
+ * @param {Object} selection - Editor content to save
+ */
+
+/**
  * Initialize Gutenberg
  */
 export function initializeEditor() {
@@ -224,6 +231,7 @@ export function useInitializeIsoEditor( { undoManager } = {} ) {
  * @param {UndoManager} [props.__experimentalUndoManager] - Undo manager
  * @param {OnUpdate} [props.__experimentalOnInput] - Gutenberg's onInput callback
  * @param {OnUpdate} [props.__experimentalOnChange] - Gutenberg's onChange callback
+ * @param {OnSelect} [props.__experimentalOnSelection] - Callback to run when the editor selection changes
  * @param {object[]} [props.__experimentalValue] - Gutenberg's value
  */
 function IsolatedBlockEditor( props ) {
@@ -236,10 +244,23 @@ function IsolatedBlockEditor( props ) {
 		__experimentalOnInput,
 		__experimentalOnChange,
 		__experimentalValue,
+		__experimentalOnSelection,
 		...params
 	} = props;
 
 	useInitializeIsoEditor( { undoManager: __experimentalUndoManager } );
+
+	const editorSelection = useSelect(
+		( select ) => ( {
+			start: select( 'core/block-editor' ).getSelectionStart(),
+			end: select( 'core/block-editor' ).getSelectionEnd(),
+		} ),
+		[]
+	);
+
+	useEffect( () => {
+		__experimentalOnSelection?.( editorSelection );
+	}, [ editorSelection ] );
 
 	return (
 		<StrictMode>
