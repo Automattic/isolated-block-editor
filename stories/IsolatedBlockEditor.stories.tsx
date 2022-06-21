@@ -6,7 +6,7 @@ import IsolatedBlockEditor, { DocumentSection } from '../src/index';
 /**
  * WordPress dependencies
  */
-import { useMemo, useCallback, useState } from '@wordpress/element';
+import { useMemo, useState } from '@wordpress/element';
 
 export default {
 	title: 'Isolated Block Editor',
