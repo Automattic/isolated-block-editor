@@ -99,7 +99,7 @@ require("./store/edit-post");
 
 require("./style.scss");
 
-var _excluded = ["children", "onSaveContent", "onSaveBlocks", "settings", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue"];
+var _excluded = ["children", "onSaveContent", "onSaveBlocks", "settings", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"];
 import { createElement } from "@wordpress/element";
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
@@ -191,6 +191,13 @@ import { createElement } from "@wordpress/element";
  * @property {object[]} reusableBlocks
  * @property {object[]} styles
  * @property {object[]} defaultEditorStyles
+ */
+
+/**
+ * OnSelect callback
+ *
+ * @callback OnSelect
+ * @param {Object} selection - Editor content to save
  */
 
 /**
@@ -293,6 +300,7 @@ function useInitializeIsoEditor() {
  * @param {UndoManager} [props.__experimentalUndoManager] - Undo manager
  * @param {OnUpdate} [props.__experimentalOnInput] - Gutenberg's onInput callback
  * @param {OnUpdate} [props.__experimentalOnChange] - Gutenberg's onChange callback
+ * @param {OnSelect} [props.__experimentalOnSelection] - Callback to run when the editor selection changes
  * @param {object[]} [props.__experimentalValue] - Gutenberg's value
  */
 
@@ -306,10 +314,20 @@ function IsolatedBlockEditor(props) {
       __experimentalOnInput = props.__experimentalOnInput,
       __experimentalOnChange = props.__experimentalOnChange,
       __experimentalValue = props.__experimentalValue,
+      __experimentalOnSelection = props.__experimentalOnSelection,
       params = (0, _objectWithoutProperties2["default"])(props, _excluded);
   useInitializeIsoEditor({
     undoManager: __experimentalUndoManager
   });
+  var editorSelection = (0, _data.useSelect)(function (select) {
+    return {
+      start: select('core/block-editor').getSelectionStart(),
+      end: select('core/block-editor').getSelectionEnd()
+    };
+  }, []);
+  (0, _element.useEffect)(function () {
+    __experimentalOnSelection === null || __experimentalOnSelection === void 0 ? void 0 : __experimentalOnSelection(editorSelection);
+  }, [editorSelection]);
   return createElement(_element.StrictMode, null, createElement(_keyboardShortcuts.ShortcutProvider, null, createElement(_contentSaver["default"], {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent

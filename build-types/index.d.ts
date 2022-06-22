@@ -80,6 +80,12 @@
  * @property {object[]} defaultEditorStyles
  */
 /**
+ * OnSelect callback
+ *
+ * @callback OnSelect
+ * @param {Object} selection - Editor content to save
+ */
+/**
  * Initialize Gutenberg
  */
 export function initializeEditor(): void;
@@ -102,6 +108,7 @@ declare var _default: import("react").ComponentType<{
     __experimentalUndoManager?: UndoManager | undefined;
     __experimentalOnInput?: import("./components/block-editor-contents/index").OnUpdate | undefined;
     __experimentalOnChange?: import("./components/block-editor-contents/index").OnUpdate | undefined;
+    __experimentalOnSelection?: OnSelect | undefined;
     __experimentalValue?: any[] | undefined;
 }>;
 export default _default;
@@ -291,6 +298,10 @@ export type EditorSettings = {
     styles: object[];
     defaultEditorStyles: object[];
 };
+/**
+ * OnSelect callback
+ */
+export type OnSelect = (selection: any) => any;
 /**
  * Save blocks callback
  */
