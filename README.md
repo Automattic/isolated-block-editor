@@ -274,6 +274,10 @@ An optional callback that will be passed down to the Gutenberg editor if provide
 
 An optional value (blocks) for the editor to show. If provided, it will be used as the internal value/blocks to display.This property is experimental and can change or be removed at any time.
 
+#### __experimentalOnSelection
+
+An optional callback that will be called when the selection changes in the editor. The only parameter passed to the callback will be the new selection value.
+
 #### onError
 
 Callback if an error occurs.

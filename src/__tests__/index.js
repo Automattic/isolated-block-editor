@@ -97,6 +97,37 @@ describe( 'IsolatedBlockEditor', () => {
 			expect( onChangeMock ).toHaveBeenCalledWith( expect.any( Array ), expect.any( Object ) );
 		} );
 
+		it( 'should call onSelection when the editor selection changes', () => {
+			const onSelectionMock = jest.fn();
+
+			render(
+				<IsolatedBlockEditor
+					__experimentalValue={ [] }
+					__experimentalOnSelection={ onSelectionMock }
+					settings={ {} }
+				/>
+			);
+
+			const input = screen.getByText( /^Start writing.+/ );
+			userEvent.click( input );
+			userEvent.keyboard( 'test' );
+
+			expect( onSelectionMock ).toHaveBeenCalledWith(
+				expect.objectContaining( {
+					start: expect.objectContaining( {
+						clientId: expect.any( String ),
+						attributeKey: expect.any( String ),
+						offset: expect.any( Number ),
+					} ),
+					end: expect.objectContaining( {
+						clientId: expect.any( String ),
+						attributeKey: expect.any( String ),
+						offset: expect.any( Number ),
+					} ),
+				} )
+			);
+		} );
+
 		it( "should call undo when undoManager's undo is requested", async () => {
 			render(
 				<IsolatedBlockEditor
