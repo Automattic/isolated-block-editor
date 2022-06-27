@@ -8,6 +8,11 @@ import { listView } from '@wordpress/icons';
 import { store as blockEditorStore, ListView } from '@wordpress/block-editor';
 import { forwardRef } from '@wordpress/element';
 
+/**
+ * Internal dependencies
+ */
+import './style.scss';
+
 function BlockNavigationDropdown( { isDisabled, ...props }, ref ) {
 	const hasBlocks = useSelect( ( select ) => !! select( blockEditorStore ).getBlockCount(), [] );
 	const isEnabled = hasBlocks && ! isDisabled;
