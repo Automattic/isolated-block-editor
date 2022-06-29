@@ -123,7 +123,7 @@ If you are not using on a WordPress site then you will need to load the core CSS
 Alternatively you can directly import the bundled `build-browser/core.css` CSS:
 
 ```js
-import 'isolated-block-editor/build-browser/core.css';
+import '@automatic/isolated-block-editor/build-browser/core.css';
 ```
 
 ## Using
@@ -150,7 +150,7 @@ Include the `IsolatedBlockEditor` module and then create an instance:
 
 ```js
 
-import IsolatedBlockEditor from 'isolated-block-editor';
+import IsolatedBlockEditor from '@automatic/isolated-block-editor';
 
 render(
 	<IsolatedBlockEditor
