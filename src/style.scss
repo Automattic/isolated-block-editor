@@ -1,10 +1,9 @@
-
-@import '@wordpress/base-styles/_colors';
-@import '@wordpress/base-styles/_variables';
-@import '@wordpress/base-styles/_mixins';
-@import '@wordpress/base-styles/_breakpoints';
-@import '@wordpress/base-styles/_animations';
-@import '@wordpress/base-styles/_z-index';
+@import "@wordpress/base-styles/_colors";
+@import "@wordpress/base-styles/_variables";
+@import "@wordpress/base-styles/_mixins";
+@import "@wordpress/base-styles/_breakpoints";
+@import "@wordpress/base-styles/_animations";
+@import "@wordpress/base-styles/_z-index";
 
 // Gutenberg has a global `position: unset` style applied to the editor that is used in the core editor to prevent the page scrolling (it scrolls internally)
 // but that isn't suitable for other situations. We need to remove that.
@@ -34,7 +33,7 @@ html.interface-interface-skeleton__html-container {
 		-webkit-box-sizing: border-box;
 	}
 
-	p:not( .components-form-token-field__help ) {
+	p:not(.components-form-token-field__help) {
 		font-size: inherit;
 		line-height: inherit;
 	}
@@ -52,6 +51,20 @@ html.interface-interface-skeleton__html-container {
 
 	ul {
 		list-style-type: none;
+	}
+
+	ul.table-of-contents__counts {
+		margin: 0;
+		padding: 0.2rem 0.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	ul.table-of-contents__counts > li {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.5rem;
 	}
 
 	ol {
