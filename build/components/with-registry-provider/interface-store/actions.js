@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.pinItem = exports.enableComplementaryArea = exports.disableComplementaryArea = void 0;
+exports.setDefaultComplementaryArea = exports.pinItem = exports.enableComplementaryArea = exports.disableComplementaryArea = void 0;
 exports.setFeatureDefaults = setFeatureDefaults;
 exports.setFeatureValue = setFeatureValue;
 exports.toggleFeature = toggleFeature;
@@ -22,21 +22,51 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
+ * Set a default complementary area.
+ *
+ * @param {string} scope Complementary area scope.
+ * @param {string} area  Area identifier.
+ *
+ * @return {Object} Action object.
+ */
+var setDefaultComplementaryArea = function setDefaultComplementaryArea(scope, area) {
+  return {
+    type: 'SET_DEFAULT_COMPLEMENTARY_AREA',
+    scope: scope,
+    area: area
+  };
+};
+/**
  * Enable the complementary area.
  *
  * @param {string} scope Complementary area scope.
  * @param {string} area  Area identifier.
  */
+
+
+exports.setDefaultComplementaryArea = setDefaultComplementaryArea;
+
 var enableComplementaryArea = function enableComplementaryArea(scope, area) {
   return function (_ref) {
-    var registry = _ref.registry;
+    var registry = _ref.registry,
+        dispatch = _ref.dispatch;
 
     // Return early if there's no area.
     if (!area) {
       return;
     }
 
-    registry.dispatch(_preferences.store).set(scope, 'complementaryArea', area);
+    var isComplementaryAreaVisible = registry.select(_preferences.store).get(scope, 'isComplementaryAreaVisible');
+
+    if (!isComplementaryAreaVisible) {
+      registry.dispatch(_preferences.store).set(scope, 'isComplementaryAreaVisible', true);
+    }
+
+    dispatch({
+      type: 'ENABLE_COMPLEMENTARY_AREA',
+      scope: scope,
+      area: area
+    });
   };
 };
 /**
@@ -51,7 +81,11 @@ exports.enableComplementaryArea = enableComplementaryArea;
 var disableComplementaryArea = function disableComplementaryArea(scope) {
   return function (_ref2) {
     var registry = _ref2.registry;
-    registry.dispatch(_preferences.store).set(scope, 'complementaryArea', null);
+    var isComplementaryAreaVisible = registry.select(_preferences.store).get(scope, 'isComplementaryAreaVisible');
+
+    if (isComplementaryAreaVisible) {
+      registry.dispatch(_preferences.store).set(scope, 'isComplementaryAreaVisible', false);
+    }
   };
 };
 /**
@@ -120,9 +154,9 @@ exports.unpinItem = unpinItem;
 function toggleFeature(scope, featureName) {
   return function (_ref5) {
     var registry = _ref5.registry;
-    (0, _deprecated["default"])("wp.dispatch( 'core/interface' ).toggleFeature", {
+    (0, _deprecated["default"])("dispatch( 'core/interface' ).toggleFeature", {
       since: '6.0',
-      alternative: "wp.dispatch( 'core/preferences' ).toggle"
+      alternative: "dispatch( 'core/preferences' ).toggle"
     });
     registry.dispatch(_preferences.store).toggle(scope, featureName);
   };
@@ -142,9 +176,9 @@ function toggleFeature(scope, featureName) {
 function setFeatureValue(scope, featureName, value) {
   return function (_ref6) {
     var registry = _ref6.registry;
-    (0, _deprecated["default"])("wp.dispatch( 'core/interface' ).setFeatureValue", {
+    (0, _deprecated["default"])("dispatch( 'core/interface' ).setFeatureValue", {
       since: '6.0',
-      alternative: "wp.dispatch( 'core/preferences' ).set"
+      alternative: "dispatch( 'core/preferences' ).set"
     });
     registry.dispatch(_preferences.store).set(scope, featureName, !!value);
   };
@@ -162,9 +196,9 @@ function setFeatureValue(scope, featureName, value) {
 function setFeatureDefaults(scope, defaults) {
   return function (_ref7) {
     var registry = _ref7.registry;
-    (0, _deprecated["default"])("wp.dispatch( 'core/interface' ).setFeatureDefaults", {
+    (0, _deprecated["default"])("dispatch( 'core/interface' ).setFeatureDefaults", {
       since: '6.0',
-      alternative: "wp.dispatch( 'core/preferences' ).setDefaults"
+      alternative: "dispatch( 'core/preferences' ).setDefaults"
     });
     registry.dispatch(_preferences.store).setDefaults(scope, defaults);
   };

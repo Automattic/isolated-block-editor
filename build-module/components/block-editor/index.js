@@ -8,15 +8,14 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 
-import { withDispatch } from '@wordpress/data';
+import { withDispatch, useSelect } from '@wordpress/data';
 import { KeyboardShortcuts } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { useViewportMatch } from '@wordpress/compose';
 import { BlockEditorKeyboardShortcuts } from '@wordpress/block-editor';
 import { EditorNotices, EditorSnackbars } from '@wordpress/editor';
 import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfaceStore } from '@wordpress/interface';
-import { __, _x } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { useEffect } from '@wordpress/element';
 /**
@@ -145,13 +144,21 @@ function BlockEditor(props) {
 
 
   useEffect(() => {
+    const html = document.querySelector('html');
+
     if (isFullscreenActive) {
       // @ts-ignore
-      document.querySelector('html').classList.add('is-fullscreen-mode');
+      html.classList.add('is-fullscreen-mode');
     } else {
       // @ts-ignore
-      document.querySelector('html').classList.remove('is-fullscreen-mode');
+      html.classList.remove('is-fullscreen-mode');
     }
+
+    return () => {
+      if (html) {
+        html.classList.remove('is-fullscreen-mode');
+      }
+    };
   }, [isFullscreenActive]);
   return createElement(Fragment, null, createElement(SettingsSidebar, {
     documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : (_settings$iso4$toolba = _settings$iso4.toolbar) === null || _settings$iso4$toolba === void 0 ? void 0 : _settings$iso4$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false

@@ -8,7 +8,6 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 
-import { __ } from '@wordpress/i18n';
 import { compose, useResizeObserver } from '@wordpress/compose';
 import { ErrorBoundary } from '@wordpress/editor';
 import { withDispatch, withSelect } from '@wordpress/data';
@@ -29,6 +28,8 @@ import './style.scss';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 
 /** @typedef {import('../../index').OnLoad} OnLoad */
+
+/** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
 
 /**
  * Set editing callback
@@ -55,6 +56,9 @@ const SIZE_MEDIUM = 480;
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  * @param {OnSetEditing} props.setEditing - Set the mode to editing
  * @param {OnLoad} props.onLoad - Load initial blocks
+ * @param {OnUpdate} [props.onInput] - Gutenberg's onInput callback
+ * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
+ * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
 
 function BlockEditorContainer(props) {
@@ -64,7 +68,10 @@ function BlockEditorContainer(props) {
     className,
     onError,
     renderMoreMenu,
-    onLoad
+    onLoad,
+    onInput,
+    onChange,
+    blocks
   } = props;
   const {
     isEditorReady,
@@ -99,9 +106,12 @@ function BlockEditorContainer(props) {
     onOutside: () => setEditing(false),
     onFocus: () => !isEditing && setEditing(true)
   }, createElement(BlockEditorContents, {
+    blocks: blocks,
     settings: settings,
     renderMoreMenu: renderMoreMenu,
-    onLoad: onLoad
+    onLoad: onLoad,
+    onInput: onInput,
+    onChange: onChange
   }, children))));
 }
 

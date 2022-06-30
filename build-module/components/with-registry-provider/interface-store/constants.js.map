@@ -1,0 +1,1 @@
+{"version":3,"file":"constants.js","names":["STORE_NAME"],"sources":["../../../../src/components/with-registry-provider/interface-store/constants.js"],"sourcesContent":["/**\n * The identifier for the data store.\n *\n * @type {string}\n */\nexport const STORE_NAME = 'core/interface';\n"],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA,OAAO,MAAMA,UAAU,GAAG,gBAAnB"}
