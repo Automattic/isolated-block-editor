@@ -4,6 +4,20 @@
 import deprecated from '@wordpress/deprecated';
 import { store as preferencesStore } from '@wordpress/preferences';
 /**
+ * Set a default complementary area.
+ *
+ * @param {string} scope Complementary area scope.
+ * @param {string} area  Area identifier.
+ *
+ * @return {Object} Action object.
+ */
+
+export const setDefaultComplementaryArea = (scope, area) => ({
+  type: 'SET_DEFAULT_COMPLEMENTARY_AREA',
+  scope,
+  area
+});
+/**
  * Enable the complementary area.
  *
  * @param {string} scope Complementary area scope.
@@ -12,7 +26,8 @@ import { store as preferencesStore } from '@wordpress/preferences';
 
 export const enableComplementaryArea = (scope, area) => _ref => {
   let {
-    registry
+    registry,
+    dispatch
   } = _ref;
 
   // Return early if there's no area.
@@ -20,7 +35,17 @@ export const enableComplementaryArea = (scope, area) => _ref => {
     return;
   }
 
-  registry.dispatch(preferencesStore).set(scope, 'complementaryArea', area);
+  const isComplementaryAreaVisible = registry.select(preferencesStore).get(scope, 'isComplementaryAreaVisible');
+
+  if (!isComplementaryAreaVisible) {
+    registry.dispatch(preferencesStore).set(scope, 'isComplementaryAreaVisible', true);
+  }
+
+  dispatch({
+    type: 'ENABLE_COMPLEMENTARY_AREA',
+    scope,
+    area
+  });
 };
 /**
  * Disable the complementary area.
@@ -32,7 +57,11 @@ export const disableComplementaryArea = scope => _ref2 => {
   let {
     registry
   } = _ref2;
-  registry.dispatch(preferencesStore).set(scope, 'complementaryArea', null);
+  const isComplementaryAreaVisible = registry.select(preferencesStore).get(scope, 'isComplementaryAreaVisible');
+
+  if (isComplementaryAreaVisible) {
+    registry.dispatch(preferencesStore).set(scope, 'isComplementaryAreaVisible', false);
+  }
 };
 /**
  * Pins an item.
@@ -97,9 +126,9 @@ export function toggleFeature(scope, featureName) {
     let {
       registry
     } = _ref5;
-    deprecated(`wp.dispatch( 'core/interface' ).toggleFeature`, {
+    deprecated(`dispatch( 'core/interface' ).toggleFeature`, {
       since: '6.0',
-      alternative: `wp.dispatch( 'core/preferences' ).toggle`
+      alternative: `dispatch( 'core/preferences' ).toggle`
     });
     registry.dispatch(preferencesStore).toggle(scope, featureName);
   };
@@ -120,9 +149,9 @@ export function setFeatureValue(scope, featureName, value) {
     let {
       registry
     } = _ref6;
-    deprecated(`wp.dispatch( 'core/interface' ).setFeatureValue`, {
+    deprecated(`dispatch( 'core/interface' ).setFeatureValue`, {
       since: '6.0',
-      alternative: `wp.dispatch( 'core/preferences' ).set`
+      alternative: `dispatch( 'core/preferences' ).set`
     });
     registry.dispatch(preferencesStore).set(scope, featureName, !!value);
   };
@@ -141,9 +170,9 @@ export function setFeatureDefaults(scope, defaults) {
     let {
       registry
     } = _ref7;
-    deprecated(`wp.dispatch( 'core/interface' ).setFeatureDefaults`, {
+    deprecated(`dispatch( 'core/interface' ).setFeatureDefaults`, {
       since: '6.0',
-      alternative: `wp.dispatch( 'core/preferences' ).setDefaults`
+      alternative: `dispatch( 'core/preferences' ).setDefaults`
     });
     registry.dispatch(preferencesStore).setDefaults(scope, defaults);
   };

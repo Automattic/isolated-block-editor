@@ -57,8 +57,8 @@ async function getInitialContent(settings, loader) {
  *
  * @param {Object} props - Component props
  * @param {object[]} props.blocks
- * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
- * @param {OnUpdate} props.updateBlocksWithUndo - Callback to update blocks
+ * @param {OnUpdate} props.onInput - Callback to update blocks
+ * @param {OnUpdate} props.onChange - Callback to update blocks
  * @param {boolean} props.isEditing - Are we editing in this editor?
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {Object} props.children - Child components
@@ -72,8 +72,8 @@ async function getInitialContent(settings, loader) {
 function BlockEditorContents(props) {
   const {
     blocks,
-    updateBlocksWithoutUndo,
-    updateBlocksWithUndo,
+    onInput,
+    onChange,
     selection,
     isEditing,
     editorMode
@@ -90,7 +90,7 @@ function BlockEditorContents(props) {
       const initialContent = await getInitialContent(settings, onLoad);
 
       if (initialContent.length > 0 && (!blocks || blocks.length === 0)) {
-        updateBlocksWithoutUndo(initialContent, {
+        onInput(initialContent, {
           isInitialContent: true
         });
       }
@@ -100,8 +100,8 @@ function BlockEditorContents(props) {
   }, []);
   return createElement(BlockEditorProvider, {
     value: blocks || [],
-    onInput: updateBlocksWithoutUndo,
-    onChange: updateBlocksWithUndo,
+    onInput: onInput,
+    onChange: onChange,
     useSubRegistry: false,
     selection: selection,
     settings: settings.editor
@@ -113,7 +113,9 @@ function BlockEditorContents(props) {
   }, children), createElement(Popover.Slot, null));
 }
 
-export default compose([withSelect(select => {
+export default compose([withSelect((select, ownProps) => {
+  var _ownProps$blocks;
+
   const {
     getBlocks,
     getEditorSelection,
@@ -121,19 +123,37 @@ export default compose([withSelect(select => {
     isEditing
   } = select('isolated/editor');
   return {
-    blocks: getBlocks(),
+    blocks: (_ownProps$blocks = ownProps.blocks) !== null && _ownProps$blocks !== void 0 ? _ownProps$blocks : getBlocks(),
     selection: getEditorSelection(),
     isEditing: isEditing(),
     editorMode: getEditorMode()
   };
-}), withDispatch(dispatch => {
+}), withDispatch((dispatch, ownProps) => {
   const {
     updateBlocksWithUndo,
     updateBlocksWithoutUndo
   } = dispatch('isolated/editor');
+  const {
+    onInput,
+    onChange
+  } = ownProps;
   return {
-    updateBlocksWithUndo,
-    updateBlocksWithoutUndo
+    onChange: function () {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      onChange === null || onChange === void 0 ? void 0 : onChange(...args);
+      updateBlocksWithUndo(...args);
+    },
+    onInput: function () {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      onInput === null || onInput === void 0 ? void 0 : onInput(...args);
+      updateBlocksWithoutUndo(...args);
+    }
   };
 })])(BlockEditorContents);
 //# sourceMappingURL=index.js.map

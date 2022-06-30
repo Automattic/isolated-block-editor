@@ -23,11 +23,26 @@ var _preferences = require("@wordpress/preferences");
  * @param {Object} state Global application state.
  * @param {string} scope Item scope.
  *
- * @return {string} The complementary area that is active in the given scope.
+ * @return {string | null | undefined} The complementary area that is active in the given scope.
  */
 var getActiveComplementaryArea = (0, _data.createRegistrySelector)(function (select) {
   return function (state, scope) {
-    return select(_preferences.store).get(scope, 'complementaryArea');
+    var _state$complementaryA;
+
+    var isComplementaryAreaVisible = select(_preferences.store).get(scope, 'isComplementaryAreaVisible'); // Return `undefined` to indicate that the user has never toggled
+    // visibility, this is the vanilla default. Other code relies on this
+    // nuance in the return value.
+
+    if (isComplementaryAreaVisible === undefined) {
+      return undefined;
+    } // Return `null` to indicate the user hid the complementary area.
+
+
+    if (!isComplementaryAreaVisible) {
+      return null;
+    }
+
+    return state === null || state === void 0 ? void 0 : (_state$complementaryA = state.complementaryAreas) === null || _state$complementaryA === void 0 ? void 0 : _state$complementaryA[scope];
   };
 });
 /**
@@ -63,9 +78,9 @@ var isItemPinned = (0, _data.createRegistrySelector)(function (select) {
 exports.isItemPinned = isItemPinned;
 var isFeatureActive = (0, _data.createRegistrySelector)(function (select) {
   return function (state, scope, featureName) {
-    (0, _deprecated["default"])("wp.select( 'core/interface' ).isFeatureActive( scope, featureName )", {
+    (0, _deprecated["default"])("select( 'core/interface' ).isFeatureActive( scope, featureName )", {
       since: '6.0',
-      alternative: "!! wp.select( 'core/preferences' ).isFeatureActive( scope, featureName )"
+      alternative: "select( 'core/preferences' ).get( scope, featureName )"
     });
     return !!select(_preferences.store).get(scope, featureName);
   };

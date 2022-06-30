@@ -7,7 +7,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
-import { NavigableToolbar, BlockNavigationDropdown, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
+import { NavigableToolbar, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
 import { TableOfContents } from '@wordpress/editor';
 import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
@@ -18,6 +18,7 @@ import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
+import BlockNavigationDropdown from '../block-navigation';
 
 const preventDefault = event => {
   event.preventDefault();

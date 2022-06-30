@@ -29,6 +29,8 @@ var _redo = _interopRequireDefault(require("./redo"));
 
 var _undo = _interopRequireDefault(require("./undo"));
 
+var _blockNavigation = _interopRequireDefault(require("../block-navigation"));
+
 import { createElement } from "@wordpress/element";
 
 /**
@@ -157,7 +159,7 @@ function HeaderToolbar(props) {
     showTooltip: !showIconLabels,
     variant: showIconLabels ? 'tertiary' : undefined
   }), navigation && !inserterInSidebar && createElement(_components.ToolbarItem, {
-    as: _blockEditor.BlockNavigationDropdown,
+    as: _blockNavigation["default"],
     isDisabled: isTextModeEnabled
   }), navigation && inserterInSidebar && createElement(_components.ToolbarItem, {
     as: _components.Button,

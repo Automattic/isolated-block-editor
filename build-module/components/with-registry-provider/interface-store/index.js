@@ -3,8 +3,9 @@
  */
 import * as actions from './actions';
 import * as selectors from './selectors';
+import reducer from './reducer';
 /**
- * Store definition for the edit post namespace.
+ * Store definition for the interface namespace.
  *
  * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/data/README.md#createReduxStore
  *
@@ -12,7 +13,7 @@ import * as selectors from './selectors';
  */
 
 export default {
-  reducer: () => {},
+  reducer,
   actions,
   selectors
 };

@@ -96,21 +96,7 @@ export function initializeEditor(): void;
 export function useInitializeIsoEditor({ undoManager }?: {
     undoManager?: UndoManager | undefined;
 }): void;
-declare var _default: import("react").ComponentType<{
-    onSaveBlocks?: OnSaveBlocks | undefined;
-    onSaveContent?: OnSaveContent | undefined;
-    onError: OnError;
-    onLoad?: OnLoad | undefined;
-    settings: BlockEditorSettings;
-    children?: any;
-    className?: string | undefined;
-    renderMoreMenu?: import("./components/block-editor-toolbar/more-menu").OnMore | undefined;
-    __experimentalUndoManager?: UndoManager | undefined;
-    __experimentalOnInput?: import("./components/block-editor-contents/index").OnUpdate | undefined;
-    __experimentalOnChange?: import("./components/block-editor-contents/index").OnUpdate | undefined;
-    __experimentalOnSelection?: OnSelect | undefined;
-    __experimentalValue?: any[] | undefined;
-}>;
+declare const _default: any;
 export default _default;
 export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
 export type Pattern = import('./store/editor/reducer').Pattern;

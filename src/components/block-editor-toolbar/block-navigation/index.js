@@ -5,7 +5,7 @@ import { Button, Dropdown } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { listView } from '@wordpress/icons';
-import { store as blockEditorStore, ListView } from '@wordpress/block-editor';
+import { store as blockEditorStore, __experimentalListView as ListView } from '@wordpress/block-editor';
 import { forwardRef } from '@wordpress/element';
 
 /**
