@@ -319,3 +319,7 @@ The values should be full `<link>` and `<script>` tags.
 To make a release, ensure you are on the trunk branch. Do not update the version number in `package.json` - the release process will do this for you. Then run:
 
 `GITHUB_TOKEN=<TOKEN> yarn dist`
+
+## Common Problems
+
+If Storybook complains about different ES6 problems then it can sometimes be solved with `npx yarn-deduplicate --scopes @babel`
