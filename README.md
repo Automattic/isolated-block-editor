@@ -87,7 +87,7 @@ You can use the provided `isolated-block-editor.js`, `core.css`, and `isolated-b
 <link rel="stylesheet" href="isolated-block-editor.css" />
 
 <body>
-	<textarea id="editor" />
+	<textarea id="editor"></textarea>
 
 	<script>
 		wp.attachEditor( document.getElementById( 'editor' ) );
