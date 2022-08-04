@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.17.0] - 2022-08-04
+- Add a new boolean 'header' setting so that it can be disabled when not neede
+
 ## [2.16.0] - 2022-06-30
 - Fixed the deprecated use of BlockNavigationDropdown
 - Remove some old CSS adding focus borders to some blocks
