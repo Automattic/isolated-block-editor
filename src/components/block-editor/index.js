@@ -73,6 +73,7 @@ function BlockEditor( props ) {
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
 	const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;
+	const showHeader = settings?.iso?.header ?? true;
 	const showFooter = settings?.iso?.footer || false;
 	const {
 		sidebarIsOpened,
@@ -141,6 +142,10 @@ function BlockEditor( props ) {
 		};
 	}, [ isFullscreenActive ] );
 
+	const header = showHeader ? (
+		<BlockEditorToolbar editorMode={ editorMode } settings={ settings } renderMoreMenu={ renderMoreMenu } />
+	) : null;
+
 	return (
 		<>
 			<SettingsSidebar documentInspector={ settings?.iso?.toolbar?.documentInspector ?? false } />
@@ -149,13 +154,7 @@ function BlockEditor( props ) {
 			<InterfaceSkeleton
 				className={ className }
 				labels={ interfaceLabels }
-				header={
-					<BlockEditorToolbar
-						editorMode={ editorMode }
-						settings={ settings }
-						renderMoreMenu={ renderMoreMenu }
-					/>
-				}
+				header={ header }
 				secondarySidebar={ secondarySidebar() }
 				sidebar={
 					( ! isMobileViewport || sidebarIsOpened ) &&

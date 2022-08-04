@@ -57,6 +57,8 @@ export default function applyDefaultSettings( settings ) {
 				...( iso?.toolbar ?? {} ),
 			},
 
+			header: iso?.header ?? true,
+
 			sidebar: {
 				inserter: false,
 				inspector: false,
