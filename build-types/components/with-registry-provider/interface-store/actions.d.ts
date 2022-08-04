@@ -29,8 +29,10 @@ export function setFeatureValue(scope: string, featureName: string, value: boole
 export function setFeatureDefaults(scope: string, defaults: {
     [x: string]: boolean;
 }): any;
-export function enableComplementaryArea(scope: string, area: string): ({ registry }: {
+export function setDefaultComplementaryArea(scope: string, area: string): any;
+export function enableComplementaryArea(scope: string, area: string): ({ registry, dispatch }: {
     registry: any;
+    dispatch: any;
 }) => void;
 export function disableComplementaryArea(scope: string): ({ registry }: {
     registry: any;

@@ -48,6 +48,7 @@
  * @property {string[]} [disallowEmbed] - List of embed names to remove
  * @property {object[]} [customStores] - Array of custom stores
  * @property {boolean} [footer] - Show footer component
+ * @property {boolean} [header] - Show header component
  * @property {ToolbarSettings} [toolbar] - Toolbar settings
  * @property {MoreMenuSettings|false} [moreMenu] - More menu settings, or false to disable
  * @property {{title: string, url: string}[]} [linkMenu] - Link menu settings
@@ -96,7 +97,21 @@ export function initializeEditor(): void;
 export function useInitializeIsoEditor({ undoManager }?: {
     undoManager?: UndoManager | undefined;
 }): void;
-declare const _default: any;
+declare const _default: import("react").ComponentType<{
+    onSaveBlocks?: OnSaveBlocks | undefined;
+    onSaveContent?: OnSaveContent | undefined;
+    onError: OnError;
+    onLoad?: OnLoad | undefined;
+    settings: BlockEditorSettings;
+    children?: any;
+    className?: string | undefined;
+    renderMoreMenu?: import("./components/block-editor-toolbar/more-menu").OnMore | undefined;
+    __experimentalUndoManager?: UndoManager | undefined;
+    __experimentalOnInput?: import("./components/block-editor-contents/index").OnUpdate | undefined;
+    __experimentalOnChange?: import("./components/block-editor-contents/index").OnUpdate | undefined;
+    __experimentalOnSelection?: OnSelect | undefined;
+    __experimentalValue?: any[] | undefined;
+}>;
 export default _default;
 export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
 export type Pattern = import('./store/editor/reducer').Pattern;
@@ -220,6 +235,10 @@ export type IsoSettings = {
      * - Show footer component
      */
     footer?: boolean | undefined;
+    /**
+     * - Show header component
+     */
+    header?: boolean | undefined;
     /**
      * - Toolbar settings
      */

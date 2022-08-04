@@ -32,7 +32,7 @@ function getMenu(current, defaultMenu) {
 
 
 function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$currentPattern, _iso$patterns, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
 
   var iso = settings.iso,
       editor = settings.editor;
@@ -66,6 +66,7 @@ function applyDefaultSettings(settings) {
         // @ts-ignore */}
         selectorTool: false
       }, (_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {}),
+      header: (_iso$header = iso === null || iso === void 0 ? void 0 : iso.header) !== null && _iso$header !== void 0 ? _iso$header : true,
       sidebar: _objectSpread({
         inserter: false,
         inspector: false

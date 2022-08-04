@@ -76,7 +76,7 @@ const interfaceLabels = {
  */
 
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso3, _settings$iso$toolbar, _settings$iso4, _settings$iso4$toolba;
+  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso$header, _settings$iso3, _settings$iso4, _settings$iso$toolbar, _settings$iso5, _settings$iso5$toolba;
 
   const {
     isEditing,
@@ -92,7 +92,8 @@ function BlockEditor(props) {
   const isMobileViewport = useViewportMatch('medium', '<');
   const inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$sidebar = _settings$iso.sidebar) === null || _settings$iso$sidebar === void 0 ? void 0 : _settings$iso$sidebar.inspector) || false;
   const inserterInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inserter) || false;
-  const showFooter = (settings === null || settings === void 0 ? void 0 : (_settings$iso3 = settings.iso) === null || _settings$iso3 === void 0 ? void 0 : _settings$iso3.footer) || false;
+  const showHeader = (_settings$iso$header = settings === null || settings === void 0 ? void 0 : (_settings$iso3 = settings.iso) === null || _settings$iso3 === void 0 ? void 0 : _settings$iso3.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
+  const showFooter = (settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.footer) || false;
   const {
     sidebarIsOpened,
     hasFixedToolbar,
@@ -160,18 +161,19 @@ function BlockEditor(props) {
       }
     };
   }, [isFullscreenActive]);
+  const header = showHeader ? createElement(BlockEditorToolbar, {
+    editorMode: editorMode,
+    settings: settings,
+    renderMoreMenu: renderMoreMenu
+  }) : null;
   return createElement(Fragment, null, createElement(SettingsSidebar, {
-    documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : (_settings$iso4$toolba = _settings$iso4.toolbar) === null || _settings$iso4$toolba === void 0 ? void 0 : _settings$iso4$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+    documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : (_settings$iso5$toolba = _settings$iso5.toolbar) === null || _settings$iso5$toolba === void 0 ? void 0 : _settings$iso5$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
   }), createElement(FullscreenMode, {
     isActive: isFullscreenActive
   }), createElement(InterfaceSkeleton, {
     className: className,
     labels: interfaceLabels,
-    header: createElement(BlockEditorToolbar, {
-      editorMode: editorMode,
-      settings: settings,
-      renderMoreMenu: renderMoreMenu
-    }),
+    header: header,
     secondarySidebar: secondarySidebar(),
     sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && createElement(ComplementaryArea.Slot, {
       scope: "isolated/editor"
