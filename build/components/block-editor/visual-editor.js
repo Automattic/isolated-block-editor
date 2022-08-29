@@ -141,7 +141,9 @@ var VisualEditor = function VisualEditor(_ref2) {
     style: {}
   }, createElement(_blockEditor.__experimentalLayoutStyle, {
     selector: ".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container",
-    layout: defaultLayout
+    layout: _objectSpread(_objectSpread({}, defaultLayout), {}, {
+      type: 'constrained'
+    })
   }), createElement(_editorHeadingSlot["default"].Slot, {
     mode: "visual"
   }), createElement(_blockEditor.BlockList, {
