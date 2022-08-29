@@ -122,6 +122,10 @@ const VisualEditor = ( { styles } ) => {
 		return undefined;
 	}, [ themeSupportsLayout, defaultLayout ] );
 
+	// If there is a layout definition, then we're on Gutenberg > v14, which requires us to pass the
+	// 'constrained' type
+	const usedLayout = layout?.definitions ? { ...layout, type: 'constrained' } : layout;
+
 	return (
 		<BlockTools __unstableContentRef={ ref } className="edit-post-visual-editor">
 			<motion.div
@@ -140,7 +144,7 @@ const VisualEditor = ( { styles } ) => {
 					>
 						<LayoutStyle
 							selector=".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container"
-							layout={ { ...defaultLayout, type: 'constrained' } }
+							layout={ usedLayout }
 						/>
 						<EditorHeading.Slot mode="visual" />
 						<BlockList className={ undefined } __experimentalLayout={ layout } />
