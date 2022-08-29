@@ -30,7 +30,7 @@ The Isolated Block Editor is provided in three forms:
 - CommonJS module
 - Standalone JavaScript file, for inclusion on any browser page
 
-Requires: Gutenberg 14.0.0
+Requires: Gutenberg 13.3.0
 
 Examples:
 - [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/blob/trunk/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor
