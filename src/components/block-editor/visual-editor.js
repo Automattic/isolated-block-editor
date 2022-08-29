@@ -116,7 +116,7 @@ const VisualEditor = ( { styles } ) => {
 
 	const layout = useMemo( () => {
 		if ( themeSupportsLayout ) {
-			return defaultLayout;
+			return { ...defaultLayout, type: 'constrained' };
 		}
 
 		return undefined;
@@ -140,7 +140,7 @@ const VisualEditor = ( { styles } ) => {
 					>
 						<LayoutStyle
 							selector=".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container"
-							layout={ defaultLayout }
+							layout={ layout }
 						/>
 						<EditorHeading.Slot mode="visual" />
 						<BlockList className={ undefined } __experimentalLayout={ layout } />
