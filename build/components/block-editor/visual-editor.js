@@ -120,7 +120,12 @@ var VisualEditor = function VisualEditor(_ref2) {
     }
 
     return undefined;
-  }, [themeSupportsLayout, defaultLayout]);
+  }, [themeSupportsLayout, defaultLayout]); // If there is a layout definition, then we're on Gutenberg > v14, which requires us to pass the
+  // 'constrained' type
+
+  var usedLayout = layout !== null && layout !== void 0 && layout.definitions ? _objectSpread(_objectSpread({}, layout), {}, {
+    type: 'constrained'
+  }) : layout;
   return createElement(_blockEditor.BlockTools, {
     __unstableContentRef: ref,
     className: "edit-post-visual-editor"
@@ -141,9 +146,7 @@ var VisualEditor = function VisualEditor(_ref2) {
     style: {}
   }, createElement(_blockEditor.__experimentalLayoutStyle, {
     selector: ".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container",
-    layout: _objectSpread(_objectSpread({}, defaultLayout), {}, {
-      type: 'constrained'
-    })
+    layout: usedLayout
   }), createElement(_editorHeadingSlot["default"].Slot, {
     mode: "visual"
   }), createElement(_blockEditor.BlockList, {
