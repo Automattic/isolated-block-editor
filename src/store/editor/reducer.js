@@ -38,6 +38,7 @@ const getPattern = ( patterns, currentPattern ) =>
  * @property {boolean} isReady - is the editor ready?
  * @property {IsoSettings} settings - editor settings
  * @property {string} deviceType - current device type
+ * @property {Object} deviceStyle - preview device style
  */
 
 /** @type EditorState */
@@ -55,6 +56,7 @@ const DEFAULT_STATE = {
 
 	ignoredContent: [],
 	deviceType: 'Desktop',
+	deviceStyle: {},
 
 	settings: {
 		preferencesKey: null,
@@ -191,6 +193,15 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				deviceType: action.deviceType,
+			};
+
+		case 'SET_DEVICE_STYLE':
+			return {
+				...state,
+				deviceStyle: {
+					...state.deviceStyle,
+					[ action.deviceType ]: action.style,
+				},
 			};
 	}
 

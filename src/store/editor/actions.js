@@ -76,6 +76,19 @@ const actions = {
 		};
 	},
 	/**
+	 * Set the preview device style
+	 *
+	 * @param {string} deviceType
+	 * @param {string} style
+	 */
+	setDeviceStyle( deviceType, style ) {
+		return {
+			type: 'SET_DEVICE_STYLE',
+			deviceType,
+			style,
+		};
+	},
+	/**
 	 * Mark this editor as in-use or not
 	 *
 	 * @param {boolean} isEditing

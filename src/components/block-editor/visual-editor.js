@@ -36,6 +36,13 @@ import EditorHeading from '../editor-heading-slot';
 function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	const ref = useMouseMoveTypingReset();
 
+	const { assets } = useSelect( ( select ) => {
+		const settings = select( 'core/block-editor' ).getSettings();
+		return {
+			assets: settings.__unstableResolvedAssets,
+		};
+	}, [] );
+
 	if ( ! shouldIframe ) {
 		// TODO: this will add an EditorStyles for each editor on the page, which includes adding a <style> element. probably harmless but something to keep an eye on
 		return (
@@ -56,6 +63,7 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	return (
 		<Iframe
 			head={ <EditorStyles styles={ styles } /> }
+			assets={ assets }
 			ref={ ref }
 			contentRef={ contentRef }
 			style={ { width: '100%', height: '100%', display: 'block' } }
@@ -79,9 +87,10 @@ const VisualEditor = ( { styles } ) => {
 		const { getSettings } = select( blockEditorStore );
 		return getSettings().supportsLayout;
 	}, [] );
-	const { deviceType } = useSelect( ( select ) => {
+	const { deviceType, deviceStyle } = useSelect( ( select ) => {
 		return {
 			deviceType: select( 'isolated/editor' ).getPreviewDeviceType(),
+			deviceStyle: select( 'isolated/editor' ).getPreviewDeviceStyle(),
 		};
 	} );
 	const resizedCanvasStyles = useResizeCanvas( deviceType, false );
@@ -100,7 +109,9 @@ const VisualEditor = ( { styles } ) => {
 		background: 'white',
 	};
 	let animatedStyles = desktopCanvasStyles;
-	if ( resizedCanvasStyles ) {
+	if ( deviceStyle ) {
+		animatedStyles = deviceStyle;
+	} else if ( resizedCanvasStyles ) {
 		animatedStyles = resizedCanvasStyles;
 	}
 
@@ -137,7 +148,9 @@ const VisualEditor = ( { styles } ) => {
 			>
 				<motion.div animate={ animatedStyles } initial={ desktopCanvasStyles } className={ previewMode }>
 					<MaybeIframe
-						shouldIframe={ deviceType === 'Tablet' || deviceType === 'Mobile' }
+						shouldIframe={
+							deviceType === 'Tablet' || deviceType === 'Mobile' || deviceType.indexOf( 'iframe' ) !== -1
+						}
 						contentRef={ contentRef }
 						styles={ styles }
 						style={ {} }

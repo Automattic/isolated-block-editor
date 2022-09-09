@@ -164,3 +164,13 @@ export function isListViewOpened( state ) {
 export function getPreviewDeviceType( state ) {
 	return state.editor.deviceType;
 }
+
+/**
+ * Return current device type
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {string} device type styles
+ */
+export function getPreviewDeviceStyle( state ) {
+	return state.editor.deviceStyle[ state.editor.deviceType ];
+}
