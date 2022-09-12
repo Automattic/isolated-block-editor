@@ -87,10 +87,11 @@ const VisualEditor = ( { styles } ) => {
 		const { getSettings } = select( blockEditorStore );
 		return getSettings().supportsLayout;
 	}, [] );
-	const { deviceType, deviceStyle } = useSelect( ( select ) => {
+	const { canvasStyles, deviceType, isIframePreview } = useSelect( ( select ) => {
 		return {
+			canvasStyles: select( 'isolated/editor' ).getCanvasStyles(),
 			deviceType: select( 'isolated/editor' ).getPreviewDeviceType(),
-			deviceStyle: select( 'isolated/editor' ).getPreviewDeviceStyle(),
+			isIframePreview: select( 'isolated/editor' ).isIframePreview(),
 		};
 	} );
 	const resizedCanvasStyles = useResizeCanvas( deviceType, false );
@@ -109,10 +110,15 @@ const VisualEditor = ( { styles } ) => {
 		background: 'white',
 	};
 	let animatedStyles = desktopCanvasStyles;
-	if ( deviceStyle ) {
-		animatedStyles = deviceStyle;
-	} else if ( resizedCanvasStyles ) {
+	if ( resizedCanvasStyles ) {
 		animatedStyles = resizedCanvasStyles;
+	}
+
+	if ( canvasStyles ) {
+		animatedStyles = {
+			...animatedStyles,
+			...canvasStyles,
+		};
 	}
 
 	const blockSelectionClearerRef = useBlockSelectionClearer();
@@ -148,9 +154,7 @@ const VisualEditor = ( { styles } ) => {
 			>
 				<motion.div animate={ animatedStyles } initial={ desktopCanvasStyles } className={ previewMode }>
 					<MaybeIframe
-						shouldIframe={
-							deviceType === 'Tablet' || deviceType === 'Mobile' || deviceType.indexOf( 'iframe' ) !== -1
-						}
+						shouldIframe={ isIframePreview }
 						contentRef={ contentRef }
 						styles={ styles }
 						style={ {} }

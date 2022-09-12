@@ -166,11 +166,21 @@ export function getPreviewDeviceType( state ) {
 }
 
 /**
- * Return current device type
+ * Return editor canvas styles
  *
  * @param {{editor: EditorState}} state - Current state
- * @return {string} device type styles
+ * @return {Object} editor canvas styles
  */
-export function getPreviewDeviceStyle( state ) {
-	return state.editor.deviceStyle[ state.editor.deviceType ];
+export function getCanvasStyles( state ) {
+	return state.editor.canvasStyles;
+}
+
+/**
+ * Whether the editor canvas is an iframe
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {boolean}
+ */
+export function isIframePreview( state ) {
+	return state.editor.isIframePreview || [ 'Tablet', 'Mobile' ].includes( state.editor.deviceType );
 }

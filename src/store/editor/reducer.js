@@ -38,7 +38,8 @@ const getPattern = ( patterns, currentPattern ) =>
  * @property {boolean} isReady - is the editor ready?
  * @property {IsoSettings} settings - editor settings
  * @property {string} deviceType - current device type
- * @property {Object} deviceStyle - preview device style
+ * @property {Object} canvasStyles - editor canvas styles
+ * @property {boolean} isIframePreview - whether the editor canvas is an iframe
  */
 
 /** @type EditorState */
@@ -56,7 +57,8 @@ const DEFAULT_STATE = {
 
 	ignoredContent: [],
 	deviceType: 'Desktop',
-	deviceStyle: {},
+	canvasStyles: {},
+	isIframePreview: false,
 
 	settings: {
 		preferencesKey: null,
@@ -195,13 +197,16 @@ const reducer = ( state = DEFAULT_STATE, action ) => {
 				deviceType: action.deviceType,
 			};
 
-		case 'SET_DEVICE_STYLE':
+		case 'SET_CANVAS_STYLES':
 			return {
 				...state,
-				deviceStyle: {
-					...state.deviceStyle,
-					[ action.deviceType ]: action.style,
-				},
+				canvasStyles: action.canvasStyles,
+			};
+
+		case 'SET_IFRAME_PREVIEW':
+			return {
+				...state,
+				isIframePreview: action.isIframePreview,
 			};
 	}
 

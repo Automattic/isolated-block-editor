@@ -76,16 +76,25 @@ const actions = {
 		};
 	},
 	/**
-	 * Set the preview device style
+	 * Set the editor canvas styles
 	 *
-	 * @param {string} deviceType
-	 * @param {string} style
+	 * @param {string} canvasStyles
 	 */
-	setDeviceStyle( deviceType, style ) {
+	setCanvasStyles( canvasStyles ) {
 		return {
-			type: 'SET_DEVICE_STYLE',
-			deviceType,
-			style,
+			type: 'SET_CANVAS_STYLES',
+			canvasStyles,
+		};
+	},
+	/**
+	 * Set the editor preview mode
+	 *
+	 * @param {boolean} isIFramePreview
+	 */
+	setIsIframePreview( isIFramePreview ) {
+		return {
+			type: 'SET_IFRAME_PREVIEW',
+			isIFramePreview,
 		};
 	},
 	/**
