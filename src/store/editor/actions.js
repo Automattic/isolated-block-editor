@@ -89,12 +89,12 @@ const actions = {
 	/**
 	 * Set the editor preview mode
 	 *
-	 * @param {boolean} isIFramePreview
+	 * @param {boolean} isIframePreview
 	 */
-	setIsIframePreview( isIFramePreview ) {
+	setIsIframePreview( isIframePreview ) {
 		return {
 			type: 'SET_IFRAME_PREVIEW',
-			isIFramePreview,
+			isIframePreview,
 		};
 	},
 	/**
