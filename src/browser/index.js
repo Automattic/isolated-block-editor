@@ -109,6 +109,7 @@ function detachEditor( textarea ) {
 
 // This adds the functions to the WP global, making it easier for the example to work.
 window.wp = {
+	...( window.wp ?? {} ),
 	attachEditor,
 	detachEditor,
 };
