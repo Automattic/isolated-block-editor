@@ -57,7 +57,7 @@ const DEFAULT_STATE = {
 
 	ignoredContent: [],
 	deviceType: 'Desktop',
-	canvasStyles: {},
+	canvasStyles: null,
 	isIframePreview: false,
 
 	settings: {
@@ -93,6 +93,7 @@ const DEFAULT_STATE = {
 		patterns: [],
 		defaultPreferences: {},
 		allowApi: false,
+		disableCanvasAnimations: false,
 	},
 };
 

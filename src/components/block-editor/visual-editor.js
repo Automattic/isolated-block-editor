@@ -74,6 +74,18 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	);
 }
 
+const PreviewWrapper = ( { children, disableAnimations, initialStyle, currentStyle, ...props } ) => {
+	if ( disableAnimations ) {
+		return <div style={ currentStyle } { ...props }>{ children }</div>;
+	}
+
+	return (
+		<motion.div animate={ currentStyle } initial={ initialStyle } { ...props }>
+			{ children }
+		</motion.div>
+	);
+};
+
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
@@ -87,11 +99,15 @@ const VisualEditor = ( { styles } ) => {
 		const { getSettings } = select( blockEditorStore );
 		return getSettings().supportsLayout;
 	}, [] );
-	const { canvasStyles, deviceType, isIframePreview } = useSelect( ( select ) => {
+	const { canvasStyles, deviceType, disableCanvasAnimations, isIframePreview } = useSelect( ( select ) => {
+		const { getCanvasStyles, getPreviewDeviceType, getEditorSettings, isIframePreview } =
+			select( 'isolated/editor' );
+
 		return {
-			canvasStyles: select( 'isolated/editor' ).getCanvasStyles(),
-			deviceType: select( 'isolated/editor' ).getPreviewDeviceType(),
-			isIframePreview: select( 'isolated/editor' ).isIframePreview(),
+			canvasStyles: getCanvasStyles(),
+			deviceType: getPreviewDeviceType(),
+			disableCanvasAnimations: getEditorSettings().disableCanvasAnimations,
+			isIframePreview: isIframePreview(),
 		};
 	} );
 	const resizedCanvasStyles = useResizeCanvas( deviceType, false );
@@ -110,6 +126,7 @@ const VisualEditor = ( { styles } ) => {
 		background: 'white',
 	};
 	let animatedStyles = desktopCanvasStyles;
+
 	if ( resizedCanvasStyles ) {
 		animatedStyles = resizedCanvasStyles;
 	}
@@ -152,7 +169,12 @@ const VisualEditor = ( { styles } ) => {
 				} }
 				ref={ blockSelectionClearerRef }
 			>
-				<motion.div animate={ animatedStyles } initial={ desktopCanvasStyles } className={ previewMode }>
+				<PreviewWrapper
+					className={ previewMode }
+					currentStyle={ animatedStyles }
+					disableAnimations={ disableCanvasAnimations }
+					initialStyle={ desktopCanvasStyles }
+				>
 					<MaybeIframe
 						shouldIframe={ isIframePreview }
 						contentRef={ contentRef }
@@ -166,7 +188,7 @@ const VisualEditor = ( { styles } ) => {
 						<EditorHeading.Slot mode="visual" />
 						<BlockList className={ undefined } __experimentalLayout={ layout } />
 					</MaybeIframe>
-				</motion.div>
+				</PreviewWrapper>
 			</motion.div>
 		</BlockTools>
 	);

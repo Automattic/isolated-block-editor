@@ -179,7 +179,7 @@ export function getCanvasStyles( state ) {
  * Whether the editor canvas is an iframe
  *
  * @param {{editor: EditorState}} state - Current state
- * @return {boolean}
+ * @return {boolean} whether the editor canvas is an iframe
  */
 export function isIframePreview( state ) {
 	return state.editor.isIframePreview || [ 'Tablet', 'Mobile' ].includes( state.editor.deviceType );

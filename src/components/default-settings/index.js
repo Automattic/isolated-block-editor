@@ -88,6 +88,8 @@ export default function applyDefaultSettings( settings ) {
 
 			allowApi: iso?.allowApi ?? false,
 
+			disableCanvasAnimations: iso?.disableCanvasAnimations ?? false,
+
 			// No default pattern
 			currentPattern: iso?.currentPattern ?? null,
 
