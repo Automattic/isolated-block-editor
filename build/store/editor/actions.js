@@ -94,6 +94,30 @@ var actions = {
   },
 
   /**
+   * Set the editor canvas styles
+   *
+   * @param {string} canvasStyles
+   */
+  setCanvasStyles: function setCanvasStyles(canvasStyles) {
+    return {
+      type: 'SET_CANVAS_STYLES',
+      canvasStyles: canvasStyles
+    };
+  },
+
+  /**
+   * Set the editor preview mode
+   *
+   * @param {boolean} isIframePreview
+   */
+  setIsIframePreview: function setIsIframePreview(isIframePreview) {
+    return {
+      type: 'SET_IFRAME_PREVIEW',
+      isIframePreview: isIframePreview
+    };
+  },
+
+  /**
    * Mark this editor as in-use or not
    *
    * @param {boolean} isEditing

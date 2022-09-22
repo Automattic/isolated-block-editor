@@ -51,6 +51,8 @@ var getPattern = function getPattern(patterns, currentPattern) {
  * @property {boolean} isReady - is the editor ready?
  * @property {IsoSettings} settings - editor settings
  * @property {string} deviceType - current device type
+ * @property {Object} canvasStyles - editor canvas styles
+ * @property {boolean} isIframePreview - whether the editor canvas is an iframe
  */
 
 /** @type EditorState */
@@ -68,6 +70,8 @@ var DEFAULT_STATE = {
   gutenbergTemplate: null,
   ignoredContent: [],
   deviceType: 'Desktop',
+  canvasStyles: null,
+  isIframePreview: false,
   settings: {
     preferencesKey: null,
     persistenceKey: null,
@@ -100,7 +104,8 @@ var DEFAULT_STATE = {
     currentPattern: null,
     patterns: [],
     defaultPreferences: {},
-    allowApi: false
+    allowApi: false,
+    disableCanvasAnimations: false
   }
 };
 /**
@@ -194,6 +199,16 @@ var reducer = function reducer() {
     case 'SET_DEVICE_TYPE':
       return _objectSpread(_objectSpread({}, state), {}, {
         deviceType: action.deviceType
+      });
+
+    case 'SET_CANVAS_STYLES':
+      return _objectSpread(_objectSpread({}, state), {}, {
+        canvasStyles: action.canvasStyles
+      });
+
+    case 'SET_IFRAME_PREVIEW':
+      return _objectSpread(_objectSpread({}, state), {}, {
+        isIframePreview: action.isIframePreview
       });
   }
 

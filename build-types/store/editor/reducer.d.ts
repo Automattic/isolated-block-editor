@@ -65,6 +65,14 @@ export type EditorState = {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 };
 declare function reducer(state: EditorState | undefined, action: any): {
     patterns: any;
@@ -96,6 +104,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     editorMode: any;
     /**
@@ -138,6 +154,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     isInserterOpened: any;
     isInspectorOpened: boolean;
@@ -178,6 +202,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     isInspectorOpened: any;
     isListViewOpened: boolean;
@@ -221,6 +253,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     isInserterOpened: boolean;
     isInspectorOpened: boolean;
@@ -261,6 +301,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     isEditing: any;
     /**
@@ -303,6 +351,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     isReady: any;
     /**
@@ -345,6 +401,14 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - current device type
      */
     deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
 } | {
     deviceType: any;
     /**
@@ -387,5 +451,63 @@ declare function reducer(state: EditorState | undefined, action: any): {
      * - editor settings
      */
     settings: IsoSettings;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
+    /**
+     * - whether the editor canvas is an iframe
+     */
+    isIframePreview: boolean;
+} | {
+    isIframePreview: any;
+    /**
+     * - whether in visual or code editing mode.
+     */
+    editorMode: EditorMode;
+    /**
+     * - whether the inserter is open.
+     */
+    isInserterOpened: boolean;
+    /**
+     * - whether the list view is open.
+     */
+    isListViewOpened: boolean;
+    /**
+     * - array of patterns.
+     */
+    patterns: Pattern[];
+    /**
+     * - current pattern name.
+     */
+    currentPattern: string | null;
+    /**
+     * - content to ignore when saving.
+     */
+    ignoredContent: string[];
+    /**
+     * - the Gutenberg template
+     */
+    gutenbergTemplate: object | null;
+    /**
+     * - is this editor being used?
+     */
+    isEditing: boolean;
+    /**
+     * - is the editor ready?
+     */
+    isReady: boolean;
+    /**
+     * - editor settings
+     */
+    settings: IsoSettings;
+    /**
+     * - current device type
+     */
+    deviceType: string;
+    /**
+     * - editor canvas styles
+     */
+    canvasStyles: any;
 };
 //# sourceMappingURL=reducer.d.ts.map

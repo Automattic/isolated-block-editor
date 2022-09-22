@@ -7,6 +7,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _react = _interopRequireDefault(require("react"));
@@ -23,6 +27,7 @@ var _compose = require("@wordpress/compose");
 
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 
+var _excluded = ["children", "disableAnimations", "initialStyle", "currentStyle"];
 import { createElement, Fragment } from "@wordpress/element";
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -36,6 +41,14 @@ function MaybeIframe(_ref) {
       styles = _ref.styles,
       style = _ref.style;
   var ref = (0, _blockEditor.__unstableUseMouseMoveTypingReset)();
+
+  var _useSelect = (0, _data.useSelect)(function (select) {
+    var settings = select('core/block-editor').getSettings();
+    return {
+      assets: settings.__unstableResolvedAssets
+    };
+  }, []),
+      assets = _useSelect.assets;
 
   if (!shouldIframe) {
     // TODO: this will add an EditorStyles for each editor on the page, which includes adding a <style> element. probably harmless but something to keep an eye on
@@ -55,6 +68,7 @@ function MaybeIframe(_ref) {
     head: createElement(_blockEditor.__unstableEditorStyles, {
       styles: styles
     }),
+    assets: assets,
     ref: ref,
     contentRef: contentRef,
     style: {
@@ -65,6 +79,25 @@ function MaybeIframe(_ref) {
     name: "editor-canvas"
   }, children);
 }
+
+var PreviewWrapper = function PreviewWrapper(_ref2) {
+  var children = _ref2.children,
+      disableAnimations = _ref2.disableAnimations,
+      initialStyle = _ref2.initialStyle,
+      currentStyle = _ref2.currentStyle,
+      props = (0, _objectWithoutProperties2["default"])(_ref2, _excluded);
+
+  if (disableAnimations) {
+    return createElement("div", (0, _extends2["default"])({
+      style: currentStyle
+    }, props), children);
+  }
+
+  return createElement(_components.__unstableMotion.div, (0, _extends2["default"])({
+    animate: currentStyle,
+    initial: initialStyle
+  }, props), children);
+};
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
@@ -75,8 +108,8 @@ function MaybeIframe(_ref) {
  */
 
 
-var VisualEditor = function VisualEditor(_ref2) {
-  var styles = _ref2.styles;
+var VisualEditor = function VisualEditor(_ref3) {
+  var styles = _ref3.styles;
   var themeSupportsLayout = (0, _data.useSelect)(function (select) {
     var _select = select(_blockEditor.store),
         getSettings = _select.getSettings;
@@ -84,12 +117,24 @@ var VisualEditor = function VisualEditor(_ref2) {
     return getSettings().supportsLayout;
   }, []);
 
-  var _useSelect = (0, _data.useSelect)(function (select) {
+  var _useSelect2 = (0, _data.useSelect)(function (select) {
+    var _select2 = select('isolated/editor'),
+        getCanvasStyles = _select2.getCanvasStyles,
+        getPreviewDeviceType = _select2.getPreviewDeviceType,
+        getEditorSettings = _select2.getEditorSettings,
+        isIframePreview = _select2.isIframePreview;
+
     return {
-      deviceType: select('isolated/editor').getPreviewDeviceType()
+      canvasStyles: getCanvasStyles(),
+      deviceType: getPreviewDeviceType(),
+      disableCanvasAnimations: getEditorSettings().disableCanvasAnimations,
+      isIframePreview: isIframePreview()
     };
   }),
-      deviceType = _useSelect.deviceType;
+      canvasStyles = _useSelect2.canvasStyles,
+      deviceType = _useSelect2.deviceType,
+      disableCanvasAnimations = _useSelect2.disableCanvasAnimations,
+      isIframePreview = _useSelect2.isIframePreview;
 
   var resizedCanvasStyles = (0, _blockEditor.__experimentalUseResizeCanvas)(deviceType, false);
   var defaultLayout = (0, _blockEditor.useSetting)('layout');
@@ -109,6 +154,10 @@ var VisualEditor = function VisualEditor(_ref2) {
 
   if (resizedCanvasStyles) {
     animatedStyles = resizedCanvasStyles;
+  }
+
+  if (canvasStyles) {
+    animatedStyles = _objectSpread(_objectSpread({}, animatedStyles), canvasStyles);
   }
 
   var blockSelectionClearerRef = (0, _blockEditor.__unstableUseBlockSelectionClearer)();
@@ -135,12 +184,13 @@ var VisualEditor = function VisualEditor(_ref2) {
       padding: '0'
     },
     ref: blockSelectionClearerRef
-  }, createElement(_components.__unstableMotion.div, {
-    animate: animatedStyles,
-    initial: desktopCanvasStyles,
-    className: previewMode
+  }, createElement(PreviewWrapper, {
+    className: previewMode,
+    currentStyle: animatedStyles,
+    disableAnimations: disableCanvasAnimations,
+    initialStyle: desktopCanvasStyles
   }, createElement(MaybeIframe, {
-    shouldIframe: deviceType === 'Tablet' || deviceType === 'Mobile',
+    shouldIframe: isIframePreview,
     contentRef: contentRef,
     styles: styles,
     style: {}

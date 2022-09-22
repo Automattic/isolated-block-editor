@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getCanvasStyles = getCanvasStyles;
 exports.getCurrentPattern = getCurrentPattern;
 exports.getCurrentPatternName = getCurrentPatternName;
 exports.getEditorMode = getEditorMode;
@@ -14,6 +15,7 @@ exports.getPreviewDeviceType = getPreviewDeviceType;
 exports.isEditing = isEditing;
 exports.isEditorReady = isEditorReady;
 exports.isEditorSidebarOpened = void 0;
+exports.isIframePreview = isIframePreview;
 exports.isInserterOpened = isInserterOpened;
 exports.isListViewOpened = isListViewOpened;
 
@@ -208,5 +210,27 @@ function isListViewOpened(state) {
 
 function getPreviewDeviceType(state) {
   return state.editor.deviceType;
+}
+/**
+ * Return editor canvas styles
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {Object} editor canvas styles
+ */
+
+
+function getCanvasStyles(state) {
+  return state.editor.canvasStyles;
+}
+/**
+ * Whether the editor canvas is an iframe
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {boolean} whether the editor canvas is an iframe
+ */
+
+
+function isIframePreview(state) {
+  return state.editor.isIframePreview || ['Tablet', 'Mobile'].includes(state.editor.deviceType);
 }
 //# sourceMappingURL=selectors.js.map

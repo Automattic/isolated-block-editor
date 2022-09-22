@@ -111,6 +111,42 @@ declare namespace actions {
         deviceType: string;
     };
     /**
+     * Set the editor canvas styles
+     *
+     * @param {string} canvasStyles
+     */
+    function setCanvasStyles(canvasStyles: string): {
+        type: string;
+        canvasStyles: string;
+    };
+    /**
+     * Set the editor canvas styles
+     *
+     * @param {string} canvasStyles
+     */
+    function setCanvasStyles(canvasStyles: string): {
+        type: string;
+        canvasStyles: string;
+    };
+    /**
+     * Set the editor preview mode
+     *
+     * @param {boolean} isIframePreview
+     */
+    function setIsIframePreview(isIframePreview: boolean): {
+        type: string;
+        isIframePreview: boolean;
+    };
+    /**
+     * Set the editor preview mode
+     *
+     * @param {boolean} isIframePreview
+     */
+    function setIsIframePreview(isIframePreview: boolean): {
+        type: string;
+        isIframePreview: boolean;
+    };
+    /**
      * Mark this editor as in-use or not
      *
      * @param {boolean} isEditing

@@ -111,6 +111,24 @@ export function isListViewOpened(state: {
 export function getPreviewDeviceType(state: {
     editor: EditorState;
 }): string;
+/**
+ * Return editor canvas styles
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {Object} editor canvas styles
+ */
+export function getCanvasStyles(state: {
+    editor: EditorState;
+}): any;
+/**
+ * Whether the editor canvas is an iframe
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {boolean} whether the editor canvas is an iframe
+ */
+export function isIframePreview(state: {
+    editor: EditorState;
+}): boolean;
 export const isEditorSidebarOpened: any;
 export type IsoSettings = import('../../index').IsoSettings;
 export type EditorMode = import('./reducer').EditorMode;

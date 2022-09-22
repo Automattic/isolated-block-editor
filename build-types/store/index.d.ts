@@ -60,6 +60,14 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             deviceType: string;
         };
+        setCanvasStyles(canvasStyles: string): {
+            type: string;
+            canvasStyles: string;
+        };
+        setIsIframePreview(isIframePreview: boolean): {
+            type: string;
+            isIframePreview: boolean;
+        };
         setEditing(isEditing: boolean): {
             type: string;
             isEditing: boolean;
@@ -130,6 +138,12 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         getPreviewDeviceType(state: {
             editor: import("./editor/reducer").EditorState;
         }): string;
+        getCanvasStyles(state: {
+            editor: import("./editor/reducer").EditorState;
+        }): any;
+        isIframePreview(state: {
+            editor: import("./editor/reducer").EditorState;
+        }): boolean;
         isEditorSidebarOpened: any;
         /**
          * Internal dependencies

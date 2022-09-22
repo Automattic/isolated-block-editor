@@ -32,7 +32,7 @@ export function createDocument({ identity, relativePositionManager, sendMessage 
     }): void;
     onYDocTriggeredChange(listener: any): () => void;
     onConnectionReady(listener: any): () => void;
-    getState(): "off" | "on" | "connecting";
+    getState(): "off" | "connecting" | "on";
     getDoc(): yjs.Doc;
     getPostMap(): yjs.Map<any>;
 };

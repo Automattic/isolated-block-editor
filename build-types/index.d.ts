@@ -56,6 +56,7 @@
  * @property {Pattern[]} [patterns] - List of patterns
  * @property {Object} [defaultPreferences] - Default preferences if nothing in localStorage
  * @property {boolean} [allowApi] - Allow API requests
+ * @property {boolean} [disableCanvasAnimations] - Disable editor canvas animations
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
 /**
@@ -256,6 +257,10 @@ export type IsoSettings = {
      * - Allow API requests
      */
     allowApi?: boolean | undefined;
+    /**
+     * - Disable editor canvas animations
+     */
+    disableCanvasAnimations?: boolean | undefined;
     /**
      * - Configure sidebar functionality
      */
