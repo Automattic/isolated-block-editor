@@ -36,6 +36,13 @@ import EditorHeading from '../editor-heading-slot';
 function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	const ref = useMouseMoveTypingReset();
 
+	const { assets } = useSelect( ( select ) => {
+		const settings = select( 'core/block-editor' ).getSettings();
+		return {
+			assets: settings.__unstableResolvedAssets,
+		};
+	}, [] );
+
 	if ( ! shouldIframe ) {
 		// TODO: this will add an EditorStyles for each editor on the page, which includes adding a <style> element. probably harmless but something to keep an eye on
 		return (
@@ -56,6 +63,7 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	return (
 		<Iframe
 			head={ <EditorStyles styles={ styles } /> }
+			assets={ assets }
 			ref={ ref }
 			contentRef={ contentRef }
 			style={ { width: '100%', height: '100%', display: 'block' } }
@@ -65,6 +73,18 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 		</Iframe>
 	);
 }
+
+const PreviewWrapper = ( { children, disableAnimations, initialStyle, currentStyle, ...props } ) => {
+	if ( disableAnimations ) {
+		return <div style={ currentStyle } { ...props }>{ children }</div>;
+	}
+
+	return (
+		<motion.div animate={ currentStyle } initial={ initialStyle } { ...props }>
+			{ children }
+		</motion.div>
+	);
+};
 
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
@@ -79,9 +99,15 @@ const VisualEditor = ( { styles } ) => {
 		const { getSettings } = select( blockEditorStore );
 		return getSettings().supportsLayout;
 	}, [] );
-	const { deviceType } = useSelect( ( select ) => {
+	const { canvasStyles, deviceType, disableCanvasAnimations, isIframePreview } = useSelect( ( select ) => {
+		const { getCanvasStyles, getPreviewDeviceType, getEditorSettings, isIframePreview } =
+			select( 'isolated/editor' );
+
 		return {
-			deviceType: select( 'isolated/editor' ).getPreviewDeviceType(),
+			canvasStyles: getCanvasStyles(),
+			deviceType: getPreviewDeviceType(),
+			disableCanvasAnimations: getEditorSettings().disableCanvasAnimations,
+			isIframePreview: isIframePreview(),
 		};
 	} );
 	const resizedCanvasStyles = useResizeCanvas( deviceType, false );
@@ -100,8 +126,16 @@ const VisualEditor = ( { styles } ) => {
 		background: 'white',
 	};
 	let animatedStyles = desktopCanvasStyles;
+
 	if ( resizedCanvasStyles ) {
 		animatedStyles = resizedCanvasStyles;
+	}
+
+	if ( canvasStyles ) {
+		animatedStyles = {
+			...animatedStyles,
+			...canvasStyles,
+		};
 	}
 
 	const blockSelectionClearerRef = useBlockSelectionClearer();
@@ -135,9 +169,14 @@ const VisualEditor = ( { styles } ) => {
 				} }
 				ref={ blockSelectionClearerRef }
 			>
-				<motion.div animate={ animatedStyles } initial={ desktopCanvasStyles } className={ previewMode }>
+				<PreviewWrapper
+					className={ previewMode }
+					currentStyle={ animatedStyles }
+					disableAnimations={ disableCanvasAnimations }
+					initialStyle={ desktopCanvasStyles }
+				>
 					<MaybeIframe
-						shouldIframe={ deviceType === 'Tablet' || deviceType === 'Mobile' }
+						shouldIframe={ isIframePreview }
 						contentRef={ contentRef }
 						styles={ styles }
 						style={ {} }
@@ -149,7 +188,7 @@ const VisualEditor = ( { styles } ) => {
 						<EditorHeading.Slot mode="visual" />
 						<BlockList className={ undefined } __experimentalLayout={ layout } />
 					</MaybeIframe>
-				</motion.div>
+				</PreviewWrapper>
 			</motion.div>
 		</BlockTools>
 	);
