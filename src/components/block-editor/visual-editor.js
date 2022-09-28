@@ -32,6 +32,7 @@ import { useMergeRefs } from '@wordpress/compose';
  * Internal dependencies
  */
 import EditorHeading from '../editor-heading-slot';
+import FooterSlot from '../footer-slot';
 
 function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	const ref = useMouseMoveTypingReset();
@@ -187,6 +188,7 @@ const VisualEditor = ( { styles } ) => {
 						/>
 						<EditorHeading.Slot mode="visual" />
 						<BlockList className={ undefined } __experimentalLayout={ layout } />
+						<FooterSlot.Slot mode="visual" />
 					</MaybeIframe>
 				</PreviewWrapper>
 			</motion.div>
