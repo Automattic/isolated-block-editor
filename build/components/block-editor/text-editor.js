@@ -15,6 +15,8 @@ var _postTextEditor = _interopRequireDefault(require("./post-text-editor"));
 
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 
+var _footerSlot = _interopRequireDefault(require("../footer-slot"));
+
 import { createElement } from "@wordpress/element";
 
 /**
@@ -38,7 +40,9 @@ function TextEditor(_ref) {
     className: "edit-post-text-editor__body"
   }, createElement(_editorHeadingSlot["default"].Slot, {
     mode: "text"
-  }), createElement(_postTextEditor["default"], null)));
+  }), createElement(_postTextEditor["default"], null), createElement(_footerSlot["default"].Slot, {
+    mode: "text"
+  })));
 }
 
 var _default = TextEditor;

@@ -27,6 +27,8 @@ var _compose = require("@wordpress/compose");
 
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 
+var _footerSlot = _interopRequireDefault(require("../footer-slot"));
+
 var _excluded = ["children", "disableAnimations", "initialStyle", "currentStyle"];
 import { createElement, Fragment } from "@wordpress/element";
 
@@ -202,6 +204,8 @@ var VisualEditor = function VisualEditor(_ref3) {
   }), createElement(_blockEditor.BlockList, {
     className: undefined,
     __experimentalLayout: layout
+  }), createElement(_footerSlot["default"].Slot, {
+    mode: "visual"
   })))));
 };
 
