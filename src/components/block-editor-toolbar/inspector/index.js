@@ -26,7 +26,7 @@ function Inspector( { button, onToggle } ) {
 		<Popover
 			position="bottom left"
 			className="iso-inspector"
-			anchorRef={ button?.current }
+			anchor={ button?.current }
 			onFocusOutside={ onOutside }
 		>
 			<ComplementaryArea.Slot scope="isolated/editor" />

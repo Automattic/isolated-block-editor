@@ -106,7 +106,7 @@ function HeaderToolbar( props ) {
 						<Popover
 							position="bottom right"
 							onClose={ () => setIsInserterOpened( false ) }
-							anchorRef={ inserterButton.current }
+							anchor={ inserterButton.current }
 						>
 							<Library
 								showMostUsedBlocks={ false }
