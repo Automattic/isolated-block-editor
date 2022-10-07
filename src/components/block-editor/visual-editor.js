@@ -17,7 +17,6 @@ import {
 	__unstableUseTypewriter as useTypewriter,
 	__unstableUseClipboardHandler as useClipboardHandler,
 	__unstableUseTypingObserver as useTypingObserver,
-	__experimentalBlockSettingsMenuFirstItem,
 	__experimentalUseResizeCanvas as useResizeCanvas,
 	__unstableUseMouseMoveTypingReset as useMouseMoveTypingReset,
 	__unstableIframe as Iframe,
