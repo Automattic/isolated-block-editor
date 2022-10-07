@@ -23,7 +23,7 @@ function PluginSidebarEditPost( { className, ...props } ) {
 			shortcut: select( keyboardShortcutsStore ).getShortcutRepresentation( 'core/edit-post/toggle-sidebar' ),
 			showIconLabels: select( 'isolated/editor' ).isFeatureActive( 'showIconLabels' ),
 		};
-	} );
+	}, [] );
 
 	return (
 		<ComplementaryArea

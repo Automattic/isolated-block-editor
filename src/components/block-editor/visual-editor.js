@@ -109,7 +109,7 @@ const VisualEditor = ( { styles } ) => {
 			disableCanvasAnimations: getEditorSettings().disableCanvasAnimations,
 			isIframePreview: isIframePreview(),
 		};
-	} );
+	}, [] );
 	const resizedCanvasStyles = useResizeCanvas( deviceType, false );
 	const defaultLayout = useSetting( 'layout' );
 	const previewMode = 'is-' + deviceType.toLowerCase() + '-preview';

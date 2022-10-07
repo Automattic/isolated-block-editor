@@ -3,7 +3,6 @@
  */
 
 import '@wordpress/editor';
-import { __ } from '@wordpress/i18n';
 import { StrictMode, useEffect } from '@wordpress/element';
 import { SlotFillProvider } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
