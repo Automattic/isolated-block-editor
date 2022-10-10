@@ -19,6 +19,7 @@ import { useSelect } from '@wordpress/data';
 function EditorLoaded( { onLoaded, onLoading } ) {
 	const { isEditorReady } = useSelect(
 		( select ) => ( {
+			// @ts-ignore
 			isEditorReady: select( 'isolated/editor' ).isEditorReady(),
 		} ),
 		[]

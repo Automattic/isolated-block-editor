@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * External dependencies
  */
@@ -43,7 +44,7 @@ function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 		};
 	}, [] );
 
-	if ( ! shouldIframe ) {
+	if ( !shouldIframe ) {
 		// TODO: this will add an EditorStyles for each editor on the page, which includes adding a <style> element. probably harmless but something to keep an eye on
 		return (
 			<>

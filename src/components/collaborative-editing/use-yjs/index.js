@@ -24,6 +24,7 @@ import { registerCollabFormats } from './formats';
 import { setupUndoManager } from './yjs-undo';
 import { PeerRelativePosition, RelativePosition } from './algorithms/relative-position';
 
+// @ts-ignore
 const debug = require( 'debug' )( 'iso-editor:collab' );
 
 /** @typedef {import('..').CollaborationSettings} CollaborationSettings */
@@ -164,8 +165,11 @@ export default function useYjs( { settings } ) {
 
 	const { getFormatType, selectionStart, selectionEnd } = useSelect( ( select ) => {
 		return {
+			// @ts-ignore
 			getFormatType: select( 'core/rich-text' ).getFormatType,
+			// @ts-ignore
 			selectionStart: select( 'core/block-editor' ).getSelectionStart(),
+			// @ts-ignore
 			selectionEnd: select( 'core/block-editor' ).getSelectionEnd(),
 		};
 	}, [] );

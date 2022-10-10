@@ -34,6 +34,7 @@ function FeatureToggle( { onToggle, isActive, label, info, messageActivated, mes
 	);
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select, { feature } ) => ( {
 		isActive: select( 'isolated/editor' ).isFeatureActive( feature ),

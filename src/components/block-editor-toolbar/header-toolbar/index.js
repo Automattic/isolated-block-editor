@@ -38,18 +38,26 @@ function HeaderToolbar( props ) {
 	} = useSelect( ( select ) => {
 		const { hasInserterItems, getBlockRootClientId, getBlockSelectionEnd } = select( 'core/block-editor' );
 		const { isListViewOpened } = select( 'isolated/editor' );
+		// @ts-ignore
 		const { getShortcutRepresentation } = select( keyboardShortcutsStore );
 
 		return {
+			// @ts-ignore
 			hasFixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
 			// This setting (richEditingEnabled) should not live in the block editor's setting.
 			isInserterEnabled:
+				// @ts-ignore
 				select( 'isolated/editor' ).getEditorMode() === 'visual' &&
+				// @ts-ignore
 				select( 'core/editor' ).getEditorSettings().richEditingEnabled &&
+				// @ts-ignore
 				hasInserterItems( getBlockRootClientId( getBlockSelectionEnd() ) ),
+			// @ts-ignore
 			isListViewOpen: isListViewOpened(),
+			// @ts-ignore
 			isTextModeEnabled: select( 'isolated/editor' ).getEditorMode() === 'text',
 			previewDeviceType: 'Desktop',
+			// @ts-ignore
 			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
 			showIconLabels: false, // Not implemented yet
 			listViewShortcut: getShortcutRepresentation( 'core/edit-post/toggle-list-view' ),
