@@ -243,6 +243,7 @@ export function commentsDocToArray( commentsDoc ) {
  *
  * @return {Array} Block list.
  */
+// @ts-ignore
 export function blocksDocToArray( yDocBlocks, { clientId = '', sanitize = false } = {} ) {
 	if ( ! yDocBlocks ) {
 		return [];
@@ -289,6 +290,7 @@ export function blocksDocToArray( yDocBlocks, { clientId = '', sanitize = false 
  *
  * @return {PostObject} Post object.
  */
+// @ts-ignore
 export function postDocToObject( doc, { sanitize = false } = {} ) {
 	const postDoc = doc.getMap( 'post' );
 	const blocks = blocksDocToArray( postDoc.get( 'blocks' ), { sanitize } );
