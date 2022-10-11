@@ -18,6 +18,7 @@ function HotSwapper( { isEditing, hotSwap } ) {
 	return null;
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select ) => {
 		const { isEditing } = select( 'isolated/editor' );

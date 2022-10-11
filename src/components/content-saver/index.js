@@ -22,7 +22,9 @@ function ContentSaver( props ) {
 	const { setReady } = useDispatch( 'isolated/editor' );
 	const { blocks, ignoredContent } = useSelect(
 		( select ) => ( {
+			// @ts-ignore
 			blocks: select( 'isolated/editor' ).getBlocks(),
+			// @ts-ignore
 			ignoredContent: select( 'isolated/editor' ).getIgnoredContent(),
 		} ),
 		[]

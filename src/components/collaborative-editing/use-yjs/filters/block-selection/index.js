@@ -19,6 +19,7 @@ const addSelectionBorders = ( OriginalComponent ) => {
 	return ( props ) => {
 		const { isSelected, color } = useSelect(
 			( select ) => {
+				// @ts-ignore
 				const peers = select( 'isolated/editor' ).getCollabPeers();
 				const matchedPeer = Object.values( peers ).find(
 					( peer ) => peer.start?.clientId === props.clientId && peer.end?.clientId === props.clientId

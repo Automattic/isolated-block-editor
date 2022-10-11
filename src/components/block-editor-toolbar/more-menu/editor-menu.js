@@ -67,6 +67,7 @@ function EditorMenu( { onClose, editorMode, onSetMode, isCodeEditingEnabled, set
 	);
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select ) => {
 		const { getEditorMode } = select( 'isolated/editor' );

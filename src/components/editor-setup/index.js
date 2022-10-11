@@ -2,11 +2,10 @@
  * WordPress dependencies
  */
 
-import { __ } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useMemo } from '@wordpress/element';
 import { withDispatch, withSelect } from '@wordpress/data';
-import { useMemo } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
+import { store as blocksStore } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -44,7 +43,7 @@ function EditorSetup( props ) {
 	useEffect( () => {
 		// Ensure we always have a __editorAssets value - Gutenberg hardcoded assets
 		// @ts-ignore
-		if ( typeof window.__editorAssets === undefined ) {
+		if ( window.__editorAssets === undefined ) {
 			// @ts-ignore
 			window.__editorAssets = { styles: '', scripts: '' };
 		}
@@ -78,10 +77,11 @@ function EditorSetup( props ) {
 	return null;
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select, { settings } ) => {
 		const { isEditing, isFeatureActive } = select( 'isolated/editor' );
-		const { getBlockTypes } = select( 'core/blocks' );
+		const { getBlockTypes } = select( blocksStore );
 		const blockTypes = getBlockTypes();
 		const hasFixedToolbar = isFeatureActive( 'fixedToolbar' );
 		const reusableBlocks = select( 'core' ).getEntityRecords( 'postType', 'wp_block' );

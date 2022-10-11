@@ -112,6 +112,7 @@ function BlockEditorContents( props ) {
 	);
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select, ownProps ) => {
 		const { getBlocks, getEditorSelection, getEditorMode, isEditing } = select( 'isolated/editor' );

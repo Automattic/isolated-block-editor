@@ -14,6 +14,7 @@ import { forwardRef } from '@wordpress/element';
 import './style.scss';
 
 function BlockNavigationDropdown( { isDisabled, ...props }, ref ) {
+	// @ts-ignore
 	const hasBlocks = useSelect( ( select ) => !! select( blockEditorStore ).getBlockCount(), [] );
 	const isEnabled = hasBlocks && ! isDisabled;
 

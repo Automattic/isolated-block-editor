@@ -87,6 +87,7 @@ export class PostTextEditor extends Component {
 	}
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select ) => {
 		const { getBlocks } = select( 'isolated/editor' );
