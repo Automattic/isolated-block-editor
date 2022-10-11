@@ -29,7 +29,9 @@ function ContentSaver(props) {
     blocks,
     ignoredContent
   } = useSelect(select => ({
+    // @ts-ignore
     blocks: select('isolated/editor').getBlocks(),
+    // @ts-ignore
     ignoredContent: select('isolated/editor').getIgnoredContent()
   }), []);
 

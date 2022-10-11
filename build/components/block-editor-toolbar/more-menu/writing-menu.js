@@ -19,6 +19,8 @@ var _toggleOption = _interopRequireDefault(require("../toggle-option"));
 
 import { createElement, Fragment } from "@wordpress/element";
 
+// @ts-nocheck
+
 /**
  * WordPress dependencies
  */

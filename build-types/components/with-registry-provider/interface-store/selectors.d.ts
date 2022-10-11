@@ -6,7 +6,7 @@
  *
  * @return {string | null | undefined} The complementary area that is active in the given scope.
  */
-export const getActiveComplementaryArea: any;
+export const getActiveComplementaryArea: Function;
 /**
  * Returns a boolean indicating if an item is pinned or not.
  *
@@ -16,7 +16,7 @@ export const getActiveComplementaryArea: any;
  *
  * @return {boolean} True if the item is pinned and false otherwise.
  */
-export const isItemPinned: any;
+export const isItemPinned: Function;
 /**
  * Returns a boolean indicating whether a feature is active for a particular
  * scope.
@@ -27,5 +27,5 @@ export const isItemPinned: any;
  *
  * @return {boolean} Is the feature enabled?
  */
-export const isFeatureActive: any;
+export const isFeatureActive: Function;
 //# sourceMappingURL=selectors.d.ts.map

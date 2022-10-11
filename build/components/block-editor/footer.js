@@ -33,6 +33,7 @@ var Footer = function Footer(_ref) {
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
 
   var _useSelect = (0, _data.useSelect)(function (select) {
+    // @ts-ignore
     var _select = select(_editor.store),
         getPostTypeLabel = _select.getPostTypeLabel;
 
@@ -42,6 +43,7 @@ var Footer = function Footer(_ref) {
         isFeatureActive = _select2.isFeatureActive;
 
     return {
+      // @ts-ignore
       hasFixedToolbar: isFeatureActive('fixedToolbar'),
       // TODO: This is currently disabled until it can be better worked in
       showBlockBreadcrumbs: false,

@@ -28,6 +28,7 @@ var _hotSwapper = _interopRequireDefault(require("./hot-swapper"));
 require("./style.scss");
 
 import { createElement } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * External dependencies

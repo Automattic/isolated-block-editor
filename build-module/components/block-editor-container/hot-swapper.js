@@ -19,7 +19,8 @@ function HotSwapper(_ref) {
     hotSwap(isEditing);
   }, [isEditing]);
   return null;
-}
+} // @ts-ignore
+
 
 export default compose([withSelect(select => {
   const {

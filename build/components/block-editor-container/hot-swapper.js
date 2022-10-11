@@ -29,7 +29,8 @@ function HotSwapper(_ref) {
     hotSwap(isEditing);
   }, [isEditing]);
   return null;
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),

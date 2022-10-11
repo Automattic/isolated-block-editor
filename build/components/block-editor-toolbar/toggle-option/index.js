@@ -11,8 +11,6 @@ var _compose = require("@wordpress/compose");
 
 var _components = require("@wordpress/components");
 
-var _i18n = require("@wordpress/i18n");
-
 var _icons = require("@wordpress/icons");
 
 import { createElement } from "@wordpress/element";
@@ -32,7 +30,8 @@ function OptionToggle(_ref) {
     role: "menuitemcheckbox",
     info: info
   }, label);
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
   var option = _ref2.option;
