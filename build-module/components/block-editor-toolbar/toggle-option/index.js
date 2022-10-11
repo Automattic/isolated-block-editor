@@ -6,7 +6,6 @@ import { createElement } from "@wordpress/element";
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { MenuItem, withSpokenMessages } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 import { check } from '@wordpress/icons';
 
 function OptionToggle(_ref) {
@@ -23,7 +22,8 @@ function OptionToggle(_ref) {
     role: "menuitemcheckbox",
     info: info
   }, label);
-}
+} // @ts-ignore
+
 
 export default compose([withSelect((select, _ref2) => {
   let {

@@ -256,6 +256,7 @@ export function commentsDocToArray(commentsDoc) {
  *
  * @return {Array} Block list.
  */
+// @ts-ignore
 
 export function blocksDocToArray(yDocBlocks) {
   var _order$get;
@@ -309,6 +310,7 @@ export function blocksDocToArray(yDocBlocks) {
  *
  * @return {PostObject} Post object.
  */
+// @ts-ignore
 
 export function postDocToObject(doc) {
   let {

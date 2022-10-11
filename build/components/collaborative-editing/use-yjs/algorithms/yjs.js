@@ -320,6 +320,7 @@ function commentsDocToArray(commentsDoc) {
  *
  * @return {Array} Block list.
  */
+// @ts-ignore
 
 
 function blocksDocToArray(yDocBlocks) {
@@ -375,6 +376,7 @@ function blocksDocToArray(yDocBlocks) {
  *
  * @return {PostObject} Post object.
  */
+// @ts-ignore
 
 
 function postDocToObject(doc) {

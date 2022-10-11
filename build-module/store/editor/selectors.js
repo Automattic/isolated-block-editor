@@ -170,4 +170,24 @@ export function isListViewOpened(state) {
 export function getPreviewDeviceType(state) {
   return state.editor.deviceType;
 }
+/**
+ * Return editor canvas styles
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {Object} editor canvas styles
+ */
+
+export function getCanvasStyles(state) {
+  return state.editor.canvasStyles;
+}
+/**
+ * Whether the editor canvas is an iframe
+ *
+ * @param {{editor: EditorState}} state - Current state
+ * @return {boolean} whether the editor canvas is an iframe
+ */
+
+export function isIframePreview(state) {
+  return state.editor.isIframePreview || ['Tablet', 'Mobile'].includes(state.editor.deviceType);
+}
 //# sourceMappingURL=selectors.js.map

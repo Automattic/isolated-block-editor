@@ -23,6 +23,7 @@ function EditorLoaded(_ref) {
   const {
     isEditorReady
   } = useSelect(select => ({
+    // @ts-ignore
     isEditorReady: select('isolated/editor').isEditorReady()
   }), []);
   useEffect(() => {

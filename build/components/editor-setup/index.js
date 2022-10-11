@@ -9,15 +9,13 @@ exports["default"] = void 0;
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
-var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
-
-var _i18n = require("@wordpress/i18n");
-
 var _element = require("@wordpress/element");
 
 var _data = require("@wordpress/data");
 
 var _compose = require("@wordpress/compose");
+
+var _blocks = require("@wordpress/blocks");
 
 var _editorSettings = _interopRequireDefault(require("./editor-settings"));
 
@@ -61,7 +59,7 @@ function EditorSetup(props) {
   (0, _element.useEffect)(function () {
     // Ensure we always have a __editorAssets value - Gutenberg hardcoded assets
     // @ts-ignore
-    if ((0, _typeof2["default"])(window.__editorAssets) === undefined) {
+    if (window.__editorAssets === undefined) {
       // @ts-ignore
       window.__editorAssets = {
         styles: '',
@@ -89,7 +87,8 @@ function EditorSetup(props) {
     updateSettings(currentSettings);
   }, [isEditing, topToolbar, currentSettings === null || currentSettings === void 0 ? void 0 : (_currentSettings$edit = currentSettings.editor) === null || _currentSettings$edit === void 0 ? void 0 : _currentSettings$edit.reusableBlocks]);
   return null;
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref) {
   var settings = _ref.settings;
@@ -98,7 +97,7 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _r
       isEditing = _select.isEditing,
       isFeatureActive = _select.isFeatureActive;
 
-  var _select2 = select('core/blocks'),
+  var _select2 = select(_blocks.store),
       getBlockTypes = _select2.getBlockTypes;
 
   var blockTypes = getBlockTypes();

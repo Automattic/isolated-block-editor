@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _i18n = require("@wordpress/i18n");
-
 var _element = require("@wordpress/element");
 
 var _data = require("@wordpress/data");
@@ -14,6 +12,8 @@ var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 
 var _blocks = require("@wordpress/blocks");
+
+// @ts-nocheck
 
 /**
  * WordPress dependencies

@@ -47,6 +47,7 @@ var _relativePosition = require("./algorithms/relative-position");
 /**
  * Internal dependencies
  */
+// @ts-ignore
 var debug = require('debug')('iso-editor:collab');
 /** @typedef {import('..').CollaborationSettings} CollaborationSettings */
 
@@ -220,8 +221,11 @@ function useYjs(_ref2) {
 
   var _useSelect = (0, _data.useSelect)(function (select) {
     return {
+      // @ts-ignore
       getFormatType: select('core/rich-text').getFormatType,
+      // @ts-ignore
       selectionStart: select('core/block-editor').getSelectionStart(),
+      // @ts-ignore
       selectionEnd: select('core/block-editor').getSelectionEnd()
     };
   }, []),

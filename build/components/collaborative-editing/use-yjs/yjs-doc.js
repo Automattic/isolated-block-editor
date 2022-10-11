@@ -106,6 +106,7 @@ function createDocument(_ref) {
      * @param {boolean} [opts.isInitialContent] Whether this is the initial content loaded from the editor onLoad.
      * @param {RichTextHint} [opts.richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
      */
+    // @ts-ignore
     applyLocalChangesToYDoc: function applyLocalChangesToYDoc(data) {
       var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
           _ref2$isInitialConten = _ref2.isInitialContent,

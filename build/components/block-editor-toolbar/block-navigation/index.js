@@ -31,6 +31,7 @@ import { createElement } from "@wordpress/element";
 function BlockNavigationDropdown(_ref, ref) {
   var isDisabled = _ref.isDisabled,
       props = (0, _objectWithoutProperties2["default"])(_ref, _excluded);
+  // @ts-ignore
   var hasBlocks = (0, _data.useSelect)(function (select) {
     return !!select(_blockEditor.store).getBlockCount();
   }, []);

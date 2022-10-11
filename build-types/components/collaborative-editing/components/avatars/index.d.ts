@@ -14,6 +14,6 @@ export function CollaborativeEditingAvatar({ peer, onAvatarClick }: {
 export function CollaborativeEditingAvatarsOverflow({ peers }: {
     peers: any;
 }): JSX.Element;
-declare const _default: any;
+declare const _default: unknown;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

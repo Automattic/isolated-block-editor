@@ -1,5 +1,6 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * WordPress dependencies
@@ -32,7 +33,7 @@ function PluginSidebarEditPost(_ref) {
       shortcut: select(keyboardShortcutsStore).getShortcutRepresentation('core/edit-post/toggle-sidebar'),
       showIconLabels: select('isolated/editor').isFeatureActive('showIconLabels')
     };
-  });
+  }, []);
   return createElement(ComplementaryArea, _extends({
     panelClassName: className,
     className: "edit-post-sidebar",

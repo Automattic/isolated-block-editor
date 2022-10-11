@@ -94,7 +94,8 @@ export function CollaborativeEditingAvatarsOverflow(_ref3) {
     onMouseEnter: () => setIsVisible(true),
     onMouseLeave: () => setIsVisible(false)
   }, `+${peers.length}`), createElement(VisuallyHidden, null, createElement(NameList, null)));
-}
+} // @ts-ignore
+
 export default compose([withSelect(select => {
   const peers = select('isolated/editor').getCollabPeers();
   return {

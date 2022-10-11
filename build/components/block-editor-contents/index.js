@@ -170,7 +170,8 @@ function BlockEditorContents(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }, children), createElement(_components.Popover.Slot, null));
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, ownProps) {
   var _ownProps$blocks;

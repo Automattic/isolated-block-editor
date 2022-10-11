@@ -6,7 +6,7 @@ import { createElement } from "@wordpress/element";
 import { useViewportMatch } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
 import { BlockBreadcrumb } from '@wordpress/block-editor';
-import { __, _x } from '@wordpress/i18n';
+import { _x } from '@wordpress/i18n';
 import { store as editorStore } from '@wordpress/editor';
 /**
  * Internal dependencies
@@ -23,6 +23,7 @@ const Footer = _ref => {
     showBlockBreadcrumbs,
     documentLabel
   } = useSelect(select => {
+    // @ts-ignore
     const {
       getPostTypeLabel
     } = select(editorStore);
@@ -31,6 +32,7 @@ const Footer = _ref => {
       isFeatureActive
     } = select('isolated/editor');
     return {
+      // @ts-ignore
       hasFixedToolbar: isFeatureActive('fixedToolbar'),
       // TODO: This is currently disabled until it can be better worked in
       showBlockBreadcrumbs: false,

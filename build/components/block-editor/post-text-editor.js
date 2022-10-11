@@ -126,7 +126,8 @@ var PostTextEditor = /*#__PURE__*/function (_Component) {
     }
   }]);
   return PostTextEditor;
-}(_element.Component);
+}(_element.Component); // @ts-ignore
+
 
 exports.PostTextEditor = PostTextEditor;
 

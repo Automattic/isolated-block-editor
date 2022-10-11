@@ -80,9 +80,13 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
   var _useSelect = (0, _data.useSelect)(function (select) {
     return {
       isEditing: select('isolated/editor'),
+      // @ts-ignore
       isEditorSidebarOpened: select('isolated/editor').isEditorSidebarOpened(),
+      // @ts-ignore
       isBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
+      // @ts-ignore
       hasBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
+      // @ts-ignore
       isInserterOpened: select('isolated/editor').isInserterOpened()
     };
   }, []),

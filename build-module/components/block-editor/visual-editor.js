@@ -1,4 +1,6 @@
+import _extends from "@babel/runtime/helpers/extends";
 import { createElement, Fragment } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * External dependencies
@@ -8,7 +10,7 @@ import React from 'react';
  * WordPress dependencies
  */
 
-import { BlockList, WritingFlow, store as blockEditorStore, useSetting, __unstableEditorStyles as EditorStyles, __experimentalLayoutStyle as LayoutStyle, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __experimentalBlockSettingsMenuFirstItem, __experimentalUseResizeCanvas as useResizeCanvas, __unstableUseMouseMoveTypingReset as useMouseMoveTypingReset, __unstableIframe as Iframe, BlockTools } from '@wordpress/block-editor';
+import { BlockList, WritingFlow, store as blockEditorStore, useSetting, __unstableEditorStyles as EditorStyles, __experimentalLayoutStyle as LayoutStyle, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __experimentalUseResizeCanvas as useResizeCanvas, __unstableUseMouseMoveTypingReset as useMouseMoveTypingReset, __unstableIframe as Iframe, BlockTools } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useRef, useMemo } from '@wordpress/element';
@@ -18,6 +20,7 @@ import { useMergeRefs } from '@wordpress/compose';
  */
 
 import EditorHeading from '../editor-heading-slot';
+import FooterSlot from '../footer-slot';
 
 function MaybeIframe(_ref) {
   let {
@@ -28,6 +31,14 @@ function MaybeIframe(_ref) {
     style
   } = _ref;
   const ref = useMouseMoveTypingReset();
+  const {
+    assets
+  } = useSelect(select => {
+    const settings = select('core/block-editor').getSettings();
+    return {
+      assets: settings.__unstableResolvedAssets
+    };
+  }, []);
 
   if (!shouldIframe) {
     // TODO: this will add an EditorStyles for each editor on the page, which includes adding a <style> element. probably harmless but something to keep an eye on
@@ -48,6 +59,7 @@ function MaybeIframe(_ref) {
     head: createElement(EditorStyles, {
       styles: styles
     }),
+    assets: assets,
     ref: ref,
     contentRef: contentRef,
     style: {
@@ -58,6 +70,27 @@ function MaybeIframe(_ref) {
     name: "editor-canvas"
   }, children);
 }
+
+const PreviewWrapper = _ref2 => {
+  let {
+    children,
+    disableAnimations,
+    initialStyle,
+    currentStyle,
+    ...props
+  } = _ref2;
+
+  if (disableAnimations) {
+    return createElement("div", _extends({
+      style: currentStyle
+    }, props), children);
+  }
+
+  return createElement(motion.div, _extends({
+    animate: currentStyle,
+    initial: initialStyle
+  }, props), children);
+};
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
@@ -68,10 +101,10 @@ function MaybeIframe(_ref) {
  */
 
 
-const VisualEditor = _ref2 => {
+const VisualEditor = _ref3 => {
   let {
     styles
-  } = _ref2;
+  } = _ref3;
   const themeSupportsLayout = useSelect(select => {
     const {
       getSettings
@@ -79,12 +112,24 @@ const VisualEditor = _ref2 => {
     return getSettings().supportsLayout;
   }, []);
   const {
-    deviceType
+    canvasStyles,
+    deviceType,
+    disableCanvasAnimations,
+    isIframePreview
   } = useSelect(select => {
+    const {
+      getCanvasStyles,
+      getPreviewDeviceType,
+      getEditorSettings,
+      isIframePreview
+    } = select('isolated/editor');
     return {
-      deviceType: select('isolated/editor').getPreviewDeviceType()
+      canvasStyles: getCanvasStyles(),
+      deviceType: getPreviewDeviceType(),
+      disableCanvasAnimations: getEditorSettings().disableCanvasAnimations,
+      isIframePreview: isIframePreview()
     };
-  });
+  }, []);
   const resizedCanvasStyles = useResizeCanvas(deviceType, false);
   const defaultLayout = useSetting('layout');
   const previewMode = 'is-' + deviceType.toLowerCase() + '-preview';
@@ -105,6 +150,12 @@ const VisualEditor = _ref2 => {
     animatedStyles = resizedCanvasStyles;
   }
 
+  if (canvasStyles) {
+    animatedStyles = { ...animatedStyles,
+      ...canvasStyles
+    };
+  }
+
   const blockSelectionClearerRef = useBlockSelectionClearer();
   const ref = useRef();
   const contentRef = useMergeRefs([ref, useClipboardHandler(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
@@ -114,7 +165,12 @@ const VisualEditor = _ref2 => {
     }
 
     return undefined;
-  }, [themeSupportsLayout, defaultLayout]);
+  }, [themeSupportsLayout, defaultLayout]); // If there is a layout definition, then we're on Gutenberg > v14, which requires us to pass the
+  // 'constrained' type
+
+  const usedLayout = layout !== null && layout !== void 0 && layout.definitions ? { ...layout,
+    type: 'constrained'
+  } : layout;
   return createElement(BlockTools, {
     __unstableContentRef: ref,
     className: "edit-post-visual-editor"
@@ -124,23 +180,26 @@ const VisualEditor = _ref2 => {
       padding: '0'
     },
     ref: blockSelectionClearerRef
-  }, createElement(motion.div, {
-    animate: animatedStyles,
-    initial: desktopCanvasStyles,
-    className: previewMode
+  }, createElement(PreviewWrapper, {
+    className: previewMode,
+    currentStyle: animatedStyles,
+    disableAnimations: disableCanvasAnimations,
+    initialStyle: desktopCanvasStyles
   }, createElement(MaybeIframe, {
-    shouldIframe: deviceType === 'Tablet' || deviceType === 'Mobile',
+    shouldIframe: isIframePreview,
     contentRef: contentRef,
     styles: styles,
     style: {}
   }, createElement(LayoutStyle, {
     selector: ".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container",
-    layout: defaultLayout
+    layout: usedLayout
   }), createElement(EditorHeading.Slot, {
     mode: "visual"
   }), createElement(BlockList, {
     className: undefined,
     __experimentalLayout: layout
+  }), createElement(FooterSlot.Slot, {
+    mode: "visual"
   })))));
 };
 

@@ -1,4 +1,5 @@
 import { createElement, Fragment } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * WordPress dependencies

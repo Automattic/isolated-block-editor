@@ -51,8 +51,6 @@ var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/h
 
 require("@wordpress/editor");
 
-var _i18n = require("@wordpress/i18n");
-
 var _element = require("@wordpress/element");
 
 var _components = require("@wordpress/components");

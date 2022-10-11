@@ -81,6 +81,30 @@ const actions = {
   },
 
   /**
+   * Set the editor canvas styles
+   *
+   * @param {string} canvasStyles
+   */
+  setCanvasStyles(canvasStyles) {
+    return {
+      type: 'SET_CANVAS_STYLES',
+      canvasStyles
+    };
+  },
+
+  /**
+   * Set the editor preview mode
+   *
+   * @param {boolean} isIframePreview
+   */
+  setIsIframePreview(isIframePreview) {
+    return {
+      type: 'SET_IFRAME_PREVIEW',
+      isIframePreview
+    };
+  },
+
+  /**
    * Mark this editor as in-use or not
    *
    * @param {boolean} isEditing

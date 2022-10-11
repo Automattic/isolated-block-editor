@@ -131,7 +131,8 @@ function CollaborativeEditingAvatarsOverflow(_ref3) {
       return setIsVisible(false);
     }
   }, "+".concat(peers.length)), createElement(_components.VisuallyHidden, null, createElement(NameList, null)));
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var peers = select('isolated/editor').getCollabPeers();

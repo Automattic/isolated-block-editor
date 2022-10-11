@@ -30,6 +30,7 @@ function EditorLoaded(_ref) {
 
   var _useSelect = (0, _data.useSelect)(function (select) {
     return {
+      // @ts-ignore
       isEditorReady: select('isolated/editor').isEditorReady()
     };
   }, []),

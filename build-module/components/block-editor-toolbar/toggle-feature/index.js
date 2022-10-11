@@ -40,7 +40,8 @@ function FeatureToggle(_ref) {
     role: "menuitemcheckbox",
     info: info
   }, label);
-}
+} // @ts-ignore
+
 
 export default compose([withSelect((select, _ref2) => {
   let {
