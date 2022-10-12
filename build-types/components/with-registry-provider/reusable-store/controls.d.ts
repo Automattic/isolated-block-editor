@@ -21,8 +21,8 @@ export function convertBlocksToReusable(clientIds: any[]): any;
 export function deleteReusableBlock(id: string): any;
 export default controls;
 declare namespace controls {
-    const CONVERT_BLOCK_TO_STATIC: any;
-    const CONVERT_BLOCKS_TO_REUSABLE: any;
-    const DELETE_REUSABLE_BLOCK: any;
+    const CONVERT_BLOCK_TO_STATIC: Function;
+    const CONVERT_BLOCKS_TO_REUSABLE: Function;
+    const DELETE_REUSABLE_BLOCK: Function;
 }
 //# sourceMappingURL=controls.d.ts.map

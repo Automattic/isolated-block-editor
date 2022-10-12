@@ -132,7 +132,7 @@ var VisualEditor = function VisualEditor(_ref3) {
       disableCanvasAnimations: getEditorSettings().disableCanvasAnimations,
       isIframePreview: isIframePreview()
     };
-  }),
+  }, []),
       canvasStyles = _useSelect2.canvasStyles,
       deviceType = _useSelect2.deviceType,
       disableCanvasAnimations = _useSelect2.disableCanvasAnimations,

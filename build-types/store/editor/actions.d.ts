@@ -169,21 +169,21 @@ declare namespace actions {
      *
      * @param {string} name Name of sidebar section
      */
-    function openGeneralSidebar(name: string): Generator<any, void, unknown>;
+    function openGeneralSidebar(name: string): Generator<Object, void, unknown>;
     /**
      * Open the named sidebar
      *
      * @param {string} name Name of sidebar section
      */
-    function openGeneralSidebar(name: string): Generator<any, void, unknown>;
+    function openGeneralSidebar(name: string): Generator<Object, void, unknown>;
     /**
      * Close the sidebar (or popover)
      */
-    function closeGeneralSidebar(): Generator<any, void, unknown>;
+    function closeGeneralSidebar(): Generator<Object, void, unknown>;
     /**
      * Close the sidebar (or popover)
      */
-    function closeGeneralSidebar(): Generator<any, void, unknown>;
+    function closeGeneralSidebar(): Generator<Object, void, unknown>;
     /**
      * Set the status of the listview sidebar section
      *

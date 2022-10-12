@@ -112,6 +112,7 @@ export function CollaborativeEditingAvatarsOverflow( { peers } ) {
 	);
 }
 
+// @ts-ignore
 export default compose( [
 	withSelect( ( select ) => {
 		const peers = select( 'isolated/editor' ).getCollabPeers();

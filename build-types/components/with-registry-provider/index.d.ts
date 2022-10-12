@@ -7,5 +7,5 @@ export default withRegistryProvider;
  *
  * The key `persistenceKey` from the settings is used as the `localStorage` key to save Gutenberg preferences
  */
-declare const withRegistryProvider: (Inner: import("react").ComponentType<any>) => any;
+declare const withRegistryProvider: (Inner: import("react").ComponentType<any>) => (props: any) => JSX.Element;
 //# sourceMappingURL=index.d.ts.map

@@ -51,6 +51,7 @@ const withRegistryProvider = createHigherOrderComponent(
 
 				// Enable the persistence plugin so we use settings in `localStorage`
 				if ( persistenceKey ) {
+					// @ts-ignore
 					newRegistry.use( plugins.persistence, {
 						persistenceKey,
 					} );
@@ -89,6 +90,7 @@ const withRegistryProvider = createHigherOrderComponent(
 
 				// This should be removed after the refactoring of the effects to controls.
 				applyMiddlewares( store );
+				// @ts-ignore
 				setSubRegistry( newRegistry );
 
 				return function cleanup() {

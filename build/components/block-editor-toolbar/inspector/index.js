@@ -35,7 +35,7 @@ function Inspector(_ref) {
   return createElement(_components.Popover, {
     position: "bottom left",
     className: "iso-inspector",
-    anchorRef: button === null || button === void 0 ? void 0 : button.current,
+    anchor: button === null || button === void 0 ? void 0 : button.current,
     onFocusOutside: onOutside
   }, createElement(_interface.ComplementaryArea.Slot, {
     scope: "isolated/editor"

@@ -15,6 +15,8 @@ var _avatars = _interopRequireDefault(require("./components/avatars"));
 
 import { createElement } from "@wordpress/element";
 
+// @ts-nocheck
+
 /**
  * Internal dependencies
  */

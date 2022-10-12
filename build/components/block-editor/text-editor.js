@@ -19,6 +19,8 @@ var _footerSlot = _interopRequireDefault(require("../footer-slot"));
 
 import { createElement } from "@wordpress/element";
 
+// @ts-nocheck
+
 /**
  * External dependencies
  */

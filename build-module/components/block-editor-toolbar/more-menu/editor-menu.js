@@ -70,7 +70,8 @@ function EditorMenu(_ref) {
     onClick: () => setMode('text'),
     role: "menuitemcheckbox"
   }, __('Code editor')));
-}
+} // @ts-ignore
+
 
 export default compose([withSelect(select => {
   const {

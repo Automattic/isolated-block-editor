@@ -81,6 +81,7 @@ export function createDocument( { identity, relativePositionManager, sendMessage
 		 * @param {boolean} [opts.isInitialContent] Whether this is the initial content loaded from the editor onLoad.
 		 * @param {RichTextHint} [opts.richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
 		 */
+		// @ts-ignore
 		applyLocalChangesToYDoc( data, { isInitialContent = false, richTextHint } = {} ) {
 			if ( state !== 'on' ) {
 				throw 'wrong state';

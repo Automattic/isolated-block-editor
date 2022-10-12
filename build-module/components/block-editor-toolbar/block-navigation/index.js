@@ -21,6 +21,7 @@ function BlockNavigationDropdown(_ref, ref) {
     isDisabled,
     ...props
   } = _ref;
+  // @ts-ignore
   const hasBlocks = useSelect(select => !!select(blockEditorStore).getBlockCount(), []);
   const isEnabled = hasBlocks && !isDisabled;
   return createElement(Dropdown, {

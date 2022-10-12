@@ -62,18 +62,26 @@ function HeaderToolbar(props) {
         getBlockSelectionEnd = _select.getBlockSelectionEnd;
 
     var _select2 = select('isolated/editor'),
-        isListViewOpened = _select2.isListViewOpened;
+        isListViewOpened = _select2.isListViewOpened; // @ts-ignore
+
 
     var _select3 = select(_keyboardShortcuts.store),
         getShortcutRepresentation = _select3.getShortcutRepresentation;
 
     return {
+      // @ts-ignore
       hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
       // This setting (richEditingEnabled) should not live in the block editor's setting.
-      isInserterEnabled: select('isolated/editor').getEditorMode() === 'visual' && select('core/editor').getEditorSettings().richEditingEnabled && hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
+      isInserterEnabled: // @ts-ignore
+      select('isolated/editor').getEditorMode() === 'visual' && // @ts-ignore
+      select('core/editor').getEditorSettings().richEditingEnabled && // @ts-ignore
+      hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
+      // @ts-ignore
       isListViewOpen: isListViewOpened(),
+      // @ts-ignore
       isTextModeEnabled: select('isolated/editor').getEditorMode() === 'text',
       previewDeviceType: 'Desktop',
+      // @ts-ignore
       isInserterOpened: select('isolated/editor').isInserterOpened(),
       showIconLabels: false,
       // Not implemented yet
@@ -141,7 +149,7 @@ function HeaderToolbar(props) {
     onClose: function onClose() {
       return setIsInserterOpened(false);
     },
-    anchorRef: inserterButton.current
+    anchor: inserterButton.current
   }, createElement(_blockEditor.__experimentalLibrary, {
     showMostUsedBlocks: false,
     showInserterHelpPanel: true,

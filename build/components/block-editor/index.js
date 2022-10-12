@@ -48,6 +48,7 @@ var _listviewSidebar = _interopRequireDefault(require("./listview-sidebar"));
 var _footer = _interopRequireDefault(require("./footer"));
 
 import { createElement, Fragment } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * External dependencies

@@ -27,6 +27,7 @@ import { createElement } from "@wordpress/element";
  * WordPress dependencies
  */
 function EditorHistoryUndo(props, ref) {
+  // @ts-ignore
   var hasUndo = (0, _data.useSelect)(function (select) {
     return select('isolated/editor').hasEditorUndo();
   }, []);

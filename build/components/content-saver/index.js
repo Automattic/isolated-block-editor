@@ -36,7 +36,9 @@ function ContentSaver(props) {
 
   var _useSelect = (0, _data.useSelect)(function (select) {
     return {
+      // @ts-ignore
       blocks: select('isolated/editor').getBlocks(),
+      // @ts-ignore
       ignoredContent: select('isolated/editor').getIgnoredContent()
     };
   }, []),

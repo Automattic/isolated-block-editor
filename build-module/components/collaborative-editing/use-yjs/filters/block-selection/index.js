@@ -24,6 +24,7 @@ const addSelectionBorders = OriginalComponent => {
       isSelected,
       color
     } = useSelect(select => {
+      // @ts-ignore
       const peers = select('isolated/editor').getCollabPeers();
       const matchedPeer = Object.values(peers).find(peer => {
         var _peer$start, _peer$end;

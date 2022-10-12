@@ -98,7 +98,7 @@ export function initializeEditor(): void;
 export function useInitializeIsoEditor({ undoManager }?: {
     undoManager?: UndoManager | undefined;
 }): void;
-declare const _default: any;
+declare const _default: (props: any) => JSX.Element;
 export default _default;
 export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
 export type Pattern = import('./store/editor/reducer').Pattern;

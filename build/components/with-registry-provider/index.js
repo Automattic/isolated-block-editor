@@ -84,6 +84,7 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
       }, registry); // Enable the persistence plugin so we use settings in `localStorage`
 
       if (persistenceKey) {
+        // @ts-ignore
         newRegistry.use(_data.plugins.persistence, {
           persistenceKey: persistenceKey
         });
@@ -108,7 +109,8 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
       registries.push(blockEditorStore);
       registries.push(editorStore); // This should be removed after the refactoring of the effects to controls.
 
-      (0, _middlewares["default"])(store);
+      (0, _middlewares["default"])(store); // @ts-ignore
+
       setSubRegistry(newRegistry);
       return function cleanup() {
         registries = registries.filter(function (item) {

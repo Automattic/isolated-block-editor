@@ -129,7 +129,7 @@ export function getCanvasStyles(state: {
 export function isIframePreview(state: {
     editor: EditorState;
 }): boolean;
-export const isEditorSidebarOpened: any;
+export const isEditorSidebarOpened: Function;
 export type IsoSettings = import('../../index').IsoSettings;
 export type EditorMode = import('./reducer').EditorMode;
 export type Pattern = import('./reducer').Pattern;

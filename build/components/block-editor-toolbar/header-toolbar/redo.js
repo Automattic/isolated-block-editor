@@ -27,6 +27,7 @@ import { createElement } from "@wordpress/element";
  * WordPress dependencies
  */
 function EditorHistoryRedo(props, ref) {
+  // @ts-ignore
   var hasRedo = (0, _data.useSelect)(function (select) {
     return select('isolated/editor').hasEditorRedo();
   }, []);

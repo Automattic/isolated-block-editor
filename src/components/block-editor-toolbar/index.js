@@ -42,9 +42,13 @@ const BlockEditorToolbar = ( props ) => {
 	const { isEditorSidebarOpened, isBlockSelected, hasBlockSelected, isInserterOpened, isEditing } = useSelect(
 		( select ) => ( {
 			isEditing: select( 'isolated/editor' ),
+			// @ts-ignore
 			isEditorSidebarOpened: select( 'isolated/editor' ).isEditorSidebarOpened(),
+			// @ts-ignore
 			isBlockSelected: !! select( 'core/block-editor' ).getBlockSelectionStart(),
+			// @ts-ignore
 			hasBlockSelected: !! select( 'core/block-editor' ).getBlockSelectionStart(),
+			// @ts-ignore
 			isInserterOpened: select( 'isolated/editor' ).isInserterOpened(),
 		} ),
 		[]

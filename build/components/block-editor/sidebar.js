@@ -40,7 +40,7 @@ function PluginSidebarEditPost(_ref) {
       shortcut: select(_keyboardShortcuts.store).getShortcutRepresentation('core/edit-post/toggle-sidebar'),
       showIconLabels: select('isolated/editor').isFeatureActive('showIconLabels')
     };
-  }),
+  }, []),
       postTitle = _useSelect.postTitle,
       shortcut = _useSelect.shortcut,
       showIconLabels = _useSelect.showIconLabels;

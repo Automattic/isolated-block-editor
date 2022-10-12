@@ -1,4 +1,5 @@
 import { createElement } from "@wordpress/element";
+// @ts-nocheck
 
 /**
  * Internal dependencies

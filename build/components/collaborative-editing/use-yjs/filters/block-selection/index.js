@@ -34,6 +34,7 @@ import { createElement } from "@wordpress/element";
 var addSelectionBorders = function addSelectionBorders(OriginalComponent) {
   return function (props) {
     var _useSelect = (0, _data.useSelect)(function (select) {
+      // @ts-ignore
       var peers = select('isolated/editor').getCollabPeers();
       var matchedPeer = Object.values(peers).find(function (peer) {
         var _peer$start, _peer$end;

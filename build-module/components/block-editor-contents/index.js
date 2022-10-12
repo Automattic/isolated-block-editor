@@ -111,7 +111,8 @@ function BlockEditorContents(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }, children), createElement(Popover.Slot, null));
-}
+} // @ts-ignore
+
 
 export default compose([withSelect((select, ownProps) => {
   var _ownProps$blocks;

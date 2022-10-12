@@ -50,7 +50,8 @@ function FeatureToggle(_ref) {
     role: "menuitemcheckbox",
     info: info
   }, label);
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
   var feature = _ref2.feature;

@@ -84,7 +84,8 @@ function EditorMenu(_ref) {
     },
     role: "menuitemcheckbox"
   }, (0, _i18n.__)('Code editor')));
-}
+} // @ts-ignore
+
 
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
