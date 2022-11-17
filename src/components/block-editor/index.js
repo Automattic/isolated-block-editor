@@ -29,6 +29,7 @@ import BlockEditorToolbar from '../block-editor-toolbar';
 import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
 import Footer from './footer';
+import ActionArea from '../action-area';
 
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
@@ -89,7 +90,7 @@ function BlockEditor( props ) {
 		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select( 'isolated/editor' );
 
 		return {
-			sidebarIsOpened: !! select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),
+			sidebarIsOpened: !!select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),
 			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
 			isInserterOpened: isInserterOpened(),
 			isListViewOpened: isListViewOpened(),
@@ -109,7 +110,7 @@ function BlockEditor( props ) {
 		'show-icon-labels': showIconLabels,
 	} );
 	const secondarySidebar = () => {
-		if ( ! inserterInSidebar ) {
+		if ( !inserterInSidebar ) {
 			return null;
 		}
 
@@ -158,7 +159,7 @@ function BlockEditor( props ) {
 				header={ header }
 				secondarySidebar={ secondarySidebar() }
 				sidebar={
-					( ! isMobileViewport || sidebarIsOpened ) &&
+					( !isMobileViewport || sidebarIsOpened ) &&
 					inspectorInSidebar && <ComplementaryArea.Slot scope="isolated/editor" />
 				}
 				notices={ <EditorSnackbars /> }
@@ -188,7 +189,7 @@ function BlockEditor( props ) {
 					</>
 				}
 				footer={ showFooter && <Footer editorMode={ editorMode } /> }
-				actions={ null }
+				actions={ <ActionArea.Slot /> }
 				shortcuts={ {
 					previous: previousShortcut,
 					next: nextShortcut,
