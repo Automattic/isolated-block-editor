@@ -5,6 +5,12 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "ActionArea", {
+  enumerable: true,
+  get: function get() {
+    return _actionArea["default"];
+  }
+});
 Object.defineProperty(exports, "CollaborativeEditing", {
   enumerable: true,
   get: function get() {
@@ -84,6 +90,8 @@ var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-sw
 var _document = _interopRequireDefault(require("./components/document"));
 
 var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
+
+var _actionArea = _interopRequireDefault(require("./components/action-area"));
 
 var _collaborativeEditing = _interopRequireDefault(require("./components/collaborative-editing"));
 

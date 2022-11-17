@@ -47,6 +47,8 @@ var _listviewSidebar = _interopRequireDefault(require("./listview-sidebar"));
 
 var _footer = _interopRequireDefault(require("./footer"));
 
+var _actionArea = _interopRequireDefault(require("../action-area"));
+
 import { createElement, Fragment } from "@wordpress/element";
 // @ts-nocheck
 
@@ -218,7 +220,7 @@ function BlockEditor(props) {
     footer: showFooter && createElement(_footer["default"], {
       editorMode: editorMode
     }),
-    actions: null,
+    actions: createElement(_actionArea["default"].Slot, null),
     shortcuts: {
       previous: previousShortcut,
       next: nextShortcut

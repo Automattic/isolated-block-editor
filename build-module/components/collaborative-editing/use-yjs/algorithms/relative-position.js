@@ -1,5 +1,3 @@
-import _defineProperty from "@babel/runtime/helpers/defineProperty";
-
 /**
  * External dependencies
  */
@@ -113,14 +111,13 @@ export class PeerRelativePosition {
    * @private
    * @type {RelativePosition[]}
    */
-
+  _peerRelativePositions = [];
   /**
    * @param {() => Record<string, Partial<SelectionRange>>} getPeers
    * @param {(peerId: string, selection: SelectionRange) => void} setPeerSelection
    */
-  constructor(getPeers, setPeerSelection) {
-    _defineProperty(this, "_peerRelativePositions", []);
 
+  constructor(getPeers, setPeerSelection) {
     /** @private */
     this._getPeers = getPeers;
     /** @private */
