@@ -324,5 +324,6 @@ import ToolbarSlot from "./components/block-editor-toolbar/slot";
 import CollaborativeEditing from "./components/collaborative-editing";
 import FooterSlot from "./components/footer-slot";
 import EditorHeadingSlot from "./components/editor-heading-slot";
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot };
+import ActionArea from "./components/action-area";
+export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };
 //# sourceMappingURL=index.d.ts.map

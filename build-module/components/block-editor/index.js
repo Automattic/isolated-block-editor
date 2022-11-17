@@ -31,6 +31,7 @@ import BlockEditorToolbar from '../block-editor-toolbar';
 import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
 import Footer from './footer';
+import ActionArea from '../action-area';
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
@@ -192,7 +193,7 @@ function BlockEditor(props) {
     footer: showFooter && createElement(Footer, {
       editorMode: editorMode
     }),
-    actions: null,
+    actions: createElement(ActionArea.Slot, null),
     shortcuts: {
       previous: previousShortcut,
       next: nextShortcut
