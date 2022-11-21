@@ -14,7 +14,6 @@ import { storeConfig as coreEditorStoreConfig } from '@wordpress/editor';
  */
 
 import storeConfig from '../../store';
-import applyMiddlewares from '../../store/middlewares';
 import reusableStore from './reusable-store';
 import applyDefaultSettings from '../default-settings';
 import decoratedEditor from '../../store/core-editor';
@@ -79,9 +78,7 @@ const withRegistryProvider = createHigherOrderComponent(WrappedComponent => with
     });
     registries.push(store);
     registries.push(blockEditorStore);
-    registries.push(editorStore); // This should be removed after the refactoring of the effects to controls.
-
-    applyMiddlewares(store); // @ts-ignore
+    registries.push(editorStore); // @ts-ignore
 
     setSubRegistry(newRegistry);
     return function cleanup() {

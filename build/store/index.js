@@ -74,8 +74,10 @@ function storeConfig(preferencesKey, defaultPreferences) {
     controls: _objectSpread({}, _controls["default"]),
     persist: ['preferences'],
     initialState: {
-      preferences: preferencesKey && localStorage.getItem(preferencesKey) ? // @ts-ignore
-      JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences
+      preferences: _objectSpread({
+        preferencesKey: preferencesKey
+      }, preferencesKey && localStorage.getItem(preferencesKey) ? // @ts-ignore
+      JSON.parse(localStorage.getItem(preferencesKey)) : defaultPreferences)
     }
   };
 }

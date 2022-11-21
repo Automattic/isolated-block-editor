@@ -27,8 +27,6 @@ var _editor = require("@wordpress/editor");
 
 var _store = _interopRequireDefault(require("../../store"));
 
-var _middlewares = _interopRequireDefault(require("../../store/middlewares"));
-
 var _reusableStore = _interopRequireDefault(require("./reusable-store"));
 
 var _defaultSettings = _interopRequireDefault(require("../default-settings"));
@@ -107,9 +105,7 @@ var withRegistryProvider = (0, _compose.createHigherOrderComponent)(function (Wr
       });
       registries.push(store);
       registries.push(blockEditorStore);
-      registries.push(editorStore); // This should be removed after the refactoring of the effects to controls.
-
-      (0, _middlewares["default"])(store); // @ts-ignore
+      registries.push(editorStore); // @ts-ignore
 
       setSubRegistry(newRegistry);
       return function cleanup() {
