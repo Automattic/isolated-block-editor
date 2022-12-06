@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.21.0] - 2022-12-06
+- Don't override the media upload setting and allow it to be passed in
+
 ## [2.20.0] - 2022-11-17
 - Add an ActionArea slot to insert components into the Gutenberg actions sidebar
 
