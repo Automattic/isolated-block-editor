@@ -305,7 +305,6 @@ Add any components to customise the editor. These components will have access to
 If you want to make use of a media uploader and media library then you must set this up similar using the `editor.MediaUpload` filter. For example, if you want to use the Gutenberg media library then this would be:
 
 ```js
-
 import { MediaUpload } from '@wordpress/media-utils';
 
 addFilter( 'editor.MediaUpload', 'your-namespace/media-upload', () => MediaUpload );
