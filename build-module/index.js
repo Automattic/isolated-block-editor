@@ -8,9 +8,7 @@ import { createElement } from "@wordpress/element";
 import '@wordpress/editor';
 import { StrictMode, useEffect } from '@wordpress/element';
 import { SlotFillProvider } from '@wordpress/components';
-import { MediaUpload } from '@wordpress/media-utils';
 import { registerCoreBlocks } from '@wordpress/block-library';
-import { addFilter } from '@wordpress/hooks';
 import { use, useDispatch, useSelect } from '@wordpress/data';
 import '@wordpress/format-library';
 import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
@@ -171,9 +169,7 @@ export function useInitializeIsoEditor() {
 
   initializeEditor(); // This allows the editor to swap stores dynamically
 
-  use(storeHotSwapPlugin, {}); // This is needed for the media uploader
-
-  addFilter('editor.MediaUpload', 'isolated-block-editor/media-upload', () => MediaUpload);
+  use(storeHotSwapPlugin, {});
   registerApiHandlers(); // Don't run this again
 
   window.isoInitialisedBlocks = true;

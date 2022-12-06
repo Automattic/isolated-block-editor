@@ -6,9 +6,7 @@
 import '@wordpress/editor';
 import { StrictMode, useEffect } from '@wordpress/element';
 import { SlotFillProvider } from '@wordpress/components';
-import { MediaUpload } from '@wordpress/media-utils';
 import { registerCoreBlocks } from '@wordpress/block-library';
-import { addFilter } from '@wordpress/hooks';
 import { use, useDispatch, useSelect } from '@wordpress/data';
 import '@wordpress/format-library';
 import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
@@ -121,7 +119,6 @@ import './style.scss';
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
  * @property {boolean} hasFixedToolbar
- * @property {null|object} mediaUpload
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
@@ -168,9 +165,6 @@ export function useInitializeIsoEditor( { undoManager } = {} ) {
 
 	// This allows the editor to swap stores dynamically
 	use( storeHotSwapPlugin, {} );
-
-	// This is needed for the media uploader
-	addFilter( 'editor.MediaUpload', 'isolated-block-editor/media-upload', () => MediaUpload );
 
 	registerApiHandlers();
 

@@ -300,6 +300,18 @@ Note: this needs improving or replacing with something more flexible
 
 Add any components to customise the editor. These components will have access to the editor's Redux store.
 
+#### Media uploader
+
+If you want to make use of a media uploader and media library then you must set this up similar using the `editor.MediaUpload` filter. For example, if you want to use the Gutenberg media library then this would be:
+
+```js
+import { MediaUpload } from '@wordpress/media-utils';
+
+addFilter( 'editor.MediaUpload', 'your-namespace/media-upload', () => MediaUpload );
+```
+
+In versions earlier than 2.21.0 this was automatically done, but this meant that you were unable to modify or disable it.
+
 ### Extending
 
 Custom behaviour can be added through child components. These components will have access to the `isolated/editor` store, as well as to the editor instance versions of `core/block-editor`.
