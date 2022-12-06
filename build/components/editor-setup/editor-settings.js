@@ -69,9 +69,7 @@ function getEditorSettings(editorSettings, isoSettings, allBlockTypes, hasFixedT
     // @ts-ignore
     allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(function (blockName) {
       return disallowBlocks.indexOf(blockName) === -1;
-    }),
-    // Enable or disable media uploads. We do this here as a logged out user doesn't have a user object, and so the standard Gutenberg `canUser` won't work
-    mediaUpload: editorSettings.allowedMimeTypes.length === 0 ? null : editorSettings.mediaUpload
+    })
   });
 }
 //# sourceMappingURL=editor-settings.js.map
