@@ -61,11 +61,7 @@ var _element = require("@wordpress/element");
 
 var _components = require("@wordpress/components");
 
-var _mediaUtils = require("@wordpress/media-utils");
-
 var _blockLibrary = require("@wordpress/block-library");
-
-var _hooks = require("@wordpress/hooks");
 
 var _data = require("@wordpress/data");
 
@@ -243,11 +239,7 @@ function useInitializeIsoEditor() {
 
   initializeEditor(); // This allows the editor to swap stores dynamically
 
-  (0, _data.use)(_storeHotSwap["default"], {}); // This is needed for the media uploader
-
-  (0, _hooks.addFilter)('editor.MediaUpload', 'isolated-block-editor/media-upload', function () {
-    return _mediaUtils.MediaUpload;
-  });
+  (0, _data.use)(_storeHotSwap["default"], {});
   (0, _apiFetch["default"])(); // Don't run this again
 
   window.isoInitialisedBlocks = true;
