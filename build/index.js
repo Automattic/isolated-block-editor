@@ -189,7 +189,6 @@ import { createElement } from "@wordpress/element";
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
  * @property {boolean} hasFixedToolbar
- * @property {null|object} mediaUpload
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
