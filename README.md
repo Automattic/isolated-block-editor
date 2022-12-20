@@ -61,7 +61,7 @@ The Isolated Block Editor aims to provide an editor that is as isolated from Wor
 
 Examples are provided for both situations (see [Plain text editor](examples/plain-text-editor/README.md) for bundled and [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) for unbundled).
 
-They key difference is in the Webpack config. If you don't want to bundle Gutenberg with your editor then you can use the `DependencyExtractionWebpackPlugin` plugin:
+The key difference is in the Webpack config. If you don't want to bundle Gutenberg with your editor then you can use the `DependencyExtractionWebpackPlugin` plugin:
 
 ```js
 plugins: [
