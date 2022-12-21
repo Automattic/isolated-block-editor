@@ -102,7 +102,6 @@ export default function applyDefaultSettings( settings ) {
 			disableCustomFontSizes: false,
 			disablePostFormats: true,
 			titlePlaceholder: __( 'Add title' ),
-			bodyPlaceholder: __( 'Start writing or type / to choose a block' ),
 			isRTL: false,
 			autosaveInterval: 60,
 			maxUploadFileSize: 0,
@@ -131,6 +130,8 @@ export default function applyDefaultSettings( settings ) {
 			fixedToolbar: true,
 
 			...editor,
+
+			bodyPlaceholder: editor?.bodyPlaceholder ?? __( 'Start writing or type / to choose a block' ),
 
 			// @ts-ignore */}
 			availableLegacyWidgets: {},
