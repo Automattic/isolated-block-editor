@@ -4867,15 +4867,15 @@
     rememo "^4.0.0"
     uuid "^8.3.0"
 
-"@wordpress/data-controls@2.19.0":
-  version "2.19.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/data-controls/-/data-controls-2.19.0.tgz#4326f8d496ca4310c552d961a3aeb20fe337d939"
-  integrity sha512-A3f4PaNGcmKFAeeByZ9CRQhD3nhAy73vAvp+dRMlMjjBAgOvwnXv1r2XEKCOUD1TwfmlWcrxgromoTFZwm2ggw==
+"@wordpress/data-controls@2.23.0":
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/data-controls/-/data-controls-2.23.0.tgz#3bb50096a5b1fb6ff1d3abbcefbff58ada000a03"
+  integrity sha512-P8xD0MtlKqGfRDrEwsIWFHeWXLsuFemPz3k86Udgqys3zkWajZRYBfSFdFXt8iywY6/IwSW1FGlGsmSWV4HEaA==
   dependencies:
     "@babel/runtime" "^7.16.0"
-    "@wordpress/api-fetch" "^6.16.0"
-    "@wordpress/data" "^7.3.0"
-    "@wordpress/deprecated" "^3.19.0"
+    "@wordpress/api-fetch" "^6.20.0"
+    "@wordpress/data" "^8.0.0"
+    "@wordpress/deprecated" "^3.23.0"
 
 "@wordpress/data@7.3.0", "@wordpress/data@^7.3.0":
   version "7.3.0"
@@ -5451,14 +5451,14 @@
     "@babel/runtime" "^7.16.0"
     requestidlecallback "^0.3.0"
 
-"@wordpress/react-i18n@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/react-i18n/-/react-i18n-3.17.0.tgz#5e471273d9b4718dde43f4528674a4169e22af30"
-  integrity sha512-TkowBBkjx7FRg2wyWiok5WKxYgXGCu23JVhBX8E7jnUqcm7kYPbmXEZy+OBo7ZnFr4CVYnu5jz3RjfZu8if4eQ==
+"@wordpress/react-i18n@3.21.0":
+  version "3.21.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/react-i18n/-/react-i18n-3.21.0.tgz#25e8369e3f93ec99d654d505ade060d3cfebd713"
+  integrity sha512-bRvR4AmGFyrRUG9NOu74ehbEG6be4YqCuFPdnuSID1mBTMjKrY8EgP4ojhUlnAZPSNRxQLFRx1aUvk5Bq1bBhA==
   dependencies:
     "@babel/runtime" "^7.16.0"
-    "@wordpress/element" "^4.17.0"
-    "@wordpress/i18n" "^4.19.0"
+    "@wordpress/element" "^5.0.0"
+    "@wordpress/i18n" "^4.23.0"
     utility-types "^3.10.0"
 
 "@wordpress/redux-routine@4.23.0", "@wordpress/redux-routine@^4.23.0":
