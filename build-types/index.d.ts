@@ -74,7 +74,6 @@
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
  * @property {boolean} hasFixedToolbar
- * @property {null|object} mediaUpload
  * @property {object[]|null} template
  * @property {null} templateLock
  * @property {object[]} reusableBlocks
@@ -287,7 +286,6 @@ export type EditorSettings = {
     allowedMimeTypes: any;
     allowedBlockTypes: string[];
     hasFixedToolbar: boolean;
-    mediaUpload: null | object;
     template: object[] | null;
     templateLock: null;
     reusableBlocks: object[];

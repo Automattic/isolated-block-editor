@@ -15270,11 +15270,6 @@ refractor@^3.6.0:
     parse-entities "^2.0.0"
     prismjs "~1.27.0"
 
-refx@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/refx/-/refx-3.1.1.tgz#8ca1b4844ac81ff8e8b79523fdd082cac9b05517"
-  integrity sha512-lwN27W5iYyagpCxxYDYDl0IIiKh0Vgi3wvafqfthbzTfBgLOYAstcftp+G2X612xVaB8rhn5wDxd4er4KEeb8A==
-
 regenerate-unicode-properties@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-10.0.1.tgz#7f442732aa7934a3740c779bb9b3340dccc1fb56"

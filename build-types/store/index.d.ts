@@ -1,4 +1,3 @@
-/// <reference types="redux-undo" />
 export default storeConfig;
 declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
     reducer: import("redux").Reducer<import("redux").CombinedState<{
