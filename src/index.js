@@ -17,7 +17,7 @@ import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
 
 import BlockEditorContainer from './components/block-editor-container';
 import withRegistryProvider from './components/with-registry-provider';
-import EditorSetup from './components/editor-setup';
+import useEditorSetup from './components/editor-setup';
 import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
 import registerApiHandlers from './components/api-fetch';
@@ -124,6 +124,7 @@ import './style.scss';
  * @property {object[]} reusableBlocks
  * @property {object[]} styles
  * @property {object[]} defaultEditorStyles
+ * @property {string} bodyPlaceholder
  */
 
 /**
@@ -236,7 +237,6 @@ function IsolatedBlockEditor( props ) {
 		children,
 		onSaveContent,
 		onSaveBlocks,
-		settings,
 		__experimentalUndoManager,
 		__experimentalOnInput,
 		__experimentalOnChange,
@@ -245,8 +245,10 @@ function IsolatedBlockEditor( props ) {
 		...params
 	} = props;
 
+	// This needs to happen first to setup Gutenbergy things
 	useInitializeIsoEditor( { undoManager: __experimentalUndoManager } );
 
+	const settings = useEditorSetup( props.settings );
 	const editorSelection = useSelect(
 		( select ) => ( {
 			start: select( 'core/block-editor' ).getSelectionStart(),
@@ -263,7 +265,6 @@ function IsolatedBlockEditor( props ) {
 		<StrictMode>
 			<ShortcutProvider>
 				<ContentSaver onSaveBlocks={ onSaveBlocks } onSaveContent={ onSaveContent } />
-				<EditorSetup settings={ settings } />
 				<PatternMonitor />
 
 				<SlotFillProvider>
