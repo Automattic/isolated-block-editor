@@ -124,6 +124,7 @@ import './style.scss';
  * @property {object[]} reusableBlocks
  * @property {object[]} styles
  * @property {object[]} defaultEditorStyles
+ * @property {string} bodyPlaceholder
  */
 
 /**
