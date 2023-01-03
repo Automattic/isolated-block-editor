@@ -101,7 +101,7 @@ require("./store/edit-post");
 
 require("./style.scss");
 
-var _excluded = ["children", "onSaveContent", "onSaveBlocks", "settings", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"];
+var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"];
 import { createElement } from "@wordpress/element";
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
@@ -194,6 +194,7 @@ import { createElement } from "@wordpress/element";
  * @property {object[]} reusableBlocks
  * @property {object[]} styles
  * @property {object[]} defaultEditorStyles
+ * @property {string} bodyPlaceholder
  */
 
 /**
@@ -308,16 +309,17 @@ function IsolatedBlockEditor(props) {
   var children = props.children,
       onSaveContent = props.onSaveContent,
       onSaveBlocks = props.onSaveBlocks,
-      settings = props.settings,
       __experimentalUndoManager = props.__experimentalUndoManager,
       __experimentalOnInput = props.__experimentalOnInput,
       __experimentalOnChange = props.__experimentalOnChange,
       __experimentalValue = props.__experimentalValue,
       __experimentalOnSelection = props.__experimentalOnSelection,
-      params = (0, _objectWithoutProperties2["default"])(props, _excluded);
+      params = (0, _objectWithoutProperties2["default"])(props, _excluded); // This needs to happen first to setup Gutenbergy things
+
   useInitializeIsoEditor({
     undoManager: __experimentalUndoManager
   });
+  var settings = (0, _editorSetup["default"])(props.settings);
   var editorSelection = (0, _data.useSelect)(function (select) {
     return {
       start: select('core/block-editor').getSelectionStart(),
@@ -330,8 +332,6 @@ function IsolatedBlockEditor(props) {
   return createElement(_element.StrictMode, null, createElement(_keyboardShortcuts.ShortcutProvider, null, createElement(_contentSaver["default"], {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
-  }), createElement(_editorSetup["default"], {
-    settings: settings
   }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], (0, _extends2["default"])({}, params, {
     onInput: __experimentalOnInput,
     onChange: __experimentalOnChange,

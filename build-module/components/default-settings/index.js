@@ -20,7 +20,7 @@ function getMenu(current, defaultMenu) {
 
 
 export default function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
 
   const {
     iso,
@@ -90,7 +90,6 @@ export default function applyDefaultSettings(settings) {
       disableCustomFontSizes: false,
       disablePostFormats: true,
       titlePlaceholder: __('Add title'),
-      bodyPlaceholder: __('Start writing or type / to choose a block'),
       isRTL: false,
       autosaveInterval: 60,
       maxUploadFileSize: 0,
@@ -114,6 +113,7 @@ export default function applyDefaultSettings(settings) {
       // Default to fixed top toolbar
       fixedToolbar: true,
       ...editor,
+      bodyPlaceholder: (_editor$bodyPlacehold = editor === null || editor === void 0 ? void 0 : editor.bodyPlaceholder) !== null && _editor$bodyPlacehold !== void 0 ? _editor$bodyPlacehold : __('Start writing or type / to choose a block'),
       // @ts-ignore */}
       availableLegacyWidgets: {},
       hasPermissionsToManageWidgets: false,
