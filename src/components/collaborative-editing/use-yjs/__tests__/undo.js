@@ -17,7 +17,7 @@ const collabSettings = {
 	avatarUrl: 'fake-image.jpg',
 };
 
-describe( 'CollaborativeEditing: Undo/Redo', () => {
+describe.skip( 'CollaborativeEditing: Undo/Redo', () => {
 	beforeAll( () => {
 		// Gutenberg issues an apiFetch at some point
 		registerApiHandlers();

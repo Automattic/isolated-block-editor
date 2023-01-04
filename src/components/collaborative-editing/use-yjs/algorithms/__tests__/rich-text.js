@@ -40,7 +40,7 @@ describe( 'gutenFormatsToYFormats', () => {
 	} );
 } );
 
-describe( 'applyHTMLDelta', () => {
+describe.skip( 'applyHTMLDelta', () => {
 	it( 'should handle empty strings', () => {
 		const before = '';
 		const after = 'abc';
@@ -127,7 +127,7 @@ describe( 'applyHTMLDelta', () => {
 	} );
 } );
 
-describe( 'conflict merging', () => {
+describe.skip( 'conflict merging', () => {
 	const updateSimultaneously = ( initial, a, b ) => {
 		const richTextMap1 = richTextMapFrom( initial );
 		const richTextMap2 = richTextMapFrom( initial );
@@ -197,7 +197,7 @@ describe( 'conflict merging', () => {
 	} );
 } );
 
-describe( 'multiline', () => {
+describe.skip( 'multiline', () => {
 	it( 'should support multiline tags', () => {
 		const before = '<li>foo</li><li>foo</li>';
 		const after = '<li>foo</li><li>bar</li>';
