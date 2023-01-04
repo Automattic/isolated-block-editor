@@ -310,6 +310,16 @@ import { MediaUpload } from '@wordpress/media-utils';
 addFilter( 'editor.MediaUpload', 'your-namespace/media-upload', () => MediaUpload );
 ```
 
+You will also need to pass in the media uploader as part of the editor settings:
+
+```js
+import { mediaUpload } from '@wordpress/editor';
+
+const settings = { your settings };
+
+settings.editor.mediaUpload = mediaUpload;
+```
+
 In versions earlier than 2.21.0 this was automatically done, but this meant that you were unable to modify or disable it.
 
 ### Extending
