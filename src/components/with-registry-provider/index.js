@@ -101,6 +101,7 @@ const withRegistryProvider = createHigherOrderComponent(
 
 			return (
 				<RegistryProvider value={ subRegistry }>
+					{ /* @ts-ignore */ }
 					<WrappedComponent { ...additionalProps } settings={ defaultSettings } />
 				</RegistryProvider>
 			);
