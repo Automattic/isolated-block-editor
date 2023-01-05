@@ -93,13 +93,15 @@
 		"lib0": "^0.2.58",
 		"lodash": "^4.17.21",
 		"memize": "^1.1.0",
-		"react": "18.2.0",
-		"react-autosize-textarea": "^7.1.0",
-		"react-dom": "18.2.0",
+		"react-textarea-autosize": "^8.4.0",
 		"reakit-utils": "^0.15.2",
 		"redux-undo": "^1.0.1",
 		"uuid": "^9.0.0",
 		"yjs": "^13.5.44"
+	},
+	"peerDependencies": {
+		"react": "^18.0.0",
+		"react-dom": "^18.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.20.7",
