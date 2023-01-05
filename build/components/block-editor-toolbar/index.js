@@ -1,36 +1,22 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _element = require("@wordpress/element");
-
 var _components = require("@wordpress/components");
-
 var _icons = require("@wordpress/icons");
-
 var _i18n = require("@wordpress/i18n");
-
 var _data = require("@wordpress/data");
-
 var _compose = require("@wordpress/compose");
-
 var _moreMenu = _interopRequireDefault(require("./more-menu"));
-
 var _headerToolbar = _interopRequireDefault(require("./header-toolbar"));
-
 var _inspector = _interopRequireDefault(require("./inspector"));
-
 var _slot = _interopRequireDefault(require("./slot"));
-
 require("./style.scss");
-
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -40,9 +26,7 @@ import { createElement } from "@wordpress/element";
  */
 
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
-
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-
 /** @typedef {import('../../index').OnMore} OnMore */
 
 /**
@@ -55,57 +39,49 @@ import { createElement } from "@wordpress/element";
  */
 var BlockEditorToolbar = function BlockEditorToolbar(props) {
   var _settings$iso, _settings$iso2, _settings$iso2$sideba;
-
   var ref = (0, _element.useRef)(null);
   var settings = props.settings,
-      editorMode = props.editorMode,
-      renderMoreMenu = props.renderMoreMenu;
+    editorMode = props.editorMode,
+    renderMoreMenu = props.renderMoreMenu;
   var isHugeViewport = (0, _compose.useViewportMatch)('huge', '>=');
-
   var _ref = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {},
-      inspector = _ref.inspector;
-
+    inspector = _ref.inspector;
   var _ref2 = settings.iso || {},
-      moreMenu = _ref2.moreMenu;
-
+    moreMenu = _ref2.moreMenu;
   var inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inspector) || false;
-
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
-      openGeneralSidebar = _useDispatch.openGeneralSidebar,
-      closeGeneralSidebar = _useDispatch.closeGeneralSidebar;
-
+    openGeneralSidebar = _useDispatch.openGeneralSidebar,
+    closeGeneralSidebar = _useDispatch.closeGeneralSidebar;
   var _useDispatch2 = (0, _data.useDispatch)('isolated/editor'),
-      setIsInserterOpened = _useDispatch2.setIsInserterOpened;
-
+    setIsInserterOpened = _useDispatch2.setIsInserterOpened;
   var _useSelect = (0, _data.useSelect)(function (select) {
-    return {
-      isEditing: select('isolated/editor'),
-      // @ts-ignore
-      isEditorSidebarOpened: select('isolated/editor').isEditorSidebarOpened(),
-      // @ts-ignore
-      isBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
-      // @ts-ignore
-      hasBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
-      // @ts-ignore
-      isInserterOpened: select('isolated/editor').isInserterOpened()
-    };
-  }, []),
-      isEditorSidebarOpened = _useSelect.isEditorSidebarOpened,
-      isBlockSelected = _useSelect.isBlockSelected,
-      hasBlockSelected = _useSelect.hasBlockSelected,
-      isInserterOpened = _useSelect.isInserterOpened,
-      isEditing = _useSelect.isEditing;
-
+      return {
+        isEditing: select('isolated/editor'),
+        // @ts-ignore
+        isEditorSidebarOpened: select('isolated/editor').isEditorSidebarOpened(),
+        // @ts-ignore
+        isBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
+        // @ts-ignore
+        hasBlockSelected: !!select('core/block-editor').getBlockSelectionStart(),
+        // @ts-ignore
+        isInserterOpened: select('isolated/editor').isInserterOpened()
+      };
+    }, []),
+    isEditorSidebarOpened = _useSelect.isEditorSidebarOpened,
+    isBlockSelected = _useSelect.isBlockSelected,
+    hasBlockSelected = _useSelect.hasBlockSelected,
+    isInserterOpened = _useSelect.isInserterOpened,
+    isEditing = _useSelect.isEditing;
   function toggleSidebar(isOpen) {
     if (!isOpen) {
       closeGeneralSidebar();
     } else {
       openGeneralSidebar(hasBlockSelected ? 'edit-post/block' : 'edit-post/document');
     }
-  } // If in popover mode then ensure the sidebar is closed when the editor is first started. This is because the complimentary area status
+  }
+
+  // If in popover mode then ensure the sidebar is closed when the editor is first started. This is because the complimentary area status
   // is saved to localStorage, and it might have been left open when in sidebar mode.
-
-
   (0, _element.useEffect)(function () {
     if (!inspectorInSidebar) {
       closeGeneralSidebar();
@@ -116,8 +92,9 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     if (!inspectorInSidebar && !isEditing && !isBlockSelected && isEditorSidebarOpened) {
       closeGeneralSidebar();
     }
-  }, [isEditing]); // Inserter and Sidebars are mutually exclusive
+  }, [isEditing]);
 
+  // Inserter and Sidebars are mutually exclusive
   (0, _element.useEffect)(function () {
     if (isEditorSidebarOpened && !isHugeViewport) {
       setIsInserterOpened(false);
@@ -161,7 +138,6 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     renderMoreMenu: renderMoreMenu
   }))));
 };
-
 var _default = BlockEditorToolbar;
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

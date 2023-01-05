@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.STORE_KEY = void 0;
-
 /**
  * Constant for the store module (or reducer) key.
  *

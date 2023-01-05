@@ -1,11 +1,11 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
 import { MenuGroup } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { MenuItem, ExternalLink } from '@wordpress/components';
+
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 
 /**
@@ -14,7 +14,6 @@ import { MenuItem, ExternalLink } from '@wordpress/components';
  * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  */
-
 function LinkMenu(_ref) {
   let {
     settings
@@ -22,11 +21,9 @@ function LinkMenu(_ref) {
   const {
     linkMenu = []
   } = settings.iso || {};
-
   if (linkMenu.length === 0) {
     return null;
   }
-
   return createElement(MenuGroup, {
     label: __('Links')
   }, linkMenu.map(_ref2 => {
@@ -41,6 +38,5 @@ function LinkMenu(_ref) {
     }, title));
   }));
 }
-
 export default LinkMenu;
 //# sourceMappingURL=link-menu.js.map

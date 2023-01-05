@@ -1,8 +1,8 @@
 /**
  * WordPress dependencies
  */
-import apiFetch from '@wordpress/api-fetch';
 
+import apiFetch from '@wordpress/api-fetch';
 function getPost() {
   return {
     body: {
@@ -10,9 +10,9 @@ function getPost() {
       type: 'post'
     }
   };
-} // Enough data for Gutenberg to work
+}
 
-
+// Enough data for Gutenberg to work
 function getTypes() {
   return {
     body: {
@@ -47,9 +47,9 @@ function getTypes() {
       }
     }
   };
-} // Provide some basic API preloading. This oils the Gutenberg wheels and allows certain operations to happen without making an external request
+}
 
-
+// Provide some basic API preloading. This oils the Gutenberg wheels and allows certain operations to happen without making an external request
 function registerApiHandlers(options) {
   const preload = {
     OPTIONS: {
@@ -64,6 +64,5 @@ function registerApiHandlers(options) {
   };
   apiFetch.use(apiFetch.createPreloadingMiddleware(preload));
 }
-
 export default registerApiHandlers;
 //# sourceMappingURL=index.js.map

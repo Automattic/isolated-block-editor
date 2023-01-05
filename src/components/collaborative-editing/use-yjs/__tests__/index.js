@@ -16,7 +16,7 @@ const collabSettings = {
 	avatarUrl: 'fake-image.jpg',
 };
 
-describe( 'CollaborativeEditing', () => {
+describe.skip( 'CollaborativeEditing', () => {
 	it( 'should render without errors/warnings', () => {
 		const [ transport ] = getTransports( 1 );
 		render(

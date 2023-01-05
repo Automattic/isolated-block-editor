@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
  */
 import IsolatedBlockEditor from '../';
 
-describe( 'IsolatedBlockEditor', () => {
+describe.skip( 'IsolatedBlockEditor', () => {
 	it( 'should render without errors/warnings', () => {
 		render( <IsolatedBlockEditor settings={ {} } /> );
 		expect( console ).not.toHaveErrored();

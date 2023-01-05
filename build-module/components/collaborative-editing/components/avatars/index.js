@@ -1,5 +1,4 @@
 import { createElement, Fragment } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -8,17 +7,17 @@ import { withSelect, withDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
+
 /**
  * Internal dependencies
  */
-
 import './style.scss';
+
 /**
  * @param {Object} props
  * @param {import("../..").AvailablePeer[]} props.peers
  * @param {Function} props.onAvatarClick
  */
-
 export function CollaborativeEditingAvatars(_ref) {
   let {
     peers,
@@ -70,7 +69,6 @@ export function CollaborativeEditingAvatarsOverflow(_ref3) {
   } = _ref3;
   const MAX_NAME_COUNT = 20;
   const [isVisible, setIsVisible] = useState(false);
-
   const NameList = () => {
     return createElement(Fragment, null, createElement("ul", {
       className: "iso-editor-collab-avatars__overflow-list"
@@ -79,11 +77,9 @@ export function CollaborativeEditingAvatarsOverflow(_ref3) {
       key: peer.id
     }, peer.name))), peers.length > MAX_NAME_COUNT && createElement("p", {
       className: "iso-editor-collab-avatars__overflow-more"
-    }, sprintf(
-    /* translators: %s: number of how many more users there are */
+    }, sprintf( /* translators: %s: number of how many more users there are */
     __('and %s more'), peers.length - MAX_NAME_COUNT)));
   };
-
   return createElement("div", {
     className: "iso-editor-collab-avatars__overflow"
   }, isVisible && createElement(Popover, {
@@ -94,8 +90,9 @@ export function CollaborativeEditingAvatarsOverflow(_ref3) {
     onMouseEnter: () => setIsVisible(true),
     onMouseLeave: () => setIsVisible(false)
   }, `+${peers.length}`), createElement(VisuallyHidden, null, createElement(NameList, null)));
-} // @ts-ignore
+}
 
+// @ts-ignore
 export default compose([withSelect(select => {
   const peers = select('isolated/editor').getCollabPeers();
   return {
@@ -113,12 +110,10 @@ export default compose([withSelect(select => {
   return {
     onAvatarClick(peer) {
       var _peer$start;
-
       if (peer !== null && peer !== void 0 && (_peer$start = peer.start) !== null && _peer$start !== void 0 && _peer$start.clientId) {
         selectBlock(peer.start.clientId);
       }
     }
-
   };
 })])(CollaborativeEditingAvatars);
 //# sourceMappingURL=index.js.map

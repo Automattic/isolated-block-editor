@@ -1,27 +1,25 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement, Fragment } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * External dependencies
  */
 import React from 'react';
+
 /**
  * WordPress dependencies
  */
-
 import { BlockList, WritingFlow, store as blockEditorStore, useSetting, __unstableEditorStyles as EditorStyles, __experimentalLayoutStyle as LayoutStyle, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __experimentalUseResizeCanvas as useResizeCanvas, __unstableUseMouseMoveTypingReset as useMouseMoveTypingReset, __unstableIframe as Iframe, BlockTools } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useRef, useMemo } from '@wordpress/element';
 import { useMergeRefs } from '@wordpress/compose';
+
 /**
  * Internal dependencies
  */
-
 import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
-
 function MaybeIframe(_ref) {
   let {
     children,
@@ -39,7 +37,6 @@ function MaybeIframe(_ref) {
       assets: settings.__unstableResolvedAssets
     };
   }, []);
-
   if (!shouldIframe) {
     // TODO: this will add an EditorStyles for each editor on the page, which includes adding a <style> element. probably harmless but something to keep an eye on
     return createElement(Fragment, null, createElement(EditorStyles, {
@@ -54,7 +51,6 @@ function MaybeIframe(_ref) {
       tabIndex: -1
     }, children));
   }
-
   return createElement(Iframe, {
     head: createElement(EditorStyles, {
       styles: styles
@@ -70,7 +66,6 @@ function MaybeIframe(_ref) {
     name: "editor-canvas"
   }, children);
 }
-
 const PreviewWrapper = _ref2 => {
   let {
     children,
@@ -79,18 +74,17 @@ const PreviewWrapper = _ref2 => {
     currentStyle,
     ...props
   } = _ref2;
-
   if (disableAnimations) {
     return createElement("div", _extends({
       style: currentStyle
     }, props), children);
   }
-
   return createElement(motion.div, _extends({
     animate: currentStyle,
     initial: initialStyle
   }, props), children);
 };
+
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
@@ -99,8 +93,6 @@ const PreviewWrapper = _ref2 => {
  * @param {Object} args
  * @param args.styles
  */
-
-
 const VisualEditor = _ref3 => {
   let {
     styles
@@ -145,17 +137,15 @@ const VisualEditor = _ref3 => {
     background: 'white'
   };
   let animatedStyles = desktopCanvasStyles;
-
   if (resizedCanvasStyles) {
     animatedStyles = resizedCanvasStyles;
   }
-
   if (canvasStyles) {
-    animatedStyles = { ...animatedStyles,
+    animatedStyles = {
+      ...animatedStyles,
       ...canvasStyles
     };
   }
-
   const blockSelectionClearerRef = useBlockSelectionClearer();
   const ref = useRef();
   const contentRef = useMergeRefs([ref, useClipboardHandler(), useTypewriter(), useBlockSelectionClearer(), useTypingObserver()]);
@@ -163,12 +153,13 @@ const VisualEditor = _ref3 => {
     if (themeSupportsLayout) {
       return defaultLayout;
     }
-
     return undefined;
-  }, [themeSupportsLayout, defaultLayout]); // If there is a layout definition, then we're on Gutenberg > v14, which requires us to pass the
-  // 'constrained' type
+  }, [themeSupportsLayout, defaultLayout]);
 
-  const usedLayout = layout !== null && layout !== void 0 && layout.definitions ? { ...layout,
+  // If there is a layout definition, then we're on Gutenberg > v14, which requires us to pass the
+  // 'constrained' type
+  const usedLayout = layout !== null && layout !== void 0 && layout.definitions ? {
+    ...layout,
     type: 'constrained'
   } : layout;
   return createElement(BlockTools, {
@@ -202,6 +193,5 @@ const VisualEditor = _ref3 => {
     mode: "visual"
   })))));
 };
-
 export default VisualEditor;
 //# sourceMappingURL=visual-editor.js.map

@@ -9,40 +9,33 @@
  * @param {Object} pluginOptions
  */
 function storeHotSwapPlugin(registry, pluginOptions) {
-  const hotStores = ['core/block-editor', 'core/editor']; // Switch select and dispatch
+  const hotStores = ['core/block-editor', 'core/editor'];
 
+  // Switch select and dispatch
   return {
     dispatch(reducerKey) {
       if (storeHotSwapPlugin.targetDispatch === null || hotStores.indexOf(reducerKey) === -1) {
         return registry.dispatch(reducerKey);
       }
-
       return storeHotSwapPlugin.targetDispatch(reducerKey);
     },
-
     select(reducerKey) {
       if (storeHotSwapPlugin.targetSelect === null || hotStores.indexOf(reducerKey) === -1) {
         return registry.select(reducerKey);
       }
-
       return storeHotSwapPlugin.targetSelect(reducerKey);
     }
-
   };
 }
-
 storeHotSwapPlugin.targetSelect = null;
 storeHotSwapPlugin.targetDispatch = null;
-
 storeHotSwapPlugin.setEditor = function (select, dispatch) {
   this.targetSelect = select;
   this.targetDispatch = dispatch;
 };
-
 storeHotSwapPlugin.resetEditor = function () {
   this.targetSelect = null;
   this.targetDispatch = null;
 };
-
 export default storeHotSwapPlugin;
 //# sourceMappingURL=store-hot-swap.js.map

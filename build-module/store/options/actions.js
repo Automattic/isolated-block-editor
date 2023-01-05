@@ -10,7 +10,6 @@ const actions = {
       option
     };
   }
-
 };
 export default actions;
 //# sourceMappingURL=actions.js.map

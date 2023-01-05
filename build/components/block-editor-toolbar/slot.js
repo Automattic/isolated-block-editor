@@ -4,19 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _components = require("@wordpress/components");
-
 var _i18n = require("@wordpress/i18n");
-
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
+
 var _createSlotFill = (0, _components.createSlotFill)('IsolatedToolbar'),
-    Fill = _createSlotFill.Fill,
-    Slot = _createSlotFill.Slot;
+  Fill = _createSlotFill.Fill,
+  Slot = _createSlotFill.Slot;
+
 /**
  * A Toolbar slot/fill
  *
@@ -24,19 +22,15 @@ var _createSlotFill = (0, _components.createSlotFill)('IsolatedToolbar'),
  * @param {Object} props.children Child components to insert in the toolbar slot
  * @return object
  */
-
-
 var ToolbarSlot = function ToolbarSlot(_ref) {
   var children = _ref.children;
   return createElement(Fill, null, children);
 };
-
 ToolbarSlot.Slot = function (props) {
   return createElement(Slot, null, function (fills) {
     return fills;
   });
 };
-
 var _default = ToolbarSlot;
 exports["default"] = _default;
 //# sourceMappingURL=slot.js.map

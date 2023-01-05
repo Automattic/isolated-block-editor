@@ -3,12 +3,12 @@
  */
 import * as diff from 'lib0/diff';
 import { isEqual } from 'lodash';
+
 /** @typedef {import("yjs").XmlText} Y.XmlText */
 
 /**
  * WordPress dependencies
  */
-
 import { select } from '@wordpress/data';
 import { create, toHTMLString, __UNSTABLE_LINE_SEPARATOR } from '@wordpress/rich-text';
 const OBJECT_REPLACEMENT_CHARACTER = '\ufffc'; // defined in @wordpress/rich-text special-characters
@@ -19,27 +19,23 @@ const OBJECT_REPLACEMENT_CHARACTER = '\ufffc'; // defined in @wordpress/rich-tex
  * @param {Object[]} formats
  * @return {Object[]} Y.Text formats
  */
-
 export function gutenFormatsToYFormats(formats) {
   const findIndexOfEqualFormat = function (needle) {
     let haystack = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
     return haystack.findIndex(f => needle === f);
   };
-
   const visited = Array(formats.length).fill(null).map(() => ({}));
   const yFormats = [];
   formats.forEach((formatsForChar, charIdx) => {
     formatsForChar.forEach((f, fIdx) => {
       if (visited[charIdx][fIdx]) return;
       let fLength = 1;
-
       for (let ci = charIdx + 1; ci < formats.length; ci++) {
         const foundIndex = findIndexOfEqualFormat(f, formats[ci]);
         if (foundIndex === -1) break;
         visited[ci][foundIndex] = true;
         fLength++;
       }
-
       yFormats.push({
         format: namedGutenFormatToStandardTags(f),
         index: charIdx,
@@ -49,6 +45,7 @@ export function gutenFormatsToYFormats(formats) {
   });
   return yFormats;
 }
+
 /**
  * Converts registered formats back to their standard tag/attribute names.
  *
@@ -56,7 +53,6 @@ export function gutenFormatsToYFormats(formats) {
  *
  * @param format
  */
-
 export function namedGutenFormatToStandardTags(format) {
   const formatTypeRecord = select('core/rich-text').getFormatType(format.type);
   if (!formatTypeRecord) return {
@@ -76,24 +72,24 @@ export function namedGutenFormatToStandardTags(format) {
   return {
     [tagName]: Object.fromEntries(remappedEntries)
   };
-} // TODO: Unsolved problem
+}
+
+// TODO: Unsolved problem
 // This is an imperfect inferral, so ideally we want to get this information
 // from Gutenberg's internal representation of the RichText.
-
 function getInferredMultilineTag(html) {
   const trimmedHtml = html.trim();
   if (/^<li>/.test(trimmedHtml)) return 'li';
   if (/^<p>/.test(trimmedHtml)) return 'p';
   return undefined;
 }
+
 /**
  * Massage the Gutenberg replacements into Yjs-friendly structures.
  *
  * @param {Array} a The `replacements` array of a Gutenberg RichText.
  * @param {Array} b The `replacements` array of another Gutenberg RichText.
  */
-
-
 function prepareReplacementsForTransaction(a, b) {
   const partitionReplacementTypes = arr => {
     const multilineWrapperReplacements = {};
@@ -113,7 +109,6 @@ function prepareReplacementsForTransaction(a, b) {
       normalReplacements
     };
   };
-
   const {
     normalReplacements: na
   } = partitionReplacementTypes(a);
@@ -126,6 +121,7 @@ function prepareReplacementsForTransaction(a, b) {
     replacementsDiff: diff.simpleDiffArray(na, nb)
   };
 }
+
 /**
  * Apply the delta between two HTML strings to a Y.XmlText.
  *
@@ -134,37 +130,39 @@ function prepareReplacementsForTransaction(a, b) {
  * @param {import("yjs").Map} richTextMap
  * @param {Object} [richTextOpts] Optional options object to pass @wordpress/rich-text create().
  */
-
-
 export function applyHTMLDelta(htmlA, htmlB, richTextMap) {
   var _richTextMap$doc;
-
   let richTextOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   const [multilineTagA, multilineTagB] = [htmlA, htmlB].map(getInferredMultilineTag);
   const inferredMultilineTag = multilineTagA || multilineTagB;
   const inferredMultilineWrapperTags = inferredMultilineTag === 'li' ? ['ul', 'ol'] : [];
-  const mergedRichTextOpts = { ...(inferredMultilineTag ? {
+  const mergedRichTextOpts = {
+    ...(inferredMultilineTag ? {
       multilineTag: inferredMultilineTag
     } : {}),
     multilineWrapperTags: inferredMultilineWrapperTags,
     ...richTextOpts
   };
   richTextMap.set('multilineTag', inferredMultilineTag);
-  const a = create({ ...mergedRichTextOpts,
+  const a = create({
+    ...mergedRichTextOpts,
     html: htmlA
   });
-  const b = create({ ...mergedRichTextOpts,
+  const b = create({
+    ...mergedRichTextOpts,
     html: htmlB
   });
-  const stringDiff = diff.simpleDiffString(a.text, b.text); // By default, a Yjs string insertion will inherit the formats of the previous character.
-  // We need to prevent this by inserting with an explicit format object nullifying the previous formats.
+  const stringDiff = diff.simpleDiffString(a.text, b.text);
 
+  // By default, a Yjs string insertion will inherit the formats of the previous character.
+  // We need to prevent this by inserting with an explicit format object nullifying the previous formats.
   const previousCharFormats = b.formats[stringDiff.index - 1];
   const nullifierFormat = previousCharFormats === null || previousCharFormats === void 0 ? void 0 : previousCharFormats.reduce((acc, _ref2) => {
     let {
       type
     } = _ref2;
-    return { ...acc,
+    return {
+      ...acc,
       [type]: null
     };
   }, {});
@@ -178,7 +176,6 @@ export function applyHTMLDelta(htmlA, htmlB, richTextMap) {
     const yfa = gutenFormatsToYFormats(a.formats);
     const yfb = gutenFormatsToYFormats(b.formats);
     const formatsDiff = diff.simpleDiffArray(yfa, yfb, isEqual);
-
     if (formatsDiff.remove) {
       yfa.slice(formatsDiff.index, formatsDiff.index + formatsDiff.remove).forEach(f => {
         const tagName = Object.keys(f.format)[0];
@@ -187,29 +184,29 @@ export function applyHTMLDelta(htmlA, htmlB, richTextMap) {
         });
       });
     }
-
     if (formatsDiff.insert) {
       formatsDiff.insert.forEach(f => richTextMap.get('xmlText').format(f.index, f.length, f.format));
     }
-
     richTextMap.get('replacements').delete(replacementsDiff.index, replacementsDiff.remove);
     richTextMap.get('replacements').insert(replacementsDiff.index, replacementsDiff.insert);
     richTextMap.set('multilineWrapperReplacements', multilineWrapperReplacements);
   });
 }
+
 /**
  * Convert the RichText back from our Yjs representation to an HTML string.
  *
  * @param {import("yjs").Map} richTextMap
  * @return {string}
  */
-
 export function richTextMapToHTML(richTextMap) {
-  let text = richTextMap.get('xmlText').toString(); // Process multiline tags
+  let text = richTextMap.get('xmlText').toString();
 
+  // Process multiline tags
   const multilineTag = richTextMap.get('multilineTag');
-  text = multilineTag ? stringAsMultiline(text, multilineTag, richTextMap.get('multilineWrapperReplacements')) : text; // Process replacements (e.g. inline images)
+  text = multilineTag ? stringAsMultiline(text, multilineTag, richTextMap.get('multilineWrapperReplacements')) : text;
 
+  // Process replacements (e.g. inline images)
   richTextMap.get('replacements').forEach(replacement => {
     const replacementHTML = toHTMLString({
       value: {
@@ -222,30 +219,30 @@ export function richTextMapToHTML(richTextMap) {
   });
   return text;
 }
+
 /**
  * Get HTML replacements for each multiline wrapper tag replacement.
  *
  * @param {string} str
  * @param {Record<number, {type: string}[]>} replacements
  */
-
 function getMultilineWrapperTagHTMLReplacements(str, replacements) {
   const replacementsHTML = [];
   let currentMultilineWrappers = [];
   let foundLineSeparatorIndex = -1;
-
   do {
     var _replacements$foundLi;
-
     foundLineSeparatorIndex = str.indexOf(__UNSTABLE_LINE_SEPARATOR, foundLineSeparatorIndex + 1);
     const multilineWrappers = (_replacements$foundLi = replacements[foundLineSeparatorIndex]) !== null && _replacements$foundLi !== void 0 ? _replacements$foundLi : [];
     const d = diff.simpleDiffArray(currentMultilineWrappers, multilineWrappers, isEqual);
-    let html = ''; // Closing multiline wrapper tags
+    let html = '';
 
+    // Closing multiline wrapper tags
     currentMultilineWrappers.slice(d.index, d.index + d.remove).reverse().forEach(multilineWrapper => {
       html += `</${multilineWrapper.type}></li>`;
-    }); // Opening multiline wrapper tags
+    });
 
+    // Opening multiline wrapper tags
     d.insert.forEach(multilineWrapper => {
       html += `<${multilineWrapper.type}>`;
     });
@@ -255,9 +252,9 @@ function getMultilineWrapperTagHTMLReplacements(str, replacements) {
     });
     currentMultilineWrappers = multilineWrappers;
   } while (foundLineSeparatorIndex !== -1);
-
   return replacementsHTML;
 }
+
 /**
  * Wraps each line of a multiline string with the given tags.
  *
@@ -266,8 +263,6 @@ function getMultilineWrapperTagHTMLReplacements(str, replacements) {
  * @param {Record<number, {type: string}[]>} replacements Multiline wrapper replacements.
  * @return {string} The string reconstructed with multiline considerations.
  */
-
-
 function stringAsMultiline(str, multilineTag, replacements) {
   const wrapperTagReplacements = getMultilineWrapperTagHTMLReplacements(str, replacements);
   return str.split(__UNSTABLE_LINE_SEPARATOR).map((line, i) => {

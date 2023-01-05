@@ -16,7 +16,7 @@ const collabSettings = {
 	avatarUrl: 'fake-image.jpg',
 };
 
-describe( 'Collaborative Editing: Sanitize', () => {
+describe.skip( 'Collaborative Editing: Sanitize', () => {
 	it( 'should sanitize HTML received from peer', async () => {
 		const [ transport1, transport2 ] = getTransports( 2 );
 

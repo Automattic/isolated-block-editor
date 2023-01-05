@@ -4,23 +4,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _element = require("@wordpress/element");
-
 var _data = require("@wordpress/data");
-
 var _compose = require("@wordpress/compose");
-
 var _blocks = require("@wordpress/blocks");
-
 // @ts-nocheck
-
 /**
  * WordPress dependencies
  */
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-
 /** @typedef {import('../../store/editor/reducer').Pattern} Pattern */
 
 /**
@@ -43,17 +36,18 @@ var _blocks = require("@wordpress/blocks");
  */
 function PatternMonitor(props) {
   var currentPattern = props.currentPattern,
-      updateBlocksWithoutUndo = props.updateBlocksWithoutUndo;
-  var previous = (0, _element.useRef)(null); // Monitor the current pattern and update the editor content if it changes
+    updateBlocksWithoutUndo = props.updateBlocksWithoutUndo;
+  var previous = (0, _element.useRef)(null);
 
+  // Monitor the current pattern and update the editor content if it changes
   (0, _element.useEffect)(function () {
     if (currentPattern === null || previous.current === currentPattern) {
       // @ts-ignore
       previous.current = currentPattern;
       return;
-    } // @ts-ignore
+    }
 
-
+    // @ts-ignore
     previous.current = currentPattern.name;
     setTimeout(function () {
       updateBlocksWithoutUndo((0, _blocks.parse)(currentPattern.content));
@@ -61,22 +55,18 @@ function PatternMonitor(props) {
   }, [currentPattern]);
   return null;
 }
-
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
-      getCurrentPattern = _select.getCurrentPattern;
-
+    getCurrentPattern = _select.getCurrentPattern;
   return {
     currentPattern: getCurrentPattern()
   };
 }), (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),
-      updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
-
+    updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
   return {
     updateBlocksWithoutUndo: updateBlocksWithoutUndo
   };
 })])(PatternMonitor);
-
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

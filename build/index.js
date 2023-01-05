@@ -1,7 +1,6 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -50,64 +49,35 @@ Object.defineProperty(exports, "ToolbarSlot", {
 exports["default"] = void 0;
 exports.initializeEditor = initializeEditor;
 exports.useInitializeIsoEditor = useInitializeIsoEditor;
-
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
-
 require("@wordpress/editor");
-
 var _element = require("@wordpress/element");
-
 var _components = require("@wordpress/components");
-
 var _blockLibrary = require("@wordpress/block-library");
-
 var _data = require("@wordpress/data");
-
 require("@wordpress/format-library");
-
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
-
 var _blockEditorContainer = _interopRequireDefault(require("./components/block-editor-container"));
-
 var _withRegistryProvider = _interopRequireDefault(require("./components/with-registry-provider"));
-
 var _editorSetup = _interopRequireDefault(require("./components/editor-setup"));
-
 var _patternMonitor = _interopRequireDefault(require("./components/pattern-monitor"));
-
 var _contentSaver = _interopRequireDefault(require("./components/content-saver"));
-
 var _apiFetch = _interopRequireDefault(require("./components/api-fetch"));
-
 var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-swap"));
-
 var _document = _interopRequireDefault(require("./components/document"));
-
 var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
-
 var _actionArea = _interopRequireDefault(require("./components/action-area"));
-
 var _collaborativeEditing = _interopRequireDefault(require("./components/collaborative-editing"));
-
 var _footerSlot = _interopRequireDefault(require("./components/footer-slot"));
-
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
-
 var _editorHeadingSlot = _interopRequireDefault(require("./components/editor-heading-slot"));
-
 require("./store/edit-post");
-
 require("./style.scss");
-
 var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"];
 import { createElement } from "@wordpress/element";
-
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
-
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
-
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
 
 /**
@@ -210,9 +180,9 @@ import { createElement } from "@wordpress/element";
 function initializeEditor() {
   if (window.isoInitialised) {
     return;
-  } // Register all core blocks
+  }
 
-
+  // Register all core blocks
   (0, _blockLibrary.registerCoreBlocks)();
   window.isoInitialised = true;
 }
@@ -220,30 +190,27 @@ function initializeEditor() {
  * @param {Object} props - Component props
  * @param {UndoManager} [props.undoManager]
  */
-
-
 function useInitializeIsoEditor() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      undoManager = _ref.undoManager;
-
+    undoManager = _ref.undoManager;
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
-      setUndoManager = _useDispatch.setUndoManager;
-
+    setUndoManager = _useDispatch.setUndoManager;
   (0, _element.useEffect)(function () {
     setUndoManager(undoManager);
   }, [undoManager]);
-
   if (window.isoInitialisedBlocks) {
     return;
   }
+  initializeEditor();
 
-  initializeEditor(); // This allows the editor to swap stores dynamically
-
+  // This allows the editor to swap stores dynamically
   (0, _data.use)(_storeHotSwap["default"], {});
-  (0, _apiFetch["default"])(); // Don't run this again
+  (0, _apiFetch["default"])();
 
+  // Don't run this again
   window.isoInitialisedBlocks = true;
 }
+
 /**
  * Save blocks callback
  *
@@ -303,19 +270,18 @@ function useInitializeIsoEditor() {
  * @param {OnSelect} [props.__experimentalOnSelection] - Callback to run when the editor selection changes
  * @param {object[]} [props.__experimentalValue] - Gutenberg's value
  */
-
-
 function IsolatedBlockEditor(props) {
   var children = props.children,
-      onSaveContent = props.onSaveContent,
-      onSaveBlocks = props.onSaveBlocks,
-      __experimentalUndoManager = props.__experimentalUndoManager,
-      __experimentalOnInput = props.__experimentalOnInput,
-      __experimentalOnChange = props.__experimentalOnChange,
-      __experimentalValue = props.__experimentalValue,
-      __experimentalOnSelection = props.__experimentalOnSelection,
-      params = (0, _objectWithoutProperties2["default"])(props, _excluded); // This needs to happen first to setup Gutenbergy things
+    onSaveContent = props.onSaveContent,
+    onSaveBlocks = props.onSaveBlocks,
+    __experimentalUndoManager = props.__experimentalUndoManager,
+    __experimentalOnInput = props.__experimentalOnInput,
+    __experimentalOnChange = props.__experimentalOnChange,
+    __experimentalValue = props.__experimentalValue,
+    __experimentalOnSelection = props.__experimentalOnSelection,
+    params = (0, _objectWithoutProperties2["default"])(props, _excluded);
 
+  // This needs to happen first to setup Gutenbergy things
   useInitializeIsoEditor({
     undoManager: __experimentalUndoManager
   });
@@ -339,8 +305,6 @@ function IsolatedBlockEditor(props) {
     settings: settings
   }), children))));
 }
-
 var _default = (0, _withRegistryProvider["default"])(IsolatedBlockEditor);
-
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

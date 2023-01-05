@@ -30,6 +30,10 @@ const STORE_NAME = 'isolated/editor';
  * The key `persistenceKey` from the settings is used as the `localStorage` key to save Gutenberg preferences
  */
 const withRegistryProvider = createHigherOrderComponent(
+	/**
+	 *
+	 * @param {import("react").FC } WrappedComponent
+	 */
 	( WrappedComponent ) =>
 		withRegistry( ( props ) => {
 			const { registry, settings, ...additionalProps } = props;
@@ -101,6 +105,7 @@ const withRegistryProvider = createHigherOrderComponent(
 
 			return (
 				<RegistryProvider value={ subRegistry }>
+					{ /* @ts-ignore */ }
 					<WrappedComponent { ...additionalProps } settings={ defaultSettings } />
 				</RegistryProvider>
 			);

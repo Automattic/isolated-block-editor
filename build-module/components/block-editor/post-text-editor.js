@@ -1,13 +1,12 @@
 import { createElement, Fragment } from "@wordpress/element";
-
 /**
  * External dependencies
  */
 import Textarea from 'react-autosize-textarea';
+
 /**
  * WordPress dependencies
  */
-
 import { __ } from '@wordpress/i18n';
 import { Component } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
@@ -20,17 +19,16 @@ export class PostTextEditor extends Component {
     this.stopEditing = this.stopEditing.bind(this);
     this.state = {};
   }
-
   static getDerivedStateFromProps(props, state) {
     if (state.isDirty) {
       return null;
     }
-
     return {
       value: props.value,
       isDirty: false
     };
   }
+
   /**
    * Handles a textarea change event to notify the onChange prop callback and
    * reflect the new value in the component's own state. This marks the start
@@ -42,8 +40,6 @@ export class PostTextEditor extends Component {
    *
    * @param {Event} event Change event.
    */
-
-
   edit(event) {
     // @ts-ignore */}
     const value = event.target.value;
@@ -53,13 +49,12 @@ export class PostTextEditor extends Component {
       isDirty: true
     });
   }
+
   /**
    * Function called when the user has completed their edits, responsible for
    * ensuring that changes, if made, are surfaced to the onPersist prop
    * callback and resetting dirty state.
    */
-
-
   stopEditing() {
     if (this.state.isDirty) {
       this.props.onPersist(this.state.value);
@@ -68,7 +63,6 @@ export class PostTextEditor extends Component {
       });
     }
   }
-
   render() {
     const {
       value
@@ -82,7 +76,8 @@ export class PostTextEditor extends Component {
     }, __('Type text or HTML')), createElement(Textarea, {
       autoComplete: "off",
       dir: "auto",
-      value: value // @ts-ignore */}
+      value: value
+      // @ts-ignore */}
       ,
       onChange: this.edit,
       onBlur: this.stopEditing,
@@ -91,9 +86,9 @@ export class PostTextEditor extends Component {
       placeholder: __('Start writing with text or HTML')
     }));
   }
+}
 
-} // @ts-ignore
-
+// @ts-ignore
 export default compose([withSelect(select => {
   const {
     getBlocks
@@ -110,12 +105,10 @@ export default compose([withSelect(select => {
       const blocks = parse(content);
       updateBlocksWithoutUndo(blocks);
     },
-
     onPersist(content) {
       const blocks = parse(content);
       updateBlocksWithoutUndo(blocks);
     }
-
   };
 }), withInstanceId])(PostTextEditor);
 //# sourceMappingURL=post-text-editor.js.map

@@ -1,5 +1,4 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -9,6 +8,7 @@ const {
   Fill,
   Slot
 } = createSlotFill('IsolatedToolbar');
+
 /**
  * A Toolbar slot/fill
  *
@@ -16,17 +16,14 @@ const {
  * @param {Object} props.children Child components to insert in the toolbar slot
  * @return object
  */
-
 const ToolbarSlot = _ref => {
   let {
     children
   } = _ref;
   return createElement(Fill, null, children);
 };
-
 ToolbarSlot.Slot = function (props) {
   return createElement(Slot, null, fills => fills);
 };
-
 export default ToolbarSlot;
 //# sourceMappingURL=slot.js.map

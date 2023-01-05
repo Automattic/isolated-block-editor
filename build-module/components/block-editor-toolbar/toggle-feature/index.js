@@ -1,19 +1,17 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * External dependencies
  */
 import { flow } from 'lodash';
+
 /**
  * WordPress dependencies
  */
-
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { MenuItem, withSpokenMessages } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { check } from '@wordpress/icons';
-
 function FeatureToggle(_ref) {
   let {
     onToggle,
@@ -24,7 +22,6 @@ function FeatureToggle(_ref) {
     messageDeactivated,
     speak
   } = _ref;
-
   const speakMessage = () => {
     if (isActive) {
       speak(messageDeactivated || __('Feature deactivated'));
@@ -32,7 +29,6 @@ function FeatureToggle(_ref) {
       speak(messageActivated || __('Feature activated'));
     }
   };
-
   return createElement(MenuItem, {
     icon: isActive && check,
     isSelected: isActive,
@@ -40,9 +36,9 @@ function FeatureToggle(_ref) {
     role: "menuitemcheckbox",
     info: info
   }, label);
-} // @ts-ignore
+}
 
-
+// @ts-ignore
 export default compose([withSelect((select, _ref2) => {
   let {
     feature
@@ -55,6 +51,5 @@ export default compose([withSelect((select, _ref2) => {
     dispatch('isolated/editor').toggleFeature(ownProps.feature);
     ownProps.onClose();
   }
-
 })), withSpokenMessages])(FeatureToggle);
 //# sourceMappingURL=index.js.map

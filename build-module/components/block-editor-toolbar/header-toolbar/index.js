@@ -1,5 +1,4 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -12,21 +11,18 @@ import { TableOfContents } from '@wordpress/editor';
 import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
+
 /**
  * Internal dependencies
  */
-
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
 import BlockNavigationDropdown from '../block-navigation';
-
 const preventDefault = event => {
   event.preventDefault();
 };
-
 function HeaderToolbar(props) {
   var _props$settings, _props$settings$iso, _props$settings$iso$s;
-
   const inserterButton = useRef();
   const {
     setIsInserterOpened,
@@ -50,8 +46,8 @@ function HeaderToolbar(props) {
     } = select('core/block-editor');
     const {
       isListViewOpened
-    } = select('isolated/editor'); // @ts-ignore
-
+    } = select('isolated/editor');
+    // @ts-ignore
     const {
       getShortcutRepresentation
     } = select(keyboardShortcutsStore);
@@ -59,9 +55,12 @@ function HeaderToolbar(props) {
       // @ts-ignore
       hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
       // This setting (richEditingEnabled) should not live in the block editor's setting.
-      isInserterEnabled: // @ts-ignore
-      select('isolated/editor').getEditorMode() === 'visual' && // @ts-ignore
-      select('core/editor').getEditorSettings().richEditingEnabled && // @ts-ignore
+      isInserterEnabled:
+      // @ts-ignore
+      select('isolated/editor').getEditorMode() === 'visual' &&
+      // @ts-ignore
+      select('core/editor').getEditorSettings().richEditingEnabled &&
+      // @ts-ignore
       hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
       // @ts-ignore
       isListViewOpen: isListViewOpened(),
@@ -86,10 +85,8 @@ function HeaderToolbar(props) {
   } = props.settings.iso.toolbar;
   const inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$iso = _props$settings.iso) === null || _props$settings$iso === void 0 ? void 0 : (_props$settings$iso$s = _props$settings$iso.sidebar) === null || _props$settings$iso$s === void 0 ? void 0 : _props$settings$iso$s.inserter) || false;
   const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
-  const toolbarAriaLabel = displayBlockToolbar ?
-  /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
-  __('Document and block tools') :
-  /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
+  const toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
+  __('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
   __('Document tools');
   const openInserter = useCallback(() => {
     if (isInserterOpened) {
@@ -117,8 +114,7 @@ function HeaderToolbar(props) {
     isPrimary: true,
     icon: plus
     /* translators: button label text should, if possible, be under 16
-    characters. */
-    ,
+    characters. */,
     label: _x('Toggle block inserter', 'Generic label for block inserter button'),
     showTooltip: !showIconLabels
   }), isInserterOpened && !inserterInSidebar && createElement(Popover, {
@@ -150,8 +146,7 @@ function HeaderToolbar(props) {
     icon: listView,
     disabled: isTextModeEnabled,
     isPressed: isListViewOpen
-    /* translators: button label text should, if possible, be under 16 characters. */
-    ,
+    /* translators: button label text should, if possible, be under 16 characters. */,
     label: __('List View'),
     onClick: toggleListView,
     shortcut: listViewShortcut,
@@ -164,6 +159,5 @@ function HeaderToolbar(props) {
     variant: showIconLabels ? 'tertiary' : undefined
   })));
 }
-
 export default HeaderToolbar;
 //# sourceMappingURL=index.js.map

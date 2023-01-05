@@ -1,25 +1,25 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * External dependencies
  */
 import { includes } from 'lodash';
+
 /**
  * WordPress dependencies
  */
-
 import { Component } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
+
 /**
  * Input types which are classified as button types, for use in considering
  * whether element is a (focus-normalized) button.
  *
  * @type {string[]}
  */
-
 const INPUT_BUTTON_TYPES = ['button', 'submit'];
+
 /**
  * Returns true if the given element is a button element subject to focus
  * normalization, or false otherwise.
@@ -30,20 +30,16 @@ const INPUT_BUTTON_TYPES = ['button', 'submit'];
  *
  * @return {boolean} Whether element is a button.
  */
-
 function isFocusNormalizedButton(element) {
   switch (element.nodeName) {
     case 'A':
     case 'BUTTON':
       return true;
-
     case 'INPUT':
       return includes(INPUT_BUTTON_TYPES, element.type);
   }
-
   return false;
 }
-
 export default createHigherOrderComponent(WrappedComponent => {
   return class extends Component {
     constructor() {
@@ -53,11 +49,9 @@ export default createHigherOrderComponent(WrappedComponent => {
       this.queueBlurCheck = this.queueBlurCheck.bind(this);
       this.normalizeButtonFocus = this.normalizeButtonFocus.bind(this);
     }
-
     componentWillUnmount() {
       clearTimeout(this.blurCheckTimeout);
     }
-
     bindNode(node) {
       if (node) {
         this.node = node;
@@ -66,16 +60,15 @@ export default createHigherOrderComponent(WrappedComponent => {
         this.cancelBlurCheck();
       }
     }
-
     queueBlurCheck(event) {
       // React does not allow using an event reference asynchronously
       // due to recycling behavior, except when explicitly persisted.
-      event.persist(); // Skip blur check if clicking button. See `normalizeButtonFocus`.
+      event.persist();
 
+      // Skip blur check if clicking button. See `normalizeButtonFocus`.
       if (this.preventBlurCheck) {
         return;
       }
-
       this.blurCheckTimeout = setTimeout(() => {
         // If document is not focused then focus should remain
         // inside the wrapped component and therefore we cancel
@@ -85,20 +78,18 @@ export default createHigherOrderComponent(WrappedComponent => {
           event.preventDefault();
           return;
         }
-
         if ('function' === typeof this.node.handleFocusOutside) {
           this.node.handleFocusOutside(event);
         }
       }, 0);
     }
-
     cancelBlurCheck() {
       clearTimeout(this.blurCheckTimeout);
-
       if (typeof this.node !== 'undefined' && 'function' === typeof this.node.handleFocus) {
         this.node.handleFocus(event);
       }
     }
+
     /**
      * Handles a mousedown or mouseup event to respectively assign and
      * unassign a flag for preventing blur check on button elements. Some
@@ -110,22 +101,18 @@ export default createHigherOrderComponent(WrappedComponent => {
      *
      * @param {MouseEvent} event Event for mousedown or mouseup.
      */
-
-
     normalizeButtonFocus(event) {
       const {
         type,
         target
       } = event;
       const isInteractionEnd = includes(['mouseup', 'touchend'], type);
-
       if (isInteractionEnd) {
         this.preventBlurCheck = false;
       } else if (isFocusNormalizedButton(target)) {
         this.preventBlurCheck = true;
       }
     }
-
     render() {
       // Disable reason: See `normalizeButtonFocus` for browser-specific
       // focus event normalization.
@@ -143,7 +130,6 @@ export default createHigherOrderComponent(WrappedComponent => {
       }, this.props)));
       /* eslint-enable jsx-a11y/no-static-element-interactions */
     }
-
   };
 }, 'withFocusOutside');
 //# sourceMappingURL=with-focus-outside.js.map

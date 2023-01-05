@@ -1,38 +1,23 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _compose = require("@wordpress/compose");
-
 var _data = require("@wordpress/data");
-
 var _i18n = require("@wordpress/i18n");
-
 var _components = require("@wordpress/components");
-
 var _blockEditor = require("@wordpress/block-editor");
-
 var _editor = require("@wordpress/editor");
-
 var _icons = require("@wordpress/icons");
-
 var _element = require("@wordpress/element");
-
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
-
 var _redo = _interopRequireDefault(require("./redo"));
-
 var _undo = _interopRequireDefault(require("./undo"));
-
 var _blockNavigation = _interopRequireDefault(require("../block-navigation"));
-
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -40,77 +25,70 @@ import { createElement } from "@wordpress/element";
 /**
  * Internal dependencies
  */
+
 var preventDefault = function preventDefault(event) {
   event.preventDefault();
 };
-
 function HeaderToolbar(props) {
   var _props$settings, _props$settings$iso, _props$settings$iso$s;
-
   var inserterButton = (0, _element.useRef)();
-
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
-      setIsInserterOpened = _useDispatch.setIsInserterOpened,
-      setIsListViewOpened = _useDispatch.setIsListViewOpened;
-
+    setIsInserterOpened = _useDispatch.setIsInserterOpened,
+    setIsListViewOpened = _useDispatch.setIsListViewOpened;
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
-
   var _useSelect = (0, _data.useSelect)(function (select) {
-    var _select = select('core/block-editor'),
+      var _select = select('core/block-editor'),
         hasInserterItems = _select.hasInserterItems,
         getBlockRootClientId = _select.getBlockRootClientId,
         getBlockSelectionEnd = _select.getBlockSelectionEnd;
-
-    var _select2 = select('isolated/editor'),
-        isListViewOpened = _select2.isListViewOpened; // @ts-ignore
-
-
-    var _select3 = select(_keyboardShortcuts.store),
+      var _select2 = select('isolated/editor'),
+        isListViewOpened = _select2.isListViewOpened;
+      // @ts-ignore
+      var _select3 = select(_keyboardShortcuts.store),
         getShortcutRepresentation = _select3.getShortcutRepresentation;
-
-    return {
-      // @ts-ignore
-      hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
-      // This setting (richEditingEnabled) should not live in the block editor's setting.
-      isInserterEnabled: // @ts-ignore
-      select('isolated/editor').getEditorMode() === 'visual' && // @ts-ignore
-      select('core/editor').getEditorSettings().richEditingEnabled && // @ts-ignore
-      hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
-      // @ts-ignore
-      isListViewOpen: isListViewOpened(),
-      // @ts-ignore
-      isTextModeEnabled: select('isolated/editor').getEditorMode() === 'text',
-      previewDeviceType: 'Desktop',
-      // @ts-ignore
-      isInserterOpened: select('isolated/editor').isInserterOpened(),
-      showIconLabels: false,
-      // Not implemented yet
-      listViewShortcut: getShortcutRepresentation('core/edit-post/toggle-list-view')
-    };
-  }, []),
-      hasFixedToolbar = _useSelect.hasFixedToolbar,
-      isInserterEnabled = _useSelect.isInserterEnabled,
-      isTextModeEnabled = _useSelect.isTextModeEnabled,
-      showIconLabels = _useSelect.showIconLabels,
-      previewDeviceType = _useSelect.previewDeviceType,
-      isInserterOpened = _useSelect.isInserterOpened,
-      isListViewOpen = _useSelect.isListViewOpen,
-      listViewShortcut = _useSelect.listViewShortcut;
-
+      return {
+        // @ts-ignore
+        hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
+        // This setting (richEditingEnabled) should not live in the block editor's setting.
+        isInserterEnabled:
+        // @ts-ignore
+        select('isolated/editor').getEditorMode() === 'visual' &&
+        // @ts-ignore
+        select('core/editor').getEditorSettings().richEditingEnabled &&
+        // @ts-ignore
+        hasInserterItems(getBlockRootClientId(getBlockSelectionEnd())),
+        // @ts-ignore
+        isListViewOpen: isListViewOpened(),
+        // @ts-ignore
+        isTextModeEnabled: select('isolated/editor').getEditorMode() === 'text',
+        previewDeviceType: 'Desktop',
+        // @ts-ignore
+        isInserterOpened: select('isolated/editor').isInserterOpened(),
+        showIconLabels: false,
+        // Not implemented yet
+        listViewShortcut: getShortcutRepresentation('core/edit-post/toggle-list-view')
+      };
+    }, []),
+    hasFixedToolbar = _useSelect.hasFixedToolbar,
+    isInserterEnabled = _useSelect.isInserterEnabled,
+    isTextModeEnabled = _useSelect.isTextModeEnabled,
+    showIconLabels = _useSelect.showIconLabels,
+    previewDeviceType = _useSelect.previewDeviceType,
+    isInserterOpened = _useSelect.isInserterOpened,
+    isListViewOpen = _useSelect.isListViewOpen,
+    listViewShortcut = _useSelect.listViewShortcut;
   var isLargeViewport = (0, _compose.useViewportMatch)('medium');
   var isWideViewport = (0, _compose.useViewportMatch)('wide');
   var _props$settings$iso$t = props.settings.iso.toolbar,
-      inserter = _props$settings$iso$t.inserter,
-      toc = _props$settings$iso$t.toc,
-      navigation = _props$settings$iso$t.navigation,
-      undo = _props$settings$iso$t.undo,
-      selectorTool = _props$settings$iso$t.selectorTool;
+    inserter = _props$settings$iso$t.inserter,
+    toc = _props$settings$iso$t.toc,
+    navigation = _props$settings$iso$t.navigation,
+    undo = _props$settings$iso$t.undo,
+    selectorTool = _props$settings$iso$t.selectorTool;
   var inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$iso = _props$settings.iso) === null || _props$settings$iso === void 0 ? void 0 : (_props$settings$iso$s = _props$settings$iso.sidebar) === null || _props$settings$iso$s === void 0 ? void 0 : _props$settings$iso$s.inserter) || false;
   var displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
-  var toolbarAriaLabel = displayBlockToolbar ?
-  /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
-  (0, _i18n.__)('Document and block tools') :
-  /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
+  var toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
+  (0, _i18n.__)('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
   (0, _i18n.__)('Document tools');
   var openInserter = (0, _element.useCallback)(function () {
     if (isInserterOpened) {
@@ -140,8 +118,7 @@ function HeaderToolbar(props) {
     isPrimary: true,
     icon: _icons.plus
     /* translators: button label text should, if possible, be under 16
-    characters. */
-    ,
+    characters. */,
     label: (0, _i18n._x)('Toggle block inserter', 'Generic label for block inserter button'),
     showTooltip: !showIconLabels
   }), isInserterOpened && !inserterInSidebar && createElement(_components.Popover, {
@@ -175,8 +152,7 @@ function HeaderToolbar(props) {
     icon: _icons.listView,
     disabled: isTextModeEnabled,
     isPressed: isListViewOpen
-    /* translators: button label text should, if possible, be under 16 characters. */
-    ,
+    /* translators: button label text should, if possible, be under 16 characters. */,
     label: (0, _i18n.__)('List View'),
     onClick: toggleListView,
     shortcut: listViewShortcut,
@@ -189,7 +165,6 @@ function HeaderToolbar(props) {
     variant: showIconLabels ? 'tertiary' : undefined
   })));
 }
-
 var _default = HeaderToolbar;
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

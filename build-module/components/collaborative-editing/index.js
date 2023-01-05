@@ -1,12 +1,12 @@
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * Internal dependencies
  */
 import { ToolbarSlot } from '../..';
 import useYjs from './use-yjs';
 import CollaborativeEditingAvatars from './components/avatars';
+
 /**
  * Real-time collaboration settings
  *
@@ -82,7 +82,6 @@ import CollaborativeEditingAvatars from './components/avatars';
  * @param {Object} props
  * @param {CollaborationSettings} props.settings
  */
-
 function CollaborativeEditing(_ref) {
   let {
     settings
@@ -92,6 +91,5 @@ function CollaborativeEditing(_ref) {
   });
   return createElement(ToolbarSlot, null, createElement(CollaborativeEditingAvatars, null));
 }
-
 export default CollaborativeEditing;
 //# sourceMappingURL=index.js.map

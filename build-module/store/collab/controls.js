@@ -2,14 +2,14 @@
  * External dependencies
  */
 import { ActionCreators } from 'redux-undo';
+
 /**
  * WordPress dependencies
  */
-
 import { createRegistryControl } from '@wordpress/data';
+const debugUndo = require('debug')('iso-editor:collab:undo');
 
-const debugUndo = require('debug')('iso-editor:collab:undo'); // TODO: Unsolved problem
-
+// TODO: Unsolved problem
 /**
  * Return the clientId and block attribute key if the current selection can be
  * associated with a RichText attribute.
@@ -24,24 +24,23 @@ const debugUndo = require('debug')('iso-editor:collab:undo'); // TODO: Unsolved 
  * @param registry
  * @return {import('../../components/collaborative-editing').RichTextHint|undefined}
  */
-
-
 const getRichTextHint = registry => {
   const {
     clientId,
     attributeKey
-  } = registry.select('core/block-editor').getSelectionStart(); // If the selection has an attribute key that is a string, we can deduce that the attribute is a RichText
+  } = registry.select('core/block-editor').getSelectionStart();
 
+  // If the selection has an attribute key that is a string, we can deduce that the attribute is a RichText
   return typeof attributeKey === 'string' ? {
     clientId,
     attributeKey
   } : undefined;
 };
-
 const applyChangesToYDoc = createRegistryControl(registry => action => {
-  const doc = registry.select('isolated/editor').getYDoc(); // If the change is triggered locally from the editor (i.e. is neither a remote change nor an undo/redo),
-  // apply those changes to the Yjs doc.
+  const doc = registry.select('isolated/editor').getYDoc();
 
+  // If the change is triggered locally from the editor (i.e. is neither a remote change nor an undo/redo),
+  // apply those changes to the Yjs doc.
   if (doc && !action.isTriggeredByYDoc) {
     doc.applyLocalChangesToYDoc({
       blocks: action.blocks
@@ -50,7 +49,6 @@ const applyChangesToYDoc = createRegistryControl(registry => action => {
       richTextHint: getRichTextHint(registry)
     });
   }
-
   return action;
 });
 export default {
@@ -58,24 +56,21 @@ export default {
   UPDATE_BLOCKS_WITHOUT_UNDO: applyChangesToYDoc,
   [ActionCreators.undo().type]: createRegistryControl(registry => action => {
     const undoManager = registry.select('isolated/editor').getUndoManager();
-
     if (!undoManager) {
       debugUndo('Undoing from redux-undo state');
       return action;
     }
-
     debugUndo('Undoing from yjs undoManager');
     debugUndo('undo');
     undoManager.undo();
     return undefined; // prevent default action
   }),
+
   [ActionCreators.redo().type]: createRegistryControl(registry => action => {
     const undoManager = registry.select('isolated/editor').getUndoManager();
-
     if (!undoManager) {
       return action;
     }
-
     debugUndo('redo');
     registry.select('isolated/editor').getUndoManager().redo();
     return undefined; // prevent default action

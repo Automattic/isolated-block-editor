@@ -1,5 +1,4 @@
 /** @typedef {import('../../index').EditorSettings} EditorSettings */
-
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 
 /**
@@ -12,27 +11,27 @@
 function getAllowedBlockTypes(blockSettings, allBlockTypes) {
   if (blockSettings && blockSettings.allowBlocks && blockSettings.allowBlocks.length > 0) {
     return blockSettings.allowBlocks;
-  } // No allow blocks - return all blocks
+  }
 
-
+  // No allow blocks - return all blocks
   return allBlockTypes.map(block => block.name);
 }
+
 /**
  * Get all the disallowed block types, either from the settings, or all available blocks
  *
  * @param {{disallowBlocks: string[]}} blockSettings - settings for disallowed blocks
  * @return {string[]}
  */
-
-
 function getDisallowedBlocks(blockSettings) {
   if (blockSettings && blockSettings.disallowBlocks) {
     return blockSettings.disallowBlocks;
-  } // No blocks disallowed
+  }
 
-
+  // No blocks disallowed
   return [];
 }
+
 /**
  * Get editor settings
  *
@@ -42,12 +41,11 @@ function getDisallowedBlocks(blockSettings) {
  * @param {boolean} hasFixedToolbar - Do we need a fixed toolbar?
  * @return {EditorSettings}
  */
-
-
 export default function getEditorSettings(editorSettings, isoSettings, allBlockTypes, hasFixedToolbar) {
   // @ts-ignore
   const disallowBlocks = getDisallowedBlocks(isoSettings.blocks);
-  return { ...editorSettings,
+  return {
+    ...editorSettings,
     hasFixedToolbar,
     // @ts-ignore
     allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(blockName => disallowBlocks.indexOf(blockName) === -1)

@@ -2,6 +2,7 @@
  * External dependencies
  */
 import * as yjs from 'yjs';
+
 /**
  * @typedef WPBlockSelection
  * @property {string} [clientId]
@@ -28,7 +29,6 @@ import * as yjs from 'yjs';
  * For example, if my caret is at `ab|c` and a remote user changes the text to `aabc`, I want my
  * caret to "stay" relative to the `b` (`aab|c`) instead of staying at the same absolute index (`aa|bc`).
  */
-
 export class RelativePosition {
   /**
    * @param {() => SelectionRange} getSelection - Function to get block editor selection.
@@ -38,6 +38,7 @@ export class RelativePosition {
     this.getSelection = getSelection;
     this.selectionChange = selectionChange;
   }
+
   /**
    * Get the current block editor selection, convert it to a Y.RelativePosition, and remember it.
    *
@@ -45,11 +46,8 @@ export class RelativePosition {
    *
    * @param {yjs.Doc} doc
    */
-
-
   saveRelativePosition(doc) {
     var _doc$getMap, _doc$getMap$get, _richTexts$get;
-
     const {
       start,
       end
@@ -59,7 +57,6 @@ export class RelativePosition {
       attributeKey
     } = start !== null && start !== void 0 ? start : {};
     const richTexts = (_doc$getMap = doc.getMap('post')) === null || _doc$getMap === void 0 ? void 0 : (_doc$getMap$get = _doc$getMap.get('blocks')) === null || _doc$getMap$get === void 0 ? void 0 : _doc$getMap$get.get('richTexts');
-
     if (richTexts !== null && richTexts !== void 0 && (_richTexts$get = richTexts.get(clientId)) !== null && _richTexts$get !== void 0 && _richTexts$get.has(attributeKey) && typeof start.offset === 'number' && typeof end.offset === 'number') {
       const xmlText = richTexts.get(clientId).get(attributeKey).get('xmlText');
       this.relPos = {
@@ -72,6 +69,7 @@ export class RelativePosition {
       this.relPos = undefined;
     }
   }
+
   /**
    * If a saved Y.RelativePosition exists, convert it to an absolute position and
    * dispatch it as a selection change to the block editor.
@@ -80,15 +78,11 @@ export class RelativePosition {
    *
    * @param {yjs.Doc} doc
    */
-
-
   setAbsolutePosition(doc) {
     var _this$relPos, _this$relPos2, _yjs$createAbsolutePo, _yjs$createAbsolutePo2;
-
     if (!((_this$relPos = this.relPos) !== null && _this$relPos !== void 0 && _this$relPos.clientId) || !((_this$relPos2 = this.relPos) !== null && _this$relPos2 !== void 0 && _this$relPos2.attributeKey)) {
       return;
     }
-
     const {
       clientId,
       attributeKey,
@@ -97,14 +91,11 @@ export class RelativePosition {
     } = this.relPos;
     const absStartOffset = (_yjs$createAbsolutePo = yjs.createAbsolutePositionFromRelativePosition(startOffset, doc)) === null || _yjs$createAbsolutePo === void 0 ? void 0 : _yjs$createAbsolutePo.index;
     const absEndOffset = (_yjs$createAbsolutePo2 = yjs.createAbsolutePositionFromRelativePosition(endOffset, doc)) === null || _yjs$createAbsolutePo2 === void 0 ? void 0 : _yjs$createAbsolutePo2.index;
-
     if (typeof absStartOffset !== 'number' || typeof absEndOffset !== 'number') {
       return;
     }
-
     this.selectionChange(clientId, attributeKey, absStartOffset, absEndOffset);
   }
-
 }
 export class PeerRelativePosition {
   /**
@@ -112,30 +103,27 @@ export class PeerRelativePosition {
    * @type {RelativePosition[]}
    */
   _peerRelativePositions = [];
+
   /**
    * @param {() => Record<string, Partial<SelectionRange>>} getPeers
    * @param {(peerId: string, selection: SelectionRange) => void} setPeerSelection
    */
-
   constructor(getPeers, setPeerSelection) {
     /** @private */
     this._getPeers = getPeers;
     /** @private */
-
     this._setPeerSelection = setPeerSelection;
   }
+
   /**
    * @private
    * @param {string} peerId
    * @param {Partial<SelectionRange>} peer
    * @return {RelativePosition}
    */
-
-
   _initRelativePositionForPeer(peerId, peer) {
     return new RelativePosition(() => {
       var _peer$start, _peer$end;
-
       return {
         start: (_peer$start = peer.start) !== null && _peer$start !== void 0 ? _peer$start : {},
         end: (_peer$end = peer.end) !== null && _peer$end !== void 0 ? _peer$end : {}
@@ -153,27 +141,23 @@ export class PeerRelativePosition {
       }
     }));
   }
+
   /**
    * @param {yjs.Doc} doc
    */
-
-
   saveRelativePositions(doc) {
     this._peerRelativePositions = Object.entries(this._getPeers()).map(_ref => {
       let [peerId, peer] = _ref;
       return this._initRelativePositionForPeer(peerId, peer);
     });
-
     this._peerRelativePositions.forEach(relPos => relPos.saveRelativePosition(doc));
   }
+
   /**
    * @param {yjs.Doc} doc
    */
-
-
   setAbsolutePositions(doc) {
     this._peerRelativePositions.forEach(relPos => relPos.setAbsolutePosition(doc));
   }
-
 }
 //# sourceMappingURL=relative-position.js.map

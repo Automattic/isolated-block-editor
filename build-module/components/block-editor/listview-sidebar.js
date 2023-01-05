@@ -1,5 +1,4 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -18,25 +17,22 @@ export default function ListViewSidebar() {
     clearSelectedBlock,
     selectBlock
   } = useDispatch(blockEditorStore);
-
   async function selectEditorBlock(clientId) {
     await clearSelectedBlock();
     selectBlock(clientId, -1);
   }
-
   const focusOnMountRef = useFocusOnMount('firstElement');
   const focusReturnRef = useFocusReturn();
-
   function closeOnEscape(event) {
     if (event.keyCode === ESCAPE && !event.defaultPrevented) {
       event.preventDefault();
       setIsListViewOpened(false);
     }
   }
-
   const instanceId = useInstanceId(ListViewSidebar);
   const labelId = `edit-post-editor__list-view-panel-label-${instanceId}`;
-  return (// eslint-disable-next-line jsx-a11y/no-static-element-interactions
+  return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     createElement("div", {
       "aria-labelledby": labelId,
       className: "edit-post-editor__list-view-panel",

@@ -7,11 +7,11 @@ export function setAvailableCollabPeers(peers) {
     peers
   };
 }
+
 /**
  * @param {string} peerId
  * @param {import('../../components/collaborative-editing').EditorSelection} selection
  */
-
 export function setCollabPeerSelection(peerId, selection) {
   return {
     type: 'SET_COLLAB_PEER_SELECTION',

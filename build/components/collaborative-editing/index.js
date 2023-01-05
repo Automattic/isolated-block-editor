@@ -1,22 +1,15 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _ = require("../..");
-
 var _useYjs = _interopRequireDefault(require("./use-yjs"));
-
 var _avatars = _interopRequireDefault(require("./components/avatars"));
-
 import { createElement } from "@wordpress/element";
-
 // @ts-nocheck
-
 /**
  * Internal dependencies
  */
@@ -103,7 +96,6 @@ function CollaborativeEditing(_ref) {
   });
   return createElement(_.ToolbarSlot, null, createElement(_avatars["default"], null));
 }
-
 var _default = CollaborativeEditing;
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

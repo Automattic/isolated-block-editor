@@ -1,8 +1,10 @@
 /**
  * WordPress dependencies
  */
+
 import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+
 /**
  * @callback OnLoad
  */
@@ -14,7 +16,6 @@ import { useSelect } from '@wordpress/data';
  * @param {OnLoad} [props.onLoaded] - Callback to signal that the editor has loaded
  * @param {OnLoad} [props.onLoading] - Callback to signal that the editor is loading
  */
-
 function EditorLoaded(_ref) {
   let {
     onLoaded,
@@ -35,6 +36,5 @@ function EditorLoaded(_ref) {
   }, [isEditorReady]);
   return null;
 }
-
 export default EditorLoaded;
 //# sourceMappingURL=index.js.map

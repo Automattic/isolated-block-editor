@@ -4,12 +4,11 @@
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
+
 /**
  * Internal dependencies
  */
-
 import storeHotSwapPlugin from '../../store/plugins/store-hot-swap';
-
 function HotSwapper(_ref) {
   let {
     isEditing,
@@ -19,9 +18,9 @@ function HotSwapper(_ref) {
     hotSwap(isEditing);
   }, [isEditing]);
   return null;
-} // @ts-ignore
+}
 
-
+// @ts-ignore
 export default compose([withSelect(select => {
   const {
     isEditing
@@ -36,7 +35,6 @@ export default compose([withSelect(select => {
   return {
     hotSwap: isEditing => {
       storeHotSwapPlugin.resetEditor();
-
       if (isEditing) {
         storeHotSwapPlugin.setEditor(select, dispatch);
       }

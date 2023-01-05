@@ -5,11 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getUndoManager = getUndoManager;
 exports.getYDoc = getYDoc;
-
 function getYDoc(state) {
   return state.collab.yDoc;
 }
-
 function getUndoManager(state) {
   return state.collab.undoManager;
 }

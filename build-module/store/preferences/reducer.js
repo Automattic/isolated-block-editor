@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'TOGGLE_FEATURE':
@@ -8,22 +9,19 @@ const reducer = (state, action) => {
         preferencesKey,
         ...preferences
       } = state;
-      const updatedPreferences = { ...preferences,
+      const updatedPreferences = {
+        ...preferences,
         [action.feature]: state[action.feature] ? !state[action.feature] : true
       };
-
       if (preferencesKey && window.localStorage) {
         localStorage.setItem(preferencesKey, JSON.stringify(updatedPreferences));
       }
-
       return {
         preferencesKey,
         ...updatedPreferences
       };
   }
-
   return state;
 };
-
 export default reducer;
 //# sourceMappingURL=reducer.js.map

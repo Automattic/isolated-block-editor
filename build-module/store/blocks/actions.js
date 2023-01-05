@@ -6,11 +6,9 @@ const actions = {
   *undo() {
     return yield ActionCreators.undo();
   },
-
   *redo() {
     return yield ActionCreators.redo();
   },
-
   /**
    * Update blocks without undo history
    *
@@ -25,7 +23,6 @@ const actions = {
       ...options
     };
   },
-
   /**
    * Update blocks without undo history
    *
@@ -40,7 +37,6 @@ const actions = {
       ...options
     };
   }
-
 };
 export default actions;
 //# sourceMappingURL=actions.js.map

@@ -1,25 +1,20 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-
 var _data = require("@wordpress/data");
-
 var _interface = require("@wordpress/interface");
-
 /**
  * WordPress dependencies
  */
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-
 /** @typedef {import('./reducer').EditorMode} EditorMode */
+
 var actions = {
   /**
    * Set whether the editor is ready for editing
@@ -32,7 +27,6 @@ var actions = {
       isReady: isReady
     };
   },
-
   /**
    * Set the current editor mode
    *
@@ -44,7 +38,6 @@ var actions = {
       editorMode: editorMode
     };
   },
-
   /**
    * Set up the editor
    *
@@ -56,7 +49,6 @@ var actions = {
       settings: settings
     };
   },
-
   /**
    * Set the current pattern name
    *
@@ -68,7 +60,6 @@ var actions = {
       pattern: pattern
     };
   },
-
   /**
    * Mark the block inserter as open or closed
    *
@@ -80,7 +71,6 @@ var actions = {
       isOpen: isOpen
     };
   },
-
   /**
    * Set the current device type
    *
@@ -92,7 +82,6 @@ var actions = {
       deviceType: deviceType
     };
   },
-
   /**
    * Set the editor canvas styles
    *
@@ -104,7 +93,6 @@ var actions = {
       canvasStyles: canvasStyles
     };
   },
-
   /**
    * Set the editor preview mode
    *
@@ -116,7 +104,6 @@ var actions = {
       isIframePreview: isIframePreview
     };
   },
-
   /**
    * Mark this editor as in-use or not
    *
@@ -128,7 +115,6 @@ var actions = {
       isEditing: isEditing
     };
   },
-
   /**
    * Open the named sidebar
    *
@@ -136,39 +122,31 @@ var actions = {
    */
   openGeneralSidebar: /*#__PURE__*/_regenerator["default"].mark(function openGeneralSidebar(name) {
     return _regenerator["default"].wrap(function openGeneralSidebar$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return _data.controls.dispatch(_interface.store, 'enableComplementaryArea', 'isolated/editor', name);
-
-          case 2:
-          case "end":
-            return _context.stop();
-        }
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return _data.controls.dispatch(_interface.store, 'enableComplementaryArea', 'isolated/editor', name);
+        case 2:
+        case "end":
+          return _context.stop();
       }
     }, openGeneralSidebar);
   }),
-
   /**
    * Close the sidebar (or popover)
    */
   closeGeneralSidebar: /*#__PURE__*/_regenerator["default"].mark(function closeGeneralSidebar() {
     return _regenerator["default"].wrap(function closeGeneralSidebar$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.next = 2;
-            return _data.controls.dispatch(_interface.store, 'disableComplementaryArea', 'isolated/editor');
-
-          case 2:
-          case "end":
-            return _context2.stop();
-        }
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return _data.controls.dispatch(_interface.store, 'disableComplementaryArea', 'isolated/editor');
+        case 2:
+        case "end":
+          return _context2.stop();
       }
     }, closeGeneralSidebar);
   }),
-
   /**
    * Set the status of the listview sidebar section
    *

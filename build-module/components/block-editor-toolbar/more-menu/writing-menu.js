@@ -1,20 +1,19 @@
 import { createElement, Fragment } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * WordPress dependencies
  */
 import { MenuGroup } from '@wordpress/components';
 import { __, _x } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
-
 import FeatureToggle from '../toggle-feature';
 import OptionToggle from '../toggle-option';
-/** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 
+/** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('./index').OnClose} OnClose */
 
 /**
@@ -24,10 +23,8 @@ import OptionToggle from '../toggle-option';
  * @param {OnClose} props.onClose - Close the menu
  * @param {BlockEditorSettings} props.settings - Settings
  */
-
 function WritingMenu(_ref) {
   var _settings$iso;
-
   let {
     onClose,
     settings
@@ -41,12 +38,12 @@ function WritingMenu(_ref) {
     isFullscreen
   } = useSelect(select => ({
     isFullscreen: select('isolated/editor').isOptionActive('fullscreenMode')
-  }), []); // Anything to show?
+  }), []);
 
+  // Anything to show?
   if (!fullscreen && !preview && !topToolbar) {
     return null;
   }
-
   return createElement(MenuGroup, {
     label: _x('View', 'noun')
   }, topToolbar && createElement(Fragment, null, createElement(FeatureToggle, {
@@ -68,6 +65,5 @@ function WritingMenu(_ref) {
     onClose: onClose
   }));
 }
-
 export default WritingMenu;
 //# sourceMappingURL=writing-menu.js.map

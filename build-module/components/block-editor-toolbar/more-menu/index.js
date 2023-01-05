@@ -1,12 +1,12 @@
 import { createElement, Fragment } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { DropdownMenu } from '@wordpress/components';
 import { moreVertical } from '@wordpress/icons';
+
 /**
  * Internal dependencies
  */
@@ -14,6 +14,7 @@ import { moreVertical } from '@wordpress/icons';
 import WritingMenu from './writing-menu';
 import EditorMenu from './editor-menu';
 import LinkMenu from './link-menu';
+
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 
 /**
@@ -37,6 +38,7 @@ const POPOVER_PROPS = {
 const TOGGLE_PROPS = {
   tooltipPosition: 'bottom'
 };
+
 /**
  * More menu
  *
@@ -45,7 +47,6 @@ const TOGGLE_PROPS = {
  * @param {OnClose} props.onClick
  * @param {OnMore} props.renderMoreMenu
  */
-
 const MoreMenu = _ref => {
   let {
     settings,
@@ -57,7 +58,8 @@ const MoreMenu = _ref => {
     icon: moreVertical,
     label: __('More tools & options'),
     popoverProps: POPOVER_PROPS,
-    toggleProps: { ...TOGGLE_PROPS,
+    toggleProps: {
+      ...TOGGLE_PROPS,
       onClick
     }
   }, _ref2 => {
@@ -75,6 +77,5 @@ const MoreMenu = _ref => {
     }));
   });
 };
-
 export default MoreMenu;
 //# sourceMappingURL=index.js.map
