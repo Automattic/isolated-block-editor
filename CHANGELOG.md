@@ -4,12 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.23.0] - 2023-01-05
 
 ### Update
 - Update all packages, including React to version 18
 
-### Breaking
+### Breaking changes
 - Collaborative editing via yjs has been deprecated and will be removed in the next version. A hook-based replacement will be proposed in the future.
 
 ## [2.22.0] - 2023-01-03
@@ -21,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.21.0] - 2022-12-06
 
 ### Breaking changes
-
 - Now doesn't automatically set up the media uploader - you must do this manually (see readme)
 
 ## [2.20.0] - 2022-11-17

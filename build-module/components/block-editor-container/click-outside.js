@@ -11,7 +11,6 @@ import withFocusOutside from './with-focus-outside.js';
 const ClickOutsideWrapper = withFocusOutside(
 // @ts-ignore
 class extends Component {
-  static contextType;
   handleFocus(ev) {
     this.props.onFocus();
   }

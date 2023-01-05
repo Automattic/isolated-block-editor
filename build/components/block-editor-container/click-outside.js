@@ -10,14 +10,14 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _element = require("@wordpress/element");
 var _withFocusOutside = _interopRequireDefault(require("./with-focus-outside.js"));
-var _class;
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-var ClickOutsideWrapper = (0, _withFocusOutside["default"])(( // @ts-ignore
-_class = /*#__PURE__*/function (_Component) {
+var ClickOutsideWrapper = (0, _withFocusOutside["default"])(
+/*#__PURE__*/
+// @ts-ignore
+function (_Component) {
   (0, _inherits2["default"])(_class, _Component);
   var _super = _createSuper(_class);
   function _class() {
@@ -66,7 +66,7 @@ _class = /*#__PURE__*/function (_Component) {
     }
   }]);
   return _class;
-}(_element.Component), (0, _defineProperty2["default"])(_class, "contextType", void 0), _class));
+}(_element.Component));
 var _default = ClickOutsideWrapper;
 exports["default"] = _default;
 //# sourceMappingURL=click-outside.js.map
