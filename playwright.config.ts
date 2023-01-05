@@ -57,6 +57,21 @@ const config: PlaywrightTestConfig = {
 				...devices[ 'Desktop Chrome' ],
 			},
 		},
+
+		// Firefox and Webkit are disabled due to https://github.com/microsoft/playwright/issues/14000
+		// {
+		// 	name: 'firefox',
+		// 	use: {
+		// 		...devices[ 'Desktop Firefox' ],
+		// 	},
+		// },
+
+		// {
+		// 	name: 'webkit',
+		// 	use: {
+		// 		...devices[ 'Desktop Safari' ],
+		// 	},
+		// },
 	],
 
 	/* Folder for test artifacts such as screenshots, videos, traces, etc. */
