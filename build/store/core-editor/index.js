@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = _default;
-
 var _blocks = require("@wordpress/blocks");
-
 /**
  * WordPress dependencies
  */
@@ -23,9 +21,9 @@ function _default(existingSelectors, newSelect) {
       if (attributeName === 'content') {
         // Content is stored in core/block-editor, not in the post entity
         return (0, _blocks.serialize)(newSelect('core/block-editor').getBlocks());
-      } // Pass everything else through
+      }
 
-
+      // Pass everything else through
       return existingSelectors.getEditedPostAttribute(state, attributeName);
     },
     getEditedPostContent: function getEditedPostContent() {

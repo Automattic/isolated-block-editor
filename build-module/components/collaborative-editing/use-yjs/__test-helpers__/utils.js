@@ -2,21 +2,19 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+
 /**
  * Helper to generate mock transport modules for an isolated channel.
  *
  * @param {number} count - Number of transport modules to generate.
  * @return {Object[]} - Array of transport modules.
  */
-
 export function getTransports(count) {
   const peers = {};
-
   const getAvailablePeers = excludeId => Object.values(peers).reduce((acc, p) => {
     if (p.user.id === excludeId) return acc;
     return [...acc, p.user];
   }, []);
-
   const mockTransport = () => {
     const transport = {
       _identity: undefined,
@@ -30,7 +28,8 @@ export function getTransports(count) {
         peers[user.identity] = {
           onReceiveMessage,
           setAvailablePeers,
-          user: { ...user,
+          user: {
+            ...user,
             id: user.identity
           }
         };
@@ -58,9 +57,9 @@ export function getTransports(count) {
     };
     return transport;
   };
-
   return Array(count).fill(null).map(() => mockTransport());
 }
+
 /**
  * Emulate a pause between typing events for Yjs to make a new undo stack item.
  *
@@ -68,7 +67,6 @@ export function getTransports(count) {
  *
  * @param {import('@testing-library/dom').Screen} screen
  */
-
 export async function pauseTyping(screen) {
   screen.getAllByRole('document').forEach(el => el.blur());
   await waitFor(() => new Promise(resolve => setTimeout(resolve, 550)));

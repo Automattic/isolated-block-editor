@@ -1,6 +1,5 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -10,7 +9,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { displayShortcut } from '@wordpress/keycodes';
 import { redo as redoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
-
 function EditorHistoryRedo(props, ref) {
   // @ts-ignore
   const hasRedo = useSelect(select => select('isolated/editor').hasEditorRedo(), []);
@@ -21,7 +19,8 @@ function EditorHistoryRedo(props, ref) {
     ref: ref,
     icon: redoIcon,
     label: __('Redo'),
-    shortcut: displayShortcut.primaryShift('z') // If there are no redo levels we don't want to actually disable this
+    shortcut: displayShortcut.primaryShift('z')
+    // If there are no redo levels we don't want to actually disable this
     // button, because it will remove focus for keyboard users.
     // See: https://github.com/WordPress/gutenberg/issues/3486
     ,
@@ -30,6 +29,5 @@ function EditorHistoryRedo(props, ref) {
     className: "editor-history__redo"
   }));
 }
-
 export default forwardRef(EditorHistoryRedo);
 //# sourceMappingURL=redo.js.map

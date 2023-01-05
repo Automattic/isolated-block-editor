@@ -1,5 +1,4 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -8,8 +7,8 @@ import { __, _x } from '@wordpress/i18n';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { check } from '@wordpress/icons';
-/** @typedef {import('./index').OnClose} OnClose */
 
+/** @typedef {import('./index').OnClose} OnClose */
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 
 /**
@@ -29,10 +28,8 @@ import { check } from '@wordpress/icons';
  * @param {OnSetMode} props.onSetMode
  * @param {BlockEditorSettings} props.settings - Settings
  */
-
 function EditorMenu(_ref) {
   var _settings$iso, _settings$iso2, _settings$iso2$moreMe;
-
   let {
     onClose,
     editorMode,
@@ -40,7 +37,6 @@ function EditorMenu(_ref) {
     isCodeEditingEnabled,
     settings
   } = _ref;
-
   /**
    * @param {string} mode
    */
@@ -48,15 +44,12 @@ function EditorMenu(_ref) {
     onSetMode(mode);
     onClose();
   };
-
   if (!isCodeEditingEnabled) {
     return null;
   }
-
   if ((settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) === false || !(settings !== null && settings !== void 0 && (_settings$iso2 = settings.iso) !== null && _settings$iso2 !== void 0 && (_settings$iso2$moreMe = _settings$iso2.moreMenu) !== null && _settings$iso2$moreMe !== void 0 && _settings$iso2$moreMe.editor)) {
     return null;
   }
-
   return createElement(MenuGroup, {
     label: _x('Editor', 'noun')
   }, createElement(MenuItem, {
@@ -70,9 +63,9 @@ function EditorMenu(_ref) {
     onClick: () => setMode('text'),
     role: "menuitemcheckbox"
   }, __('Code editor')));
-} // @ts-ignore
+}
 
-
+// @ts-ignore
 export default compose([withSelect(select => {
   const {
     getEditorMode
@@ -88,6 +81,5 @@ export default compose([withSelect(select => {
   onSetMode(mode) {
     dispatch('isolated/editor').setEditorMode(mode);
   }
-
 }))])(EditorMenu);
 //# sourceMappingURL=editor-menu.js.map

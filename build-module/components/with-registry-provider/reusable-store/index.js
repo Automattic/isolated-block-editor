@@ -5,6 +5,7 @@ import * as actions from './actions';
 import controls from './controls';
 import reducer from './reducer';
 import * as selectors from './selectors';
+
 /**
  * Data store configuration.
  *
@@ -12,7 +13,6 @@ import * as selectors from './selectors';
  *
  * @type {Object}
  */
-
 export default {
   actions,
   controls,

@@ -1,10 +1,10 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * WordPress dependencies
  */
+
 import '@wordpress/editor';
 import { StrictMode, useEffect } from '@wordpress/element';
 import { SlotFillProvider } from '@wordpress/components';
@@ -12,6 +12,7 @@ import { registerCoreBlocks } from '@wordpress/block-library';
 import { use, useDispatch, useSelect } from '@wordpress/data';
 import '@wordpress/format-library';
 import { ShortcutProvider } from '@wordpress/keyboard-shortcuts';
+
 /**
  * Internal dependencies
  */
@@ -27,17 +28,18 @@ import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
 import ActionArea from './components/action-area';
 import CollaborativeEditing from './components/collaborative-editing';
-import FooterSlot from './components/footer-slot'; // Export library components
+import FooterSlot from './components/footer-slot';
 
+// Export library components
 import EditorLoaded from './components/editor-loaded';
-import EditorHeadingSlot from './components/editor-heading-slot'; // A fake edit-post store is needed
+import EditorHeadingSlot from './components/editor-heading-slot';
 
+// A fake edit-post store is needed
 import './store/edit-post';
 import './style.scss';
+
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
-
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
-
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
 
 /**
@@ -137,13 +139,12 @@ import './style.scss';
 /**
  * Initialize Gutenberg
  */
-
 export function initializeEditor() {
   if (window.isoInitialised) {
     return;
-  } // Register all core blocks
+  }
 
-
+  // Register all core blocks
   registerCoreBlocks();
   window.isoInitialised = true;
 }
@@ -151,7 +152,6 @@ export function initializeEditor() {
  * @param {Object} props - Component props
  * @param {UndoManager} [props.undoManager]
  */
-
 export function useInitializeIsoEditor() {
   let {
     undoManager
@@ -162,18 +162,19 @@ export function useInitializeIsoEditor() {
   useEffect(() => {
     setUndoManager(undoManager);
   }, [undoManager]);
-
   if (window.isoInitialisedBlocks) {
     return;
   }
+  initializeEditor();
 
-  initializeEditor(); // This allows the editor to swap stores dynamically
-
+  // This allows the editor to swap stores dynamically
   use(storeHotSwapPlugin, {});
-  registerApiHandlers(); // Don't run this again
+  registerApiHandlers();
 
+  // Don't run this again
   window.isoInitialisedBlocks = true;
 }
+
 /**
  * Save blocks callback
  *
@@ -233,7 +234,6 @@ export function useInitializeIsoEditor() {
  * @param {OnSelect} [props.__experimentalOnSelection] - Callback to run when the editor selection changes
  * @param {object[]} [props.__experimentalValue] - Gutenberg's value
  */
-
 function IsolatedBlockEditor(props) {
   const {
     children,
@@ -245,8 +245,9 @@ function IsolatedBlockEditor(props) {
     __experimentalValue,
     __experimentalOnSelection,
     ...params
-  } = props; // This needs to happen first to setup Gutenbergy things
+  } = props;
 
+  // This needs to happen first to setup Gutenbergy things
   useInitializeIsoEditor({
     undoManager: __experimentalUndoManager
   });
@@ -268,7 +269,6 @@ function IsolatedBlockEditor(props) {
     settings: settings
   }), children))));
 }
-
 export default withRegistryProvider(IsolatedBlockEditor);
 export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };
 //# sourceMappingURL=index.js.map

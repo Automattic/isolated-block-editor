@@ -4,37 +4,38 @@
 import { createMutex } from 'lib0/mutex';
 import { v4 as uuidv4 } from 'uuid';
 import { noop, once, sample } from 'lodash';
+
 /**
  * Internal dependencies
  */
-
 import { createDocument } from './yjs-doc';
+
 /**
  * WordPress dependencies
  */
-
 import { useRegistry, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
+
 /**
  * Internal dependencies
  */
-
 import { addCollabFilters } from './filters';
 import { registerCollabFormats } from './formats';
 import { setupUndoManager } from './yjs-undo';
-import { PeerRelativePosition, RelativePosition } from './algorithms/relative-position'; // @ts-ignore
+import { PeerRelativePosition, RelativePosition } from './algorithms/relative-position';
 
+// @ts-ignore
 const debug = require('debug')('iso-editor:collab');
+
 /** @typedef {import('..').CollaborationSettings} CollaborationSettings */
 
-
 export const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D14', '#3B4856', '#4A807A'];
+
 /**
  * @param {Object} opts
  * @param {import('..').CollaborationSettings} opts.settings
  * @param {Object} opts.registry - Redux data registry for this context.
  */
-
 async function initYDoc(_ref) {
   let {
     settings,
@@ -49,8 +50,8 @@ async function initYDoc(_ref) {
     select
   } = registry;
   const mutex = createMutex();
-  /** @type {string} */
 
+  /** @type {string} */
   const identity = uuidv4();
   debug(`initYDoc (identity: ${identity})`);
   const doc = createDocument({
@@ -62,7 +63,6 @@ async function initYDoc(_ref) {
       }), dispatch('core/block-editor').selectionChange),
       peers: new PeerRelativePosition(select('isolated/editor').getCollabPeers, dispatch('isolated/editor').setCollabPeerSelection)
     },
-
     /** @param {Object} message */
     sendMessage: message => {
       debug('sendDocMessage', message);
@@ -93,11 +93,9 @@ async function initYDoc(_ref) {
       color: settings.caretColor || sample(defaultColors),
       avatarUrl: settings.avatarUrl
     },
-
     /** @param {import('..').CollaborationTransportMessage} data */
     onReceiveMessage: data => {
       debug('remote change received by transport', data);
-
       switch (data.type) {
         case 'doc':
           {
@@ -107,7 +105,6 @@ async function initYDoc(_ref) {
             });
             break;
           }
-
         case 'selection':
           {
             dispatch('isolated/editor').setCollabPeerSelection(data.identity, data.selection);
@@ -122,12 +119,12 @@ async function initYDoc(_ref) {
     channelId
   });
   debug(`connected (channelId: ${channelId})`);
-
   if (isFirstInChannel) {
-    debug('first in channel'); // Fetching the blocks from redux now, after the transport has successfully connected,
+    debug('first in channel');
+
+    // Fetching the blocks from redux now, after the transport has successfully connected,
     // ensures that we don't initialize the Yjs doc with stale blocks.
     // (This can happen if <IsolatedBlockEditor> is given an onLoad handler.)
-
     doc.startSharing({
       title: '',
       blocks: select('core/block-editor').getBlocks()
@@ -135,12 +132,10 @@ async function initYDoc(_ref) {
   } else {
     doc.connect();
   }
-
   const disconnect = () => {
     transport.disconnect();
     doc.disconnect();
   };
-
   window.addEventListener('beforeunload', () => disconnect());
   return {
     sendSelection: (start, end) => {
@@ -163,12 +158,11 @@ async function initYDoc(_ref) {
     }
   };
 }
+
 /**
  * @param {Object} opts - Hook options
  * @param {CollaborationSettings} [opts.settings]
  */
-
-
 export default function useYjs(_ref2) {
   let {
     settings
@@ -193,13 +187,11 @@ export default function useYjs(_ref2) {
     if (!(settings !== null && settings !== void 0 && settings.enabled)) {
       return;
     }
-
     if (!settings.transport) {
       // eslint-disable-next-line no-console
       console.error(`Collaborative editor is disabled because a transport module wasn't provided.`);
       return;
     }
-
     debug('registered collab formats');
     registerCollabFormats(getFormatType);
     debug('added collab filters');
@@ -213,12 +205,10 @@ export default function useYjs(_ref2) {
         sendSelection,
         disconnect
       } = _ref3;
-
       onUnmount = () => {
         debug('unmount');
         disconnect();
       };
-
       onSelectionChange.current = sendSelection;
     });
     return () => onUnmount();

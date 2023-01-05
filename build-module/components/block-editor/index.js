@@ -1,14 +1,13 @@
 import { createElement, Fragment } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * External dependencies
  */
 import classnames from 'classnames';
+
 /**
  * WordPress dependencies
  */
-
 import { withDispatch, useSelect } from '@wordpress/data';
 import { KeyboardShortcuts } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
@@ -19,10 +18,10 @@ import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfac
 import { __ } from '@wordpress/i18n';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { useEffect } from '@wordpress/element';
+
 /**
  * Internal dependencies
  */
-
 import SettingsSidebar from './sidebar';
 import VisualEditor from './visual-editor';
 import TextEditor from './text-editor';
@@ -32,10 +31,9 @@ import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
 import Footer from './footer';
 import ActionArea from '../action-area';
+
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
-
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-
 /** @typedef {import('../../index').OnMore} OnMore */
 
 /**
@@ -46,22 +44,18 @@ import ActionArea from '../action-area';
 
 const interfaceLabels = {
   secondarySidebar: __('Block library'),
-
   /* translators: accessibility text for the editor top bar landmark region. */
   header: __('Editor top bar'),
-
   /* translators: accessibility text for the editor content landmark region. */
   body: __('Editor content'),
-
   /* translators: accessibility text for the editor settings landmark region. */
   sidebar: __('Editor settings'),
-
   /* translators: accessibility text for the editor publish landmark region. */
   actions: __('Editor publish'),
-
   /* translators: accessibility text for the editor footer landmark region. */
   footer: __('Editor footer')
 };
+
 /**
  * The editor component. Contains the visual or text editor, along with keyboard handling.
  *
@@ -76,10 +70,8 @@ const interfaceLabels = {
  * @param {OnHistory} props.redo
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
-
 function BlockEditor(props) {
   var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso$header, _settings$iso3, _settings$iso4, _settings$iso$toolbar, _settings$iso5, _settings$iso5$toolba;
-
   const {
     isEditing,
     editorMode,
@@ -90,7 +82,6 @@ function BlockEditor(props) {
     renderMoreMenu
   } = props;
   const styles = {}; // TODO: do we need hasThemeStyles support here?
-
   const isMobileViewport = useViewportMatch('medium', '<');
   const inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$sidebar = _settings$iso.sidebar) === null || _settings$iso$sidebar === void 0 ? void 0 : _settings$iso$sidebar.inspector) || false;
   const inserterInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inserter) || false;
@@ -128,27 +119,22 @@ function BlockEditor(props) {
     'has-fixed-toolbar': hasFixedToolbar,
     'show-icon-labels': showIconLabels
   });
-
   const secondarySidebar = () => {
     if (!inserterInSidebar) {
       return null;
     }
-
     if (editorMode === 'visual' && isInserterOpened) {
       return createElement(InserterSidebar, null);
     }
-
     if (editorMode === 'visual' && isListViewOpened) {
       return createElement(ListViewSidebar, null);
     }
-
     return null;
-  }; // For back-compat with older iso-editor
+  };
 
-
+  // For back-compat with older iso-editor
   useEffect(() => {
     const html = document.querySelector('html');
-
     if (isFullscreenActive) {
       // @ts-ignore
       html.classList.add('is-fullscreen-mode');
@@ -156,7 +142,6 @@ function BlockEditor(props) {
       // @ts-ignore
       html.classList.remove('is-fullscreen-mode');
     }
-
     return () => {
       if (html) {
         html.classList.remove('is-fullscreen-mode');
@@ -200,7 +185,6 @@ function BlockEditor(props) {
     }
   }));
 }
-
 export default withDispatch(dispatch => {
   const {
     redo,

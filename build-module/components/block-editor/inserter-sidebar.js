@@ -1,6 +1,5 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -14,9 +13,9 @@ export default function InserterSidebar() {
     setIsInserterOpened
   } = useDispatch('isolated/editor');
   const isMobileViewport = useViewportMatch('medium', '<');
-  const TagName = !isMobileViewport ? VisuallyHidden : 'div'; // Note: focusOnMount not present in Gutenberg
+  const TagName = !isMobileViewport ? VisuallyHidden : 'div';
+  // Note: focusOnMount not present in Gutenberg
   // @ts-ignore
-
   const [inserterDialogRef, inserterDialogProps] = useDialog({
     onClose: () => setIsInserterOpened(false),
     // @ts-ignore copied from Gutenberg

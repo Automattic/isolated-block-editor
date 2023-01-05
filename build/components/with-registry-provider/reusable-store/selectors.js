@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.__experimentalIsEditingReusableBlock = __experimentalIsEditingReusableBlock;
-
 /**
  * Returns true if reusable block is in the editing state.
  *

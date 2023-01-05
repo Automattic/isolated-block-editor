@@ -4,6 +4,7 @@
 import * as actions from './actions';
 import * as selectors from './selectors';
 import reducer from './reducer';
+
 /**
  * Store definition for the interface namespace.
  *
@@ -11,7 +12,6 @@ import reducer from './reducer';
  *
  * @type {Object}
  */
-
 export default {
   reducer,
   actions,

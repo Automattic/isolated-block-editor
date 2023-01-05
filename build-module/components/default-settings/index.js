@@ -1,27 +1,26 @@
 /**
  * WordPress dependencies
  */
+
 import { __ } from '@wordpress/i18n';
+
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
 function getMenu(current, defaultMenu) {
   if (current === false) {
     return false;
   }
-
   return defaultMenu;
 }
+
 /**
  * Apply default settings to the user supplied settings, ensuring we have a full and valid set of settings
  *
  * @param {BlockEditorSettings} settings - Settings
  * @return {BlockEditorSettings}
  */
-
-
 export default function applyDefaultSettings(settings) {
   var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
-
   const {
     iso,
     editor
@@ -75,7 +74,8 @@ export default function applyDefaultSettings(settings) {
       // No link menu
       linkMenu: (_iso$linkMenu = iso === null || iso === void 0 ? void 0 : iso.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
       // Default to top toolbar
-      defaultPreferences: { ...((_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
+      defaultPreferences: {
+        ...((_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
       },
       allowApi: (_iso$allowApi = iso === null || iso === void 0 ? void 0 : iso.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
       disableCanvasAnimations: (_iso$disableCanvasAni = iso === null || iso === void 0 ? void 0 : iso.disableCanvasAnimations) !== null && _iso$disableCanvasAni !== void 0 ? _iso$disableCanvasAni : false,

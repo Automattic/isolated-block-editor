@@ -1,10 +1,11 @@
 /**
  * WordPress dependencies
  */
+
 import { controls } from '@wordpress/data';
 import { store as interfaceStore } from '@wordpress/interface';
-/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
+/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('./reducer').EditorMode} EditorMode */
 
 const actions = {
@@ -19,7 +20,6 @@ const actions = {
       isReady
     };
   },
-
   /**
    * Set the current editor mode
    *
@@ -31,7 +31,6 @@ const actions = {
       editorMode
     };
   },
-
   /**
    * Set up the editor
    *
@@ -43,7 +42,6 @@ const actions = {
       settings
     };
   },
-
   /**
    * Set the current pattern name
    *
@@ -55,7 +53,6 @@ const actions = {
       pattern
     };
   },
-
   /**
    * Mark the block inserter as open or closed
    *
@@ -67,7 +64,6 @@ const actions = {
       isOpen
     };
   },
-
   /**
    * Set the current device type
    *
@@ -79,7 +75,6 @@ const actions = {
       deviceType
     };
   },
-
   /**
    * Set the editor canvas styles
    *
@@ -91,7 +86,6 @@ const actions = {
       canvasStyles
     };
   },
-
   /**
    * Set the editor preview mode
    *
@@ -103,7 +97,6 @@ const actions = {
       isIframePreview
     };
   },
-
   /**
    * Mark this editor as in-use or not
    *
@@ -115,7 +108,6 @@ const actions = {
       isEditing
     };
   },
-
   /**
    * Open the named sidebar
    *
@@ -124,14 +116,12 @@ const actions = {
   *openGeneralSidebar(name) {
     yield controls.dispatch(interfaceStore, 'enableComplementaryArea', 'isolated/editor', name);
   },
-
   /**
    * Close the sidebar (or popover)
    */
   *closeGeneralSidebar() {
     yield controls.dispatch(interfaceStore, 'disableComplementaryArea', 'isolated/editor');
   },
-
   /**
    * Set the status of the listview sidebar section
    *
@@ -143,7 +133,6 @@ const actions = {
       isOpen
     };
   }
-
 };
 export default actions;
 //# sourceMappingURL=actions.js.map

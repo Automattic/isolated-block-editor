@@ -10,7 +10,6 @@ const actions = {
       feature
     };
   }
-
 };
 export default actions;
 //# sourceMappingURL=actions.js.map

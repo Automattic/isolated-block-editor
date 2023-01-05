@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.isFeatureActive = isFeatureActive;
-
 /**
  * Is the feature active?
  *

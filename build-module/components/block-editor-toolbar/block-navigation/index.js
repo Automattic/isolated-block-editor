@@ -1,6 +1,5 @@
 import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -10,12 +9,11 @@ import { useSelect } from '@wordpress/data';
 import { listView } from '@wordpress/icons';
 import { store as blockEditorStore, __experimentalListView as ListView } from '@wordpress/block-editor';
 import { forwardRef } from '@wordpress/element';
+
 /**
  * Internal dependencies
  */
-
 import './style.scss';
-
 function BlockNavigationDropdown(_ref, ref) {
   let {
     isDisabled,
@@ -38,8 +36,7 @@ function BlockNavigationDropdown(_ref, ref) {
         "aria-expanded": isOpen,
         "aria-haspopup": "true",
         onClick: isEnabled ? onToggle : undefined
-        /* translators: button label text should, if possible, be under 16 characters. */
-        ,
+        /* translators: button label text should, if possible, be under 16 characters. */,
         label: __('List view'),
         className: "block-editor-block-navigation",
         "aria-disabled": !isEnabled
@@ -52,6 +49,5 @@ function BlockNavigationDropdown(_ref, ref) {
     }, __('List view')), createElement(ListView, null))
   });
 }
-
 export default forwardRef(BlockNavigationDropdown);
 //# sourceMappingURL=index.js.map

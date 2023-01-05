@@ -1,7 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { remove } from '@wordpress/dom'; // TODO: Unsolved problem
+import { remove } from '@wordpress/dom';
+
+// TODO: Unsolved problem
 // The limitation in our sanitization strategy is that it does not match the
 // server-side wp_kses rules, which should be considered the canonical config
 // of how unsafe the site owner is willing to be. On sites that do allow script tags,
@@ -22,7 +24,6 @@ import { remove } from '@wordpress/dom'; // TODO: Unsolved problem
  *
  * @return {string} The sanitized HTML.
  */
-
 export default function sanitizeHTML(html) {
   const {
     body
@@ -31,21 +32,17 @@ export default function sanitizeHTML(html) {
   const elements = body.getElementsByTagName('*');
   let elementIndex = elements.length;
   let found = 0;
-
   while (elementIndex--) {
     const element = elements[elementIndex];
-
     if (element.tagName === 'SCRIPT') {
       found++;
       remove(element);
     } else {
       let attributeIndex = element.attributes.length;
-
       while (attributeIndex--) {
         const {
           name: key
         } = element.attributes[attributeIndex];
-
         if (key.startsWith('on')) {
           found++;
           element.removeAttribute(key);
@@ -53,7 +50,6 @@ export default function sanitizeHTML(html) {
       }
     }
   }
-
   return found ? body.innerHTML : html;
 }
 //# sourceMappingURL=sanitize-html.js.map

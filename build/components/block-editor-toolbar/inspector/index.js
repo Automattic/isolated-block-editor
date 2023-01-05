@@ -4,15 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _interface = require("@wordpress/interface");
-
 var _components = require("@wordpress/components");
-
 require("./style.scss");
-
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -20,10 +15,10 @@ import { createElement } from "@wordpress/element";
 /**
  * Internal dependencies
  */
+
 function Inspector(_ref) {
   var button = _ref.button,
-      onToggle = _ref.onToggle;
-
+    onToggle = _ref.onToggle;
   function onOutside(ev) {
     if (ev.target.closest('.block-editor-block-inspector') === null && !ev.target.classList.contains('iso-inspector')) {
       onToggle(false);
@@ -31,7 +26,6 @@ function Inspector(_ref) {
       ev.stopPropagation();
     }
   }
-
   return createElement(_components.Popover, {
     position: "bottom left",
     className: "iso-inspector",
@@ -41,7 +35,6 @@ function Inspector(_ref) {
     scope: "isolated/editor"
   }));
 }
-
 var _default = Inspector;
 exports["default"] = _default;
 //# sourceMappingURL=index.js.map

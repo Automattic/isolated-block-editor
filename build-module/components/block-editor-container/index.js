@@ -1,35 +1,31 @@
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
-
 /**
  * External dependencies
  */
+
 import classnames from 'classnames';
+
 /**
  * WordPress dependencies
  */
-
 import { compose, useResizeObserver } from '@wordpress/compose';
 import { ErrorBoundary } from '@wordpress/editor';
 import { withDispatch, withSelect } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
-
 import ClickOutsideWrapper from './click-outside';
 import BlockEditorContents from '../block-editor-contents';
 import HotSwapper from './hot-swapper';
 import './style.scss';
+
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-
 /** @typedef {import('../../index').OnError} OnError */
-
 /** @typedef {import('../../index').OnMore} OnMore */
-
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
-
 /** @typedef {import('../../index').OnLoad} OnLoad */
-
 /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
 
 /**
@@ -41,6 +37,7 @@ import './style.scss';
 
 const SIZE_LARGE = 720;
 const SIZE_MEDIUM = 480;
+
 /**
  * Contains the block contents. Handles the hot-swapping of the redux stores, as well as applying the root CSS classes
  *
@@ -61,7 +58,6 @@ const SIZE_MEDIUM = 480;
  * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
  * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
-
 function BlockEditorContainer(props) {
   const {
     children,
@@ -115,7 +111,6 @@ function BlockEditorContainer(props) {
     onChange: onChange
   }, children))));
 }
-
 export default compose([withSelect(select => {
   const {
     isEditorReady,

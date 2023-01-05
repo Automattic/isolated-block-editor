@@ -2,8 +2,8 @@
  * External dependencies
  */
 import * as yjs from 'yjs';
-
 const debugUndo = require('debug')('iso-editor:collab:undo');
+
 /**
  * Set up undo handling.
  *
@@ -11,19 +11,15 @@ const debugUndo = require('debug')('iso-editor:collab:undo');
  * @param {string} identity
  * @param {Object} registry - Registry object from `@wordpress/data`.
  */
-
-
 export function setupUndoManager(typeScope, identity, registry) {
   const {
     dispatch,
     select
   } = registry;
-
   const getSelection = () => ({
     start: select('core/block-editor').getSelectionStart(),
     end: select('core/block-editor').getSelectionEnd()
   });
-
   const setSelection = _ref => {
     let {
       start,
@@ -31,16 +27,13 @@ export function setupUndoManager(typeScope, identity, registry) {
     } = _ref;
     return dispatch('core/block-editor').selectionChange(start === null || start === void 0 ? void 0 : start.clientId, start === null || start === void 0 ? void 0 : start.attributeKey, start === null || start === void 0 ? void 0 : start.offset, end === null || end === void 0 ? void 0 : end.offset);
   };
-
   const undoManager = new yjs.UndoManager(typeScope, {
     trackedOrigins: new Set([identity])
   });
-
   const debugUndoWithStackSizes = function () {
     debugUndo(...arguments);
     debugUndo(`stack size: undo ${undoManager.undoStack.length}, redo ${undoManager.redoStack.length}`);
   };
-
   undoManager.on('stack-item-added', event => {
     const selection = getSelection();
     event.stackItem.meta.set('caret-location', selection);
@@ -51,15 +44,12 @@ export function setupUndoManager(typeScope, identity, registry) {
       debugUndoWithStackSizes(`undo stack item popped (last item, no caret position to restore)`);
       return;
     }
-
     const selection = event.stackItem.meta.get('caret-location');
-
     if (selection !== null && selection !== void 0 && selection.start) {
       setSelection(selection);
       debugUndoWithStackSizes(`${event.type} stack item popped with selection`, selection);
       return;
     }
-
     debugUndoWithStackSizes(`${event.type} stack item popped without selection`);
   });
   dispatch('isolated/editor').setUndoManager(undoManager);

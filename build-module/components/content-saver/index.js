@@ -1,11 +1,12 @@
 /**
  * WordPress dependencies
  */
+
 import { useEffect, useRef } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { serialize } from '@wordpress/blocks';
-/** @typedef {import('../../index').OnSaveBlocks} OnSaveBlocks */
 
+/** @typedef {import('../../index').OnSaveBlocks} OnSaveBlocks */
 /** @typedef {import('../../index').OnSaveContent} OnSaveContent */
 
 /**
@@ -15,7 +16,6 @@ import { serialize } from '@wordpress/blocks';
  * @param {OnSaveBlocks} [props.onSaveBlocks] - Save blocks callback
  * @param {OnSaveContent} [props.onSaveContent] - Save content callback
  */
-
 function ContentSaver(props) {
   const {
     onSaveBlocks,
@@ -34,24 +34,23 @@ function ContentSaver(props) {
     // @ts-ignore
     ignoredContent: select('isolated/editor').getIgnoredContent()
   }), []);
-
   function saveBlocks() {
     // Save the content in the format wanted by the user
     onSaveBlocks === null || onSaveBlocks === void 0 ? void 0 : onSaveBlocks(blocks, ignoredContent);
     onSaveContent === null || onSaveContent === void 0 ? void 0 : onSaveContent(serialize(blocks));
   }
-
   useEffect(() => {
     if (!blocks) {
       setReady(true);
       return;
-    } // Try and avoid an initial first save if no content
+    }
 
-
+    // Try and avoid an initial first save if no content
     if (firstTime.current) {
       firstTime.current = false;
-      setReady(true); // The editor has initial content - save it
+      setReady(true);
 
+      // The editor has initial content - save it
       if (blocks && blocks.length > 1) {
         saveBlocks();
       }
@@ -61,6 +60,5 @@ function ContentSaver(props) {
   }, [blocks]);
   return null;
 }
-
 export default ContentSaver;
 //# sourceMappingURL=index.js.map

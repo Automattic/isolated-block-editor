@@ -4,12 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = sanitizeHTML;
-
 var _dom = require("@wordpress/dom");
-
 /**
  * WordPress dependencies
  */
+
 // TODO: Unsolved problem
 // The limitation in our sanitization strategy is that it does not match the
 // server-side wp_kses rules, which should be considered the canonical config
@@ -33,25 +32,20 @@ var _dom = require("@wordpress/dom");
  */
 function sanitizeHTML(html) {
   var _document$implementat = document.implementation.createHTMLDocument(''),
-      body = _document$implementat.body;
-
+    body = _document$implementat.body;
   body.innerHTML = html;
   var elements = body.getElementsByTagName('*');
   var elementIndex = elements.length;
   var found = 0;
-
   while (elementIndex--) {
     var element = elements[elementIndex];
-
     if (element.tagName === 'SCRIPT') {
       found++;
       (0, _dom.remove)(element);
     } else {
       var attributeIndex = element.attributes.length;
-
       while (attributeIndex--) {
         var key = element.attributes[attributeIndex].name;
-
         if (key.startsWith('on')) {
           found++;
           element.removeAttribute(key);
@@ -59,7 +53,6 @@ function sanitizeHTML(html) {
       }
     }
   }
-
   return found ? body.innerHTML : html;
 }
 //# sourceMappingURL=sanitize-html.js.map

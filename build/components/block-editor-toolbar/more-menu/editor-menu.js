@@ -4,25 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _components = require("@wordpress/components");
-
 var _i18n = require("@wordpress/i18n");
-
 var _data = require("@wordpress/data");
-
 var _compose = require("@wordpress/compose");
-
 var _icons = require("@wordpress/icons");
-
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
 
 /** @typedef {import('./index').OnClose} OnClose */
-
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 
 /**
@@ -44,13 +36,11 @@ import { createElement } from "@wordpress/element";
  */
 function EditorMenu(_ref) {
   var _settings$iso, _settings$iso2, _settings$iso2$moreMe;
-
   var onClose = _ref.onClose,
-      editorMode = _ref.editorMode,
-      onSetMode = _ref.onSetMode,
-      isCodeEditingEnabled = _ref.isCodeEditingEnabled,
-      settings = _ref.settings;
-
+    editorMode = _ref.editorMode,
+    onSetMode = _ref.onSetMode,
+    isCodeEditingEnabled = _ref.isCodeEditingEnabled,
+    settings = _ref.settings;
   /**
    * @param {string} mode
    */
@@ -58,15 +48,12 @@ function EditorMenu(_ref) {
     onSetMode(mode);
     onClose();
   };
-
   if (!isCodeEditingEnabled) {
     return null;
   }
-
   if ((settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) === false || !(settings !== null && settings !== void 0 && (_settings$iso2 = settings.iso) !== null && _settings$iso2 !== void 0 && (_settings$iso2$moreMe = _settings$iso2.moreMenu) !== null && _settings$iso2$moreMe !== void 0 && _settings$iso2$moreMe.editor)) {
     return null;
   }
-
   return createElement(_components.MenuGroup, {
     label: (0, _i18n._x)('Editor', 'noun')
   }, createElement(_components.MenuItem, {
@@ -84,16 +71,14 @@ function EditorMenu(_ref) {
     },
     role: "menuitemcheckbox"
   }, (0, _i18n.__)('Code editor')));
-} // @ts-ignore
+}
 
-
+// @ts-ignore
 var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
-      getEditorMode = _select.getEditorMode;
-
+    getEditorMode = _select.getEditorMode;
   var _select$getEditorSett = select('core/editor').getEditorSettings(),
-      codeEditingEnabled = _select$getEditorSett.codeEditingEnabled;
-
+    codeEditingEnabled = _select$getEditorSett.codeEditingEnabled;
   return {
     editorMode: getEditorMode(),
     isCodeEditingEnabled: codeEditingEnabled
@@ -105,6 +90,5 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     }
   };
 })])(EditorMenu);
-
 exports["default"] = _default;
 //# sourceMappingURL=editor-menu.js.map

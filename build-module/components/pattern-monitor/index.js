@@ -1,14 +1,14 @@
 // @ts-nocheck
-
 /**
  * WordPress dependencies
  */
+
 import { useEffect, useRef } from '@wordpress/element';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { parse } from '@wordpress/blocks';
-/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
+/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../store/editor/reducer').Pattern} Pattern */
 
 /**
@@ -29,22 +29,22 @@ import { parse } from '@wordpress/blocks';
  * @param {Pattern} props.currentPattern - Currently selected pattern
  * @param {OnUpdate} props.updateBlocksWithoutUndo - Callback to update blocks
  */
-
 function PatternMonitor(props) {
   const {
     currentPattern,
     updateBlocksWithoutUndo
   } = props;
-  const previous = useRef(null); // Monitor the current pattern and update the editor content if it changes
+  const previous = useRef(null);
 
+  // Monitor the current pattern and update the editor content if it changes
   useEffect(() => {
     if (currentPattern === null || previous.current === currentPattern) {
       // @ts-ignore
       previous.current = currentPattern;
       return;
-    } // @ts-ignore
+    }
 
-
+    // @ts-ignore
     previous.current = currentPattern.name;
     setTimeout(() => {
       updateBlocksWithoutUndo(parse(currentPattern.content));
@@ -52,7 +52,6 @@ function PatternMonitor(props) {
   }, [currentPattern]);
   return null;
 }
-
 export default compose([withSelect(select => {
   const {
     getCurrentPattern

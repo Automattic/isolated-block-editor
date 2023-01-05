@@ -1,5 +1,4 @@
 import { createElement } from "@wordpress/element";
-
 /**
  * WordPress dependencies
  */
@@ -7,7 +6,6 @@ import { withSelect, withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { MenuItem, withSpokenMessages } from '@wordpress/components';
 import { check } from '@wordpress/icons';
-
 function OptionToggle(_ref) {
   let {
     onToggle,
@@ -22,9 +20,9 @@ function OptionToggle(_ref) {
     role: "menuitemcheckbox",
     info: info
   }, label);
-} // @ts-ignore
+}
 
-
+// @ts-ignore
 export default compose([withSelect((select, _ref2) => {
   let {
     option
@@ -37,6 +35,5 @@ export default compose([withSelect((select, _ref2) => {
     dispatch('isolated/editor').toggleOption(ownProps.option);
     ownProps.onClose();
   }
-
 })), withSpokenMessages])(OptionToggle);
 //# sourceMappingURL=index.js.map

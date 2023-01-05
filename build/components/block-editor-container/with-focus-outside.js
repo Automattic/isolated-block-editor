@@ -1,38 +1,23 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
-
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
 var _lodash = require("lodash");
-
 var _element = require("@wordpress/element");
-
 var _compose = require("@wordpress/compose");
-
 import { createElement } from "@wordpress/element";
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 /**
  * Input types which are classified as button types, for use in considering
  * whether element is a (focus-normalized) button.
@@ -40,6 +25,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
  * @type {string[]}
  */
 var INPUT_BUTTON_TYPES = ['button', 'submit'];
+
 /**
  * Returns true if the given element is a button element subject to focus
  * normalization, or false otherwise.
@@ -50,29 +36,22 @@ var INPUT_BUTTON_TYPES = ['button', 'submit'];
  *
  * @return {boolean} Whether element is a button.
  */
-
 function isFocusNormalizedButton(element) {
   switch (element.nodeName) {
     case 'A':
     case 'BUTTON':
       return true;
-
     case 'INPUT':
       return (0, _lodash.includes)(INPUT_BUTTON_TYPES, element.type);
   }
-
   return false;
 }
-
 var _default = (0, _compose.createHigherOrderComponent)(function (WrappedComponent) {
   return /*#__PURE__*/function (_Component) {
     (0, _inherits2["default"])(_class, _Component);
-
     var _super = _createSuper(_class);
-
     function _class() {
       var _this;
-
       (0, _classCallCheck2["default"])(this, _class);
       _this = _super.apply(this, arguments);
       _this.bindNode = _this.bindNode.bind((0, _assertThisInitialized2["default"])(_this));
@@ -81,7 +60,6 @@ var _default = (0, _compose.createHigherOrderComponent)(function (WrappedCompone
       _this.normalizeButtonFocus = _this.normalizeButtonFocus.bind((0, _assertThisInitialized2["default"])(_this));
       return _this;
     }
-
     (0, _createClass2["default"])(_class, [{
       key: "componentWillUnmount",
       value: function componentWillUnmount() {
@@ -101,15 +79,14 @@ var _default = (0, _compose.createHigherOrderComponent)(function (WrappedCompone
       key: "queueBlurCheck",
       value: function queueBlurCheck(event) {
         var _this2 = this;
-
         // React does not allow using an event reference asynchronously
         // due to recycling behavior, except when explicitly persisted.
-        event.persist(); // Skip blur check if clicking button. See `normalizeButtonFocus`.
+        event.persist();
 
+        // Skip blur check if clicking button. See `normalizeButtonFocus`.
         if (this.preventBlurCheck) {
           return;
         }
-
         this.blurCheckTimeout = setTimeout(function () {
           // If document is not focused then focus should remain
           // inside the wrapped component and therefore we cancel
@@ -119,7 +96,6 @@ var _default = (0, _compose.createHigherOrderComponent)(function (WrappedCompone
             event.preventDefault();
             return;
           }
-
           if ('function' === typeof _this2.node.handleFocusOutside) {
             _this2.node.handleFocusOutside(event);
           }
@@ -129,11 +105,11 @@ var _default = (0, _compose.createHigherOrderComponent)(function (WrappedCompone
       key: "cancelBlurCheck",
       value: function cancelBlurCheck() {
         clearTimeout(this.blurCheckTimeout);
-
         if (typeof this.node !== 'undefined' && 'function' === typeof this.node.handleFocus) {
           this.node.handleFocus(event);
         }
       }
+
       /**
        * Handles a mousedown or mouseup event to respectively assign and
        * unassign a flag for preventing blur check on button elements. Some
@@ -145,14 +121,12 @@ var _default = (0, _compose.createHigherOrderComponent)(function (WrappedCompone
        *
        * @param {MouseEvent} event Event for mousedown or mouseup.
        */
-
     }, {
       key: "normalizeButtonFocus",
       value: function normalizeButtonFocus(event) {
         var type = event.type,
-            target = event.target;
+          target = event.target;
         var isInteractionEnd = (0, _lodash.includes)(['mouseup', 'touchend'], type);
-
         if (isInteractionEnd) {
           this.preventBlurCheck = false;
         } else if (isFocusNormalizedButton(target)) {
@@ -182,6 +156,5 @@ var _default = (0, _compose.createHigherOrderComponent)(function (WrappedCompone
     return _class;
   }(_element.Component);
 }, 'withFocusOutside');
-
 exports["default"] = _default;
 //# sourceMappingURL=with-focus-outside.js.map
