@@ -2,11 +2,6 @@ import _extends from "@babel/runtime/helpers/extends";
 import { createElement, Fragment } from "@wordpress/element";
 // @ts-nocheck
 /**
- * External dependencies
- */
-import React from 'react';
-
-/**
  * WordPress dependencies
  */
 import { BlockList, WritingFlow, store as blockEditorStore, useSetting, __unstableEditorStyles as EditorStyles, __experimentalLayoutStyle as LayoutStyle, __unstableUseBlockSelectionClearer as useBlockSelectionClearer, __unstableUseTypewriter as useTypewriter, __unstableUseClipboardHandler as useClipboardHandler, __unstableUseTypingObserver as useTypingObserver, __experimentalUseResizeCanvas as useResizeCanvas, __unstableUseMouseMoveTypingReset as useMouseMoveTypingReset, __unstableIframe as Iframe, BlockTools } from '@wordpress/block-editor';

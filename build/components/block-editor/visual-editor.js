@@ -8,7 +8,6 @@ exports["default"] = void 0;
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _react = _interopRequireDefault(require("react"));
 var _blockEditor = require("@wordpress/block-editor");
 var _data = require("@wordpress/data");
 var _components = require("@wordpress/components");

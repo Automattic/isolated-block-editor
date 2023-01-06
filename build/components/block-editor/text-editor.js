@@ -6,16 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _objectDestructuringEmpty2 = _interopRequireDefault(require("@babel/runtime/helpers/objectDestructuringEmpty"));
-var _react = _interopRequireDefault(require("react"));
 var _postTextEditor = _interopRequireDefault(require("./post-text-editor"));
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
-/**
- * External dependencies
- */
-
 /**
  * Internal dependencies
  */
