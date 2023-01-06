@@ -1,6 +1,6 @@
 {
 	"name": "@automattic/isolated-block-editor",
-	"version": "2.23.0",
+	"version": "2.23.1",
 	"description": "Repackages Gutenberg's editor playground as multi-instance editor.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
@@ -93,10 +93,7 @@
 		"lib0": "^0.2.58",
 		"lodash": "^4.17.21",
 		"memize": "^1.1.0",
-		"react": "18.2.0",
 		"react-autosize-textarea": "^7.1.0",
-		"react-dom": "18.2.0",
-		"reakit-utils": "^0.15.2",
 		"redux-undo": "^1.0.1",
 		"uuid": "^9.0.0",
 		"yjs": "^13.5.44"
