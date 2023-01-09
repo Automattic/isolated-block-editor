@@ -80,8 +80,8 @@ You can use the provided [`iso-gutenberg.php`](examples/wordpress-php/README.md)
 You can use the provided `isolated-block-editor.js`, `core.css`, and `isolated-block-editor.css` files on any web page, regardless of whether it is on WordPress. It will provide two global functions which can turn a `textarea` into a block editor. Here's an example:
 
 ```js
-<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="isolated-block-editor.js"></script>
 <link rel="stylesheet" href="core.css" />
 <link rel="stylesheet" href="isolated-block-editor.css" />
