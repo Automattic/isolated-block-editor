@@ -1,10 +1,5 @@
 // @ts-nocheck
 /**
- * External dependencies
- */
-import React from 'react';
-
-/**
  * WordPress dependencies
  */
 import {

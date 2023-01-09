@@ -1,11 +1,6 @@
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
 /**
- * External dependencies
- */
-import React from 'react';
-
-/**
  * Internal dependencies
  */
 import PostTextEditor from './post-text-editor';
