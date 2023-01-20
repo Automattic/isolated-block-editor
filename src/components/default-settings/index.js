@@ -131,7 +131,7 @@ export default function applyDefaultSettings( settings ) {
 
 			...editor,
 
-			bodyPlaceholder: editor?.bodyPlaceholder ?? __( 'Start writing or type / to choose a block' ),
+			bodyPlaceholder: editor?.bodyPlaceholder ?? __( 'Type / to choose a block' ),
 
 			// @ts-ignore */}
 			availableLegacyWidgets: {},
