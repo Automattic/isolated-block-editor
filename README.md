@@ -218,7 +218,6 @@ The following function is also provided:
 - _iso.toolbar.inserter_ `[boolean]` - Enable or disable the toolbar block inserter, defaults to `true`
 - _iso.toolbar.inspector_ `[boolean]` - Enable or disable the toolbar block inspector, defaults to `false`
 - _iso.toolbar.navigation_ `[boolean]` - Enable or disable the toolbar navigation button, defaults to `false`
-- _iso.toolbar.toc_ `[boolean]` - Enable or disable the toolbar table of contents button, defaults to `false`
 - _iso.toolbar.undo_ `[boolean]` - Enable or disable the toolbar undo/redo buttons, defaults to `true`
 - _iso.toolbar.documentInspector_ `[string|null]` - Set to a string to show as a new tab in the inspector and filled with `DocumentSection`, otherwise defaults to no new tab
 - _iso.moreMenu_ `[Object]` - More menu settings

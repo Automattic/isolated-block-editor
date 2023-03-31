@@ -55,7 +55,6 @@ Controlled.args = {
 	inserter: true,
 	inspector: true,
 	navigation: true,
-	toc: true,
 	documentInspector: 'Document',
 };
 
@@ -78,7 +77,6 @@ ToolbarSettings.args = {
 	inserter: true,
 	inspector: true,
 	navigation: true,
-	toc: true,
 	documentInspector: 'Document',
 };
 
