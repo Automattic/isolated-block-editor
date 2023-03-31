@@ -6,4 +6,7 @@ module.exports = {
 	},
 	stories: [ '../src/**/*.stories.*', '../stories/**/*.stories.*' ],
 	addons: [ '@storybook/addon-links', '@storybook/addon-essentials', '@storybook/preset-scss' ],
+	typescript: {
+		reactDocgen: 'react-docgen-typescript-plugin'
+	},
 };
