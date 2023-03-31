@@ -29,11 +29,10 @@ import {
 	VisualEditorGlobalKeyboardShortcuts,
 	store as editorStore,
 } from '@wordpress/editor';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useEffect, useRef, useMemo } from '@wordpress/element';
 import { useMergeRefs } from '@wordpress/compose';
-import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -90,13 +89,11 @@ export default function VisualEditor( { styles } ) {
 		editedPostTemplate = {},
 		wrapperBlockName,
 		wrapperUniqueId,
-		isBlockBasedTheme,
 	} = useSelect( ( select ) => {
 		const {
 			isFeatureActive,
-			getEditedPostTemplate,
-			__experimentalGetPreviewDeviceType,
 		} = select( 'isolated/editor' );
+		// @ts-ignore
 		const { getCurrentPostId, getCurrentPostType, getEditorSettings } =
 			select( editorStore );
 		const _isTemplateMode = false;
@@ -109,32 +106,27 @@ export default function VisualEditor( { styles } ) {
 		}
 
 		const editorSettings = getEditorSettings();
-		const supportsTemplateMode = editorSettings.supportsTemplateMode;
-		const canEditTemplate = select( coreStore ).canUser(
-			'create',
-			'templates'
-		);
 
 		return {
 			deviceType: 'Desktop',
+			// @ts-ignore
 			isWelcomeGuideVisible: isFeatureActive( 'welcomeGuide' ),
 			isTemplateMode: _isTemplateMode,
 			postContentAttributes: getEditorSettings().postContentAttributes,
 			// Post template fetch returns a 404 on classic themes, which
 			// messes with e2e tests, so check it's a block theme first.
-			editedPostTemplate:
-				supportsTemplateMode && canEditTemplate
-					? getEditedPostTemplate()
-					: undefined,
+			editedPostTemplate: undefined,
 			wrapperBlockName: _wrapperBlockName,
 			wrapperUniqueId: getCurrentPostId(),
 			isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
 		};
 	}, [] );
+	// @ts-ignore
 	const { isCleanNewPost } = useSelect( editorStore );
 	const hasMetaBoxes = false;
-	const { themeHasDisabledLayoutStyles, themeSupportsLayout, isFocusMode } =
+	const { themeHasDisabledLayoutStyles, themeSupportsLayout } =
 		useSelect( ( select ) => {
+			// @ts-ignore
 			const _settings = select( blockEditorStore ).getSettings();
 			return {
 				themeHasDisabledLayoutStyles: _settings.disableLayoutStyles,
@@ -142,7 +134,6 @@ export default function VisualEditor( { styles } ) {
 				isFocusMode: _settings.focusMode,
 			};
 		}, [] );
-	const { clearSelectedBlock } = useDispatch( blockEditorStore );
 	const desktopCanvasStyles = {
 		height: '100%',
 		width: '100%',
@@ -206,23 +197,27 @@ export default function VisualEditor( { styles } ) {
 	}, [ isTemplateMode, themeSupportsLayout, globalLayoutSettings ] );
 
 	const newestPostContentAttributes = useMemo( () => {
+		// @ts-ignore
 		if ( !editedPostTemplate?.content && !editedPostTemplate?.blocks ) {
 			return postContentAttributes;
 		}
 		// When in template editing mode, we can access the blocks directly.
+		// @ts-ignore
 		if ( editedPostTemplate?.blocks ) {
+			// @ts-ignore
 			return getPostContentAttributes( editedPostTemplate?.blocks );
 		}
 		// If there are no blocks, we have to parse the content string.
 		// Best double-check it's a string otherwise the parse function gets unhappy.
-		const parseableContent =
-			typeof editedPostTemplate?.content === 'string'
-				? editedPostTemplate?.content
-				: '';
+		// @ts-ignore
+		const parseableContent = typeof editedPostTemplate?.content === 'string' ? editedPostTemplate?.content : '';
 
+		// @ts-ignore
 		return getPostContentAttributes( parse( parseableContent ) ) || {};
 	}, [
+		// @ts-ignore
 		editedPostTemplate?.content,
+		// @ts-ignore
 		editedPostTemplate?.blocks,
 		postContentAttributes,
 	] );
@@ -275,9 +270,10 @@ export default function VisualEditor( { styles } ) {
 		if ( isWelcomeGuideVisible || !isCleanNewPost() ) {
 			return;
 		}
+		// @ts-ignore
 		titleRef?.current?.focus();
 	}, [ isWelcomeGuideVisible, isCleanNewPost ] );
-console.log( 'styles', styles );
+
 	styles = useMemo(
 		() => [
 			...styles,
@@ -321,6 +317,7 @@ console.log( 'styles', styles );
 						}
 						contentRef={ contentRef }
 						styles={ styles }
+						style={ {} }
 					>
 						{ themeSupportsLayout &&
 							!themeHasDisabledLayoutStyles &&

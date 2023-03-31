@@ -62,17 +62,19 @@ export default function ListViewSidebar( { canClose = true } ) {
 		// List view tab is selected.
 		if ( currentTab === 'list-view' ) {
 			// Either focus the list view or the list view tab button. Must have a fallback because the list view does not render when there are no blocks.
-			const listViewApplicationFocus = focus.tabbable.find(
-				listViewRef.current
-			)[ 0 ];
+			// @ts-ignore
+			const listViewApplicationFocus = focus.tabbable.find( listViewRef.current )[ 0 ];
+			// @ts-ignore
 			const listViewFocusArea = sidebarRef.current.contains(
 				listViewApplicationFocus
 			)
 				? listViewApplicationFocus
 				: listViewTabRef.current;
+			// @ts-ignore
 			listViewFocusArea.focus();
 			// Outline tab is selected.
 		} else {
+			// @ts-ignore
 			outlineTabRef.current.focus();
 		}
 	}
@@ -80,11 +82,8 @@ export default function ListViewSidebar( { canClose = true } ) {
 	// This only fires when the sidebar is open because of the conditional rendering. It is the same shortcut to open but that is defined as a global shortcut and only fires when the sidebar is closed.
 	useShortcut( 'core/edit-post/toggle-list-view', () => {
 		// If the sidebar has focus, it is safe to close.
-		if (
-			sidebarRef.current.contains(
-				sidebarRef.current.ownerDocument.activeElement
-			)
-		) {
+		// @ts-ignore
+		if ( sidebarRef.current.contains( sidebarRef.current.ownerDocument.activeElement ) ) {
 			setIsListViewOpened( false );
 			// If the list view or outline does not have focus, focus should be moved to it.
 		} else {
@@ -98,6 +97,7 @@ export default function ListViewSidebar( { canClose = true } ) {
 			aria-label={ __( 'Document Overview' ) }
 			className="edit-post-editor__document-overview-panel"
 			onKeyDown={ closeOnEscape }
+			// @ts-ignore
 			ref={ sidebarRef }
 		>
 			<div

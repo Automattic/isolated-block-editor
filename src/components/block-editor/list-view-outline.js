@@ -58,6 +58,7 @@ function EmptyOutlineIllustration() {
 
 export default function ListViewOutline() {
 	const { headingCount } = useSelect( ( select ) => {
+		// @ts-ignore
 		const { getGlobalBlockCount } = select( blockEditorStore );
 		return {
 			headingCount: getGlobalBlockCount( 'core/heading' ),

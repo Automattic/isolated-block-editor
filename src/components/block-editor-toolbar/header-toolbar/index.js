@@ -63,15 +63,14 @@ function HeaderToolbar( props ) {
 		};
 	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const isWideViewport = useViewportMatch( 'wide' );
 	const { inserter, navigation, undo, selectorTool } = props.settings.iso.toolbar;
 	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
-	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
+	const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
 		? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
-		  __( 'Document and block tools' )
+		__( 'Document and block tools' )
 		: /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
-		  __( 'Document tools' );
+		__( 'Document tools' );
 	const openInserter = useCallback( () => {
 		if ( isInserterOpened ) {
 			// Focusing the inserter button closes the inserter popover
@@ -82,7 +81,7 @@ function HeaderToolbar( props ) {
 		}
 	}, [ isInserterOpened, setIsInserterOpened ] );
 
-	const toggleListView = useCallback( () => setIsListViewOpened( ! isListViewOpen ), [
+	const toggleListView = useCallback( () => setIsListViewOpened( !isListViewOpen ), [
 		setIsListViewOpened,
 		isListViewOpen,
 	] );
@@ -99,17 +98,17 @@ function HeaderToolbar( props ) {
 							isPressed={ isInserterOpened }
 							onMouseDown={ preventDefault }
 							onClick={ openInserter }
-							disabled={ ! isInserterEnabled }
+							disabled={ !isInserterEnabled }
 							isPrimary
 							icon={ plus }
 							/* translators: button label text should, if possible, be under 16
 					characters. */
 							label={ _x( 'Toggle block inserter', 'Generic label for block inserter button' ) }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 						/>
 					) }
 
-					{ isInserterOpened && ! inserterInSidebar && (
+					{ isInserterOpened && !inserterInSidebar && (
 						<Popover
 							position="bottom right"
 							onClose={ () => setIsInserterOpened( false ) }
@@ -131,18 +130,18 @@ function HeaderToolbar( props ) {
 					{ undo && (
 						<ToolbarItem
 							as={ EditorHistoryUndo }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 							variant={ showIconLabels ? 'tertiary' : undefined }
 						/>
 					) }
 					{ undo && (
 						<ToolbarItem
 							as={ EditorHistoryRedo }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 							variant={ showIconLabels ? 'tertiary' : undefined }
 						/>
 					) }
-					{ navigation && ! inserterInSidebar && (
+					{ navigation && !inserterInSidebar && (
 						<ToolbarItem as={ BlockNavigationDropdown } isDisabled={ isTextModeEnabled } />
 					) }
 					{ navigation && inserterInSidebar && (
@@ -156,7 +155,7 @@ function HeaderToolbar( props ) {
 							label={ __( 'List View' ) }
 							onClick={ toggleListView }
 							shortcut={ listViewShortcut }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 						/>
 					) }
 				</div>
