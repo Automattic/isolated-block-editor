@@ -5,18 +5,19 @@ import { Button, Dropdown } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { listView } from '@wordpress/icons';
-import { store as blockEditorStore, __experimentalListView as ListView } from '@wordpress/block-editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { forwardRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
+import ListViewSidebar from '../../block-editor/listview-sidebar';
 import './style.scss';
 
 function BlockNavigationDropdown( { isDisabled, ...props }, ref ) {
 	// @ts-ignore
-	const hasBlocks = useSelect( ( select ) => !! select( blockEditorStore ).getBlockCount(), [] );
-	const isEnabled = hasBlocks && ! isDisabled;
+	const hasBlocks = useSelect( ( select ) => !!select( blockEditorStore ).getBlockCount(), [] );
+	const isEnabled = hasBlocks && !isDisabled;
 
 	return (
 		<Dropdown
@@ -33,17 +34,11 @@ function BlockNavigationDropdown( { isDisabled, ...props }, ref ) {
 					/* translators: button label text should, if possible, be under 16 characters. */
 					label={ __( 'List view' ) }
 					className="block-editor-block-navigation"
-					aria-disabled={ ! isEnabled }
+					aria-disabled={ !isEnabled }
 				/>
 			) }
 			renderContent={ () => (
-				<div className="block-editor-block-navigation__container">
-					<p className="block-editor-block-navigation__label">
-						{ __( 'List view' ) }
-					</p>
-
-					<ListView />
-				</div>
+				<ListViewSidebar canClose={ false } />
 			) }
 		/>
 	);

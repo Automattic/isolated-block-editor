@@ -6,7 +6,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
 import { NavigableToolbar, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
-import { TableOfContents } from '@wordpress/editor';
 import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
@@ -65,7 +64,7 @@ function HeaderToolbar( props ) {
 	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const isWideViewport = useViewportMatch( 'wide' );
-	const { inserter, toc, navigation, undo, selectorTool } = props.settings.iso.toolbar;
+	const { inserter, navigation, undo, selectorTool } = props.settings.iso.toolbar;
 	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
 	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
@@ -90,7 +89,7 @@ function HeaderToolbar( props ) {
 
 	return (
 		<NavigableToolbar className="edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>
-			{ ( inserter || undo || navigation || toc || selectorTool ) && (
+			{ ( inserter || undo || navigation || selectorTool ) && (
 				<div className="edit-post-header-toolbar__left">
 					{ inserter && (
 						<ToolbarItem
@@ -158,15 +157,6 @@ function HeaderToolbar( props ) {
 							onClick={ toggleListView }
 							shortcut={ listViewShortcut }
 							showTooltip={ ! showIconLabels }
-						/>
-					) }
-					{ toc && (
-						<ToolbarItem
-							as={ TableOfContents }
-							hasOutlineItemsDisabled={ isTextModeEnabled }
-							repositionDropdown={ showIconLabels && ! isWideViewport }
-							showTooltip={ ! showIconLabels }
-							variant={ showIconLabels ? 'tertiary' : undefined }
 						/>
 					) }
 				</div>
