@@ -90,13 +90,13 @@
 		"@wordpress/wordcount": "3.24.0",
 		"classnames": "^2.3.2",
 		"debug": "^4.3.4",
-		"lib0": "^0.2.58",
+		"lib0": "^0.2.73",
 		"lodash": "^4.17.21",
 		"memize": "^1.1.0",
 		"react-autosize-textarea": "^7.1.0",
 		"redux-undo": "^1.0.1",
 		"uuid": "^9.0.0",
-		"yjs": "^13.5.44"
+		"yjs": "^13.5.51"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.20.7",
@@ -139,13 +139,13 @@
 		"eslint-plugin-storybook": "^0.6.8",
 		"eslint-plugin-testing-library": "^5.9.1",
 		"eslint-plugin-wpcalypso": "^6.1.0",
-		"mini-css-extract-plugin": "^2.7.2",
+		"mini-css-extract-plugin": "^2.7.5",
 		"prettier": "npm:wp-prettier@2.6.2",
-		"release-it": "^15.6.0",
+		"release-it": "^15.9.3",
 		"resize-observer-polyfill": "^1.5.1",
-		"sass-loader": "^13.2.0",
+		"sass-loader": "^13.2.2",
 		"typescript": "^4.9.4",
-		"webpack": "^5.75.0",
+		"webpack": "^5.77.0",
 		"webpack-cli": "^5.0.1"
 	},
 	"release-it": {
