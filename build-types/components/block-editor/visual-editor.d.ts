@@ -1,4 +1,3 @@
-export default VisualEditor;
 /**
  * This is a copy of packages/edit-post/src/components/visual-editor/index.js
  *
@@ -7,7 +6,7 @@ export default VisualEditor;
  * @param {Object} args
  * @param args.styles
  */
-declare function VisualEditor({ styles }: {
+export default function VisualEditor({ styles }: {
     styles: any;
 }): JSX.Element;
 //# sourceMappingURL=visual-editor.d.ts.map

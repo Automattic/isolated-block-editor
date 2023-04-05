@@ -22,7 +22,6 @@ var _blocks = require("@wordpress/blocks");
  * @callback OnUpdate
  * @param {object[]} blocks - Editor content to save
  */
-
 /**
  * Sets up Gutenberg and the Isolated Block Editor
  *

@@ -14,6 +14,9 @@ var _marked = /*#__PURE__*/_regenerator["default"].mark(__experimentalConvertBlo
   _marked2 = /*#__PURE__*/_regenerator["default"].mark(__experimentalConvertBlocksToReusable),
   _marked3 = /*#__PURE__*/_regenerator["default"].mark(__experimentalDeleteReusableBlock);
 /**
+ * Internal dependencies
+ */
+/**
  * Returns a generator converting a reusable block into a static block.
  *
  * @param {string} clientId The client ID of the block to attach.

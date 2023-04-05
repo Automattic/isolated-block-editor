@@ -23,7 +23,6 @@ import { createElement } from "@wordpress/element";
  * @callback OnSetMode
  * @param {string} mode
  */
-
 /**
  * The 'more menu' editor section
  *

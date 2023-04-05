@@ -74,7 +74,15 @@ var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded")
 var _editorHeadingSlot = _interopRequireDefault(require("./components/editor-heading-slot"));
 require("./store/edit-post");
 require("./style.scss");
-var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"];
+var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"]; // @ts-nocheck
+/**
+ * WordPress dependencies
+ */
+/**
+ * Internal dependencies
+ */
+// Export library components
+// A fake edit-post store is needed
 import { createElement } from "@wordpress/element";
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
@@ -97,7 +105,6 @@ import { createElement } from "@wordpress/element";
  * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
  * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
  * @property {boolean} [navigation] - Enable or disable the toolbar navigation button
- * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
  * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
  * @property {boolean} [selectorTool] - Enable or disable the selector tool
  * @property {boolean|string} [documentInspector] - Enable or disable the document inspector or enable with custom label

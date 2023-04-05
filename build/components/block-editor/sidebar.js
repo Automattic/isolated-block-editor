@@ -15,7 +15,13 @@ var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _sidebarHeading = _interopRequireDefault(require("./sidebar-heading"));
 var _document = _interopRequireDefault(require("../document"));
-var _excluded = ["className"];
+var _excluded = ["className"]; // @ts-nocheck
+/**
+ * WordPress dependencies
+ */
+/**
+ * Internal dependencies
+ */
 import { createElement } from "@wordpress/element";
 function PluginSidebarEditPost(_ref) {
   var className = _ref.className,

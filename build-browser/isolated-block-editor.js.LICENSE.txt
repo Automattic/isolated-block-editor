@@ -115,4 +115,4 @@ PERFORMANCE OF THIS SOFTWARE.
 
 //! moment.js locale configuration
 
-//! version : 0.5.34
+//! version : 0.5.43

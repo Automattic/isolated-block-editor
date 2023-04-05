@@ -88,5 +88,5 @@ export type PostObject = {
     comments: any[];
 };
 export type RichTextHint = import('../yjs-doc').RichTextHint;
-import * as yjs from "yjs";
+import * as yjs from 'yjs';
 //# sourceMappingURL=yjs.d.ts.map

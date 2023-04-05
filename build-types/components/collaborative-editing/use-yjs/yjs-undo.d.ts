@@ -6,5 +6,5 @@
  * @param {Object} registry - Registry object from `@wordpress/data`.
  */
 export function setupUndoManager(typeScope: yjs.AbstractType<any>, identity: string, registry: any): void;
-import * as yjs from "yjs";
+import * as yjs from 'yjs';
 //# sourceMappingURL=yjs-undo.d.ts.map

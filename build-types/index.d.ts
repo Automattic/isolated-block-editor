@@ -17,7 +17,6 @@
  * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
  * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
  * @property {boolean} [navigation] - Enable or disable the toolbar navigation button
- * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
  * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
  * @property {boolean} [selectorTool] - Enable or disable the selector tool
  * @property {boolean|string} [documentInspector] - Enable or disable the document inspector or enable with custom label
@@ -79,6 +78,7 @@
  * @property {object[]} reusableBlocks
  * @property {object[]} styles
  * @property {object[]} defaultEditorStyles
+ * @property {string} bodyPlaceholder
  */
 /**
  * OnSelect callback
@@ -139,10 +139,6 @@ export type ToolbarSettings = {
      * - Enable or disable the toolbar navigation button
      */
     navigation?: boolean | undefined;
-    /**
-     * - Enable or disable the toolbar table of contents button
-     */
-    toc?: boolean | undefined;
     /**
      * - Enable or disable the toolbar undo/redo buttons
      */
@@ -291,6 +287,7 @@ export type EditorSettings = {
     reusableBlocks: object[];
     styles: object[];
     defaultEditorStyles: object[];
+    bodyPlaceholder: string;
 };
 /**
  * OnSelect callback
@@ -316,12 +313,12 @@ export type OnLoad = (parse: OnParse, rawHandler: OnParse) => object[] | Promise
  * Error callback
  */
 export type OnError = () => any;
-import EditorLoaded from "./components/editor-loaded";
-import DocumentSection from "./components/document";
-import ToolbarSlot from "./components/block-editor-toolbar/slot";
-import CollaborativeEditing from "./components/collaborative-editing";
-import FooterSlot from "./components/footer-slot";
-import EditorHeadingSlot from "./components/editor-heading-slot";
-import ActionArea from "./components/action-area";
+import EditorLoaded from './components/editor-loaded';
+import DocumentSection from './components/document';
+import ToolbarSlot from './components/block-editor-toolbar/slot';
+import CollaborativeEditing from './components/collaborative-editing';
+import FooterSlot from './components/footer-slot';
+import EditorHeadingSlot from './components/editor-heading-slot';
+import ActionArea from './components/action-area';
 export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };
 //# sourceMappingURL=index.d.ts.map

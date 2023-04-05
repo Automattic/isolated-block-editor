@@ -49,8 +49,6 @@ export default function applyDefaultSettings(settings) {
         // @ts-ignore */}
         documentInspector: false,
         // @ts-ignore */}
-        toc: false,
-        // @ts-ignore */}
         undo: true,
         // @ts-ignore */}
         selectorTool: false,

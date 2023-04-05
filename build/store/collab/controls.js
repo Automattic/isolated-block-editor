@@ -9,6 +9,12 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/de
 var _reduxUndo = require("redux-undo");
 var _data = require("@wordpress/data");
 var _UPDATE_BLOCKS_WITH_U;
+/**
+ * External dependencies
+ */
+/**
+ * WordPress dependencies
+ */
 var debugUndo = require('debug')('iso-editor:collab:undo');
 
 // TODO: Unsolved problem

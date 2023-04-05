@@ -22,7 +22,6 @@ import { createElement, Fragment } from "@wordpress/element";
 
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('./index').OnClose} OnClose */
-
 /**
  * Writing menu
  *

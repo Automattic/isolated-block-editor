@@ -97,5 +97,5 @@ export type RelativePositionManager = {
     self: RelativePosition;
     peers: PeerRelativePosition;
 };
-import * as yjs from "yjs";
+import * as yjs from 'yjs';
 //# sourceMappingURL=relative-position.d.ts.map

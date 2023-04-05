@@ -12,7 +12,6 @@ import { createElement } from "@wordpress/element";
  */
 
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
-
 /**
  * Link menu
  *
