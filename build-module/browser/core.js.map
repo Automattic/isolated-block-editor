@@ -1,0 +1,1 @@
+{"version":3,"file":"core.js","names":[],"sources":["../../src/browser/core.js"],"sourcesContent":["/**\n * Internal dependencies\n */\nimport './core.scss';\n"],"mappings":"AAAA;AACA;AACA;AACA,OAAO,aAAa"}

@@ -70,6 +70,7 @@ function gutenFormatsToYFormats(formats) {
  * @param format
  */
 function namedGutenFormatToStandardTags(format) {
+  // @ts-ignore
   var formatTypeRecord = (0, _data.select)('core/rich-text').getFormatType(format.type);
   if (!formatTypeRecord) return (0, _defineProperty2["default"])({}, format.type, true);
   var tagName = formatTypeRecord.tagName,

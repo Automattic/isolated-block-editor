@@ -135,7 +135,9 @@ function BlockEditorContents(props) {
     editorMode: editorMode,
     settings: settings,
     renderMoreMenu: renderMoreMenu
-  }, children), createElement(_components.Popover.Slot, null));
+  }, children),
+  // @ts-ignore
+  createElement(_components.Popover.Slot, null));
 }
 
 // @ts-ignore
