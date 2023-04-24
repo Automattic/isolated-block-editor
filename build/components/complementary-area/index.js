@@ -42,8 +42,6 @@ function ComplementaryArea(_ref2) {
     title = _ref2.title,
     identifier = _ref2.identifier,
     props = (0, _objectWithoutProperties2["default"])(_ref2, _excluded);
-  var _useDispatch = (0, _data.useDispatch)(_interface.store),
-    disableComplementaryArea = _useDispatch.disableComplementaryArea;
   var scope = "isolated/editor";
   var _useSelect = (0, _data.useSelect)(function (select) {
       // @ts-ignore
