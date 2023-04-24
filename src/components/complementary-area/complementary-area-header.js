@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { Button, Panel, Slot, Fill } from '@wordpress/components';
+import { Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as interfaceStore } from '@wordpress/interface';
 
@@ -23,6 +23,7 @@ function ComplementaryAreaToggle( {
 	const ComponentToUse = as;
 	const isSelected = useSelect(
 		( select ) =>
+			// @ts-ignore
 			select( interfaceStore ).getActiveComplementaryArea( scope ) ===
 			identifier,
 		[ identifier ]

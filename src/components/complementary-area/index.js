@@ -1,25 +1,20 @@
 /**
  * WordPress dependencies
  */
-import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { store as interfaceStore } from '@wordpress/interface';
-import { Panel, Slot, Fill } from '@wordpress/components';
+import { Panel, Fill } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
 
 import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 
 import ComplementaryAreaHeader from './complementary-area-header';
 
 function isActiveArea( area ) {
 	return [ 'edit-post/document', 'edit-post/block' ].includes( area )
-}
-
-function ComplementaryAreaSlot( { scope, ...props } ) {
-	return <Slot name={ `ComplementaryArea/${ scope }` } { ...props } />;
 }
 
 function ComplementaryAreaFill( { scope, children, className } ) {
@@ -31,15 +26,15 @@ function ComplementaryAreaFill( { scope, children, className } ) {
 }
 
 export default function ComplementaryArea( { className, children, header, headerClassName, toggleShortcut, closeLabel, title, identifier, ...props } ) {
-	const { enableComplementaryArea, disableComplementaryArea } = useDispatch( interfaceStore );
 	const scope = "isolated/editor";
-	const { postTitle, showIconLabels, isActive } = useSelect( ( select ) => {
-		const { getActiveComplementaryArea, isItemPinned } =
-			select( interfaceStore );
+	const { postTitle, isActive } = useSelect( ( select ) => {
+		// @ts-ignore
+		const { getActiveComplementaryArea } = select( interfaceStore );
 		const _activeArea = getActiveComplementaryArea( 'isolated/editor' );
 
 		return {
 			postTitle: '',
+			// @ts-ignore
 			showIconLabels: select( 'isolated/editor' ).isFeatureActive( 'showIconLabels' ),
 			isActive: isActiveArea( _activeArea ),
 		};
@@ -56,8 +51,6 @@ export default function ComplementaryArea( { className, children, header, header
 		>
 			<ComplementaryAreaHeader
 				className={ headerClassName }
-				closeLabel={ closeLabel }
-				onClose={ () => disableComplementaryArea( scope ) }
 				smallScreenTitle={ postTitle || __( '(no title)' ) }
 				toggleButtonProps={ {
 					label: closeLabel,
