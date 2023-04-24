@@ -6,4 +6,9 @@ dist
 /test-results/
 /playwright-report/
 /dist-pw/
-.yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
