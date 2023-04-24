@@ -5,7 +5,8 @@
 import { BlockInspector, store as blockEditorStore } from '@wordpress/block-editor';
 import { cog } from '@wordpress/icons';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
-import { ComplementaryArea, store as interfaceStore } from '@wordpress/interface';
+import { store as interfaceStore } from '@wordpress/interface';
+import { Button, Panel, Slot, Fill } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -13,37 +14,19 @@ import { ComplementaryArea, store as interfaceStore } from '@wordpress/interface
 
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
-
 import SettingsHeader from './sidebar-heading';
 import Document from '../document';
+import ComplementaryArea from '../complementary-area';
 
-function PluginSidebarEditPost( { className, ...props } ) {
-	const { postTitle, shortcut, showIconLabels } = useSelect( ( select ) => {
-		return {
-			postTitle: '',
-			shortcut: select( keyboardShortcutsStore ).getShortcutRepresentation( 'core/edit-post/toggle-sidebar' ),
-			showIconLabels: select( 'isolated/editor' ).isFeatureActive( 'showIconLabels' ),
-		};
-	}, [] );
-
-	return (
-		<ComplementaryArea
-			panelClassName={ className }
-			className="edit-post-sidebar"
-			smallScreenTitle={ postTitle || __( '(no title)' ) }
-			scope="isolated/editor"
-			toggleShortcut={ shortcut }
-			showIconLabels={ showIconLabels }
-			{ ...props }
-		/>
-	);
+function isActiveArea( area ) {
+	return [ 'edit-post/document', 'edit-post/block' ].includes( area )
 }
 
 const SettingsSidebar = ( { documentInspector } ) => {
 	const { sidebarName, keyboardShortcut } = useSelect( ( select ) => {
 		let sidebar = select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' );
 
-		if ( ! [ 'edit-post/document', 'edit-post/block' ].includes( sidebar ) ) {
+		if ( !isActiveArea( sidebar ) ) {
 			sidebar = 'edit-post/document';
 
 			if ( select( blockEditorStore ).getBlockSelectionStart() ) {
@@ -59,7 +42,7 @@ const SettingsSidebar = ( { documentInspector } ) => {
 	}, [] );
 
 	return (
-		<PluginSidebarEditPost
+		<ComplementaryArea
 			className="iso-sidebar"
 			identifier={ sidebarName }
 			header={ <SettingsHeader sidebarName={ sidebarName } documentInspector={ documentInspector } /> }
@@ -73,7 +56,7 @@ const SettingsSidebar = ( { documentInspector } ) => {
 		>
 			{ sidebarName === 'edit-post/document' && <Document.Slot /> }
 			{ sidebarName === 'edit-post/block' && <BlockInspector /> }
-		</PluginSidebarEditPost>
+		</ComplementaryArea>
 	);
 };
 
