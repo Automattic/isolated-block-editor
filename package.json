@@ -90,13 +90,13 @@
 		"@wordpress/wordcount": "3.31.0",
 		"classnames": "^2.3.2",
 		"debug": "^4.3.4",
-		"lib0": "^0.2.73",
+		"lib0": "^0.2.74",
 		"lodash": "^4.17.21",
 		"memize": "^1.1.0",
 		"react-autosize-textarea": "^7.1.0",
 		"redux-undo": "^1.0.1",
 		"uuid": "^9.0.0",
-		"yjs": "^13.5.53"
+		"yjs": "^13.6.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.21.0",
@@ -126,14 +126,14 @@
 		"babel-loader": "^9.1.2",
 		"babel-plugin-inline-json-import": "^0.3.2",
 		"css-loader": "^6.7.3",
-		"eslint": "^8.38.0",
+		"eslint": "^8.39.0",
 		"eslint-config-wpcalypso": "^6.1.0",
 		"eslint-plugin-eslint-comments": "^3.2.0",
 		"eslint-plugin-import": "^2.27.5",
 		"eslint-plugin-inclusive-language": "^2.2.0",
 		"eslint-plugin-jest": "^27.2.1",
 		"eslint-plugin-jest-dom": "^4.0.3",
-		"eslint-plugin-jsdoc": "^43.0.6",
+		"eslint-plugin-jsdoc": "^43.0.7",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"eslint-plugin-react": "^7.32.2",
 		"eslint-plugin-storybook": "^0.6.11",
@@ -146,7 +146,7 @@
 		"sass-loader": "^13.2.2",
 		"typescript": "^5.0.4",
 		"webpack": "^5.80.0",
-		"webpack-cli": "^5.0.1"
+		"webpack-cli": "^5.0.2"
 	},
 	"release-it": {
 		"github": {
