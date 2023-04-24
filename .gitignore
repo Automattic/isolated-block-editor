@@ -6,3 +6,4 @@ dist
 /test-results/
 /playwright-report/
 /dist-pw/
+.yarn

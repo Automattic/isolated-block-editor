@@ -162,5 +162,6 @@
 	"publishConfig": {
 		"access": "public",
 		"registry": "https://registry.npmjs.org/"
-	}
+	},
+	"packageManager": "yarn@3.2.3"
 }
