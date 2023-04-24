@@ -22,7 +22,7 @@ test.describe( 'Editor content', () => {
 		await page.goto( '?path=/story/isolated-block-editor--default' );
 		const iframe = await page.frameLocator( '#storybook-preview-iframe' );
 		await iframe.locator( '[aria-label="Add default block"]' ).focus();
-		await iframe.locator( '[aria-label="Add default block"]' ).type( 'Hello' );
+		await iframe.locator( '[aria-label="Empty block; start writing or type forward slash to choose a block"]' ).type( 'Hello' );
 		await expect( iframe.getByRole( 'document' ).nth( 1 ) ).toHaveText( 'Hello' );
 	} );
 
@@ -33,10 +33,11 @@ test.describe( 'Editor content', () => {
 		const bob = iframe.locator( '[aria-label="Editor content"]' ).nth( 1 );
 		const aliceTextBlock = alice.locator( '[aria-label="Add default block"]' );
 		await aliceTextBlock.click();
-		await aliceTextBlock.type( 'Hello' );
+		await iframe.locator( '[aria-label="Empty block; start writing or type forward slash to choose a block"]' ).type( 'Hello' );
+
 		const bobTextBlock = bob.locator( '[aria-label="Add default block"]' );
 		await bobTextBlock.click();
-		await bobTextBlock.type( 'World' );
+		await iframe.locator( '[aria-label="Empty block; start writing or type forward slash to choose a block"]' ).type( 'World' );
 		await expect( alice.locator( 'role=document' ) ).toHaveText( 'Hello' );
 		await expect( bob.locator( 'role=document' ) ).toHaveText( 'World' );
 	} );

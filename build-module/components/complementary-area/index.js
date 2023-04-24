@@ -10,7 +10,7 @@ import { Panel, Fill } from '@wordpress/components';
  */
 
 import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import ComplementaryAreaHeader from './complementary-area-header';
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
@@ -39,9 +39,6 @@ export default function ComplementaryArea(_ref2) {
     identifier,
     ...props
   } = _ref2;
-  const {
-    disableComplementaryArea
-  } = useDispatch(interfaceStore);
   const scope = "isolated/editor";
   const {
     postTitle,
