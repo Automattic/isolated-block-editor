@@ -79,6 +79,7 @@
  * @property {object[]} reusableBlocks
  * @property {object[]} styles
  * @property {object[]} defaultEditorStyles
+ * @property {string} bodyPlaceholder
  */
 /**
  * OnSelect callback
@@ -291,6 +292,7 @@ export type EditorSettings = {
     reusableBlocks: object[];
     styles: object[];
     defaultEditorStyles: object[];
+    bodyPlaceholder: string;
 };
 /**
  * OnSelect callback

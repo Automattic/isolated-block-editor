@@ -11,7 +11,7 @@ declare function CollabCaret({ label, color }: {
     label: any;
     color: any;
 }): JSX.Element;
-declare type Props = {
+type Props = {
     label: string;
     color: string;
 };

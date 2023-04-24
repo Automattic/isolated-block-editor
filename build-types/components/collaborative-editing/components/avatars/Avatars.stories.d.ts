@@ -8,7 +8,7 @@ declare const _default: {
     component: typeof CollaborativeEditingAvatars;
 };
 export default _default;
-declare type Props = {
+type Props = {
     peerCount: number;
 };
 export declare const Default: Story<Props>;
