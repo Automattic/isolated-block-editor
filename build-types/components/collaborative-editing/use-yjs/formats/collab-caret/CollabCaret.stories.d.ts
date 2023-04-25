@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import type { Story } from '@storybook/react';
+import { Story } from '@storybook/react';
 declare const _default: {
     title: string;
     component: typeof CollabCaret;
@@ -15,6 +15,6 @@ type Props = {
     label: string;
     color: string;
 };
-export declare const Default: Story<Props>;
+export declare const Default: import("@storybook/types").AnnotatedStoryFn<import("@storybook/react/dist/types-0a347bb9").R, Props>;
 export declare const MultiLine: Story<Props>;
 //# sourceMappingURL=CollabCaret.stories.d.ts.map

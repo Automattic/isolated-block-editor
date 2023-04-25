@@ -31,6 +31,7 @@ export function setupUndoManager(typeScope, identity, registry) {
     trackedOrigins: new Set([identity])
   });
   const debugUndoWithStackSizes = function () {
+    // @ts-ignore
     debugUndo(...arguments);
     debugUndo(`stack size: undo ${undoManager.undoStack.length}, redo ${undoManager.redoStack.length}`);
   };
