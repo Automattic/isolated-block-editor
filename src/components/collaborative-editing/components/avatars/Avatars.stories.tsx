@@ -35,9 +35,8 @@ type Props = {
 };
 
 const Template: Story< Props > = ( { peerCount } ) => {
-	return (
-		<CollaborativeEditingAvatars peers={ generateRandomPeers( peerCount ) } onAvatarClick={ onAvatarClickMock } />
-	);
+	// @ts-ignore
+	return <CollaborativeEditingAvatars peers={ generateRandomPeers( peerCount ) } onAvatarClick={ onAvatarClickMock } />;
 };
 
 export const Default = Template.bind( {} );
