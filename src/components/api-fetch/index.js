@@ -62,6 +62,7 @@ function registerApiHandlers( options ) {
 		'/wp/v2/types?context=view': getTypes(),
 		'/wp/v2/types?context=edit': getTypes(),
 		'/wp/v2/posts/0?context=edit': getPost(),
+		'/wp/v2/posts?context=edit': getPost(),
 	};
 
 	apiFetch.use( apiFetch.createPreloadingMiddleware( preload ) );

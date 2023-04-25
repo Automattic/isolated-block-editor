@@ -43,13 +43,11 @@ import { createElement, Fragment } from "@wordpress/element";
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../index').OnMore} OnMore */
-
 /**
  * Undo/redo
  *
  * @callback OnHistory
  */
-
 var interfaceLabels = {
   secondarySidebar: (0, _i18n.__)('Block library'),
   /* translators: accessibility text for the editor top bar landmark region. */
@@ -87,7 +85,7 @@ function BlockEditor(props) {
     redo = props.redo,
     settings = props.settings,
     renderMoreMenu = props.renderMoreMenu;
-  var styles = {}; // TODO: do we need hasThemeStyles support here?
+  var styles = []; // TODO: do we need hasThemeStyles support here?
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
   var inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$sidebar = _settings$iso.sidebar) === null || _settings$iso$sidebar === void 0 ? void 0 : _settings$iso$sidebar.inspector) || false;
   var inserterInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inserter) || false;

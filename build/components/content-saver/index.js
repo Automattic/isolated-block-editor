@@ -13,7 +13,6 @@ var _blocks = require("@wordpress/blocks");
 
 /** @typedef {import('../../index').OnSaveBlocks} OnSaveBlocks */
 /** @typedef {import('../../index').OnSaveContent} OnSaveContent */
-
 /**
  * Content saver
  *

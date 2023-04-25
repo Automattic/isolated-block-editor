@@ -59,7 +59,6 @@ import './style.scss';
  * @property {boolean} [inserter] - Enable or disable the toolbar block inserter
  * @property {boolean} [inspector] - Enable or disable the toolbar block inspector
  * @property {boolean} [navigation] - Enable or disable the toolbar navigation button
- * @property {boolean} [toc] - Enable or disable the toolbar table of contents button
  * @property {boolean} [undo] - Enable or disable the toolbar undo/redo buttons
  * @property {boolean} [selectorTool] - Enable or disable the selector tool
  * @property {boolean|string} [documentInspector] - Enable or disable the document inspector or enable with custom label

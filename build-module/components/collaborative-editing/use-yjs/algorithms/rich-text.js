@@ -54,6 +54,7 @@ export function gutenFormatsToYFormats(formats) {
  * @param format
  */
 export function namedGutenFormatToStandardTags(format) {
+  // @ts-ignore
   const formatTypeRecord = select('core/rich-text').getFormatType(format.type);
   if (!formatTypeRecord) return {
     [format.type]: true

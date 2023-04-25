@@ -71,7 +71,6 @@ const DEFAULT_STATE = {
 		customStores: [],
 		toolbar: {
 			inserter: true,
-			toc: false,
 			undo: true,
 			inspector: true,
 			navigation: false,

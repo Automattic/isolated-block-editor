@@ -43,8 +43,8 @@ async function getInitialContent( settings, loader ) {
 	const contentLoader = isPromise( loader )
 		? loader
 		: new Promise( ( resolve ) => {
-				resolve( loader ? loader( parse, rawHandler ) : [] );
-		  } );
+			resolve( loader ? loader( parse, rawHandler ) : [] );
+		} );
 
 	return contentLoader.then( ( content ) => {
 		return getInitialEditorContent(
@@ -81,7 +81,7 @@ function BlockEditorContents( props ) {
 		const loadData = async () => {
 			const initialContent = await getInitialContent( settings, onLoad );
 
-			if ( initialContent.length > 0 && ( ! blocks || blocks.length === 0 ) ) {
+			if ( initialContent.length > 0 && ( !blocks || blocks.length === 0 ) ) {
 				onInput( initialContent, { isInitialContent: true } );
 			}
 		};
@@ -107,7 +107,9 @@ function BlockEditorContents( props ) {
 				{ children }
 			</BlockEditor>
 
-			<Popover.Slot />
+			{ // @ts-ignore
+				( <Popover.Slot /> )
+			}
 		</BlockEditorProvider>
 	);
 }

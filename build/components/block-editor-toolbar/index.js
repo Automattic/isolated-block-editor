@@ -28,7 +28,6 @@ import { createElement } from "@wordpress/element";
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../index').OnMore} OnMore */
-
 /**
  * Block editor toolbar
  *

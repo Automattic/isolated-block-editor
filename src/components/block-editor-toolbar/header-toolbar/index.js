@@ -6,7 +6,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
 import { NavigableToolbar, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
-import { TableOfContents } from '@wordpress/editor';
 import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
@@ -64,15 +63,14 @@ function HeaderToolbar( props ) {
 		};
 	}, [] );
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const isWideViewport = useViewportMatch( 'wide' );
-	const { inserter, toc, navigation, undo, selectorTool } = props.settings.iso.toolbar;
+	const { inserter, navigation, undo, selectorTool } = props.settings.iso.toolbar;
 	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
-	const displayBlockToolbar = ! isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
+	const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
 		? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
-		  __( 'Document and block tools' )
+		__( 'Document and block tools' )
 		: /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
-		  __( 'Document tools' );
+		__( 'Document tools' );
 	const openInserter = useCallback( () => {
 		if ( isInserterOpened ) {
 			// Focusing the inserter button closes the inserter popover
@@ -83,14 +81,14 @@ function HeaderToolbar( props ) {
 		}
 	}, [ isInserterOpened, setIsInserterOpened ] );
 
-	const toggleListView = useCallback( () => setIsListViewOpened( ! isListViewOpen ), [
+	const toggleListView = useCallback( () => setIsListViewOpened( !isListViewOpen ), [
 		setIsListViewOpened,
 		isListViewOpen,
 	] );
 
 	return (
 		<NavigableToolbar className="edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>
-			{ ( inserter || undo || navigation || toc || selectorTool ) && (
+			{ ( inserter || undo || navigation || selectorTool ) && (
 				<div className="edit-post-header-toolbar__left">
 					{ inserter && (
 						<ToolbarItem
@@ -100,17 +98,17 @@ function HeaderToolbar( props ) {
 							isPressed={ isInserterOpened }
 							onMouseDown={ preventDefault }
 							onClick={ openInserter }
-							disabled={ ! isInserterEnabled }
+							disabled={ !isInserterEnabled }
 							isPrimary
 							icon={ plus }
 							/* translators: button label text should, if possible, be under 16
 					characters. */
 							label={ _x( 'Toggle block inserter', 'Generic label for block inserter button' ) }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 						/>
 					) }
 
-					{ isInserterOpened && ! inserterInSidebar && (
+					{ isInserterOpened && !inserterInSidebar && (
 						<Popover
 							position="bottom right"
 							onClose={ () => setIsInserterOpened( false ) }
@@ -132,18 +130,18 @@ function HeaderToolbar( props ) {
 					{ undo && (
 						<ToolbarItem
 							as={ EditorHistoryUndo }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 							variant={ showIconLabels ? 'tertiary' : undefined }
 						/>
 					) }
 					{ undo && (
 						<ToolbarItem
 							as={ EditorHistoryRedo }
-							showTooltip={ ! showIconLabels }
+							showTooltip={ !showIconLabels }
 							variant={ showIconLabels ? 'tertiary' : undefined }
 						/>
 					) }
-					{ navigation && ! inserterInSidebar && (
+					{ navigation && !inserterInSidebar && (
 						<ToolbarItem as={ BlockNavigationDropdown } isDisabled={ isTextModeEnabled } />
 					) }
 					{ navigation && inserterInSidebar && (
@@ -157,16 +155,7 @@ function HeaderToolbar( props ) {
 							label={ __( 'List View' ) }
 							onClick={ toggleListView }
 							shortcut={ listViewShortcut }
-							showTooltip={ ! showIconLabels }
-						/>
-					) }
-					{ toc && (
-						<ToolbarItem
-							as={ TableOfContents }
-							hasOutlineItemsDisabled={ isTextModeEnabled }
-							repositionDropdown={ showIconLabels && ! isWideViewport }
-							showTooltip={ ! showIconLabels }
-							variant={ showIconLabels ? 'tertiary' : undefined }
+							showTooltip={ !showIconLabels }
 						/>
 					) }
 				</div>

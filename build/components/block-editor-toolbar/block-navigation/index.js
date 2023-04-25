@@ -13,8 +13,15 @@ var _data = require("@wordpress/data");
 var _icons = require("@wordpress/icons");
 var _blockEditor = require("@wordpress/block-editor");
 var _element = require("@wordpress/element");
+var _listviewSidebar = _interopRequireDefault(require("../../block-editor/listview-sidebar"));
 require("./style.scss");
 var _excluded = ["isDisabled"];
+/**
+ * WordPress dependencies
+ */
+/**
+ * Internal dependencies
+ */
 import { createElement } from "@wordpress/element";
 function BlockNavigationDropdown(_ref, ref) {
   var isDisabled = _ref.isDisabled,
@@ -43,11 +50,9 @@ function BlockNavigationDropdown(_ref, ref) {
       }));
     },
     renderContent: function renderContent() {
-      return createElement("div", {
-        className: "block-editor-block-navigation__container"
-      }, createElement("p", {
-        className: "block-editor-block-navigation__label"
-      }, (0, _i18n.__)('List view')), createElement(_blockEditor.__experimentalListView, null));
+      return createElement(_listviewSidebar["default"], {
+        canClose: false
+      });
     }
   });
 }

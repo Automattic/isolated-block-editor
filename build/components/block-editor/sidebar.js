@@ -5,45 +5,34 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 var _blockEditor = require("@wordpress/block-editor");
 var _icons = require("@wordpress/icons");
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
 var _interface = require("@wordpress/interface");
+var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _sidebarHeading = _interopRequireDefault(require("./sidebar-heading"));
 var _document = _interopRequireDefault(require("../document"));
-var _excluded = ["className"];
+var _complementaryArea = _interopRequireDefault(require("../complementary-area"));
 import { createElement } from "@wordpress/element";
-function PluginSidebarEditPost(_ref) {
-  var className = _ref.className,
-    props = (0, _objectWithoutProperties2["default"])(_ref, _excluded);
-  var _useSelect = (0, _data.useSelect)(function (select) {
-      return {
-        postTitle: '',
-        shortcut: select(_keyboardShortcuts.store).getShortcutRepresentation('core/edit-post/toggle-sidebar'),
-        showIconLabels: select('isolated/editor').isFeatureActive('showIconLabels')
-      };
-    }, []),
-    postTitle = _useSelect.postTitle,
-    shortcut = _useSelect.shortcut,
-    showIconLabels = _useSelect.showIconLabels;
-  return createElement(_interface.ComplementaryArea, (0, _extends2["default"])({
-    panelClassName: className,
-    className: "edit-post-sidebar",
-    smallScreenTitle: postTitle || (0, _i18n.__)('(no title)'),
-    scope: "isolated/editor",
-    toggleShortcut: shortcut,
-    showIconLabels: showIconLabels
-  }, props));
+// @ts-nocheck
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+function isActiveArea(area) {
+  return ['edit-post/document', 'edit-post/block'].includes(area);
 }
-var SettingsSidebar = function SettingsSidebar(_ref2) {
-  var documentInspector = _ref2.documentInspector;
-  var _useSelect2 = (0, _data.useSelect)(function (select) {
+var SettingsSidebar = function SettingsSidebar(_ref) {
+  var documentInspector = _ref.documentInspector;
+  var _useSelect = (0, _data.useSelect)(function (select) {
       var sidebar = select(_interface.store).getActiveComplementaryArea('isolated/editor');
-      if (!['edit-post/document', 'edit-post/block'].includes(sidebar)) {
+      if (!isActiveArea(sidebar)) {
         sidebar = 'edit-post/document';
         if (select(_blockEditor.store).getBlockSelectionStart()) {
           sidebar = 'edit-post/block';
@@ -55,9 +44,9 @@ var SettingsSidebar = function SettingsSidebar(_ref2) {
         keyboardShortcut: shortcut
       };
     }, []),
-    sidebarName = _useSelect2.sidebarName,
-    keyboardShortcut = _useSelect2.keyboardShortcut;
-  return createElement(PluginSidebarEditPost, {
+    sidebarName = _useSelect.sidebarName,
+    keyboardShortcut = _useSelect.keyboardShortcut;
+  return createElement(_complementaryArea["default"], {
     className: "iso-sidebar",
     identifier: sidebarName,
     header: createElement(_sidebarHeading["default"], {

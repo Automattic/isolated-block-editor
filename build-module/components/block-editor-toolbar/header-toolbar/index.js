@@ -7,7 +7,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
 import { NavigableToolbar, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
-import { TableOfContents } from '@wordpress/editor';
 import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
@@ -75,10 +74,8 @@ function HeaderToolbar(props) {
     };
   }, []);
   const isLargeViewport = useViewportMatch('medium');
-  const isWideViewport = useViewportMatch('wide');
   const {
     inserter,
-    toc,
     navigation,
     undo,
     selectorTool
@@ -101,7 +98,7 @@ function HeaderToolbar(props) {
   return createElement(NavigableToolbar, {
     className: "edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel
-  }, (inserter || undo || navigation || toc || selectorTool) && createElement("div", {
+  }, (inserter || undo || navigation || selectorTool) && createElement("div", {
     className: "edit-post-header-toolbar__left"
   }, inserter && createElement(ToolbarItem, {
     ref: inserterButton,
@@ -151,12 +148,6 @@ function HeaderToolbar(props) {
     onClick: toggleListView,
     shortcut: listViewShortcut,
     showTooltip: !showIconLabels
-  }), toc && createElement(ToolbarItem, {
-    as: TableOfContents,
-    hasOutlineItemsDisabled: isTextModeEnabled,
-    repositionDropdown: showIconLabels && !isWideViewport,
-    showTooltip: !showIconLabels,
-    variant: showIconLabels ? 'tertiary' : undefined
   })));
 }
 export default HeaderToolbar;

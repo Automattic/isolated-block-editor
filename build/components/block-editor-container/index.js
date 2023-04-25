@@ -35,14 +35,12 @@ import { createElement } from "@wordpress/element";
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').OnLoad} OnLoad */
 /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
-
 /**
  * Set editing callback
  *
  * @callback OnSetEditing
  * @param {boolean} isEditing
  */
-
 var SIZE_LARGE = 720;
 var SIZE_MEDIUM = 480;
 

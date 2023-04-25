@@ -71,7 +71,7 @@ const interfaceLabels = {
  */
 function BlockEditor( props ) {
 	const { isEditing, editorMode, children, undo, redo, settings, renderMoreMenu } = props;
-	const styles = {}; // TODO: do we need hasThemeStyles support here?
+	const styles = []; // TODO: do we need hasThemeStyles support here?
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
 	const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;

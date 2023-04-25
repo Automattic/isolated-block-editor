@@ -7,12 +7,13 @@ import { Button, Dropdown } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { listView } from '@wordpress/icons';
-import { store as blockEditorStore, __experimentalListView as ListView } from '@wordpress/block-editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { forwardRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
+import ListViewSidebar from '../../block-editor/listview-sidebar';
 import './style.scss';
 function BlockNavigationDropdown(_ref, ref) {
   let {
@@ -42,11 +43,9 @@ function BlockNavigationDropdown(_ref, ref) {
         "aria-disabled": !isEnabled
       }));
     },
-    renderContent: () => createElement("div", {
-      className: "block-editor-block-navigation__container"
-    }, createElement("p", {
-      className: "block-editor-block-navigation__label"
-    }, __('List view')), createElement(ListView, null))
+    renderContent: () => createElement(ListViewSidebar, {
+      canClose: false
+    })
   });
 }
 export default forwardRef(BlockNavigationDropdown);

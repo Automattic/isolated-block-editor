@@ -18,7 +18,6 @@ var _dom = require("@wordpress/dom");
 //
 // The ideal solution would be for block authors to make sure that any arbitrary code
 // is run through wp_kses before executing.
-
 /**
  * Strips scripts and on* attributes from HTML.
  *

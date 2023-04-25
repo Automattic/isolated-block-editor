@@ -30,6 +30,7 @@ export function setupUndoManager( typeScope, identity, registry ) {
 	const undoManager = new yjs.UndoManager( typeScope, { trackedOrigins: new Set( [ identity ] ) } );
 
 	const debugUndoWithStackSizes = ( ...args ) => {
+		// @ts-ignore
 		debugUndo( ...args );
 		debugUndo( `stack size: undo ${ undoManager.undoStack.length }, redo ${ undoManager.redoStack.length }` );
 	};

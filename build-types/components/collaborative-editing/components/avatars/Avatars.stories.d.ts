@@ -2,17 +2,16 @@
  * Internal dependencies
  */
 import { CollaborativeEditingAvatars } from '.';
-import type { Story } from '@storybook/react';
 declare const _default: {
     title: string;
     component: typeof CollaborativeEditingAvatars;
 };
 export default _default;
-declare type Props = {
+type Props = {
     peerCount: number;
 };
-export declare const Default: Story<Props>;
-export declare const Empty: Story<Props>;
+export declare const Default: import("@storybook/types").AnnotatedStoryFn<import("@storybook/react/dist/types-0a347bb9").R, Props>;
+export declare const Empty: import("@storybook/types").AnnotatedStoryFn<import("@storybook/react/dist/types-0a347bb9").R, Props>;
 export declare const NoImage: {
     (args: any): JSX.Element;
     args: {

@@ -23,7 +23,6 @@ export namespace settings {
         export { className_1 as className };
     }
     function edit(): null;
-    function edit(): null;
     function __experimentalGetPropsForEditableTreePreparation(select: any, { richTextIdentifier, blockClientId }: {
         richTextIdentifier: any;
         blockClientId: any;
@@ -38,25 +37,6 @@ export namespace settings {
         multilineTag: any;
         blockAttributeSelector: () => any;
     };
-    function __experimentalGetPropsForEditableTreePreparation(select: any, { richTextIdentifier, blockClientId }: {
-        richTextIdentifier: any;
-        blockClientId: any;
-    }): {
-        carets: {
-            id: string;
-            label: any;
-            start: any;
-            end: any;
-            color: any;
-        }[];
-        multilineTag: any;
-        blockAttributeSelector: () => any;
-    };
-    function __experimentalCreatePrepareEditableTree({ carets, multilineTag, blockAttributeSelector }: {
-        carets: any;
-        multilineTag: any;
-        blockAttributeSelector: any;
-    }): (formats: any, text: any) => any;
     function __experimentalCreatePrepareEditableTree({ carets, multilineTag, blockAttributeSelector }: {
         carets: any;
         multilineTag: any;
