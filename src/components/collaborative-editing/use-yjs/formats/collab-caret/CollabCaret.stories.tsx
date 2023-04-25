@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import type { Story } from '@storybook/react';
+import { Story } from '@storybook/react';
 
 /**
  * Internal dependencies

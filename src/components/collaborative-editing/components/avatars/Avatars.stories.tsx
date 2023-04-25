@@ -9,7 +9,7 @@ import { sample } from 'lodash';
 import { CollaborativeEditingAvatars, CollaborativeEditingAvatar } from '.';
 import { defaultColors } from '../../use-yjs';
 
-import type { Story } from '@storybook/react';
+import { Story } from '@storybook/react';
 
 export default {
 	title: 'Collaboration/Components/Avatars',
@@ -23,7 +23,7 @@ const generateRandomPeers = ( count ) => {
 				name: `Peery Collabson ${ index }`,
 				// eslint-disable-next-line no-restricted-syntax
 				avatarUrl: `https://i.pravatar.cc/64?cacheBust=${ Math.random() }`,
-				color: sample( defaultColors ) as string,
+				color: sample( defaultColors ),
 		  } ) )
 		: [];
 };
