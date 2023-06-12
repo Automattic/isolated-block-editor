@@ -100,7 +100,7 @@
 		&:active,
 		&:focus,
 		&:hover {
-			background-color: transparent;
+			background-color: var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#006BA1));
 			background-image: none;
 		}
 	}
