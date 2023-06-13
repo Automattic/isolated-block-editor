@@ -61,7 +61,8 @@ function applyDefaultSettings(settings) {
       header: (_iso$header = iso === null || iso === void 0 ? void 0 : iso.header) !== null && _iso$header !== void 0 ? _iso$header : true,
       sidebar: _objectSpread({
         inserter: false,
-        inspector: false
+        inspector: false,
+        customComponent: null
       }, (_iso$sidebar = iso === null || iso === void 0 ? void 0 : iso.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {}),
       footer: (_iso$footer = iso === null || iso === void 0 ? void 0 : iso.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,
       // Nothing appears in the 'more menu'

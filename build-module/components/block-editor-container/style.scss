@@ -103,6 +103,10 @@
 			background-color: transparent;
 			background-image: none;
 		}
+
+		&.is-primary:hover {
+			background-color: var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#006BA1));;
+		}
 	}
 
 	// Ugly fix for an issue with the outline view in an empty document showing no content.

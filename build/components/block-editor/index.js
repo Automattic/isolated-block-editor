@@ -77,7 +77,7 @@ var interfaceLabels = {
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso$header, _settings$iso3, _settings$iso4, _settings$iso$toolbar, _settings$iso5, _settings$iso5$toolba, _ref;
+  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso$header, _settings$iso3, _settings$iso4, _settings$iso$sidebar2, _settings$iso5, _settings$iso5$sideba, _settings$iso$toolbar, _settings$iso6, _settings$iso6$toolba, _ref;
   var isEditing = props.isEditing,
     editorMode = props.editorMode,
     children = props.children,
@@ -155,8 +155,9 @@ function BlockEditor(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }) : null;
-  return createElement(Fragment, null, createElement(_sidebar["default"], {
-    documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : (_settings$iso5$toolba = _settings$iso5.toolbar) === null || _settings$iso5$toolba === void 0 ? void 0 : _settings$iso5$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+  var CustomSettingsSidebar = (_settings$iso$sidebar2 = settings === null || settings === void 0 ? void 0 : (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : (_settings$iso5$sideba = _settings$iso5.sidebar) === null || _settings$iso5$sideba === void 0 ? void 0 : _settings$iso5$sideba.customComponent) !== null && _settings$iso$sidebar2 !== void 0 ? _settings$iso$sidebar2 : _sidebar["default"];
+  return createElement(Fragment, null, createElement(CustomSettingsSidebar, {
+    documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 ? void 0 : (_settings$iso6$toolba = _settings$iso6.toolbar) === null || _settings$iso6$toolba === void 0 ? void 0 : _settings$iso6$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
   }), createElement(_interface.FullscreenMode, {
     isActive: isFullscreenActive
   }), createElement(_interface.InterfaceSkeleton, {
