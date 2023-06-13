@@ -126,6 +126,7 @@ import { createElement } from "@wordpress/element";
  * @typedef SidebarSettings
  * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
+ * @property {function|null} [customComponent] - Function returning a custom sidebar component, or will default to the block inspector
  */
 
 /**

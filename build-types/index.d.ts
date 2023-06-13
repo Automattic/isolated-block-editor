@@ -36,6 +36,7 @@
  * @typedef SidebarSettings
  * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
+ * @property {function|null} [customComponent] - Function returning a custom sidebar component, or will default to the block inspector
  */
 /**
  * Isolated Editor Settings
@@ -185,6 +186,10 @@ export type SidebarSettings = {
      * - Display the block inserter in a sidebar (true) or popover (false)
      */
     inserter?: boolean | undefined;
+    /**
+     * - Function returning a custom sidebar component, or will default to the block inspector
+     */
+    customComponent?: Function | null | undefined;
 };
 /**
  * Isolated Editor Settings
