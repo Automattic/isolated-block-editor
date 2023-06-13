@@ -60,6 +60,7 @@ export default function applyDefaultSettings( settings ) {
 			sidebar: {
 				inserter: false,
 				inspector: false,
+				customComponent: null,
 
 				...( iso?.sidebar ?? {} ),
 			},

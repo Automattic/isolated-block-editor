@@ -147,10 +147,11 @@ function BlockEditor( props ) {
 	const header = showHeader ? (
 		<BlockEditorToolbar editorMode={ editorMode } settings={ settings } renderMoreMenu={ renderMoreMenu } />
 	) : null;
+	const CustomSettingsSidebar = settings?.iso?.sidebar?.customComponent ?? SettingsSidebar;
 
 	return (
 		<>
-			<SettingsSidebar documentInspector={ settings?.iso?.toolbar?.documentInspector ?? false } />
+			<CustomSettingsSidebar documentInspector={ settings?.iso?.toolbar?.documentInspector ?? false } />
 			<FullscreenMode isActive={ isFullscreenActive } />
 
 			<InterfaceSkeleton

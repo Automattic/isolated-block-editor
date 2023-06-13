@@ -215,11 +215,13 @@ The following function is also provided:
 - _iso.blocks.disallowBlocks_ `[string[]]` - list of block names to disallow, defaults to none
 - _iso.disallowEmbed_ `[string[]]`  - List of embed names to remove, defaults to none.
 - _iso.toolbar_ `[Object]` - Toolbar settings
-- _iso.toolbar.inserter_ `[boolean]` - Enable or disable the toolbar block inserter, defaults to `true`
-- _iso.toolbar.inspector_ `[boolean]` - Enable or disable the toolbar block inspector, defaults to `false`
 - _iso.toolbar.navigation_ `[boolean]` - Enable or disable the toolbar navigation button, defaults to `false`
 - _iso.toolbar.undo_ `[boolean]` - Enable or disable the toolbar undo/redo buttons, defaults to `true`
 - _iso.toolbar.documentInspector_ `[string|null]` - Set to a string to show as a new tab in the inspector and filled with `DocumentSection`, otherwise defaults to no new tab
+- _iso.sidebar_ `[Object]` - Sidebar settings
+- _iso.sidebar.inserter_ `[boolean]` - Enable or disable the sidebar block inserter, defaults to `true`
+- _iso.sidebar.inspector_ `[boolean]` - Enable or disable the sidebar block inspector, defaults to `false`
+- _iso.sidebar.customComponent_ `[function]` - A function returning a custom sidebar component, or null to uses the default sidebar
 - _iso.moreMenu_ `[Object]` - More menu settings
 - _iso.moreMenu.editor_ `[boolean]` - Enable or disable the editor sub menu (visual/code editing), defaults to `false`
 - _iso.moreMenu.fullscreen_ `[boolean]` - Enable or disable the fullscreen option, defaults to `false`
@@ -320,6 +322,22 @@ settings.editor.mediaUpload = mediaUpload;
 ```
 
 In versions earlier than 2.21.0 this was automatically done, but this meant that you were unable to modify or disable it.
+
+### Custom settings sidebar
+
+By default the editor will use the Gutenberg settings sidebar. This provides the block and document inspector tabs, along with associated content.
+
+If you wish to customise this sidebar then you can use the `iso.sidebar.customComponent` setting and pass a function that returns a React component.
+
+You will need to manage the display of the sidebar yourself, including whether it should appear or not. It may help to look at the [existing sidebar code](src/components/block-editor/sidebar.js) for reference.
+
+For example:
+
+```js
+sidebar: {
+	customComponent: () => <div>My custom sidebar</div>
+},
+```
 
 ### Extending
 
