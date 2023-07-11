@@ -44,19 +44,17 @@ export function deleteReusableBlock(id) {
   };
 }
 const controls = {
-  CONVERT_BLOCK_TO_STATIC: createRegistryControl(registry => _ref => {
-    let {
-      clientId
-    } = _ref;
+  CONVERT_BLOCK_TO_STATIC: createRegistryControl(registry => ({
+    clientId
+  }) => {
     const oldBlock = registry.select('core/block-editor').getBlock(clientId);
     const reusableBlock = registry.select('core').getEditedEntityRecord('postType', 'wp_block', oldBlock.attributes.ref);
     const newBlocks = parse(reusableBlock.content);
     registry.dispatch('core/block-editor').replaceBlocks(oldBlock.clientId, newBlocks);
   }),
-  CONVERT_BLOCKS_TO_REUSABLE: createRegistryControl(registry => async function (_ref2) {
-    let {
-      clientIds
-    } = _ref2;
+  CONVERT_BLOCKS_TO_REUSABLE: createRegistryControl(registry => async function ({
+    clientIds
+  }) {
     const reusableBlock = {
       title: __('Untitled Reusable Block'),
       content: serialize(registry.select('core/block-editor').getBlocksByClientId(clientIds)),
@@ -71,10 +69,9 @@ const controls = {
     // @ts-ignore */}
     .dispatch(reusableBlocksStore).__experimentalSetEditingReusableBlock(newBlock.clientId, true);
   }),
-  DELETE_REUSABLE_BLOCK: createRegistryControl(registry => async function (_ref3) {
-    let {
-      id
-    } = _ref3;
+  DELETE_REUSABLE_BLOCK: createRegistryControl(registry => async function ({
+    id
+  }) {
     const reusableBlock = registry.select('core').getEditedEntityRecord('postType', 'wp_block', id);
 
     // Don't allow a reusable block with a temporary ID to be deleted

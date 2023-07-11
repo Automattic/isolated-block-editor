@@ -32,7 +32,6 @@ import './style.scss';
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 const BlockEditorToolbar = props => {
-  var _settings$iso, _settings$iso2, _settings$iso2$sideba;
   const ref = useRef(null);
   const {
     settings,
@@ -42,11 +41,11 @@ const BlockEditorToolbar = props => {
   const isHugeViewport = useViewportMatch('huge', '>=');
   const {
     inspector
-  } = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {};
+  } = settings.iso?.toolbar || {};
   const {
     moreMenu
   } = settings.iso || {};
-  const inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inspector) || false;
+  const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
   const {
     openGeneralSidebar,
     closeGeneralSidebar

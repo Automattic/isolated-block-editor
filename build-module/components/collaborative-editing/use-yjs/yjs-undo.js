@@ -20,19 +20,16 @@ export function setupUndoManager(typeScope, identity, registry) {
     start: select('core/block-editor').getSelectionStart(),
     end: select('core/block-editor').getSelectionEnd()
   });
-  const setSelection = _ref => {
-    let {
-      start,
-      end
-    } = _ref;
-    return dispatch('core/block-editor').selectionChange(start === null || start === void 0 ? void 0 : start.clientId, start === null || start === void 0 ? void 0 : start.attributeKey, start === null || start === void 0 ? void 0 : start.offset, end === null || end === void 0 ? void 0 : end.offset);
-  };
+  const setSelection = ({
+    start,
+    end
+  }) => dispatch('core/block-editor').selectionChange(start?.clientId, start?.attributeKey, start?.offset, end?.offset);
   const undoManager = new yjs.UndoManager(typeScope, {
     trackedOrigins: new Set([identity])
   });
-  const debugUndoWithStackSizes = function () {
+  const debugUndoWithStackSizes = (...args) => {
     // @ts-ignore
-    debugUndo(...arguments);
+    debugUndo(...args);
     debugUndo(`stack size: undo ${undoManager.undoStack.length}, redo ${undoManager.redoStack.length}`);
   };
   undoManager.on('stack-item-added', event => {
@@ -46,7 +43,7 @@ export function setupUndoManager(typeScope, identity, registry) {
       return;
     }
     const selection = event.stackItem.meta.get('caret-location');
-    if (selection !== null && selection !== void 0 && selection.start) {
+    if (selection?.start) {
       setSelection(selection);
       debugUndoWithStackSizes(`${event.type} stack item popped with selection`, selection);
       return;

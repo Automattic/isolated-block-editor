@@ -2,9 +2,7 @@
  * WordPress dependencies
  */
 import { combineReducers } from '@wordpress/data';
-export function complementaryAreas() {
-  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  let action = arguments.length > 1 ? arguments[1] : undefined;
+export function complementaryAreas(state = {}, action) {
   switch (action.type) {
     case 'SET_DEFAULT_COMPLEMENTARY_AREA':
       {

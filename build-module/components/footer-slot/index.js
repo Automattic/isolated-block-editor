@@ -7,10 +7,9 @@ const {
   Fill,
   Slot
 } = createSlotFill('IsolatedFooter');
-const FooterSection = _ref => {
-  let {
-    children
-  } = _ref;
+const FooterSection = ({
+  children
+}) => {
   return createElement(Fill, null, children);
 };
 FooterSection.Slot = function (props) {

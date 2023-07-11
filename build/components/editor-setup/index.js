@@ -44,7 +44,7 @@ function useEditorSetup(settings) {
   var _useDispatch3 = (0, _data.useDispatch)('core/block-editor'),
     updateSettings = _useDispatch3.updateSettings;
   var _useSelect = (0, _data.useSelect)(function (select) {
-      var _settings$iso, _settings$iso$default, _settings$iso2, _settings$iso2$defaul;
+      var _settings$iso, _settings$iso2;
       var _select = select('isolated/editor'),
         isEditingSelect = _select.isEditing,
         isFeatureActive = _select.isFeatureActive;
@@ -63,7 +63,7 @@ function useEditorSetup(settings) {
           // @ts-ignore
           settings.editor, settings.iso, blockTypes,
           // Use the default preference, if set, otherwise use the feature
-          ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$default = _settings$iso.defaultPreferences) === null || _settings$iso$default === void 0 ? void 0 : _settings$iso$default.fixedToolbar) !== undefined ? (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$defaul = _settings$iso2.defaultPreferences) === null || _settings$iso2$defaul === void 0 ? void 0 : _settings$iso2$defaul.fixedToolbar : hasFixedToolbar)), {}, {
+          ((_settings$iso = settings.iso) === null || _settings$iso === void 0 || (_settings$iso = _settings$iso.defaultPreferences) === null || _settings$iso === void 0 ? void 0 : _settings$iso.fixedToolbar) !== undefined ? (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 || (_settings$iso2 = _settings$iso2.defaultPreferences) === null || _settings$iso2 === void 0 ? void 0 : _settings$iso2.fixedToolbar : hasFixedToolbar)), {}, {
             // Reusable blocks
             __experimentalReusableBlocks: [],
             __experimentalFetchReusableBlocks: false,
@@ -114,7 +114,7 @@ function useEditorSetup(settings) {
 
     // Setup Gutenberg for this editor, but only when focussed. This swaps allowed blocks and other capabilities
     updateSettings(currentSettings);
-  }, [isEditing, topToolbar, currentSettings === null || currentSettings === void 0 ? void 0 : (_currentSettings$edit = currentSettings.editor) === null || _currentSettings$edit === void 0 ? void 0 : _currentSettings$edit.reusableBlocks]);
+  }, [isEditing, topToolbar, currentSettings === null || currentSettings === void 0 || (_currentSettings$edit = currentSettings.editor) === null || _currentSettings$edit === void 0 ? void 0 : _currentSettings$edit.reusableBlocks]);
   return settings;
 }
 //# sourceMappingURL=index.js.map

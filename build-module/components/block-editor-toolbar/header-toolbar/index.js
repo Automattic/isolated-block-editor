@@ -1,4 +1,5 @@
 import { createElement } from "@wordpress/element";
+// @ts-nocheck
 /**
  * WordPress dependencies
  */
@@ -21,7 +22,6 @@ const preventDefault = event => {
   event.preventDefault();
 };
 function HeaderToolbar(props) {
-  var _props$settings, _props$settings$iso, _props$settings$iso$s;
   const inserterButton = useRef();
   const {
     setIsInserterOpened,
@@ -80,7 +80,7 @@ function HeaderToolbar(props) {
     undo,
     selectorTool
   } = props.settings.iso.toolbar;
-  const inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$iso = _props$settings.iso) === null || _props$settings$iso === void 0 ? void 0 : (_props$settings$iso$s = _props$settings$iso.sidebar) === null || _props$settings$iso$s === void 0 ? void 0 : _props$settings$iso$s.inserter) || false;
+  const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
   const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
   const toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
   __('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */

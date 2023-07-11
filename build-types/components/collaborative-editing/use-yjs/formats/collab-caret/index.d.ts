@@ -14,12 +14,12 @@ export function applyCarets(record: any, multiline: MultilineData, carets?: any[
  */
 export const FORMAT_NAME: "isolated/collab-caret";
 export namespace settings {
-    const title: string;
-    const tagName: string;
-    const className: string;
+    let title: string;
+    let tagName: string;
+    let className: string;
     namespace attributes {
-        export const id: string;
-        const className_1: string;
+        export let id: string;
+        let className_1: string;
         export { className_1 as className };
     }
     function edit(): null;

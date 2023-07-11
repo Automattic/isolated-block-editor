@@ -5,19 +5,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.addFilterCollabBlockSelection = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _hooks = require("@wordpress/hooks");
 var _data = require("@wordpress/data");
 require("./style.scss");
 import { createElement } from "@wordpress/element";
-/**
- * WordPress dependencies
- */
-
-/**
- * Internal dependencies
- */
-
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * WordPress dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */ /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Internal dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 /**
  * Adds peer selected className to the block-list-block component.
  *
@@ -40,7 +38,7 @@ var addSelectionBorders = function addSelectionBorders(OriginalComponent) {
       }, [props.clientId]),
       isSelected = _useSelect.isSelected,
       color = _useSelect.color;
-    return createElement(OriginalComponent, (0, _extends2["default"])({}, props, {
+    return createElement(OriginalComponent, _objectSpread(_objectSpread({}, props), {}, {
       className: isSelected ? 'is-iso-editor-collab-peer-selected' : undefined,
       wrapperProps: {
         style: {

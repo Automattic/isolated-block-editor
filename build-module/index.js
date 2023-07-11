@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
 /**
@@ -152,10 +151,9 @@ export function initializeEditor() {
  * @param {Object} props - Component props
  * @param {UndoManager} [props.undoManager]
  */
-export function useInitializeIsoEditor() {
-  let {
-    undoManager
-  } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+export function useInitializeIsoEditor({
+  undoManager
+} = {}) {
   const {
     setUndoManager
   } = useDispatch('isolated/editor');
@@ -257,17 +255,18 @@ function IsolatedBlockEditor(props) {
     end: select('core/block-editor').getSelectionEnd()
   }), []);
   useEffect(() => {
-    __experimentalOnSelection === null || __experimentalOnSelection === void 0 ? void 0 : __experimentalOnSelection(editorSelection);
+    __experimentalOnSelection?.(editorSelection);
   }, [editorSelection]);
   return createElement(StrictMode, null, createElement(ShortcutProvider, null, createElement(ContentSaver, {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
-  }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(BlockEditorContainer, _extends({}, params, {
+  }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(BlockEditorContainer, {
+    ...params,
     onInput: __experimentalOnInput,
     onChange: __experimentalOnChange,
     blocks: __experimentalValue,
     settings: settings
-  }), children))));
+  }, children))));
 }
 export default withRegistryProvider(IsolatedBlockEditor);
 export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };

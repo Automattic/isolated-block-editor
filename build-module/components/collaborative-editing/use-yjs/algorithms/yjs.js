@@ -28,8 +28,7 @@ import sanitizeHTML from './sanitize-html';
  * @param {RichTextHint} [richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
  * @param {string}  clientId   Current clientId.
  */
-export function updateBlocksDoc(yDocBlocks, blocks, richTextHint) {
-  let clientId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+export function updateBlocksDoc(yDocBlocks, blocks, richTextHint, clientId = '') {
   if (!yDocBlocks.has('order')) {
     yDocBlocks.set('order', new yjs.Map());
   }
@@ -92,12 +91,11 @@ function getKnownRichTextAttributes(clientId, richTextHint, richTexts) {
  * @param {string} args.attributeKey
  * @param {yjs.Map} args.richTexts
  */
-export function updateRichText(_ref) {
-  let {
-    newBlock,
-    attributeKey,
-    richTexts
-  } = _ref;
+export function updateRichText({
+  newBlock,
+  attributeKey,
+  richTexts
+}) {
   const newText = newBlock.attributes[attributeKey];
   if (!richTexts.has(newBlock.clientId)) {
     richTexts.set(newBlock.clientId, new yjs.Map());
@@ -117,8 +115,7 @@ export function updateRichText(_ref) {
  * @param {yjs.Map} commentsDoc  comments doc.
  * @param {Object[]}  comments     Updated comments.
  */
-export function updateCommentsDoc(commentsDoc) {
-  let comments = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+export function updateCommentsDoc(commentsDoc, comments = []) {
   comments.forEach(comment => {
     let currentDoc = commentsDoc.get(comment._id);
     const isNewDoc = !currentDoc;
@@ -145,8 +142,7 @@ export function updateCommentsDoc(commentsDoc) {
  * @param {yjs.Map} repliesDoc  replies doc.
  * @param {Object[]}  replies     Updated replies.
  */
-export function updateCommentRepliesDoc(repliesDoc) {
-  let replies = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+export function updateCommentRepliesDoc(repliesDoc, replies = []) {
   replies.forEach(reply => {
     let currentReplyDoc = repliesDoc.get(reply._id);
     const isNewDoc = !currentReplyDoc;
@@ -194,8 +190,7 @@ export function commentsDocToArray(commentsDoc) {
   if (!commentsDoc) {
     return [];
   }
-  return Object.entries(commentsDoc.toJSON()).map(_ref2 => {
-    let [id, commentDoc] = _ref2;
+  return Object.entries(commentsDoc.toJSON()).map(([id, commentDoc]) => {
     return {
       _id: id,
       type: commentDoc.type,
@@ -206,8 +201,7 @@ export function commentsDocToArray(commentsDoc) {
       end: commentDoc.end,
       authorId: commentDoc.authorId,
       authorName: commentDoc.authorName,
-      replies: Object.entries(commentDoc.replies).map(_ref3 => {
-        let [replyId, entryDoc] = _ref3;
+      replies: Object.entries(commentDoc.replies).map(([replyId, entryDoc]) => {
         return {
           _id: replyId,
           content: entryDoc.content,
@@ -231,23 +225,20 @@ export function commentsDocToArray(commentsDoc) {
  * @return {Array} Block list.
  */
 // @ts-ignore
-export function blocksDocToArray(yDocBlocks) {
-  var _order$get;
-  let {
-    clientId = '',
-    sanitize = false
-  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+export function blocksDocToArray(yDocBlocks, {
+  clientId = '',
+  sanitize = false
+} = {}) {
   if (!yDocBlocks) {
     return [];
   }
   let order = yDocBlocks.get('order');
-  order = (_order$get = order.get(clientId)) === null || _order$get === void 0 ? void 0 : _order$get.toArray();
+  order = order.get(clientId)?.toArray();
   if (!order) return [];
   const byClientId = yDocBlocks.get('byClientId');
   return order.map(_clientId => {
     const richTextMap = yDocBlocks.get('richTexts').get(_clientId) || new yjs.Map();
-    const richTextsAsStrings = Array.from(richTextMap.entries()).reduce((acc, _ref4) => {
-      let [key, value] = _ref4;
+    const richTextsAsStrings = Array.from(richTextMap.entries()).reduce((acc, [key, value]) => {
       return {
         ...acc,
         [key]: richTextMapToHTML(value)
@@ -283,10 +274,9 @@ export function blocksDocToArray(yDocBlocks) {
  * @return {PostObject} Post object.
  */
 // @ts-ignore
-export function postDocToObject(doc) {
-  let {
-    sanitize = false
-  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+export function postDocToObject(doc, {
+  sanitize = false
+} = {}) {
   const postDoc = doc.getMap('post');
   const blocks = blocksDocToArray(postDoc.get('blocks'), {
     sanitize

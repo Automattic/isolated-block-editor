@@ -21,10 +21,9 @@ import ComplementaryArea from '../complementary-area';
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
 }
-const SettingsSidebar = _ref => {
-  let {
-    documentInspector
-  } = _ref;
+const SettingsSidebar = ({
+  documentInspector
+}) => {
   const {
     sidebarName,
     keyboardShortcut

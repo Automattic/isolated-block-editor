@@ -36,7 +36,7 @@ var getActiveComplementaryArea = (0, _data.createRegistrySelector)(function (sel
     if (!isComplementaryAreaVisible) {
       return null;
     }
-    return state === null || state === void 0 ? void 0 : (_state$complementaryA = state.complementaryAreas) === null || _state$complementaryA === void 0 ? void 0 : _state$complementaryA[scope];
+    return state === null || state === void 0 || (_state$complementaryA = state.complementaryAreas) === null || _state$complementaryA === void 0 ? void 0 : _state$complementaryA[scope];
   };
 });
 

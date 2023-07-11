@@ -7,10 +7,9 @@ const {
   Fill,
   Slot
 } = createSlotFill('IsolatedFooter');
-const ActionArea = _ref => {
-  let {
-    children
-  } = _ref;
+const ActionArea = ({
+  children
+}) => {
   return createElement(Fill, null, children);
 };
 ActionArea.Slot = function () {

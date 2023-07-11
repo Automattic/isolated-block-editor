@@ -215,7 +215,9 @@ function richTextMapToHTML(richTextMap) {
       value: {
         replacements: [replacement],
         formats: Array(1),
-        text: OBJECT_REPLACEMENT_CHARACTER
+        text: OBJECT_REPLACEMENT_CHARACTER,
+        start: undefined,
+        end: undefined
       }
     });
     text = text.replace(OBJECT_REPLACEMENT_CHARACTER, replacementHTML);

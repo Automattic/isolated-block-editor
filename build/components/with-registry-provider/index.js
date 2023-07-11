@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
@@ -113,7 +112,7 @@ function (WrappedComponent) {
     }
     return createElement(_data.RegistryProvider, {
       value: subRegistry
-    }, createElement(WrappedComponent, (0, _extends2["default"])({}, additionalProps, {
+    }, createElement(WrappedComponent, _objectSpread(_objectSpread({}, additionalProps), {}, {
       settings: defaultSettings
     })));
   });

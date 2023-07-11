@@ -47,7 +47,6 @@ export class RelativePosition {
    * @param {yjs.Doc} doc
    */
   saveRelativePosition(doc) {
-    var _doc$getMap, _doc$getMap$get, _richTexts$get;
     const {
       start,
       end
@@ -56,8 +55,8 @@ export class RelativePosition {
       clientId,
       attributeKey
     } = start !== null && start !== void 0 ? start : {};
-    const richTexts = (_doc$getMap = doc.getMap('post')) === null || _doc$getMap === void 0 ? void 0 : (_doc$getMap$get = _doc$getMap.get('blocks')) === null || _doc$getMap$get === void 0 ? void 0 : _doc$getMap$get.get('richTexts');
-    if (richTexts !== null && richTexts !== void 0 && (_richTexts$get = richTexts.get(clientId)) !== null && _richTexts$get !== void 0 && _richTexts$get.has(attributeKey) && typeof start.offset === 'number' && typeof end.offset === 'number') {
+    const richTexts = doc.getMap('post')?.get('blocks')?.get('richTexts');
+    if (richTexts?.get(clientId)?.has(attributeKey) && typeof start.offset === 'number' && typeof end.offset === 'number') {
       const xmlText = richTexts.get(clientId).get(attributeKey).get('xmlText');
       this.relPos = {
         clientId,
@@ -79,8 +78,7 @@ export class RelativePosition {
    * @param {yjs.Doc} doc
    */
   setAbsolutePosition(doc) {
-    var _this$relPos, _this$relPos2, _yjs$createAbsolutePo, _yjs$createAbsolutePo2;
-    if (!((_this$relPos = this.relPos) !== null && _this$relPos !== void 0 && _this$relPos.clientId) || !((_this$relPos2 = this.relPos) !== null && _this$relPos2 !== void 0 && _this$relPos2.attributeKey)) {
+    if (!this.relPos?.clientId || !this.relPos?.attributeKey) {
       return;
     }
     const {
@@ -89,8 +87,8 @@ export class RelativePosition {
       startOffset,
       endOffset
     } = this.relPos;
-    const absStartOffset = (_yjs$createAbsolutePo = yjs.createAbsolutePositionFromRelativePosition(startOffset, doc)) === null || _yjs$createAbsolutePo === void 0 ? void 0 : _yjs$createAbsolutePo.index;
-    const absEndOffset = (_yjs$createAbsolutePo2 = yjs.createAbsolutePositionFromRelativePosition(endOffset, doc)) === null || _yjs$createAbsolutePo2 === void 0 ? void 0 : _yjs$createAbsolutePo2.index;
+    const absStartOffset = yjs.createAbsolutePositionFromRelativePosition(startOffset, doc)?.index;
+    const absEndOffset = yjs.createAbsolutePositionFromRelativePosition(endOffset, doc)?.index;
     if (typeof absStartOffset !== 'number' || typeof absEndOffset !== 'number') {
       return;
     }
@@ -146,10 +144,7 @@ export class PeerRelativePosition {
    * @param {yjs.Doc} doc
    */
   saveRelativePositions(doc) {
-    this._peerRelativePositions = Object.entries(this._getPeers()).map(_ref => {
-      let [peerId, peer] = _ref;
-      return this._initRelativePositionForPeer(peerId, peer);
-    });
+    this._peerRelativePositions = Object.entries(this._getPeers()).map(([peerId, peer]) => this._initRelativePositionForPeer(peerId, peer));
     this._peerRelativePositions.forEach(relPos => relPos.saveRelativePosition(doc));
   }
 

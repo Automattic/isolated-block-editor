@@ -36,11 +36,10 @@ export const defaultColors = ['#4676C0', '#6F6EBE', '#9063B6', '#C3498D', '#9E6D
  * @param {import('..').CollaborationSettings} opts.settings
  * @param {Object} opts.registry - Redux data registry for this context.
  */
-async function initYDoc(_ref) {
-  let {
-    settings,
-    registry
-  } = _ref;
+async function initYDoc({
+  settings,
+  registry
+}) {
   const {
     channelId,
     transport
@@ -163,10 +162,9 @@ async function initYDoc(_ref) {
  * @param {Object} opts - Hook options
  * @param {CollaborationSettings} [opts.settings]
  */
-export default function useYjs(_ref2) {
-  let {
-    settings
-  } = _ref2;
+export default function useYjs({
+  settings
+}) {
   const onSelectionChange = useRef(noop);
   const registry = useRegistry();
   const {
@@ -184,7 +182,7 @@ export default function useYjs(_ref2) {
     };
   }, []);
   useEffect(() => {
-    if (!(settings !== null && settings !== void 0 && settings.enabled)) {
+    if (!settings?.enabled) {
       return;
     }
     if (!settings.transport) {
@@ -200,11 +198,10 @@ export default function useYjs(_ref2) {
     initYDoc({
       settings,
       registry
-    }).then(_ref3 => {
-      let {
-        sendSelection,
-        disconnect
-      } = _ref3;
+    }).then(({
+      sendSelection,
+      disconnect
+    }) => {
       onUnmount = () => {
         debug('unmount');
         disconnect();

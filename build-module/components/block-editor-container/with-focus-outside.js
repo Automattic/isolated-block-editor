@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 // @ts-nocheck
 /**
@@ -125,9 +124,10 @@ export default createHigherOrderComponent(WrappedComponent => {
         onTouchStart: this.normalizeButtonFocus,
         onTouchEnd: this.normalizeButtonFocus,
         onBlur: this.queueBlurCheck
-      }, createElement(WrappedComponent, _extends({
-        ref: this.bindNode
-      }, this.props)));
+      }, createElement(WrappedComponent, {
+        ref: this.bindNode,
+        ...this.props
+      }));
       /* eslint-enable jsx-a11y/no-static-element-interactions */
     }
   };

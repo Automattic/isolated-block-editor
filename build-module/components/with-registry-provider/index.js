@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 /**
  * WordPress dependencies
@@ -103,9 +102,10 @@ WrappedComponent => withRegistry(props => {
   }
   return createElement(RegistryProvider, {
     value: subRegistry
-  }, createElement(WrappedComponent, _extends({}, additionalProps, {
+  }, createElement(WrappedComponent, {
+    ...additionalProps,
     settings: defaultSettings
-  })));
+  }));
 }), 'withRegistryProvider');
 export default withRegistryProvider;
 //# sourceMappingURL=index.js.map

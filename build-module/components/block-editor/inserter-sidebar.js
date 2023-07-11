@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 /**
  * WordPress dependencies
@@ -21,12 +20,12 @@ export default function InserterSidebar() {
     // @ts-ignore copied from Gutenberg
     focusOnMount: null
   });
-  return createElement("div", _extends({
+  return createElement("div", {
     // @ts-ignore
-    ref: inserterDialogRef
-  }, inserterDialogProps, {
+    ref: inserterDialogRef,
+    ...inserterDialogProps,
     className: "edit-post-editor__inserter-panel"
-  }), createElement(TagName, {
+  }, createElement(TagName, {
     className: "edit-post-editor__inserter-panel-header"
   }, createElement(Button, {
     icon: close,

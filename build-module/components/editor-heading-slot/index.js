@@ -4,10 +4,9 @@ const {
   Fill,
   Slot
 } = createSlotFill('IsolatedEditorHeading');
-const EditorHeading = _ref => {
-  let {
-    children
-  } = _ref;
+const EditorHeading = ({
+  children
+}) => {
   return createElement(Fill, null, children);
 };
 EditorHeading.Slot = function (props) {

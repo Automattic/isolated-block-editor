@@ -10,11 +10,10 @@ import { useDispatch, useSelect } from '@wordpress/data';
  * Internal dependencies
  */
 
-const SettingsHeader = _ref => {
-  let {
-    sidebarName,
-    documentInspector
-  } = _ref;
+const SettingsHeader = ({
+  sidebarName,
+  documentInspector
+}) => {
   const {
     openGeneralSidebar
   } = useDispatch('isolated/editor');

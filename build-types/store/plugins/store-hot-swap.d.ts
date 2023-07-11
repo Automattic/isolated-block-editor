@@ -14,8 +14,8 @@ declare function storeHotSwapPlugin(registry: any, pluginOptions: any): {
     select(reducerKey: any): any;
 };
 declare namespace storeHotSwapPlugin {
-    const targetSelect: any;
-    const targetDispatch: any;
+    let targetSelect: any;
+    let targetDispatch: any;
     function setEditor(select: any, dispatch: any): void;
     function resetEditor(): void;
 }

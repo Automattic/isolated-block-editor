@@ -17,6 +17,7 @@ var _redo = _interopRequireDefault(require("./redo"));
 var _undo = _interopRequireDefault(require("./undo"));
 var _blockNavigation = _interopRequireDefault(require("../block-navigation"));
 import { createElement } from "@wordpress/element";
+// @ts-nocheck
 /**
  * WordPress dependencies
  */
@@ -29,7 +30,7 @@ var preventDefault = function preventDefault(event) {
   event.preventDefault();
 };
 function HeaderToolbar(props) {
-  var _props$settings, _props$settings$iso, _props$settings$iso$s;
+  var _props$settings;
   var inserterButton = (0, _element.useRef)();
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
     setIsInserterOpened = _useDispatch.setIsInserterOpened,
@@ -82,7 +83,7 @@ function HeaderToolbar(props) {
     navigation = _props$settings$iso$t.navigation,
     undo = _props$settings$iso$t.undo,
     selectorTool = _props$settings$iso$t.selectorTool;
-  var inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$iso = _props$settings.iso) === null || _props$settings$iso === void 0 ? void 0 : (_props$settings$iso$s = _props$settings$iso.sidebar) === null || _props$settings$iso$s === void 0 ? void 0 : _props$settings$iso$s.inserter) || false;
+  var inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 || (_props$settings = _props$settings.iso) === null || _props$settings === void 0 || (_props$settings = _props$settings.sidebar) === null || _props$settings === void 0 ? void 0 : _props$settings.inserter) || false;
   var displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
   var toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
   (0, _i18n.__)('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */

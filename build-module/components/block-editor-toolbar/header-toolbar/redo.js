@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 /**
  * WordPress dependencies
@@ -15,7 +14,8 @@ function EditorHistoryRedo(props, ref) {
   const {
     redo
   } = useDispatch('isolated/editor');
-  return createElement(Button, _extends({}, props, {
+  return createElement(Button, {
+    ...props,
     ref: ref,
     icon: redoIcon,
     label: __('Redo'),
@@ -27,7 +27,7 @@ function EditorHistoryRedo(props, ref) {
     "aria-disabled": !hasRedo,
     onClick: hasRedo ? redo : undefined,
     className: "editor-history__redo"
-  }));
+  });
 }
 export default forwardRef(EditorHistoryRedo);
 //# sourceMappingURL=redo.js.map

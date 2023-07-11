@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = VisualEditor;
+exports.unlock = exports.lock = void 0;
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _classnames = _interopRequireDefault(require("classnames"));
@@ -14,6 +15,7 @@ var _data = require("@wordpress/data");
 var _components = require("@wordpress/components");
 var _element = require("@wordpress/element");
 var _compose = require("@wordpress/compose");
+var _privateApis = require("@wordpress/private-apis");
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
 import { createElement, Fragment } from "@wordpress/element";
@@ -25,6 +27,15 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  */ /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Internal dependencies
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+var _dangerousOptInToUns = (0, _privateApis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my plugin or theme will inevitably break on the next WordPress release.', '@wordpress/edit-post'),
+  lock = _dangerousOptInToUns.lock,
+  unlock = _dangerousOptInToUns.unlock;
+exports.unlock = unlock;
+exports.lock = lock;
+var _unlock = unlock(_blockEditor.privateApis),
+  LayoutStyle = _unlock.LayoutStyle,
+  useLayoutClasses = _unlock.useLayoutClasses,
+  useLayoutStyles = _unlock.useLayoutStyles;
 function MaybeIframe(_ref) {
   var children = _ref.children,
     contentRef = _ref.contentRef,
@@ -196,11 +207,11 @@ function VisualEditor(_ref2) {
   editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content, // @ts-ignore
   editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.blocks, postContentAttributes]);
   var layout = (newestPostContentAttributes === null || newestPostContentAttributes === void 0 ? void 0 : newestPostContentAttributes.layout) || {};
-  var postContentLayoutClasses = (0, _blockEditor.__experimentaluseLayoutClasses)(newestPostContentAttributes, 'core/post-content');
+  var postContentLayoutClasses = useLayoutClasses(newestPostContentAttributes, 'core/post-content');
   var blockListLayoutClass = (0, _classnames["default"])({
     'is-layout-flow': !themeSupportsLayout
   }, themeSupportsLayout && postContentLayoutClasses);
-  var postContentLayoutStyles = (0, _blockEditor.__experimentaluseLayoutStyles)(newestPostContentAttributes, 'core/post-content', '.block-editor-block-list__layout.is-root-container');
+  var postContentLayoutStyles = useLayoutStyles(newestPostContentAttributes, 'core/post-content', '.block-editor-block-list__layout.is-root-container');
 
   // Update type for blocks using legacy layouts.
   var postContentLayout = (0, _element.useMemo)(function () {
@@ -221,7 +232,7 @@ function VisualEditor(_ref2) {
       return;
     }
     // @ts-ignore
-    titleRef === null || titleRef === void 0 ? void 0 : (_titleRef$current = titleRef.current) === null || _titleRef$current === void 0 ? void 0 : _titleRef$current.focus();
+    titleRef === null || titleRef === void 0 || (_titleRef$current = titleRef.current) === null || _titleRef$current === void 0 ? void 0 : _titleRef$current.focus();
   }, [isWelcomeGuideVisible, isCleanNewPost]);
   styles = (0, _element.useMemo)(function () {
     return [].concat((0, _toConsumableArray2["default"])(styles), [{
@@ -249,11 +260,11 @@ function VisualEditor(_ref2) {
     contentRef: contentRef,
     styles: styles,
     style: {}
-  }, themeSupportsLayout && !themeHasDisabledLayoutStyles && !isTemplateMode && createElement(Fragment, null, createElement(_blockEditor.__experimentalLayoutStyle, {
+  }, themeSupportsLayout && !themeHasDisabledLayoutStyles && !isTemplateMode && createElement(Fragment, null, createElement(LayoutStyle, {
     selector: ".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container",
     layout: fallbackLayout,
     layoutDefinitions: globalLayoutSettings === null || globalLayoutSettings === void 0 ? void 0 : globalLayoutSettings.definitions
-  }), postContentLayoutStyles && createElement(_blockEditor.__experimentalLayoutStyle, {
+  }), postContentLayoutStyles && createElement(LayoutStyle, {
     layout: postContentLayout,
     css: postContentLayoutStyles,
     layoutDefinitions: globalLayoutSettings === null || globalLayoutSettings === void 0 ? void 0 : globalLayoutSettings.definitions
