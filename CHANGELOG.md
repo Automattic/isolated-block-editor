@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.26.0] - 2023-07-11
+
+### Update
+- Get working with Gutenberg 16+
+- Fixed toolbar is now attached to the top of the editor and is no longer sticky
+
 ## [2.25.0] - 2023-06-13
 
 ### Added
