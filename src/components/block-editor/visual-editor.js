@@ -18,12 +18,10 @@ import {
 	__experimentalUseResizeCanvas as useResizeCanvas,
 	__unstableEditorStyles as EditorStyles,
 	useSetting,
-	__experimentalLayoutStyle as LayoutStyle,
 	__unstableUseMouseMoveTypingReset as useMouseMoveTypingReset,
 	__unstableIframe as Iframe,
 	__experimentalRecursionProvider as RecursionProvider,
-	__experimentaluseLayoutClasses as useLayoutClasses,
-	__experimentaluseLayoutStyles as useLayoutStyles,
+	privateApis as blockEditorPrivateApis,
 } from '@wordpress/block-editor';
 import {
 	VisualEditorGlobalKeyboardShortcuts,
@@ -33,12 +31,23 @@ import { useSelect } from '@wordpress/data';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useEffect, useRef, useMemo } from '@wordpress/element';
 import { useMergeRefs } from '@wordpress/compose';
+import { __dangerousOptInToUnstableAPIsOnlyForCoreModules } from '@wordpress/private-apis';
 
 /**
  * Internal dependencies
  */
 import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
+
+export const { lock, unlock } =
+	__dangerousOptInToUnstableAPIsOnlyForCoreModules(
+		'I know using unstable features means my plugin or theme will inevitably break on the next WordPress release.',
+		'@wordpress/edit-post'
+	);
+
+const { LayoutStyle, useLayoutClasses, useLayoutStyles } = unlock(
+	blockEditorPrivateApis
+);
 
 function MaybeIframe( { children, contentRef, shouldIframe, styles, style } ) {
 	const ref = useMouseMoveTypingReset();
