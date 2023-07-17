@@ -31,10 +31,9 @@ export const FORMAT_NAME = 'isolated/collab-caret';
  * @param {Array} carets The carets to apply.
  * @return {Object} A record with the carets applied.
  */
-export function applyCarets(record, multiline) {
-  let carets = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+export function applyCarets(record, multiline, carets = []) {
   carets.forEach(caret => {
-    var _pop, _lastGrapheme$length;
+    var _lastGrapheme$length;
     let {
       start,
       end,
@@ -54,9 +53,10 @@ export function applyCarets(record, multiline) {
     // the last character is an emoji, where "<emoji>".length can be more than 1.
     // For example, "👩‍👩‍👧‍👦".length === 11. (Intl.Segementer is still unsupported in Firefox)
     // @ts-ignore Intl.Segmenter is not in spec yet
-    const lastGrapheme = Intl.Segmenter ? // @ts-ignore Intl.Segmenter is not in spec yet
-    (_pop = [...new Intl.Segmenter().segment(text)].pop()) === null || _pop === void 0 ? void 0 : _pop.segment : undefined;
-    const offset = (_lastGrapheme$length = lastGrapheme === null || lastGrapheme === void 0 ? void 0 : lastGrapheme.length) !== null && _lastGrapheme$length !== void 0 ? _lastGrapheme$length : 1; // fall back to 1 if we can't accurately segment the last grapheme
+    const lastGrapheme = Intl.Segmenter ?
+    // @ts-ignore Intl.Segmenter is not in spec yet
+    [...new Intl.Segmenter().segment(text)].pop()?.segment : undefined;
+    const offset = (_lastGrapheme$length = lastGrapheme?.length) !== null && _lastGrapheme$length !== void 0 ? _lastGrapheme$length : 1; // fall back to 1 if we can't accurately segment the last grapheme
 
     if (isShifted) {
       start = end - offset;
@@ -66,6 +66,7 @@ export function applyCarets(record, multiline) {
     }
     record = applyFormat(record, {
       type: FORMAT_NAME,
+      // @ts-ignore
       attributes: {
         id: 'iso-editor-collab-caret-' + id,
         class: classnames({
@@ -80,20 +81,15 @@ export function applyCarets(record, multiline) {
   return record;
 }
 const getCarets = memoize((peers, richTextIdentifier, blockClientId) => {
-  return Object.entries(peers).filter(_ref => {
-    var _peer$start, _peer$end;
-    let [, peer] = _ref;
-    return (peer === null || peer === void 0 ? void 0 : (_peer$start = peer.start) === null || _peer$start === void 0 ? void 0 : _peer$start.clientId) === blockClientId && (peer === null || peer === void 0 ? void 0 : (_peer$end = peer.end) === null || _peer$end === void 0 ? void 0 : _peer$end.clientId) === blockClientId && peer.start.attributeKey === richTextIdentifier;
-  }).map(_ref2 => {
-    let [id, peer] = _ref2;
-    return {
-      id,
-      label: peer.name,
-      start: peer.start.offset,
-      end: peer.end.offset,
-      color: peer.color
-    };
-  });
+  return Object.entries(peers).filter(([, peer]) => {
+    return peer?.start?.clientId === blockClientId && peer?.end?.clientId === blockClientId && peer.start.attributeKey === richTextIdentifier;
+  }).map(([id, peer]) => ({
+    id,
+    label: peer.name,
+    start: peer.start.offset,
+    end: peer.end.offset,
+    color: peer.color
+  }));
 });
 
 /**
@@ -102,11 +98,10 @@ const getCarets = memoize((peers, richTextIdentifier, blockClientId) => {
  * @return {MultilineData}
  */
 const getMultilineData = (multilineTag, attributeValue) => {
-  var _create, _create$text, _create$text$split;
-  const multilineItems = multilineTag ? (_create = create({
+  const multilineItems = multilineTag ? create({
     html: attributeValue,
     multilineTag
-  })) === null || _create === void 0 ? void 0 : (_create$text = _create.text) === null || _create$text === void 0 ? void 0 : (_create$text$split = _create$text.split) === null || _create$text$split === void 0 ? void 0 : _create$text$split.call(_create$text, __UNSTABLE_LINE_SEPARATOR) : [];
+  })?.text?.split?.(__UNSTABLE_LINE_SEPARATOR) : [];
   return {
     isMultiline: !!multilineTag,
     checkOffset: offset => {
@@ -140,12 +135,10 @@ export const settings = {
   edit() {
     return null;
   },
-  __experimentalGetPropsForEditableTreePreparation(select, _ref3) {
-    var _MULTILINE_ATTRIBUTES, _MULTILINE_ATTRIBUTES2;
-    let {
-      richTextIdentifier,
-      blockClientId
-    } = _ref3;
+  __experimentalGetPropsForEditableTreePreparation(select, {
+    richTextIdentifier,
+    blockClientId
+  }) {
     // Adds special handling for certain block attributes that are known to be multiline,
     // e.g. the `values` attribute of the List block.
     const MULTILINE_ATTRIBUTES = {
@@ -156,7 +149,7 @@ export const settings = {
       }
     };
     const blockName = select('core/block-editor').getBlockName(blockClientId);
-    const multilineTag = (_MULTILINE_ATTRIBUTES = MULTILINE_ATTRIBUTES[blockName]) === null || _MULTILINE_ATTRIBUTES === void 0 ? void 0 : (_MULTILINE_ATTRIBUTES2 = _MULTILINE_ATTRIBUTES[richTextIdentifier]) === null || _MULTILINE_ATTRIBUTES2 === void 0 ? void 0 : _MULTILINE_ATTRIBUTES2.multilineTag;
+    const multilineTag = MULTILINE_ATTRIBUTES[blockName]?.[richTextIdentifier]?.multilineTag;
 
     // The properties in this return object need to be as stable as possible.
     // See https://github.com/WordPress/gutenberg/issues/23428
@@ -166,14 +159,13 @@ export const settings = {
       blockAttributeSelector: getStableBlockAttributeSelector(select('core/block-editor').getBlockAttributes, blockClientId, richTextIdentifier)
     };
   },
-  __experimentalCreatePrepareEditableTree(_ref4) {
-    let {
-      carets,
-      multilineTag,
-      blockAttributeSelector
-    } = _ref4;
+  __experimentalCreatePrepareEditableTree({
+    carets,
+    multilineTag,
+    blockAttributeSelector
+  }) {
     return (formats, text) => {
-      if (!(carets !== null && carets !== void 0 && carets.length)) {
+      if (!carets?.length) {
         return formats;
       }
       const multiline = getMultilineData(multilineTag, blockAttributeSelector());
@@ -186,6 +178,7 @@ export const settings = {
   }
 };
 export const registerFormatCollabCaret = () => {
+  // @ts-ignore
   registerFormatType(FORMAT_NAME, settings);
 };
 //# sourceMappingURL=index.js.map

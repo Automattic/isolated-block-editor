@@ -62,6 +62,7 @@ export function applyCarets( record, multiline, carets = [] ) {
 			record,
 			{
 				type: FORMAT_NAME,
+				// @ts-ignore
 				attributes: {
 					id: 'iso-editor-collab-caret-' + id,
 					class: classnames( {
@@ -181,5 +182,6 @@ export const settings = {
 };
 
 export const registerFormatCollabCaret = () => {
+	// @ts-ignore
 	registerFormatType( FORMAT_NAME, settings );
 };

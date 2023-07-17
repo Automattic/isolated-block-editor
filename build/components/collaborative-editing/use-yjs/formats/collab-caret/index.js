@@ -72,6 +72,7 @@ function applyCarets(record, multiline) {
     }
     record = (0, _richText.applyFormat)(record, {
       type: FORMAT_NAME,
+      // @ts-ignore
       attributes: {
         id: 'iso-editor-collab-caret-' + id,
         "class": (0, _classnames["default"])({
@@ -90,7 +91,7 @@ var getCarets = (0, _memize["default"])(function (peers, richTextIdentifier, blo
     var _peer$start, _peer$end;
     var _ref2 = (0, _slicedToArray2["default"])(_ref, 2),
       peer = _ref2[1];
-    return (peer === null || peer === void 0 ? void 0 : (_peer$start = peer.start) === null || _peer$start === void 0 ? void 0 : _peer$start.clientId) === blockClientId && (peer === null || peer === void 0 ? void 0 : (_peer$end = peer.end) === null || _peer$end === void 0 ? void 0 : _peer$end.clientId) === blockClientId && peer.start.attributeKey === richTextIdentifier;
+    return (peer === null || peer === void 0 || (_peer$start = peer.start) === null || _peer$start === void 0 ? void 0 : _peer$start.clientId) === blockClientId && (peer === null || peer === void 0 || (_peer$end = peer.end) === null || _peer$end === void 0 ? void 0 : _peer$end.clientId) === blockClientId && peer.start.attributeKey === richTextIdentifier;
   }).map(function (_ref3) {
     var _ref4 = (0, _slicedToArray2["default"])(_ref3, 2),
       id = _ref4[0],
@@ -111,11 +112,11 @@ var getCarets = (0, _memize["default"])(function (peers, richTextIdentifier, blo
  * @return {MultilineData}
  */
 var getMultilineData = function getMultilineData(multilineTag, attributeValue) {
-  var _create, _create$text, _create$text$split;
+  var _create, _create$split;
   var multilineItems = multilineTag ? (_create = (0, _richText.create)({
     html: attributeValue,
     multilineTag: multilineTag
-  })) === null || _create === void 0 ? void 0 : (_create$text = _create.text) === null || _create$text === void 0 ? void 0 : (_create$text$split = _create$text.split) === null || _create$text$split === void 0 ? void 0 : _create$text$split.call(_create$text, _richText.__UNSTABLE_LINE_SEPARATOR) : [];
+  })) === null || _create === void 0 || (_create = _create.text) === null || _create === void 0 || (_create$split = _create.split) === null || _create$split === void 0 ? void 0 : _create$split.call(_create, _richText.__UNSTABLE_LINE_SEPARATOR) : [];
   return {
     isMultiline: !!multilineTag,
     checkOffset: function checkOffset(offset) {
@@ -162,7 +163,7 @@ var settings = {
     return null;
   },
   __experimentalGetPropsForEditableTreePreparation: function __experimentalGetPropsForEditableTreePreparation(select, _ref5) {
-    var _MULTILINE_ATTRIBUTES, _MULTILINE_ATTRIBUTES2;
+    var _MULTILINE_ATTRIBUTES;
     var richTextIdentifier = _ref5.richTextIdentifier,
       blockClientId = _ref5.blockClientId;
     // Adds special handling for certain block attributes that are known to be multiline,
@@ -175,7 +176,7 @@ var settings = {
       }
     };
     var blockName = select('core/block-editor').getBlockName(blockClientId);
-    var multilineTag = (_MULTILINE_ATTRIBUTES = MULTILINE_ATTRIBUTES[blockName]) === null || _MULTILINE_ATTRIBUTES === void 0 ? void 0 : (_MULTILINE_ATTRIBUTES2 = _MULTILINE_ATTRIBUTES[richTextIdentifier]) === null || _MULTILINE_ATTRIBUTES2 === void 0 ? void 0 : _MULTILINE_ATTRIBUTES2.multilineTag;
+    var multilineTag = (_MULTILINE_ATTRIBUTES = MULTILINE_ATTRIBUTES[blockName]) === null || _MULTILINE_ATTRIBUTES === void 0 || (_MULTILINE_ATTRIBUTES = _MULTILINE_ATTRIBUTES[richTextIdentifier]) === null || _MULTILINE_ATTRIBUTES === void 0 ? void 0 : _MULTILINE_ATTRIBUTES.multilineTag;
 
     // The properties in this return object need to be as stable as possible.
     // See https://github.com/WordPress/gutenberg/issues/23428
@@ -204,6 +205,7 @@ var settings = {
 };
 exports.settings = settings;
 var registerFormatCollabCaret = function registerFormatCollabCaret() {
+  // @ts-ignore
   (0, _richText.registerFormatType)(FORMAT_NAME, settings);
 };
 exports.registerFormatCollabCaret = registerFormatCollabCaret;

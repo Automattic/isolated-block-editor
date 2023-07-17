@@ -22,10 +22,9 @@ import { ESCAPE } from '@wordpress/keycodes';
  * Internal dependencies
  */
 import ListViewOutline from './list-view-outline';
-export default function ListViewSidebar(_ref) {
-  let {
-    canClose = true
-  } = _ref;
+export default function ListViewSidebar({
+  canClose = true
+}) {
   const {
     setIsListViewOpened
   } = useDispatch('isolated/editor');

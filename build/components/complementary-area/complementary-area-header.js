@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 var _classnames = _interopRequireDefault(require("classnames"));
 var _components = require("@wordpress/components");
@@ -20,6 +20,8 @@ var _excluded = ["as", "scope", "identifier", "icon", "selectedIcon", "name"];
  * WordPress dependencies
  */
 import { createElement, Fragment } from "@wordpress/element";
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function ComplementaryAreaToggle(_ref) {
   var _ref$as = _ref.as,
     as = _ref$as === void 0 ? _components.Button : _ref$as,
@@ -39,7 +41,7 @@ function ComplementaryAreaToggle(_ref) {
   var _useDispatch = (0, _data.useDispatch)(_interface.store),
     enableComplementaryArea = _useDispatch.enableComplementaryArea,
     disableComplementaryArea = _useDispatch.disableComplementaryArea;
-  return createElement(ComponentToUse, (0, _extends2["default"])({
+  return createElement(ComponentToUse, _objectSpread({
     icon: selectedIcon && isSelected ? selectedIcon : icon,
     onClick: function onClick() {
       if (isSelected) {
@@ -55,7 +57,7 @@ var ComplementaryAreaHeader = function ComplementaryAreaHeader(_ref2) {
     children = _ref2.children,
     className = _ref2.className,
     toggleButtonProps = _ref2.toggleButtonProps;
-  var toggleButton = createElement(ComplementaryAreaToggle, (0, _extends2["default"])({
+  var toggleButton = createElement(ComplementaryAreaToggle, _objectSpread({
     icon: _icons.closeSmall
   }, toggleButtonProps));
   return createElement(Fragment, null, createElement("div", {

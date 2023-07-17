@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
@@ -23,6 +23,8 @@ var _excluded = ["isDisabled"];
  * Internal dependencies
  */
 import { createElement } from "@wordpress/element";
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function BlockNavigationDropdown(_ref, ref) {
   var isDisabled = _ref.isDisabled,
     props = (0, _objectWithoutProperties2["default"])(_ref, _excluded);
@@ -37,7 +39,7 @@ function BlockNavigationDropdown(_ref, ref) {
     renderToggle: function renderToggle(_ref2) {
       var isOpen = _ref2.isOpen,
         onToggle = _ref2.onToggle;
-      return createElement(_components.Button, (0, _extends2["default"])({}, props, {
+      return createElement(_components.Button, _objectSpread(_objectSpread({}, props), {}, {
         ref: ref,
         icon: _icons.listView,
         "aria-expanded": isOpen,

@@ -37,7 +37,7 @@ import { createElement } from "@wordpress/element";
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 var BlockEditorToolbar = function BlockEditorToolbar(props) {
-  var _settings$iso, _settings$iso2, _settings$iso2$sideba;
+  var _settings$iso, _settings$iso2;
   var ref = (0, _element.useRef)(null);
   var settings = props.settings,
     editorMode = props.editorMode,
@@ -47,7 +47,7 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     inspector = _ref.inspector;
   var _ref2 = settings.iso || {},
     moreMenu = _ref2.moreMenu;
-  var inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inspector) || false;
+  var inspectorInSidebar = (settings === null || settings === void 0 || (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 || (_settings$iso2 = _settings$iso2.sidebar) === null || _settings$iso2 === void 0 ? void 0 : _settings$iso2.inspector) || false;
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
     openGeneralSidebar = _useDispatch.openGeneralSidebar,
     closeGeneralSidebar = _useDispatch.closeGeneralSidebar;

@@ -16,10 +16,9 @@ const {
  * @param {Object} props.children Child components to insert in the toolbar slot
  * @return object
  */
-const ToolbarSlot = _ref => {
-  let {
-    children
-  } = _ref;
+const ToolbarSlot = ({
+  children
+}) => {
   return createElement(Fill, null, children);
 };
 ToolbarSlot.Slot = function (props) {

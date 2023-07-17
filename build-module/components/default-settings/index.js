@@ -20,7 +20,7 @@ function getMenu(current, defaultMenu) {
  * @return {BlockEditorSettings}
  */
 export default function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks$disallowB, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
   const {
     iso,
     editor
@@ -28,15 +28,15 @@ export default function applyDefaultSettings(settings) {
   return {
     iso: {
       // No preferences or persistence
-      preferencesKey: (_iso$preferencesKey = iso === null || iso === void 0 ? void 0 : iso.preferencesKey) !== null && _iso$preferencesKey !== void 0 ? _iso$preferencesKey : null,
-      persistenceKey: (_iso$persistenceKey = iso === null || iso === void 0 ? void 0 : iso.persistenceKey) !== null && _iso$persistenceKey !== void 0 ? _iso$persistenceKey : null,
+      preferencesKey: (_iso$preferencesKey = iso?.preferencesKey) !== null && _iso$preferencesKey !== void 0 ? _iso$preferencesKey : null,
+      persistenceKey: (_iso$persistenceKey = iso?.persistenceKey) !== null && _iso$persistenceKey !== void 0 ? _iso$persistenceKey : null,
       // No disallowed embeds
-      disallowEmbed: (_iso$disallowEmbed = iso === null || iso === void 0 ? void 0 : iso.disallowEmbed) !== null && _iso$disallowEmbed !== void 0 ? _iso$disallowEmbed : [],
-      customStores: (_iso$customStores = iso === null || iso === void 0 ? void 0 : iso.customStores) !== null && _iso$customStores !== void 0 ? _iso$customStores : [],
+      disallowEmbed: (_iso$disallowEmbed = iso?.disallowEmbed) !== null && _iso$disallowEmbed !== void 0 ? _iso$disallowEmbed : [],
+      customStores: (_iso$customStores = iso?.customStores) !== null && _iso$customStores !== void 0 ? _iso$customStores : [],
       // Default to all blocks
       blocks: {
-        allowBlocks: (_iso$blocks$allowBloc = iso === null || iso === void 0 ? void 0 : (_iso$blocks = iso.blocks) === null || _iso$blocks === void 0 ? void 0 : _iso$blocks.allowBlocks) !== null && _iso$blocks$allowBloc !== void 0 ? _iso$blocks$allowBloc : [],
-        disallowBlocks: (_iso$blocks$disallowB = iso === null || iso === void 0 ? void 0 : (_iso$blocks2 = iso.blocks) === null || _iso$blocks2 === void 0 ? void 0 : _iso$blocks2.disallowBlocks) !== null && _iso$blocks$disallowB !== void 0 ? _iso$blocks$disallowB : []
+        allowBlocks: (_iso$blocks$allowBloc = iso?.blocks?.allowBlocks) !== null && _iso$blocks$allowBloc !== void 0 ? _iso$blocks$allowBloc : [],
+        disallowBlocks: (_iso$blocks$disallowB = iso?.blocks?.disallowBlocks) !== null && _iso$blocks$disallowB !== void 0 ? _iso$blocks$disallowB : []
       },
       // Inserter, undo, and inspector is on, everything else is off
       toolbar: {
@@ -52,36 +52,36 @@ export default function applyDefaultSettings(settings) {
         undo: true,
         // @ts-ignore */}
         selectorTool: false,
-        ...((_iso$toolbar = iso === null || iso === void 0 ? void 0 : iso.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {})
+        ...((_iso$toolbar = iso?.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {})
       },
-      header: (_iso$header = iso === null || iso === void 0 ? void 0 : iso.header) !== null && _iso$header !== void 0 ? _iso$header : true,
+      header: (_iso$header = iso?.header) !== null && _iso$header !== void 0 ? _iso$header : true,
       sidebar: {
         inserter: false,
         inspector: false,
         customComponent: null,
-        ...((_iso$sidebar = iso === null || iso === void 0 ? void 0 : iso.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {})
+        ...((_iso$sidebar = iso?.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {})
       },
-      footer: (_iso$footer = iso === null || iso === void 0 ? void 0 : iso.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,
+      footer: (_iso$footer = iso?.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,
       // Nothing appears in the 'more menu'
-      moreMenu: getMenu(iso === null || iso === void 0 ? void 0 : iso.moreMenu, {
+      moreMenu: getMenu(iso?.moreMenu, {
         editor: false,
         fullscreen: false,
         preview: false,
         topToolbar: false,
-        ...((_iso$moreMenu = iso === null || iso === void 0 ? void 0 : iso.moreMenu) !== null && _iso$moreMenu !== void 0 ? _iso$moreMenu : {})
+        ...((_iso$moreMenu = iso?.moreMenu) !== null && _iso$moreMenu !== void 0 ? _iso$moreMenu : {})
       }),
       // No link menu
-      linkMenu: (_iso$linkMenu = iso === null || iso === void 0 ? void 0 : iso.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
+      linkMenu: (_iso$linkMenu = iso?.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
       // Default to top toolbar
       defaultPreferences: {
-        ...((_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
+        ...((_iso$defaultPreferenc = iso?.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
       },
-      allowApi: (_iso$allowApi = iso === null || iso === void 0 ? void 0 : iso.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
-      disableCanvasAnimations: (_iso$disableCanvasAni = iso === null || iso === void 0 ? void 0 : iso.disableCanvasAnimations) !== null && _iso$disableCanvasAni !== void 0 ? _iso$disableCanvasAni : false,
+      allowApi: (_iso$allowApi = iso?.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
+      disableCanvasAnimations: (_iso$disableCanvasAni = iso?.disableCanvasAnimations) !== null && _iso$disableCanvasAni !== void 0 ? _iso$disableCanvasAni : false,
       // No default pattern
-      currentPattern: (_iso$currentPattern = iso === null || iso === void 0 ? void 0 : iso.currentPattern) !== null && _iso$currentPattern !== void 0 ? _iso$currentPattern : null,
+      currentPattern: (_iso$currentPattern = iso?.currentPattern) !== null && _iso$currentPattern !== void 0 ? _iso$currentPattern : null,
       // No patterns
-      patterns: (_iso$patterns = iso === null || iso === void 0 ? void 0 : iso.patterns) !== null && _iso$patterns !== void 0 ? _iso$patterns : []
+      patterns: (_iso$patterns = iso?.patterns) !== null && _iso$patterns !== void 0 ? _iso$patterns : []
     },
     editor: {
       alignWide: true,
@@ -112,14 +112,14 @@ export default function applyDefaultSettings(settings) {
       // Default to fixed top toolbar
       fixedToolbar: true,
       ...editor,
-      bodyPlaceholder: (_editor$bodyPlacehold = editor === null || editor === void 0 ? void 0 : editor.bodyPlaceholder) !== null && _editor$bodyPlacehold !== void 0 ? _editor$bodyPlacehold : __('Start writing or type / to choose a block'),
+      bodyPlaceholder: (_editor$bodyPlacehold = editor?.bodyPlaceholder) !== null && _editor$bodyPlacehold !== void 0 ? _editor$bodyPlacehold : __('Start writing or type / to choose a block'),
       // @ts-ignore */}
       availableLegacyWidgets: {},
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
       // @ts-ignore */}
-      fetchLinkSuggestions: ((_editor$fetchLinkSugg = editor === null || editor === void 0 ? void 0 : editor.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg !== void 0 ? _editor$fetchLinkSugg : editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions) ? // @ts-ignore */}
-      (_editor$fetchLinkSugg2 = editor === null || editor === void 0 ? void 0 : editor.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg2 !== void 0 ? _editor$fetchLinkSugg2 : editor === null || editor === void 0 ? void 0 : editor.__experimentalFetchLinkSuggestions : () => []
+      fetchLinkSuggestions: ((_editor$fetchLinkSugg = editor?.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg !== void 0 ? _editor$fetchLinkSugg : editor?.__experimentalFetchLinkSuggestions) ? // @ts-ignore */}
+      (_editor$fetchLinkSugg2 = editor?.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg2 !== void 0 ? _editor$fetchLinkSugg2 : editor?.__experimentalFetchLinkSuggestions : () => []
     }
   };
 }

@@ -20,10 +20,7 @@ const OBJECT_REPLACEMENT_CHARACTER = '\ufffc'; // defined in @wordpress/rich-tex
  * @return {Object[]} Y.Text formats
  */
 export function gutenFormatsToYFormats(formats) {
-  const findIndexOfEqualFormat = function (needle) {
-    let haystack = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    return haystack.findIndex(f => needle === f);
-  };
+  const findIndexOfEqualFormat = (needle, haystack = []) => haystack.findIndex(f => needle === f);
   const visited = Array(formats.length).fill(null).map(() => ({}));
   const yFormats = [];
   formats.forEach((formatsForChar, charIdx) => {
@@ -66,10 +63,7 @@ export function namedGutenFormatToStandardTags(format) {
   if (!format.attributes) return {
     [tagName]: true
   };
-  const remappedEntries = Object.entries(format.attributes).map(_ref => {
-    let [key, value] = _ref;
-    return [attributes[key], value];
-  });
+  const remappedEntries = Object.entries(format.attributes).map(([key, value]) => [attributes[key], value]);
   return {
     [tagName]: Object.fromEntries(remappedEntries)
   };
@@ -131,9 +125,7 @@ function prepareReplacementsForTransaction(a, b) {
  * @param {import("yjs").Map} richTextMap
  * @param {Object} [richTextOpts] Optional options object to pass @wordpress/rich-text create().
  */
-export function applyHTMLDelta(htmlA, htmlB, richTextMap) {
-  var _richTextMap$doc;
-  let richTextOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+export function applyHTMLDelta(htmlA, htmlB, richTextMap, richTextOpts = {}) {
   const [multilineTagA, multilineTagB] = [htmlA, htmlB].map(getInferredMultilineTag);
   const inferredMultilineTag = multilineTagA || multilineTagB;
   const inferredMultilineWrapperTags = inferredMultilineTag === 'li' ? ['ul', 'ol'] : [];
@@ -158,20 +150,17 @@ export function applyHTMLDelta(htmlA, htmlB, richTextMap) {
   // By default, a Yjs string insertion will inherit the formats of the previous character.
   // We need to prevent this by inserting with an explicit format object nullifying the previous formats.
   const previousCharFormats = b.formats[stringDiff.index - 1];
-  const nullifierFormat = previousCharFormats === null || previousCharFormats === void 0 ? void 0 : previousCharFormats.reduce((acc, _ref2) => {
-    let {
-      type
-    } = _ref2;
-    return {
-      ...acc,
-      [type]: null
-    };
-  }, {});
+  const nullifierFormat = previousCharFormats?.reduce((acc, {
+    type
+  }) => ({
+    ...acc,
+    [type]: null
+  }), {});
   const {
     multilineWrapperReplacements,
     replacementsDiff
   } = prepareReplacementsForTransaction(a.replacements, b.replacements);
-  (_richTextMap$doc = richTextMap.doc) === null || _richTextMap$doc === void 0 ? void 0 : _richTextMap$doc.transact(() => {
+  richTextMap.doc?.transact(() => {
     richTextMap.get('xmlText').delete(stringDiff.index, stringDiff.remove);
     richTextMap.get('xmlText').insert(stringDiff.index, stringDiff.insert, nullifierFormat);
     const yfa = gutenFormatsToYFormats(a.formats);
@@ -213,7 +202,9 @@ export function richTextMapToHTML(richTextMap) {
       value: {
         replacements: [replacement],
         formats: Array(1),
-        text: OBJECT_REPLACEMENT_CHARACTER
+        text: OBJECT_REPLACEMENT_CHARACTER,
+        start: undefined,
+        end: undefined
       }
     });
     text = text.replace(OBJECT_REPLACEMENT_CHARACTER, replacementHTML);

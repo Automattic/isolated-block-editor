@@ -23,12 +23,11 @@ const decodeArray = string => new Uint8Array(string.split(','));
  * @param {string} opts.identity - Client identifier.
  * @param {function(Record<string, unknown>): void} opts.sendMessage
  */
-export function createDocument(_ref) {
-  let {
-    identity,
-    relativePositionManager,
-    sendMessage
-  } = _ref;
+export function createDocument({
+  identity,
+  relativePositionManager,
+  sendMessage
+}) {
   const doc = new yjs.Doc();
   /** @type {'off'|'connecting'|'on'} */
   let state = 'off';
@@ -81,11 +80,10 @@ export function createDocument(_ref) {
      * @param {RichTextHint} [opts.richTextHint] Indication that a certain block attribute is a RichText, inferred from the current editor selection.
      */
     // @ts-ignore
-    applyLocalChangesToYDoc(data) {
-      let {
-        isInitialContent = false,
-        richTextHint
-      } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    applyLocalChangesToYDoc(data, {
+      isInitialContent = false,
+      richTextHint
+    } = {}) {
       if (state !== 'on') {
         throw 'wrong state';
       }
@@ -114,13 +112,12 @@ export function createDocument(_ref) {
         isInitialContent: true
       });
     },
-    receiveMessage(_ref2) {
-      let {
-        protocol,
-        messageType,
-        origin,
-        ...content
-      } = _ref2;
+    receiveMessage({
+      protocol,
+      messageType,
+      origin,
+      ...content
+    }) {
       if (protocol !== 'yjs1') {
         throw 'wrong protocol';
       }

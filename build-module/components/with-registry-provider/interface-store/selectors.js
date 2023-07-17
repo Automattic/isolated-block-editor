@@ -14,7 +14,6 @@ import { store as preferencesStore } from '@wordpress/preferences';
  * @return {string | null | undefined} The complementary area that is active in the given scope.
  */
 export const getActiveComplementaryArea = createRegistrySelector(select => (state, scope) => {
-  var _state$complementaryA;
   const isComplementaryAreaVisible = select(preferencesStore).get(scope, 'isComplementaryAreaVisible');
 
   // Return `undefined` to indicate that the user has never toggled
@@ -28,7 +27,7 @@ export const getActiveComplementaryArea = createRegistrySelector(select => (stat
   if (!isComplementaryAreaVisible) {
     return null;
   }
-  return state === null || state === void 0 ? void 0 : (_state$complementaryA = state.complementaryAreas) === null || _state$complementaryA === void 0 ? void 0 : _state$complementaryA[scope];
+  return state?.complementaryAreas?.[scope];
 });
 
 /**
@@ -43,7 +42,7 @@ export const getActiveComplementaryArea = createRegistrySelector(select => (stat
 export const isItemPinned = createRegistrySelector(select => (state, scope, item) => {
   var _pinnedItems$item;
   const pinnedItems = select(preferencesStore).get(scope, 'pinnedItems');
-  return (_pinnedItems$item = pinnedItems === null || pinnedItems === void 0 ? void 0 : pinnedItems[item]) !== null && _pinnedItems$item !== void 0 ? _pinnedItems$item : true;
+  return (_pinnedItems$item = pinnedItems?.[item]) !== null && _pinnedItems$item !== void 0 ? _pinnedItems$item : true;
 });
 
 /**

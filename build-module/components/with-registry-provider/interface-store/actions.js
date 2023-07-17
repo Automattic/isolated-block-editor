@@ -24,11 +24,10 @@ export const setDefaultComplementaryArea = (scope, area) => ({
  * @param {string} scope Complementary area scope.
  * @param {string} area  Area identifier.
  */
-export const enableComplementaryArea = (scope, area) => _ref => {
-  let {
-    registry,
-    dispatch
-  } = _ref;
+export const enableComplementaryArea = (scope, area) => ({
+  registry,
+  dispatch
+}) => {
   // Return early if there's no area.
   if (!area) {
     return;
@@ -49,10 +48,9 @@ export const enableComplementaryArea = (scope, area) => _ref => {
  *
  * @param {string} scope Complementary area scope.
  */
-export const disableComplementaryArea = scope => _ref2 => {
-  let {
-    registry
-  } = _ref2;
+export const disableComplementaryArea = scope => ({
+  registry
+}) => {
   const isComplementaryAreaVisible = registry.select(preferencesStore).get(scope, 'isComplementaryAreaVisible');
   if (isComplementaryAreaVisible) {
     registry.dispatch(preferencesStore).set(scope, 'isComplementaryAreaVisible', false);
@@ -67,10 +65,9 @@ export const disableComplementaryArea = scope => _ref2 => {
  *
  * @return {Object} Action object.
  */
-export const pinItem = (scope, item) => _ref3 => {
-  let {
-    registry
-  } = _ref3;
+export const pinItem = (scope, item) => ({
+  registry
+}) => {
   // Return early if there's no item.
   if (!item) {
     return;
@@ -78,7 +75,7 @@ export const pinItem = (scope, item) => _ref3 => {
   const pinnedItems = registry.select(preferencesStore).get(scope, 'pinnedItems');
 
   // The item is already pinned, there's nothing to do.
-  if ((pinnedItems === null || pinnedItems === void 0 ? void 0 : pinnedItems[item]) === true) {
+  if (pinnedItems?.[item] === true) {
     return;
   }
   registry.dispatch(preferencesStore).set(scope, 'pinnedItems', {
@@ -93,10 +90,9 @@ export const pinItem = (scope, item) => _ref3 => {
  * @param {string} scope Item scope.
  * @param {string} item  Item identifier.
  */
-export const unpinItem = (scope, item) => _ref4 => {
-  let {
-    registry
-  } = _ref4;
+export const unpinItem = (scope, item) => ({
+  registry
+}) => {
   // Return early if there's no item.
   if (!item) {
     return;
@@ -115,10 +111,9 @@ export const unpinItem = (scope, item) => _ref4 => {
  * @param {string} featureName The feature name.
  */
 export function toggleFeature(scope, featureName) {
-  return function (_ref5) {
-    let {
-      registry
-    } = _ref5;
+  return function ({
+    registry
+  }) {
     deprecated(`dispatch( 'core/interface' ).toggleFeature`, {
       since: '6.0',
       alternative: `dispatch( 'core/preferences' ).toggle`
@@ -138,10 +133,9 @@ export function toggleFeature(scope, featureName) {
  * @return {Object} Action object.
  */
 export function setFeatureValue(scope, featureName, value) {
-  return function (_ref6) {
-    let {
-      registry
-    } = _ref6;
+  return function ({
+    registry
+  }) {
     deprecated(`dispatch( 'core/interface' ).setFeatureValue`, {
       since: '6.0',
       alternative: `dispatch( 'core/preferences' ).set`
@@ -159,10 +153,9 @@ export function setFeatureValue(scope, featureName, value) {
  * @return {Object} Action object.
  */
 export function setFeatureDefaults(scope, defaults) {
-  return function (_ref7) {
-    let {
-      registry
-    } = _ref7;
+  return function ({
+    registry
+  }) {
     deprecated(`dispatch( 'core/interface' ).setFeatureDefaults`, {
       since: '6.0',
       alternative: `dispatch( 'core/preferences' ).setDefaults`

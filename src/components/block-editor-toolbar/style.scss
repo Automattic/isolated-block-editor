@@ -1,9 +1,9 @@
-@import '@wordpress/base-styles/_colors';
-@import '@wordpress/base-styles/_variables';
-@import '@wordpress/base-styles/_mixins';
-@import '@wordpress/base-styles/_breakpoints';
-@import '@wordpress/base-styles/_animations';
-@import '@wordpress/base-styles/_z-index';
+@import "@wordpress/base-styles/_colors";
+@import "@wordpress/base-styles/_variables";
+@import "@wordpress/base-styles/_mixins";
+@import "@wordpress/base-styles/_breakpoints";
+@import "@wordpress/base-styles/_animations";
+@import "@wordpress/base-styles/_z-index";
 
 .edit-post-header {
 	// Make toolbar sticky on larger breakpoints
@@ -18,5 +18,23 @@
 
 	button.components-button.has-icon {
 		margin-right: 0;
+	}
+}
+
+.block-editor-block-contextual-toolbar.is-fixed {
+	position: static;
+	margin-left: 0;
+	min-height: 49px;
+	border-bottom: 1px solid #e0e0e0;
+
+	&.is-collapsed {
+		margin-left: 0;
+	}
+
+	.block-editor-block-toolbar .components-toolbar-group::after,
+	> .block-editor-block-toolbar__group-collapse-fixed-toolbar::after {
+		height: 49px;
+		margin-top: 0;
+		margin-bottom: 0;
 	}
 }

@@ -30,7 +30,6 @@ import getEditorSettings from './editor-settings';
  * @param {BlockEditorSettings} settings - Settings
  */
 export default function useEditorSetup(settings) {
-  var _currentSettings$edit;
   // @ts-ignore
   const {
     undo,
@@ -48,7 +47,6 @@ export default function useEditorSetup(settings) {
     topToolbar,
     currentSettings
   } = useSelect(select => {
-    var _settings$iso, _settings$iso$default, _settings$iso2, _settings$iso2$defaul;
     const {
       isEditing: isEditingSelect,
       isFeatureActive
@@ -71,7 +69,7 @@ export default function useEditorSetup(settings) {
           // @ts-ignore
           settings.editor, settings.iso, blockTypes,
           // Use the default preference, if set, otherwise use the feature
-          ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$default = _settings$iso.defaultPreferences) === null || _settings$iso$default === void 0 ? void 0 : _settings$iso$default.fixedToolbar) !== undefined ? (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$defaul = _settings$iso2.defaultPreferences) === null || _settings$iso2$defaul === void 0 ? void 0 : _settings$iso2$defaul.fixedToolbar : hasFixedToolbar),
+          settings.iso?.defaultPreferences?.fixedToolbar !== undefined ? settings.iso?.defaultPreferences?.fixedToolbar : hasFixedToolbar),
           // Reusable blocks
           __experimentalReusableBlocks: [],
           __experimentalFetchReusableBlocks: false,
@@ -119,7 +117,7 @@ export default function useEditorSetup(settings) {
 
     // Setup Gutenberg for this editor, but only when focussed. This swaps allowed blocks and other capabilities
     updateSettings(currentSettings);
-  }, [isEditing, topToolbar, currentSettings === null || currentSettings === void 0 ? void 0 : (_currentSettings$edit = currentSettings.editor) === null || _currentSettings$edit === void 0 ? void 0 : _currentSettings$edit.reusableBlocks]);
+  }, [isEditing, topToolbar, currentSettings?.editor?.reusableBlocks]);
   return settings;
 }
 //# sourceMappingURL=index.js.map

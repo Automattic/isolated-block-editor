@@ -8,10 +8,9 @@ const {
   Fill,
   Slot
 } = createSlotFill('PluginDocumentSettingPanel');
-const DocumentSection = _ref => {
-  let {
-    children
-  } = _ref;
+const DocumentSection = ({
+  children
+}) => {
   return createElement(Fill, null, children);
 };
 DocumentSection.Slot = function (props) {

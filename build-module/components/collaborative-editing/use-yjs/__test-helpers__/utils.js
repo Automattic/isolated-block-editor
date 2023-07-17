@@ -18,12 +18,11 @@ export function getTransports(count) {
   const mockTransport = () => {
     const transport = {
       _identity: undefined,
-      connect: jest.fn(_ref => {
-        let {
-          onReceiveMessage,
-          setAvailablePeers,
-          user
-        } = _ref;
+      connect: jest.fn(({
+        onReceiveMessage,
+        setAvailablePeers,
+        user
+      }) => {
         transport._identity = user.identity;
         peers[user.identity] = {
           onReceiveMessage,

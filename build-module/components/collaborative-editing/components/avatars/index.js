@@ -18,11 +18,10 @@ import './style.scss';
  * @param {import("../..").AvailablePeer[]} props.peers
  * @param {Function} props.onAvatarClick
  */
-export function CollaborativeEditingAvatars(_ref) {
-  let {
-    peers,
-    onAvatarClick
-  } = _ref;
+export function CollaborativeEditingAvatars({
+  peers,
+  onAvatarClick
+}) {
   const MAX_AVATAR_COUNT = 4;
   const shouldOverflow = peers.length > MAX_AVATAR_COUNT;
   const actualAvatarCount = shouldOverflow ? MAX_AVATAR_COUNT - 1 : MAX_AVATAR_COUNT;
@@ -33,14 +32,13 @@ export function CollaborativeEditingAvatars(_ref) {
     peer: peer,
     onAvatarClick: onAvatarClick
   })), shouldOverflow && createElement(CollaborativeEditingAvatarsOverflow, {
-    peers: peers === null || peers === void 0 ? void 0 : peers.slice(actualAvatarCount)
+    peers: peers?.slice(actualAvatarCount)
   }));
 }
-export function CollaborativeEditingAvatar(_ref2) {
-  let {
-    peer,
-    onAvatarClick
-  } = _ref2;
+export function CollaborativeEditingAvatar({
+  peer,
+  onAvatarClick
+}) {
   const [isVisible, setIsVisible] = useState(false);
   return createElement("button", {
     className: "iso-editor-collab-avatars__avatar-btn",
@@ -63,10 +61,9 @@ export function CollaborativeEditingAvatar(_ref2) {
     className: "iso-editor-collab-avatars__name-initial"
   }, peer.name.charAt(0)));
 }
-export function CollaborativeEditingAvatarsOverflow(_ref3) {
-  let {
-    peers
-  } = _ref3;
+export function CollaborativeEditingAvatarsOverflow({
+  peers
+}) {
   const MAX_NAME_COUNT = 20;
   const [isVisible, setIsVisible] = useState(false);
   const NameList = () => {
@@ -109,8 +106,7 @@ export default compose([withSelect(select => {
   } = dispatch('core/block-editor');
   return {
     onAvatarClick(peer) {
-      var _peer$start;
-      if (peer !== null && peer !== void 0 && (_peer$start = peer.start) !== null && _peer$start !== void 0 && _peer$start.clientId) {
+      if (peer?.start?.clientId) {
         selectBlock(peer.start.clientId);
       }
     }

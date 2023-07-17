@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement, Fragment } from "@wordpress/element";
 /**
  * External dependencies
@@ -12,16 +11,15 @@ import { store as interfaceStore } from '@wordpress/interface';
  * WordPress dependencies
  */
 import { closeSmall } from '@wordpress/icons';
-function ComplementaryAreaToggle(_ref) {
-  let {
-    as = Button,
-    scope,
-    identifier,
-    icon,
-    selectedIcon,
-    name,
-    ...props
-  } = _ref;
+function ComplementaryAreaToggle({
+  as = Button,
+  scope,
+  identifier,
+  icon,
+  selectedIcon,
+  name,
+  ...props
+}) {
   const ComponentToUse = as;
   const isSelected = useSelect(select =>
   // @ts-ignore
@@ -30,7 +28,7 @@ function ComplementaryAreaToggle(_ref) {
     enableComplementaryArea,
     disableComplementaryArea
   } = useDispatch(interfaceStore);
-  return createElement(ComponentToUse, _extends({
+  return createElement(ComponentToUse, {
     icon: selectedIcon && isSelected ? selectedIcon : icon,
     onClick: () => {
       if (isSelected) {
@@ -38,19 +36,20 @@ function ComplementaryAreaToggle(_ref) {
       } else {
         enableComplementaryArea(scope, identifier);
       }
-    }
-  }, props));
+    },
+    ...props
+  });
 }
-const ComplementaryAreaHeader = _ref2 => {
-  let {
-    smallScreenTitle,
-    children,
-    className,
-    toggleButtonProps
-  } = _ref2;
-  const toggleButton = createElement(ComplementaryAreaToggle, _extends({
-    icon: closeSmall
-  }, toggleButtonProps));
+const ComplementaryAreaHeader = ({
+  smallScreenTitle,
+  children,
+  className,
+  toggleButtonProps
+}) => {
+  const toggleButton = createElement(ComplementaryAreaToggle, {
+    icon: closeSmall,
+    ...toggleButtonProps
+  });
   return createElement(Fragment, null, createElement("div", {
     className: "components-panel__header interface-complementary-area-header__small"
   }, smallScreenTitle && createElement("span", {

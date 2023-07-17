@@ -33,7 +33,7 @@ function WritingMenu(_ref) {
   var _settings$iso;
   var onClose = _ref.onClose,
     settings = _ref.settings;
-  var _ref2 = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) || {},
+  var _ref2 = (settings === null || settings === void 0 || (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) || {},
     preview = _ref2.preview,
     fullscreen = _ref2.fullscreen,
     topToolbar = _ref2.topToolbar;

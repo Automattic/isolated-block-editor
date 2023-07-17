@@ -1,4 +1,3 @@
-import _extends from "@babel/runtime/helpers/extends";
 import { createElement } from "@wordpress/element";
 /**
  * WordPress dependencies
@@ -15,7 +14,8 @@ function EditorHistoryUndo(props, ref) {
   const {
     undo
   } = useDispatch('isolated/editor');
-  return createElement(Button, _extends({}, props, {
+  return createElement(Button, {
+    ...props,
     ref: ref,
     icon: undoIcon,
     label: __('Undo'),
@@ -27,7 +27,7 @@ function EditorHistoryUndo(props, ref) {
     "aria-disabled": !hasUndo,
     onClick: hasUndo ? undo : undefined,
     className: "editor-history__undo"
-  }));
+  });
 }
 export default forwardRef(EditorHistoryUndo);
 //# sourceMappingURL=undo.js.map

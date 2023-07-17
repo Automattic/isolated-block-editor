@@ -49,7 +49,7 @@ Object.defineProperty(exports, "ToolbarSlot", {
 exports["default"] = void 0;
 exports.initializeEditor = initializeEditor;
 exports.useInitializeIsoEditor = useInitializeIsoEditor;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 require("@wordpress/editor");
 var _element = require("@wordpress/element");
@@ -84,6 +84,8 @@ var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUnd
 // Export library components
 // A fake edit-post store is needed
 import { createElement } from "@wordpress/element";
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
@@ -306,7 +308,7 @@ function IsolatedBlockEditor(props) {
   return createElement(_element.StrictMode, null, createElement(_keyboardShortcuts.ShortcutProvider, null, createElement(_contentSaver["default"], {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
-  }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], (0, _extends2["default"])({}, params, {
+  }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], _objectSpread(_objectSpread({}, params), {}, {
     onInput: __experimentalOnInput,
     onChange: __experimentalOnChange,
     blocks: __experimentalValue,

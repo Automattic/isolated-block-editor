@@ -71,7 +71,7 @@ const interfaceLabels = {
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso$sidebar, _settings$iso2, _settings$iso2$sideba, _settings$iso$header, _settings$iso3, _settings$iso4, _settings$iso$sidebar2, _settings$iso5, _settings$iso5$sideba, _settings$iso$toolbar, _settings$iso6, _settings$iso6$toolba;
+  var _settings$iso$header, _settings$iso$sidebar, _settings$iso$toolbar;
   const {
     isEditing,
     editorMode,
@@ -83,10 +83,10 @@ function BlockEditor(props) {
   } = props;
   const styles = []; // TODO: do we need hasThemeStyles support here?
   const isMobileViewport = useViewportMatch('medium', '<');
-  const inspectorInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : (_settings$iso$sidebar = _settings$iso.sidebar) === null || _settings$iso$sidebar === void 0 ? void 0 : _settings$iso$sidebar.inspector) || false;
-  const inserterInSidebar = (settings === null || settings === void 0 ? void 0 : (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 ? void 0 : (_settings$iso2$sideba = _settings$iso2.sidebar) === null || _settings$iso2$sideba === void 0 ? void 0 : _settings$iso2$sideba.inserter) || false;
-  const showHeader = (_settings$iso$header = settings === null || settings === void 0 ? void 0 : (_settings$iso3 = settings.iso) === null || _settings$iso3 === void 0 ? void 0 : _settings$iso3.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
-  const showFooter = (settings === null || settings === void 0 ? void 0 : (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.footer) || false;
+  const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
+  const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;
+  const showHeader = (_settings$iso$header = settings?.iso?.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
+  const showFooter = settings?.iso?.footer || false;
   const {
     sidebarIsOpened,
     hasFixedToolbar,
@@ -153,9 +153,9 @@ function BlockEditor(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }) : null;
-  const CustomSettingsSidebar = (_settings$iso$sidebar2 = settings === null || settings === void 0 ? void 0 : (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : (_settings$iso5$sideba = _settings$iso5.sidebar) === null || _settings$iso5$sideba === void 0 ? void 0 : _settings$iso5$sideba.customComponent) !== null && _settings$iso$sidebar2 !== void 0 ? _settings$iso$sidebar2 : SettingsSidebar;
+  const CustomSettingsSidebar = (_settings$iso$sidebar = settings?.iso?.sidebar?.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : SettingsSidebar;
   return createElement(Fragment, null, createElement(CustomSettingsSidebar, {
-    documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 ? void 0 : (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 ? void 0 : (_settings$iso6$toolba = _settings$iso6.toolbar) === null || _settings$iso6$toolba === void 0 ? void 0 : _settings$iso6$toolba.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+    documentInspector: (_settings$iso$toolbar = settings?.iso?.toolbar?.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
   }), createElement(FullscreenMode, {
     isActive: isFullscreenActive
   }), createElement(InterfaceSkeleton, {

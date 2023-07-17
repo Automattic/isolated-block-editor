@@ -15,30 +15,28 @@ import ComplementaryAreaHeader from './complementary-area-header';
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
 }
-function ComplementaryAreaFill(_ref) {
-  let {
-    scope,
-    children,
-    className
-  } = _ref;
+function ComplementaryAreaFill({
+  scope,
+  children,
+  className
+}) {
   return createElement(Fill, {
     name: `ComplementaryArea/${scope}`
   }, createElement("div", {
     className: className
   }, children));
 }
-export default function ComplementaryArea(_ref2) {
-  let {
-    className,
-    children,
-    header,
-    headerClassName,
-    toggleShortcut,
-    closeLabel,
-    title,
-    identifier,
-    ...props
-  } = _ref2;
+export default function ComplementaryArea({
+  className,
+  children,
+  header,
+  headerClassName,
+  toggleShortcut,
+  closeLabel,
+  title,
+  identifier,
+  ...props
+}) {
   const scope = "isolated/editor";
   const {
     postTitle,

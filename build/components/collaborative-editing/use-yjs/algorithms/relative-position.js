@@ -60,14 +60,14 @@ var RelativePosition = /*#__PURE__*/function () {
   (0, _createClass2["default"])(RelativePosition, [{
     key: "saveRelativePosition",
     value: function saveRelativePosition(doc) {
-      var _doc$getMap, _doc$getMap$get, _richTexts$get;
+      var _doc$getMap, _richTexts$get;
       var _this$getSelection = this.getSelection(),
         start = _this$getSelection.start,
         end = _this$getSelection.end;
       var _ref = start !== null && start !== void 0 ? start : {},
         clientId = _ref.clientId,
         attributeKey = _ref.attributeKey;
-      var richTexts = (_doc$getMap = doc.getMap('post')) === null || _doc$getMap === void 0 ? void 0 : (_doc$getMap$get = _doc$getMap.get('blocks')) === null || _doc$getMap$get === void 0 ? void 0 : _doc$getMap$get.get('richTexts');
+      var richTexts = (_doc$getMap = doc.getMap('post')) === null || _doc$getMap === void 0 || (_doc$getMap = _doc$getMap.get('blocks')) === null || _doc$getMap === void 0 ? void 0 : _doc$getMap.get('richTexts');
       if (richTexts !== null && richTexts !== void 0 && (_richTexts$get = richTexts.get(clientId)) !== null && _richTexts$get !== void 0 && _richTexts$get.has(attributeKey) && typeof start.offset === 'number' && typeof end.offset === 'number') {
         var xmlText = richTexts.get(clientId).get(attributeKey).get('xmlText');
         this.relPos = {
@@ -114,16 +114,15 @@ var RelativePosition = /*#__PURE__*/function () {
 exports.RelativePosition = RelativePosition;
 var PeerRelativePosition = /*#__PURE__*/function () {
   /**
-   * @private
-   * @type {RelativePosition[]}
-   */
-
-  /**
    * @param {() => Record<string, Partial<SelectionRange>>} getPeers
    * @param {(peerId: string, selection: SelectionRange) => void} setPeerSelection
    */
   function PeerRelativePosition(getPeers, setPeerSelection) {
     (0, _classCallCheck2["default"])(this, PeerRelativePosition);
+    /**
+     * @private
+     * @type {RelativePosition[]}
+     */
     (0, _defineProperty2["default"])(this, "_peerRelativePositions", []);
     /** @private */
     this._getPeers = getPeers;

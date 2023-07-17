@@ -28,15 +28,13 @@ import { check } from '@wordpress/icons';
  * @param {OnSetMode} props.onSetMode
  * @param {BlockEditorSettings} props.settings - Settings
  */
-function EditorMenu(_ref) {
-  var _settings$iso, _settings$iso2, _settings$iso2$moreMe;
-  let {
-    onClose,
-    editorMode,
-    onSetMode,
-    isCodeEditingEnabled,
-    settings
-  } = _ref;
+function EditorMenu({
+  onClose,
+  editorMode,
+  onSetMode,
+  isCodeEditingEnabled,
+  settings
+}) {
   /**
    * @param {string} mode
    */
@@ -47,7 +45,7 @@ function EditorMenu(_ref) {
   if (!isCodeEditingEnabled) {
     return null;
   }
-  if ((settings === null || settings === void 0 ? void 0 : (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) === false || !(settings !== null && settings !== void 0 && (_settings$iso2 = settings.iso) !== null && _settings$iso2 !== void 0 && (_settings$iso2$moreMe = _settings$iso2.moreMenu) !== null && _settings$iso2$moreMe !== void 0 && _settings$iso2$moreMe.editor)) {
+  if (settings?.iso?.moreMenu === false || !settings?.iso?.moreMenu?.editor) {
     return null;
   }
   return createElement(MenuGroup, {

@@ -9,11 +9,10 @@ import { useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import storeHotSwapPlugin from '../../store/plugins/store-hot-swap';
-function HotSwapper(_ref) {
-  let {
-    isEditing,
-    hotSwap
-  } = _ref;
+function HotSwapper({
+  isEditing,
+  hotSwap
+}) {
   useEffect(() => {
     hotSwap(isEditing);
   }, [isEditing]);
@@ -28,10 +27,9 @@ export default compose([withSelect(select => {
   return {
     isEditing: isEditing()
   };
-}), withDispatch((dispatch, ownProps, _ref2) => {
-  let {
-    select
-  } = _ref2;
+}), withDispatch((dispatch, ownProps, {
+  select
+}) => {
   return {
     hotSwap: isEditing => {
       storeHotSwapPlugin.resetEditor();
