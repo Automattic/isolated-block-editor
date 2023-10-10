@@ -25,7 +25,6 @@ import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
 import ActionArea from './components/action-area';
-import CollaborativeEditing from './components/collaborative-editing';
 import FooterSlot from './components/footer-slot';
 
 // Export library components
@@ -152,12 +151,6 @@ export function initializeEditor() {
  * @param {UndoManager} [props.undoManager]
  */
 export function useInitializeIsoEditor( { undoManager } = {} ) {
-	const { setUndoManager } = useDispatch( 'isolated/editor' );
-
-	useEffect( () => {
-		setUndoManager( undoManager );
-	}, [ undoManager ] );
-
 	if ( window.isoInitialisedBlocks ) {
 		return;
 	}
@@ -285,4 +278,4 @@ function IsolatedBlockEditor( props ) {
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };
+export { EditorLoaded, DocumentSection, ToolbarSlot, FooterSlot, EditorHeadingSlot, ActionArea };
