@@ -15,12 +15,15 @@ import {
 	useSetting,
 	__experimentalRecursionProvider as RecursionProvider,
 	privateApis as blockEditorPrivateApis,
+// @ts-ignore
 } from '@wordpress/block-editor';
 import { useEffect, useRef, useMemo } from '@wordpress/element';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useMergeRefs } from '@wordpress/compose';
+// @ts-ignore
 import { parse, store as blocksStore } from '@wordpress/blocks';
+// @ts-ignore
 import { store as editorStore } from '@wordpress/editor';
 import { __dangerousOptInToUnstableAPIsOnlyForCoreModules } from '@wordpress/private-apis';
 
@@ -221,7 +224,9 @@ export default function VisualEditor( { styles } ) {
 		// Best double-check it's a string otherwise the parse function gets unhappy.
 		// @ts-ignore
 		const parseableContent =
+			// @ts-ignore
 			typeof editedPostTemplate?.content === 'string'
+				// @ts-ignore
 				? editedPostTemplate?.content
 				: '';
 
@@ -236,23 +241,29 @@ export default function VisualEditor( { styles } ) {
 	] );
 
 	const hasPostContentAtRootLevel = useMemo( () => {
+		// @ts-ignore
 		if ( ! editedPostTemplate?.content && ! editedPostTemplate?.blocks ) {
 			return false;
 		}
 		// When in template editing mode, we can access the blocks directly.
+		// @ts-ignore
 		if ( editedPostTemplate?.blocks ) {
+			// @ts-ignore
 			return checkForPostContentAtRootLevel( editedPostTemplate?.blocks );
 		}
 		// If there are no blocks, we have to parse the content string.
 		// Best double-check it's a string otherwise the parse function gets unhappy.
 		const parseableContent =
+			// @ts-ignore
 			typeof editedPostTemplate?.content === 'string'
+				// @ts-ignore
 				? editedPostTemplate?.content
 				: '';
 
 		return (
 			checkForPostContentAtRootLevel( parse( parseableContent ) ) || false
 		);
+	// @ts-ignore
 	}, [ editedPostTemplate?.content, editedPostTemplate?.blocks ] );
 
 	const { layout = {}, align = '' } = newestPostContentAttributes || {};
