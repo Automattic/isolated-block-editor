@@ -94,7 +94,6 @@
 	.components-popover__content button:not(.is-active) {
 		font-weight: normal;
 		text-transform: none;
-		font-family: Arial;
 
 		// Some themes can set a button style, which we don't want
 		&:active,
