@@ -14,10 +14,10 @@ DocumentSection.Slot = function ( props ) {
 	return (
 		<Slot>
 			{ ( fills ) =>
-				fills.length === 0 ? (
-					<span className="block-editor-block-inspector__no-blocks">{ __( 'Nothing to display' ) }</span>
-				) : (
+				fills ? (
 					fills
+				) : (
+					<span className="block-editor-block-inspector__no-blocks">{ __( 'Nothing to display' ) }</span>
 				)
 			}
 		</Slot>

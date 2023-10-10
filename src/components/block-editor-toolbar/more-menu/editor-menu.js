@@ -47,7 +47,7 @@ function EditorMenu( { onClose, editorMode, onSetMode, isCodeEditingEnabled, set
 	return (
 		<MenuGroup label={ _x( 'Editor', 'noun' ) }>
 			<MenuItem
-				icon={ editorMode === 'visual' && check }
+				icon={ editorMode === 'visual' ? check : null }
 				isSelected={ editorMode === 'visual' }
 				onClick={ () => setMode( 'visual' ) }
 				role="menuitemcheckbox"
@@ -56,7 +56,7 @@ function EditorMenu( { onClose, editorMode, onSetMode, isCodeEditingEnabled, set
 			</MenuItem>
 
 			<MenuItem
-				icon={ editorMode === 'text' && check }
+				icon={ editorMode === 'text' ? check : null }
 				isSelected={ editorMode === 'text' }
 				onClick={ () => setMode( 'text' ) }
 				role="menuitemcheckbox"
