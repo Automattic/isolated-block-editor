@@ -1,4 +1,4 @@
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 import { createSlotFill } from '@wordpress/components';
 const {
   Fill,

@@ -111,6 +111,8 @@ export default function applyDefaultSettings(settings) {
       reusableBlocks: [],
       // Default to fixed top toolbar
       fixedToolbar: true,
+      hasFixedToolbar: true,
+      hasInlineToolbar: false,
       ...editor,
       bodyPlaceholder: (_editor$bodyPlacehold = editor?.bodyPlaceholder) !== null && _editor$bodyPlacehold !== void 0 ? _editor$bodyPlacehold : __('Start writing or type / to choose a block'),
       // @ts-ignore */}

@@ -1,4 +1,4 @@
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -26,12 +26,7 @@ const Footer = ({
       getPostTypeLabel
     } = select(editorStore);
     const postTypeLabel = getPostTypeLabel();
-    const {
-      isFeatureActive
-    } = select('isolated/editor');
     return {
-      // @ts-ignore
-      hasFixedToolbar: isFeatureActive('fixedToolbar'),
       // TODO: This is currently disabled until it can be better worked in
       showBlockBreadcrumbs: false,
       //isFeatureActive( 'showBlockBreadcrumbs' ),

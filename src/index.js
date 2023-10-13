@@ -117,6 +117,7 @@ import './style.scss';
  * @property {boolean} hasUploadPermissions
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
+ * @property {boolean} fixedToolbar
  * @property {boolean} hasFixedToolbar
  * @property {object[]|null} template
  * @property {null} templateLock
@@ -256,22 +257,20 @@ function IsolatedBlockEditor( props ) {
 
 	return (
 		<StrictMode>
-			<ShortcutProvider>
-				<ContentSaver onSaveBlocks={ onSaveBlocks } onSaveContent={ onSaveContent } />
-				<PatternMonitor />
+			<ContentSaver onSaveBlocks={ onSaveBlocks } onSaveContent={ onSaveContent } />
+			<PatternMonitor />
 
-				<SlotFillProvider>
-					<BlockEditorContainer
-						{ ...params }
-						onInput={ __experimentalOnInput }
-						onChange={ __experimentalOnChange }
-						blocks={ __experimentalValue }
-						settings={ settings }
-					>
-						{ children }
-					</BlockEditorContainer>
-				</SlotFillProvider>
-			</ShortcutProvider>
+			<SlotFillProvider>
+				<BlockEditorContainer
+					{ ...params }
+					onInput={ __experimentalOnInput }
+					onChange={ __experimentalOnChange }
+					blocks={ __experimentalValue }
+					settings={ settings }
+				>
+					{ children }
+				</BlockEditorContainer>
+			</SlotFillProvider>
 		</StrictMode>
 	);
 }

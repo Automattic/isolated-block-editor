@@ -7,10 +7,10 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = applyDefaultSettings;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _i18n = require("@wordpress/i18n");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * WordPress dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
 function getMenu(current, defaultMenu) {
@@ -110,7 +110,9 @@ function applyDefaultSettings(settings) {
       // @ts-ignore */}
       reusableBlocks: [],
       // Default to fixed top toolbar
-      fixedToolbar: true
+      fixedToolbar: true,
+      hasFixedToolbar: true,
+      hasInlineToolbar: false
     }, editor), {}, {
       bodyPlaceholder: (_editor$bodyPlacehold = editor === null || editor === void 0 ? void 0 : editor.bodyPlaceholder) !== null && _editor$bodyPlacehold !== void 0 ? _editor$bodyPlacehold : (0, _i18n.__)('Start writing or type / to choose a block'),
       // @ts-ignore */}

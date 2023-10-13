@@ -1,4 +1,4 @@
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -29,7 +29,7 @@ function HeaderToolbar(props) {
   } = useDispatch('isolated/editor');
   const isMobileViewport = useViewportMatch('medium', '<');
   const {
-    hasFixedToolbar,
+    fixedToolbar,
     isInserterEnabled,
     isTextModeEnabled,
     showIconLabels,
@@ -52,7 +52,7 @@ function HeaderToolbar(props) {
     } = select(keyboardShortcutsStore);
     return {
       // @ts-ignore
-      hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
+      fixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
       // This setting (richEditingEnabled) should not live in the block editor's setting.
       isInserterEnabled:
       // @ts-ignore
@@ -81,7 +81,7 @@ function HeaderToolbar(props) {
     selectorTool
   } = props.settings.iso.toolbar;
   const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
-  const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
+  const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || fixedToolbar;
   const toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
   __('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
   __('Document tools');

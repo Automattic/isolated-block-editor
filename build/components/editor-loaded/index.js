@@ -39,6 +39,5 @@ function EditorLoaded(_ref) {
   }, [isEditorReady]);
   return null;
 }
-var _default = EditorLoaded;
-exports["default"] = _default;
+var _default = exports["default"] = EditorLoaded;
 //# sourceMappingURL=index.js.map

@@ -72,6 +72,5 @@ function registerApiHandlers(options) {
   };
   _apiFetch["default"].use(_apiFetch["default"].createPreloadingMiddleware(preload));
 }
-var _default = registerApiHandlers;
-exports["default"] = _default;
+var _default = exports["default"] = registerApiHandlers;
 //# sourceMappingURL=index.js.map

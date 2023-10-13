@@ -9,7 +9,7 @@ var _editor = require("@wordpress/editor");
 var _blockEditor = require("@wordpress/block-editor");
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
-import { createElement, Fragment } from "@wordpress/element";
+import { createElement, Fragment } from "react";
 /**
  * WordPress dependencies
  */

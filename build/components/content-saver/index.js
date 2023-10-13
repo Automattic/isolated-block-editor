@@ -38,8 +38,8 @@ function ContentSaver(props) {
     ignoredContent = _useSelect.ignoredContent;
   function saveBlocks() {
     // Save the content in the format wanted by the user
-    onSaveBlocks === null || onSaveBlocks === void 0 ? void 0 : onSaveBlocks(blocks, ignoredContent);
-    onSaveContent === null || onSaveContent === void 0 ? void 0 : onSaveContent((0, _blocks.serialize)(blocks));
+    onSaveBlocks === null || onSaveBlocks === void 0 || onSaveBlocks(blocks, ignoredContent);
+    onSaveContent === null || onSaveContent === void 0 || onSaveContent((0, _blocks.serialize)(blocks));
   }
   (0, _element.useEffect)(function () {
     if (!blocks) {
@@ -62,6 +62,5 @@ function ContentSaver(props) {
   }, [blocks]);
   return null;
 }
-var _default = ContentSaver;
-exports["default"] = _default;
+var _default = exports["default"] = ContentSaver;
 //# sourceMappingURL=index.js.map

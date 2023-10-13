@@ -40,7 +40,7 @@ export default function useEditorSetup( settings ) {
 		const { getBlockTypes } = select( blocksStore );
 		const blockTypes = getBlockTypes();
 		// @ts-ignore
-		const hasFixedToolbar = isFeatureActive( 'fixedToolbar' );
+		const hasFixedToolbar = isFeatureActive( 'fixedToolbar', settings?.editor.hasFixedToolbar );
 
 		return {
 			// @ts-ignore

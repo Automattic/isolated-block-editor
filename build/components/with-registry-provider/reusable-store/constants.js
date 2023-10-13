@@ -9,6 +9,5 @@ exports.STORE_KEY = void 0;
  *
  * @type {string}
  */
-var STORE_KEY = 'core/reusable-blocks';
-exports.STORE_KEY = STORE_KEY;
+var STORE_KEY = exports.STORE_KEY = 'core/reusable-blocks';
 //# sourceMappingURL=constants.js.map

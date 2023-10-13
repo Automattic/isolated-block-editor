@@ -12,10 +12,10 @@ exports.unpinItem = void 0;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _deprecated = _interopRequireDefault(require("@wordpress/deprecated"));
 var _preferences = require("@wordpress/preferences");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * WordPress dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
 /**
  * Set a default complementary area.
  *
@@ -24,7 +24,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  *
  * @return {Object} Action object.
  */
-var setDefaultComplementaryArea = function setDefaultComplementaryArea(scope, area) {
+var setDefaultComplementaryArea = exports.setDefaultComplementaryArea = function setDefaultComplementaryArea(scope, area) {
   return {
     type: 'SET_DEFAULT_COMPLEMENTARY_AREA',
     scope: scope,
@@ -38,8 +38,7 @@ var setDefaultComplementaryArea = function setDefaultComplementaryArea(scope, ar
  * @param {string} scope Complementary area scope.
  * @param {string} area  Area identifier.
  */
-exports.setDefaultComplementaryArea = setDefaultComplementaryArea;
-var enableComplementaryArea = function enableComplementaryArea(scope, area) {
+var enableComplementaryArea = exports.enableComplementaryArea = function enableComplementaryArea(scope, area) {
   return function (_ref) {
     var registry = _ref.registry,
       dispatch = _ref.dispatch;
@@ -64,8 +63,7 @@ var enableComplementaryArea = function enableComplementaryArea(scope, area) {
  *
  * @param {string} scope Complementary area scope.
  */
-exports.enableComplementaryArea = enableComplementaryArea;
-var disableComplementaryArea = function disableComplementaryArea(scope) {
+var disableComplementaryArea = exports.disableComplementaryArea = function disableComplementaryArea(scope) {
   return function (_ref2) {
     var registry = _ref2.registry;
     var isComplementaryAreaVisible = registry.select(_preferences.store).get(scope, 'isComplementaryAreaVisible');
@@ -83,8 +81,7 @@ var disableComplementaryArea = function disableComplementaryArea(scope) {
  *
  * @return {Object} Action object.
  */
-exports.disableComplementaryArea = disableComplementaryArea;
-var pinItem = function pinItem(scope, item) {
+var pinItem = exports.pinItem = function pinItem(scope, item) {
   return function (_ref3) {
     var registry = _ref3.registry;
     // Return early if there's no item.
@@ -107,8 +104,7 @@ var pinItem = function pinItem(scope, item) {
  * @param {string} scope Item scope.
  * @param {string} item  Item identifier.
  */
-exports.pinItem = pinItem;
-var unpinItem = function unpinItem(scope, item) {
+var unpinItem = exports.unpinItem = function unpinItem(scope, item) {
   return function (_ref4) {
     var registry = _ref4.registry;
     // Return early if there's no item.
@@ -126,7 +122,6 @@ var unpinItem = function unpinItem(scope, item) {
  * @param {string} scope       The feature scope (e.g. core/edit-post).
  * @param {string} featureName The feature name.
  */
-exports.unpinItem = unpinItem;
 function toggleFeature(scope, featureName) {
   return function (_ref5) {
     var registry = _ref5.registry;

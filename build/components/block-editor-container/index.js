@@ -15,7 +15,7 @@ var _clickOutside = _interopRequireDefault(require("./click-outside"));
 var _blockEditorContents = _interopRequireDefault(require("../block-editor-contents"));
 var _hotSwapper = _interopRequireDefault(require("./hot-swapper"));
 require("./style.scss");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * External dependencies
@@ -52,7 +52,7 @@ var SIZE_MEDIUM = 480;
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
  * @param {boolean} props.isPreview - Whether preview mode is enabled
- * @param {boolean} props.hasFixedToolbar - Has fixed toolbar
+ * @param {boolean} props.fixedToolbar - Has fixed toolbar
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
  * @param {BlockEditorSettings} props.settings - Settings
@@ -79,7 +79,7 @@ function BlockEditorContainer(props) {
     editorMode = props.editorMode,
     isEditing = props.isEditing,
     setEditing = props.setEditing,
-    hasFixedToolbar = props.hasFixedToolbar,
+    fixedToolbar = props.fixedToolbar,
     isPreview = props.isPreview;
   var _useResizeObserver = (0, _compose.useResizeObserver)(),
     _useResizeObserver2 = (0, _slicedToArray2["default"])(_useResizeObserver, 2),
@@ -95,7 +95,7 @@ function BlockEditorContainer(props) {
     // Match Gutenberg
     'block-editor': true,
     'edit-post-layout': true,
-    'has-fixed-toolbar': hasFixedToolbar
+    'has-fixed-toolbar': fixedToolbar
   }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
   return createElement("div", {
     className: classes
@@ -117,7 +117,8 @@ function BlockEditorContainer(props) {
     onChange: onChange
   }, children))));
 }
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref) {
+  var settings = _ref.settings;
   var _select = select('isolated/editor'),
     isEditorReady = _select.isEditorReady,
     getEditorMode = _select.getEditorMode,
@@ -128,7 +129,7 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     isEditorReady: isEditorReady(),
     editorMode: getEditorMode(),
     isEditing: isEditing(),
-    hasFixedToolbar: isFeatureActive('fixedToolbar'),
+    fixedToolbar: isFeatureActive('fixedToolbar', settings === null || settings === void 0 ? void 0 : settings.editor.hasFixedToolbar),
     isPreview: isOptionActive('preview')
   };
 }), (0, _data.withDispatch)(function (dispatch) {
@@ -138,5 +139,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     setEditing: setEditing
   };
 })])(BlockEditorContainer);
-exports["default"] = _default;
 //# sourceMappingURL=index.js.map

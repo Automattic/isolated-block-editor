@@ -16,7 +16,7 @@ var _headerToolbar = _interopRequireDefault(require("./header-toolbar"));
 var _inspector = _interopRequireDefault(require("./inspector"));
 var _slot = _interopRequireDefault(require("./slot"));
 require("./style.scss");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -137,6 +137,5 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     renderMoreMenu: renderMoreMenu
   }))));
 };
-var _default = BlockEditorToolbar;
-exports["default"] = _default;
+var _default = exports["default"] = BlockEditorToolbar;
 //# sourceMappingURL=index.js.map

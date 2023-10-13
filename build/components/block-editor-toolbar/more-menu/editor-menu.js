@@ -9,7 +9,7 @@ var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _icons = require("@wordpress/icons");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -56,14 +56,14 @@ function EditorMenu(_ref) {
   return createElement(_components.MenuGroup, {
     label: (0, _i18n._x)('Editor', 'noun')
   }, createElement(_components.MenuItem, {
-    icon: editorMode === 'visual' && _icons.check,
+    icon: editorMode === 'visual' ? _icons.check : null,
     isSelected: editorMode === 'visual',
     onClick: function onClick() {
       return setMode('visual');
     },
     role: "menuitemcheckbox"
   }, (0, _i18n.__)('Visual editor')), createElement(_components.MenuItem, {
-    icon: editorMode === 'text' && _icons.check,
+    icon: editorMode === 'text' ? _icons.check : null,
     isSelected: editorMode === 'text',
     onClick: function onClick() {
       return setMode('text');
@@ -73,7 +73,7 @@ function EditorMenu(_ref) {
 }
 
 // @ts-ignore
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
     getEditorMode = _select.getEditorMode;
   var _select$getEditorSett = select('core/editor').getEditorSettings(),
@@ -89,5 +89,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     }
   };
 })])(EditorMenu);
-exports["default"] = _default;
 //# sourceMappingURL=editor-menu.js.map

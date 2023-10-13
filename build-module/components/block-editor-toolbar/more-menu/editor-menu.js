@@ -1,4 +1,4 @@
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -51,12 +51,12 @@ function EditorMenu({
   return createElement(MenuGroup, {
     label: _x('Editor', 'noun')
   }, createElement(MenuItem, {
-    icon: editorMode === 'visual' && check,
+    icon: editorMode === 'visual' ? check : null,
     isSelected: editorMode === 'visual',
     onClick: () => setMode('visual'),
     role: "menuitemcheckbox"
   }, __('Visual editor')), createElement(MenuItem, {
-    icon: editorMode === 'text' && check,
+    icon: editorMode === 'text' ? check : null,
     isSelected: editorMode === 'text',
     onClick: () => setMode('text'),
     role: "menuitemcheckbox"

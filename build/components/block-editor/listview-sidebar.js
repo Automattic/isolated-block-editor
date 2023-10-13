@@ -18,7 +18,7 @@ var _icons = require("@wordpress/icons");
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
 var _keycodes = require("@wordpress/keycodes");
 var _listViewOutline = _interopRequireDefault(require("./list-view-outline"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * External dependencies
  */

@@ -26,7 +26,7 @@ var _inserterSidebar = _interopRequireDefault(require("./inserter-sidebar"));
 var _listviewSidebar = _interopRequireDefault(require("./listview-sidebar"));
 var _footer = _interopRequireDefault(require("./footer"));
 var _actionArea = _interopRequireDefault(require("../action-area"));
-import { createElement, Fragment } from "@wordpress/element";
+import { createElement, Fragment } from "react";
 // @ts-nocheck
 /**
  * External dependencies
@@ -99,7 +99,7 @@ function BlockEditor(props) {
         isOptionActive = _select.isOptionActive;
       return {
         sidebarIsOpened: !!select(_interface.store).getActiveComplementaryArea('isolated/editor'),
-        hasFixedToolbar: isFeatureActive('fixedToolbar'),
+        fixedToolbar: isFeatureActive('fixedToolbar', settings === null || settings === void 0 ? void 0 : settings.editor.hasFixedToolbar),
         isInserterOpened: isInserterOpened(),
         isListViewOpened: isListViewOpened(),
         isFullscreenActive: isOptionActive('fullscreenMode'),
@@ -109,7 +109,7 @@ function BlockEditor(props) {
       };
     }, []),
     sidebarIsOpened = _useSelect.sidebarIsOpened,
-    hasFixedToolbar = _useSelect.hasFixedToolbar,
+    fixedToolbar = _useSelect.fixedToolbar,
     isInserterOpened = _useSelect.isInserterOpened,
     isListViewOpened = _useSelect.isListViewOpened,
     showIconLabels = _useSelect.showIconLabels,
@@ -118,7 +118,8 @@ function BlockEditor(props) {
     nextShortcut = _useSelect.nextShortcut;
   var className = (0, _classnames["default"])('edit-post-layout', 'is-mode-' + editorMode, {
     'is-sidebar-opened': sidebarIsOpened,
-    'has-fixed-toolbar': hasFixedToolbar,
+    'is-inserter-opened': isInserterOpened,
+    'has-fixed-toolbar': fixedToolbar,
     'show-icon-labels': showIconLabels
   });
   var secondarySidebar = function secondarySidebar() {
@@ -185,7 +186,7 @@ function BlockEditor(props) {
     }
   }));
 }
-var _default = (0, _data.withDispatch)(function (dispatch) {
+var _default = exports["default"] = (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),
     redo = _dispatch.redo,
     undo = _dispatch.undo;
@@ -194,5 +195,4 @@ var _default = (0, _data.withDispatch)(function (dispatch) {
     undo: undo
   };
 })(BlockEditor);
-exports["default"] = _default;
 //# sourceMappingURL=index.js.map

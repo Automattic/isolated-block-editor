@@ -27,7 +27,7 @@ function HotSwapper(_ref) {
 }
 
 // @ts-ignore
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
     isEditing = _select.isEditing;
   return {
@@ -44,5 +44,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     }
   };
 })])(HotSwapper);
-exports["default"] = _default;
 //# sourceMappingURL=hot-swapper.js.map

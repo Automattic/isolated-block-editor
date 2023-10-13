@@ -9,8 +9,10 @@ exports.isFeatureActive = isFeatureActive;
  *
  * @param {Object} state - Current state
  * @param {string} feature - Feature name
+ * @param {boolean} [defaultValue=false] - Default value
  */
 function isFeatureActive(state, feature) {
-  return state.preferences[feature] ? state.preferences[feature] : false;
+  var defaultValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return state.preferences[feature] === undefined ? defaultValue : state.preferences[feature];
 }
 //# sourceMappingURL=selectors.js.map

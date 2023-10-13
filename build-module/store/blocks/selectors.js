@@ -31,9 +31,6 @@ export function getEditorSelection(state) {
  */
 export function hasEditorUndo(state) {
   if (getEditorMode(state) !== 'visual') return false;
-  if (state.collab?.undoManager) {
-    return !!state.collab.undoManager.undoStack.length;
-  }
   return state.blocks.past.length > 0;
 }
 
@@ -45,9 +42,6 @@ export function hasEditorUndo(state) {
  */
 export function hasEditorRedo(state) {
   if (getEditorMode(state) !== 'visual') return false;
-  if (state.collab?.undoManager) {
-    return !!state.collab.undoManager.redoStack.length;
-  }
   return state.blocks.future.length > 0;
 }
 

@@ -9,7 +9,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -69,6 +69,5 @@ var SettingsHeader = function SettingsHeader(_ref) {
   // translators: Text label for the Block Settings Sidebar tab.
   (0, _i18n.__)('Block'))));
 };
-var _default = SettingsHeader;
-exports["default"] = _default;
+var _default = exports["default"] = SettingsHeader;
 //# sourceMappingURL=sidebar-heading.js.map
