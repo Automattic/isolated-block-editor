@@ -30,11 +30,13 @@ The Isolated Block Editor is provided in three forms:
 - CommonJS module
 - Standalone JavaScript file, for inclusion on any browser page
 
-Requires: Gutenberg 13.3.0
+Requires: Gutenberg 16.7.1
+
+If using with WordPress then You are advised to use the Gutenberg plugin, although it may work with the default Gutenberg provided by WordPress. You may or may not run into problems when using with different versions (older or newer).
 
 Examples:
 - [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/blob/trunk/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor
-- [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
+- [Blocks Everywhere](https://github.com/Automattic/blocks-everywhere/) - a WordPress plugin to add Gutenberg to comments, WP admin pages, bbPress, and BuddyPress
 - [Gutenberg Chrome Extension](https://github.com/Automattic/gutenberg-everywhere-chrome/) - a Chrome extension that allows Gutenberg to be used on any page
 - [Gutenberg Desktop](https://github.com/Automattic/gutenberg-desktop/) - a desktop editor that supports the loading and saving of HTML and Markdown files
 - [P2](https://wordpress.com/p2/) - WordPress as a collaborative workspace (coming soon for self-hosted)
@@ -59,7 +61,7 @@ The Isolated Block Editor aims to provide an editor that is as isolated from Wor
 - Bundled without Gutenberg - if used on a WordPress site then you can use the Gutenberg code already included with WordPress. You will need a working WordPress site, but do not need to include Gutenberg within your editor
 - Bundled with Gutenberg - Gutenberg is included within the editor and there is no dependency on WordPress or PHP
 
-Examples are provided for both situations (see [Plain text editor](examples/plain-text-editor/README.md) for bundled and [Gutenberg Everywhere](https://github.com/Automattic/gutenberg-everywhere/) for unbundled).
+Examples are provided for both situations (see [Plain text editor](examples/plain-text-editor/README.md) for bundled and [Blocks Everywhere](https://github.com/Automattic/gutenberg-everywhere/) for unbundled).
 
 The key difference is in the Webpack config. If you don't want to bundle Gutenberg with your editor then you can use the `DependencyExtractionWebpackPlugin` plugin:
 
@@ -172,11 +174,10 @@ The `IsolatedBlockEditor` also exports the following support components:
 - `FooterSlot` - Insert content into the footer
 - `EditorHeadingSlot` - Insert content at the beginning of the editor area. Suitable for titles.
 - `ActionArea` - Insert content into the actions sidebar
-- [`CollaborativeEditing`](https://github.com/Automattic/isolated-block-editor/tree/trunk/src/components/collaborative-editing) - Enable real-time collaborative editing
 
 ```js
 
-import IsolatedBlockEditor, { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing } from 'isolated-block-editor';
+import IsolatedBlockEditor, { EditorLoaded, DocumentSection, ToolbarSlot } from 'isolated-block-editor';
 
 render(
 	<IsolatedBlockEditor
@@ -187,7 +188,6 @@ render(
 	>
 		<EditorLoaded onLoaded={ () => {} } onLoading={ () => {} } />
 		<DocumentSection>Extra Information</DocumentSection>
-		<CollaborativeEditing settings={ collabSettings } />
 
 		<ToolbarSlot>
 			<button>Beep!</button>

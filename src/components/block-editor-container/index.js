@@ -45,7 +45,7 @@ const SIZE_MEDIUM = 480;
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
  * @param {boolean} props.isPreview - Whether preview mode is enabled
- * @param {boolean} props.hasFixedToolbar - Has fixed toolbar
+ * @param {boolean} props.fixedToolbar - Has fixed toolbar
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
  * @param {BlockEditorSettings} props.settings - Settings
@@ -59,7 +59,7 @@ const SIZE_MEDIUM = 480;
  */
 function BlockEditorContainer( props ) {
 	const { children, settings, className, onError, renderMoreMenu, onLoad, onInput, onChange, blocks } = props;
-	const { isEditorReady, editorMode, isEditing, setEditing, hasFixedToolbar, isPreview } = props;
+	const { isEditorReady, editorMode, isEditing, setEditing, fixedToolbar, isPreview } = props;
 	const [ resizeListener, { width } ] = useResizeObserver();
 	const classes = classnames( className, {
 		'iso-editor': true,
@@ -74,7 +74,7 @@ function BlockEditorContainer( props ) {
 		// Match Gutenberg
 		'block-editor': true,
 		'edit-post-layout': true,
-		'has-fixed-toolbar': hasFixedToolbar,
+		'has-fixed-toolbar': fixedToolbar,
 		[ 'is-mode-' + editorMode ]: true,
 		'is-preview-mode': isPreview,
 	} );
@@ -107,7 +107,7 @@ function BlockEditorContainer( props ) {
 }
 
 export default compose( [
-	withSelect( ( select ) => {
+	withSelect( ( select, { settings } ) => {
 		const { isEditorReady, getEditorMode, isEditing, isFeatureActive, isOptionActive } = select(
 			'isolated/editor'
 		);
@@ -116,7 +116,7 @@ export default compose( [
 			isEditorReady: isEditorReady(),
 			editorMode: getEditorMode(),
 			isEditing: isEditing(),
-			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
+			fixedToolbar: isFeatureActive( 'fixedToolbar', settings?.editor.hasFixedToolbar ),
 			isPreview: isOptionActive( 'preview' ),
 		};
 	} ),

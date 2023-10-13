@@ -27,6 +27,7 @@ import { parse, store as blocksStore } from '@wordpress/blocks';
 import { store as editorStore } from '@wordpress/editor';
 import { __dangerousOptInToUnstableAPIsOnlyForCoreModules } from '@wordpress/private-apis';
 
+// @ts-ignore
 const isGutenbergPlugin = true;
 
 /**
@@ -100,7 +101,9 @@ export default function VisualEditor( { styles } ) {
 		editedPostTemplate = {},
 		wrapperBlockName,
 		wrapperUniqueId,
+		// @ts-ignore
 		isBlockBasedTheme,
+		// @ts-ignore
 		hasV3BlocksOnly,
 	} = useSelect( ( select ) => {
 		const {
@@ -345,12 +348,14 @@ export default function VisualEditor( { styles } ) {
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
 
-	const isToBeIframed =
-		( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
-			! hasMetaBoxes ) ||
-		isTemplateMode ||
-		deviceType === 'Tablet' ||
-		deviceType === 'Mobile';
+	// TODO: Styles not appearing in the iframe mode yet
+	// const isToBeIframed =
+	// 	( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
+	// 		! hasMetaBoxes ) ||
+	// 	isTemplateMode ||
+	// 	deviceType === 'Tablet' ||
+	// 	deviceType === 'Mobile';
+	const isToBeIframed = false;
 
 	return (
 		<BlockTools

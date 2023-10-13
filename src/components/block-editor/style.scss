@@ -15,6 +15,19 @@
 		width: 100%;
 	}
 
+	.interface-interface-skeleton__sidebar,
+	.interface-interface-skeleton__secondary-sidebar {
+		margin-bottom: 1px;
+	}
+
+	.edit-post-layout:not(.is-sidebar-opened):not(.is-inserter-opened) {
+		.interface-interface-skeleton__editor,
+		.interface-interface-skeleton__content,
+		.interface-interface-skeleton__body {
+			overflow: visible;
+		}
+	}
+
 	.is-mode__text .edit-post-text-editor__body {
 		margin-left: 0;
 		margin-right: 0;

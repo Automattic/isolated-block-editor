@@ -79,7 +79,7 @@ function BlockEditor( props ) {
 	const showFooter = settings?.iso?.footer || false;
 	const {
 		sidebarIsOpened,
-		hasFixedToolbar,
+		fixedToolbar,
 		isInserterOpened,
 		isListViewOpened,
 		showIconLabels,
@@ -91,7 +91,7 @@ function BlockEditor( props ) {
 
 		return {
 			sidebarIsOpened: !!select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),
-			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
+			fixedToolbar: isFeatureActive( 'fixedToolbar', settings?.editor.hasFixedToolbar ),
 			isInserterOpened: isInserterOpened(),
 			isListViewOpened: isListViewOpened(),
 			isFullscreenActive: isOptionActive( 'fullscreenMode' ),
@@ -106,7 +106,8 @@ function BlockEditor( props ) {
 	}, [] );
 	const className = classnames( 'edit-post-layout', 'is-mode-' + editorMode, {
 		'is-sidebar-opened': sidebarIsOpened,
-		'has-fixed-toolbar': hasFixedToolbar,
+		'is-inserter-opened': isInserterOpened,
+		'has-fixed-toolbar': fixedToolbar,
 		'show-icon-labels': showIconLabels,
 	} );
 	const secondarySidebar = () => {

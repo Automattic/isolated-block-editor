@@ -127,6 +127,8 @@ export default function applyDefaultSettings( settings ) {
 
 			// Default to fixed top toolbar
 			fixedToolbar: true,
+			hasFixedToolbar: true,
+			hasInlineToolbar: false,
 
 			...editor,
 
