@@ -130,7 +130,7 @@ import '@automattic/isolated-block-editor/build-browser/core.css';
 
 The module is currently only available on Github and can be added with:
 
-`npm install @automattic/isolated-block-editor@1.2.0" --save` (where `1.2.0` is the version you want to use)
+`npm install @automattic/isolated-block-editor@1.2.0 --save` (where `1.2.0` is the version you want to use)
 
 ## Future
 
