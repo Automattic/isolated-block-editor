@@ -50,6 +50,5 @@ function getInitialEditorContent(patterns, currentPattern, template, initialCont
   // No content
   return [];
 }
-var _default = getInitialEditorContent;
-exports["default"] = _default;
+var _default = exports["default"] = getInitialEditorContent;
 //# sourceMappingURL=editor-content.js.map

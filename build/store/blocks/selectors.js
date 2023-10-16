@@ -40,11 +40,7 @@ function getEditorSelection(state) {
  * @return {boolean}
  */
 function hasEditorUndo(state) {
-  var _state$collab;
   if ((0, _selectors.getEditorMode)(state) !== 'visual') return false;
-  if ((_state$collab = state.collab) !== null && _state$collab !== void 0 && _state$collab.undoManager) {
-    return !!state.collab.undoManager.undoStack.length;
-  }
   return state.blocks.past.length > 0;
 }
 
@@ -55,11 +51,7 @@ function hasEditorUndo(state) {
  * @return {boolean}
  */
 function hasEditorRedo(state) {
-  var _state$collab2;
   if ((0, _selectors.getEditorMode)(state) !== 'visual') return false;
-  if ((_state$collab2 = state.collab) !== null && _state$collab2 !== void 0 && _state$collab2.undoManager) {
-    return !!state.collab.undoManager.redoStack.length;
-  }
   return state.blocks.future.length > 0;
 }
 

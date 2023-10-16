@@ -11,7 +11,7 @@ var _blockEditor = require("@wordpress/block-editor");
 var _i18n = require("@wordpress/i18n");
 var _editor = require("@wordpress/editor");
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -28,11 +28,7 @@ var Footer = function Footer(_ref) {
       var _select = select(_editor.store),
         getPostTypeLabel = _select.getPostTypeLabel;
       var postTypeLabel = getPostTypeLabel();
-      var _select2 = select('isolated/editor'),
-        isFeatureActive = _select2.isFeatureActive;
       return {
-        // @ts-ignore
-        hasFixedToolbar: isFeatureActive('fixedToolbar'),
         // TODO: This is currently disabled until it can be better worked in
         showBlockBreadcrumbs: false,
         //isFeatureActive( 'showBlockBreadcrumbs' ),
@@ -48,6 +44,5 @@ var Footer = function Footer(_ref) {
     rootLabelText: documentLabel
   }), createElement(_footerSlot["default"].Slot, null));
 };
-var _default = Footer;
-exports["default"] = _default;
+var _default = exports["default"] = Footer;
 //# sourceMappingURL=footer.js.map

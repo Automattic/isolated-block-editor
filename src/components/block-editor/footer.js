@@ -19,11 +19,8 @@ const Footer = ( { editorMode } ) => {
 		// @ts-ignore
 		const { getPostTypeLabel } = select( editorStore );
 		const postTypeLabel = getPostTypeLabel();
-		const { isFeatureActive } = select( 'isolated/editor' );
 
 		return {
-			// @ts-ignore
-			hasFixedToolbar: isFeatureActive( 'fixedToolbar' ),
 			// TODO: This is currently disabled until it can be better worked in
 			showBlockBreadcrumbs: false, //isFeatureActive( 'showBlockBreadcrumbs' ),
 			// translators: Default label for the Document in the Block Breadcrumb.

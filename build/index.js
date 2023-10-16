@@ -10,12 +10,6 @@ Object.defineProperty(exports, "ActionArea", {
     return _actionArea["default"];
   }
 });
-Object.defineProperty(exports, "CollaborativeEditing", {
-  enumerable: true,
-  get: function get() {
-    return _collaborativeEditing["default"];
-  }
-});
 Object.defineProperty(exports, "DocumentSection", {
   enumerable: true,
   get: function get() {
@@ -68,7 +62,6 @@ var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-sw
 var _document = _interopRequireDefault(require("./components/document"));
 var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
 var _actionArea = _interopRequireDefault(require("./components/action-area"));
-var _collaborativeEditing = _interopRequireDefault(require("./components/collaborative-editing"));
 var _footerSlot = _interopRequireDefault(require("./components/footer-slot"));
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 var _editorHeadingSlot = _interopRequireDefault(require("./components/editor-heading-slot"));
@@ -83,9 +76,9 @@ var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUnd
  */
 // Export library components
 // A fake edit-post store is needed
-import { createElement } from "@wordpress/element";
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+import { createElement } from "react";
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
@@ -168,6 +161,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * @property {boolean} hasUploadPermissions
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
+ * @property {boolean} fixedToolbar
  * @property {boolean} hasFixedToolbar
  * @property {object[]|null} template
  * @property {null} templateLock
@@ -203,11 +197,6 @@ function initializeEditor() {
 function useInitializeIsoEditor() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     undoManager = _ref.undoManager;
-  var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
-    setUndoManager = _useDispatch.setUndoManager;
-  (0, _element.useEffect)(function () {
-    setUndoManager(undoManager);
-  }, [undoManager]);
   if (window.isoInitialisedBlocks) {
     return;
   }
@@ -303,9 +292,9 @@ function IsolatedBlockEditor(props) {
     };
   }, []);
   (0, _element.useEffect)(function () {
-    __experimentalOnSelection === null || __experimentalOnSelection === void 0 ? void 0 : __experimentalOnSelection(editorSelection);
+    __experimentalOnSelection === null || __experimentalOnSelection === void 0 || __experimentalOnSelection(editorSelection);
   }, [editorSelection]);
-  return createElement(_element.StrictMode, null, createElement(_keyboardShortcuts.ShortcutProvider, null, createElement(_contentSaver["default"], {
+  return createElement(_element.StrictMode, null, createElement(_contentSaver["default"], {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
   }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], _objectSpread(_objectSpread({}, params), {}, {
@@ -313,8 +302,7 @@ function IsolatedBlockEditor(props) {
     onChange: __experimentalOnChange,
     blocks: __experimentalValue,
     settings: settings
-  }), children))));
+  }), children)));
 }
-var _default = (0, _withRegistryProvider["default"])(IsolatedBlockEditor);
-exports["default"] = _default;
+var _default = exports["default"] = (0, _withRegistryProvider["default"])(IsolatedBlockEditor);
 //# sourceMappingURL=index.js.map

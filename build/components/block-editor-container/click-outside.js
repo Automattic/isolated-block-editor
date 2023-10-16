@@ -71,6 +71,5 @@ function (_Component) {
   }]);
   return _class;
 }(_element.Component));
-var _default = ClickOutsideWrapper;
-exports["default"] = _default;
+var _default = exports["default"] = ClickOutsideWrapper;
 //# sourceMappingURL=click-outside.js.map

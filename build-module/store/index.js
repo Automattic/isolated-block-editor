@@ -20,43 +20,25 @@ import * as blockSelectors from './blocks/selectors';
 import * as editorSelectors from './editor/selectors';
 import * as preferenceSelectors from './preferences/selectors';
 import * as optionSelectors from './options/selectors';
-
-// Collaborative Editing
-import * as collabActions from './collab/actions';
-import * as collabSelectors from './collab/selectors';
-import * as collabPeersActions from './collab-peers/actions';
-import * as collabPeersSelectors from './collab-peers/selectors';
-import collabControls from './collab/controls'; // will safely noop if collab isn't initialized
-import collabReducer from './collab/reducer';
-import collabPeersReducer from './collab-peers/reducer';
 function storeConfig(preferencesKey, defaultPreferences) {
   return {
     reducer: combineReducers({
       blocks: blocksReducer,
       editor: editorReducer,
       preferences: preferencesReducer,
-      options: optionsReducer,
-      collab: collabReducer,
-      collabPeers: collabPeersReducer
+      options: optionsReducer
     }),
     actions: {
       ...blockActions,
       ...editorActions,
       ...optionActions,
-      ...preferenceActions,
-      ...collabActions,
-      ...collabPeersActions
+      ...preferenceActions
     },
     selectors: {
       ...blockSelectors,
       ...editorSelectors,
       ...preferenceSelectors,
-      ...optionSelectors,
-      ...collabSelectors,
-      ...collabPeersSelectors
-    },
-    controls: {
-      ...collabControls
+      ...optionSelectors
     },
     persist: ['preferences'],
     initialState: {

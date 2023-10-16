@@ -16,7 +16,7 @@ var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
 var _redo = _interopRequireDefault(require("./redo"));
 var _undo = _interopRequireDefault(require("./undo"));
 var _blockNavigation = _interopRequireDefault(require("../block-navigation"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -48,7 +48,7 @@ function HeaderToolbar(props) {
         getShortcutRepresentation = _select3.getShortcutRepresentation;
       return {
         // @ts-ignore
-        hasFixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
+        fixedToolbar: select('isolated/editor').isFeatureActive('fixedToolbar'),
         // This setting (richEditingEnabled) should not live in the block editor's setting.
         isInserterEnabled:
         // @ts-ignore
@@ -69,7 +69,7 @@ function HeaderToolbar(props) {
         listViewShortcut: getShortcutRepresentation('core/edit-post/toggle-list-view')
       };
     }, []),
-    hasFixedToolbar = _useSelect.hasFixedToolbar,
+    fixedToolbar = _useSelect.fixedToolbar,
     isInserterEnabled = _useSelect.isInserterEnabled,
     isTextModeEnabled = _useSelect.isTextModeEnabled,
     showIconLabels = _useSelect.showIconLabels,
@@ -84,7 +84,7 @@ function HeaderToolbar(props) {
     undo = _props$settings$iso$t.undo,
     selectorTool = _props$settings$iso$t.selectorTool;
   var inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 || (_props$settings = _props$settings.iso) === null || _props$settings === void 0 || (_props$settings = _props$settings.sidebar) === null || _props$settings === void 0 ? void 0 : _props$settings.inserter) || false;
-  var displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
+  var displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || fixedToolbar;
   var toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
   (0, _i18n.__)('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
   (0, _i18n.__)('Document tools');
@@ -157,6 +157,5 @@ function HeaderToolbar(props) {
     showTooltip: !showIconLabels
   })));
 }
-var _default = HeaderToolbar;
-exports["default"] = _default;
+var _default = exports["default"] = HeaderToolbar;
 //# sourceMappingURL=index.js.map

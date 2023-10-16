@@ -10,7 +10,7 @@ var _compose = require("@wordpress/compose");
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
 var _icons = require("@wordpress/icons");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * External dependencies
  */
@@ -44,7 +44,7 @@ function FeatureToggle(_ref) {
 }
 
 // @ts-ignore
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
   var feature = _ref2.feature;
   return {
     isActive: select('isolated/editor').isFeatureActive(feature)
@@ -57,5 +57,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _r
     }
   };
 }), _components.withSpokenMessages])(FeatureToggle);
-exports["default"] = _default;
 //# sourceMappingURL=index.js.map

@@ -15,7 +15,7 @@ var _data = require("@wordpress/data");
 var _sidebarHeading = _interopRequireDefault(require("./sidebar-heading"));
 var _document = _interopRequireDefault(require("../document"));
 var _complementaryArea = _interopRequireDefault(require("../complementary-area"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -62,6 +62,5 @@ var SettingsSidebar = function SettingsSidebar(_ref) {
     isActiveByDefault: false
   }, sidebarName === 'edit-post/document' && createElement(_document["default"].Slot, null), sidebarName === 'edit-post/block' && createElement(_blockEditor.BlockInspector, null));
 };
-var _default = SettingsSidebar;
-exports["default"] = _default;
+var _default = exports["default"] = SettingsSidebar;
 //# sourceMappingURL=sidebar.js.map

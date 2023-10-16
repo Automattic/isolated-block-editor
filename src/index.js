@@ -25,7 +25,6 @@ import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
 import ActionArea from './components/action-area';
-import CollaborativeEditing from './components/collaborative-editing';
 import FooterSlot from './components/footer-slot';
 
 // Export library components
@@ -118,6 +117,7 @@ import './style.scss';
  * @property {boolean} hasUploadPermissions
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
+ * @property {boolean} fixedToolbar
  * @property {boolean} hasFixedToolbar
  * @property {object[]|null} template
  * @property {null} templateLock
@@ -152,12 +152,6 @@ export function initializeEditor() {
  * @param {UndoManager} [props.undoManager]
  */
 export function useInitializeIsoEditor( { undoManager } = {} ) {
-	const { setUndoManager } = useDispatch( 'isolated/editor' );
-
-	useEffect( () => {
-		setUndoManager( undoManager );
-	}, [ undoManager ] );
-
 	if ( window.isoInitialisedBlocks ) {
 		return;
 	}
@@ -263,26 +257,24 @@ function IsolatedBlockEditor( props ) {
 
 	return (
 		<StrictMode>
-			<ShortcutProvider>
-				<ContentSaver onSaveBlocks={ onSaveBlocks } onSaveContent={ onSaveContent } />
-				<PatternMonitor />
+			<ContentSaver onSaveBlocks={ onSaveBlocks } onSaveContent={ onSaveContent } />
+			<PatternMonitor />
 
-				<SlotFillProvider>
-					<BlockEditorContainer
-						{ ...params }
-						onInput={ __experimentalOnInput }
-						onChange={ __experimentalOnChange }
-						blocks={ __experimentalValue }
-						settings={ settings }
-					>
-						{ children }
-					</BlockEditorContainer>
-				</SlotFillProvider>
-			</ShortcutProvider>
+			<SlotFillProvider>
+				<BlockEditorContainer
+					{ ...params }
+					onInput={ __experimentalOnInput }
+					onChange={ __experimentalOnChange }
+					blocks={ __experimentalValue }
+					settings={ settings }
+				>
+					{ children }
+				</BlockEditorContainer>
+			</SlotFillProvider>
 		</StrictMode>
 	);
 }
 
 export default withRegistryProvider( IsolatedBlockEditor );
 
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };
+export { EditorLoaded, DocumentSection, ToolbarSlot, FooterSlot, EditorHeadingSlot, ActionArea };

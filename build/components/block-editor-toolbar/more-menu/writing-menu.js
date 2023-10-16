@@ -10,7 +10,7 @@ var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _toggleFeature = _interopRequireDefault(require("../toggle-feature"));
 var _toggleOption = _interopRequireDefault(require("../toggle-option"));
-import { createElement, Fragment } from "@wordpress/element";
+import { createElement, Fragment } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -69,6 +69,5 @@ function WritingMenu(_ref) {
     onClose: onClose
   }));
 }
-var _default = WritingMenu;
-exports["default"] = _default;
+var _default = exports["default"] = WritingMenu;
 //# sourceMappingURL=writing-menu.js.map

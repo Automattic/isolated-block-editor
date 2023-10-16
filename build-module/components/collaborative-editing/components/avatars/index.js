@@ -1,4 +1,4 @@
-import { createElement, Fragment } from "@wordpress/element";
+import { createElement, Fragment } from "react";
 /**
  * WordPress dependencies
  */

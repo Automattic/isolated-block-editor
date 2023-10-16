@@ -7,7 +7,7 @@ exports["default"] = void 0;
 var _interface = require("@wordpress/interface");
 var _components = require("@wordpress/components");
 require("./style.scss");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -35,6 +35,5 @@ function Inspector(_ref) {
     scope: "isolated/editor"
   }));
 }
-var _default = Inspector;
-exports["default"] = _default;
+var _default = exports["default"] = Inspector;
 //# sourceMappingURL=index.js.map

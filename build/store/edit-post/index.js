@@ -25,6 +25,5 @@ var store = (0, _data.registerStore)(STORE_KEY, {
     }
   }
 });
-var _default = store;
-exports["default"] = _default;
+var _default = exports["default"] = store;
 //# sourceMappingURL=index.js.map

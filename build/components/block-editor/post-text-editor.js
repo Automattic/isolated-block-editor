@@ -17,14 +17,14 @@ var _element = require("@wordpress/element");
 var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _blocks = require("@wordpress/blocks");
-import { createElement, Fragment } from "@wordpress/element";
+import { createElement, Fragment } from "react";
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } } /**
                                                                                                                                                                                                                                                                                                                                            * External dependencies
                                                                                                                                                                                                                                                                                                                                            */ /**
                                                                                                                                                                                                                                                                                                                                                * WordPress dependencies
                                                                                                                                                                                                                                                                                                                                                */
-var PostTextEditor = /*#__PURE__*/function (_Component) {
+var PostTextEditor = exports.PostTextEditor = /*#__PURE__*/function (_Component) {
   (0, _inherits2["default"])(PostTextEditor, _Component);
   var _super = _createSuper(PostTextEditor);
   function PostTextEditor(props) {
@@ -110,8 +110,7 @@ var PostTextEditor = /*#__PURE__*/function (_Component) {
   }]);
   return PostTextEditor;
 }(_element.Component); // @ts-ignore
-exports.PostTextEditor = PostTextEditor;
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
     getBlocks = _select.getBlocks;
   return {
@@ -131,5 +130,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     }
   };
 }), _compose.withInstanceId])(PostTextEditor);
-exports["default"] = _default;
 //# sourceMappingURL=post-text-editor.js.map

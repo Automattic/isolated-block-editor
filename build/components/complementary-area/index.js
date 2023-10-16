@@ -18,7 +18,7 @@ var _excluded = ["className", "children", "header", "headerClassName", "toggleSh
 /**
  * Internal dependencies
  */
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
 }

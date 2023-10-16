@@ -21,11 +21,10 @@
 	}
 }
 
-.block-editor-block-contextual-toolbar.is-fixed {
+.edit-post-visual-editor .block-editor-block-contextual-toolbar.is-fixed {
 	position: static;
 	margin-left: 0;
 	min-height: 49px;
-	border-bottom: 1px solid #e0e0e0;
 
 	&.is-collapsed {
 		margin-left: 0;
@@ -37,4 +36,12 @@
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+
+	&.is-collapsed:after {
+		display: none;
+	}
+}
+
+.is-fixed ~ .edit-post-visual-editor__content-area {
+	border-top: 1px solid #e0e0e0;
 }

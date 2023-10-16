@@ -16,7 +16,7 @@ var _blocks = require("@wordpress/blocks");
 var _blockEditor = require("@wordpress/block-editor");
 var _blockEditor2 = _interopRequireDefault(require("../block-editor"));
 var _editorContent = _interopRequireDefault(require("./editor-content"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * External dependencies
  */
@@ -141,7 +141,7 @@ function BlockEditorContents(props) {
 }
 
 // @ts-ignore
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, ownProps) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, ownProps) {
   var _ownProps$blocks;
   var _select = select('isolated/editor'),
     getBlocks = _select.getBlocks,
@@ -165,17 +165,16 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, ow
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
-      _onChange === null || _onChange === void 0 ? void 0 : _onChange.apply(void 0, args);
+      _onChange === null || _onChange === void 0 || _onChange.apply(void 0, args);
       updateBlocksWithUndo.apply(void 0, args);
     },
     onInput: function onInput() {
       for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
       }
-      _onInput === null || _onInput === void 0 ? void 0 : _onInput.apply(void 0, args);
+      _onInput === null || _onInput === void 0 || _onInput.apply(void 0, args);
       updateBlocksWithoutUndo.apply(void 0, args);
     }
   };
 })])(BlockEditorContents);
-exports["default"] = _default;
 //# sourceMappingURL=index.js.map

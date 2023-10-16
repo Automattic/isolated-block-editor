@@ -20,7 +20,7 @@ var _preferences = require("@wordpress/preferences");
  *
  * @return {string | null | undefined} The complementary area that is active in the given scope.
  */
-var getActiveComplementaryArea = (0, _data.createRegistrySelector)(function (select) {
+var getActiveComplementaryArea = exports.getActiveComplementaryArea = (0, _data.createRegistrySelector)(function (select) {
   return function (state, scope) {
     var _state$complementaryA;
     var isComplementaryAreaVisible = select(_preferences.store).get(scope, 'isComplementaryAreaVisible');
@@ -49,8 +49,7 @@ var getActiveComplementaryArea = (0, _data.createRegistrySelector)(function (sel
  *
  * @return {boolean} True if the item is pinned and false otherwise.
  */
-exports.getActiveComplementaryArea = getActiveComplementaryArea;
-var isItemPinned = (0, _data.createRegistrySelector)(function (select) {
+var isItemPinned = exports.isItemPinned = (0, _data.createRegistrySelector)(function (select) {
   return function (state, scope, item) {
     var _pinnedItems$item;
     var pinnedItems = select(_preferences.store).get(scope, 'pinnedItems');
@@ -68,8 +67,7 @@ var isItemPinned = (0, _data.createRegistrySelector)(function (select) {
  *
  * @return {boolean} Is the feature enabled?
  */
-exports.isItemPinned = isItemPinned;
-var isFeatureActive = (0, _data.createRegistrySelector)(function (select) {
+var isFeatureActive = exports.isFeatureActive = (0, _data.createRegistrySelector)(function (select) {
   return function (state, scope, featureName) {
     (0, _deprecated["default"])("select( 'core/interface' ).isFeatureActive( scope, featureName )", {
       since: '6.0',
@@ -78,5 +76,4 @@ var isFeatureActive = (0, _data.createRegistrySelector)(function (select) {
     return !!select(_preferences.store).get(scope, featureName);
   };
 });
-exports.isFeatureActive = isFeatureActive;
 //# sourceMappingURL=selectors.js.map

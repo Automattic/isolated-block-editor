@@ -8,7 +8,7 @@ var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _components = require("@wordpress/components");
 var _icons = require("@wordpress/icons");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -28,7 +28,7 @@ function OptionToggle(_ref) {
 }
 
 // @ts-ignore
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
   var option = _ref2.option;
   return {
     isActive: select('isolated/editor').isOptionActive(option)
@@ -41,5 +41,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select, _r
     }
   };
 }), _components.withSpokenMessages])(OptionToggle);
-exports["default"] = _default;
 //# sourceMappingURL=index.js.map

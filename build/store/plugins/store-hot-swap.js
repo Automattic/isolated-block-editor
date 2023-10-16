@@ -43,6 +43,5 @@ storeHotSwapPlugin.resetEditor = function () {
   this.targetSelect = null;
   this.targetDispatch = null;
 };
-var _default = storeHotSwapPlugin;
-exports["default"] = _default;
+var _default = exports["default"] = storeHotSwapPlugin;
 //# sourceMappingURL=store-hot-swap.js.map

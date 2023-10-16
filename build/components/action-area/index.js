@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _components = require("@wordpress/components");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -22,6 +22,5 @@ ActionArea.Slot = function () {
     return fills;
   });
 };
-var _default = ActionArea;
-exports["default"] = _default;
+var _default = exports["default"] = ActionArea;
 //# sourceMappingURL=index.js.map

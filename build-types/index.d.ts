@@ -73,6 +73,7 @@
  * @property {boolean} hasUploadPermissions
  * @property {Object} allowedMimeTypes
  * @property {string[]} allowedBlockTypes
+ * @property {boolean} fixedToolbar
  * @property {boolean} hasFixedToolbar
  * @property {object[]|null} template
  * @property {null} templateLock
@@ -286,6 +287,7 @@ export type EditorSettings = {
     hasUploadPermissions: boolean;
     allowedMimeTypes: any;
     allowedBlockTypes: string[];
+    fixedToolbar: boolean;
     hasFixedToolbar: boolean;
     template: object[] | null;
     templateLock: null;
@@ -321,9 +323,8 @@ export type OnError = () => any;
 import EditorLoaded from './components/editor-loaded';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
-import CollaborativeEditing from './components/collaborative-editing';
 import FooterSlot from './components/footer-slot';
 import EditorHeadingSlot from './components/editor-heading-slot';
 import ActionArea from './components/action-area';
-export { EditorLoaded, DocumentSection, ToolbarSlot, CollaborativeEditing, FooterSlot, EditorHeadingSlot, ActionArea };
+export { EditorLoaded, DocumentSection, ToolbarSlot, FooterSlot, EditorHeadingSlot, ActionArea };
 //# sourceMappingURL=index.d.ts.map

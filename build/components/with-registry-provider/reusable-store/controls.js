@@ -140,6 +140,5 @@ var controls = {
     }();
   })
 };
-var _default = controls;
-exports["default"] = _default;
+var _default = exports["default"] = controls;
 //# sourceMappingURL=controls.js.map

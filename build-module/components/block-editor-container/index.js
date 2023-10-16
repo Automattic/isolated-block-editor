@@ -1,4 +1,4 @@
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * External dependencies
@@ -46,7 +46,7 @@ const SIZE_MEDIUM = 480;
  * @param {boolean} props.isEditorReady - The editor is ready for editing
  * @param {boolean} props.isEditing - This editor is being edited in
  * @param {boolean} props.isPreview - Whether preview mode is enabled
- * @param {boolean} props.hasFixedToolbar - Has fixed toolbar
+ * @param {boolean} props.fixedToolbar - Has fixed toolbar
  * @param {EditorMode} props.editorMode - 'text' or 'visual'
  * @param {string} props.className - additional class names
  * @param {BlockEditorSettings} props.settings - Settings
@@ -75,7 +75,7 @@ function BlockEditorContainer(props) {
     editorMode,
     isEditing,
     setEditing,
-    hasFixedToolbar,
+    fixedToolbar,
     isPreview
   } = props;
   const [resizeListener, {
@@ -91,7 +91,7 @@ function BlockEditorContainer(props) {
     // Match Gutenberg
     'block-editor': true,
     'edit-post-layout': true,
-    'has-fixed-toolbar': hasFixedToolbar,
+    'has-fixed-toolbar': fixedToolbar,
     ['is-mode-' + editorMode]: true,
     'is-preview-mode': isPreview
   });
@@ -111,7 +111,9 @@ function BlockEditorContainer(props) {
     onChange: onChange
   }, children))));
 }
-export default compose([withSelect(select => {
+export default compose([withSelect((select, {
+  settings
+}) => {
   const {
     isEditorReady,
     getEditorMode,
@@ -123,7 +125,7 @@ export default compose([withSelect(select => {
     isEditorReady: isEditorReady(),
     editorMode: getEditorMode(),
     isEditing: isEditing(),
-    hasFixedToolbar: isFeatureActive('fixedToolbar'),
+    fixedToolbar: isFeatureActive('fixedToolbar', settings?.editor.hasFixedToolbar),
     isPreview: isOptionActive('preview')
   };
 }), withDispatch(dispatch => {

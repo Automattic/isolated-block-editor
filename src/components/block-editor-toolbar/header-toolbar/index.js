@@ -27,7 +27,7 @@ function HeaderToolbar( props ) {
 	const { setIsInserterOpened, setIsListViewOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const {
-		hasFixedToolbar,
+		fixedToolbar,
 		isInserterEnabled,
 		isTextModeEnabled,
 		showIconLabels,
@@ -43,7 +43,7 @@ function HeaderToolbar( props ) {
 
 		return {
 			// @ts-ignore
-			hasFixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
+			fixedToolbar: select( 'isolated/editor' ).isFeatureActive( 'fixedToolbar' ),
 			// This setting (richEditingEnabled) should not live in the block editor's setting.
 			isInserterEnabled:
 				// @ts-ignore
@@ -66,7 +66,7 @@ function HeaderToolbar( props ) {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const { inserter, navigation, undo, selectorTool } = props.settings.iso.toolbar;
 	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
-	const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || hasFixedToolbar;
+	const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || fixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
 		? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
 		__( 'Document and block tools' )

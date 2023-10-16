@@ -9,7 +9,7 @@ var _objectDestructuringEmpty2 = _interopRequireDefault(require("@babel/runtime/
 var _postTextEditor = _interopRequireDefault(require("./post-text-editor"));
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * Internal dependencies
@@ -32,6 +32,5 @@ function TextEditor(_ref) {
     mode: "text"
   })));
 }
-var _default = TextEditor;
-exports["default"] = _default;
+var _default = exports["default"] = TextEditor;
 //# sourceMappingURL=text-editor.js.map

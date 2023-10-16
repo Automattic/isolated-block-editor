@@ -8,7 +8,7 @@ exports["default"] = void 0;
 var _ = require("../..");
 var _useYjs = _interopRequireDefault(require("./use-yjs"));
 var _avatars = _interopRequireDefault(require("./components/avatars"));
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 // @ts-nocheck
 /**
  * Internal dependencies

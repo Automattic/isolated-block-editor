@@ -1,4 +1,4 @@
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -14,9 +14,9 @@ const DocumentSection = ({
   return createElement(Fill, null, children);
 };
 DocumentSection.Slot = function (props) {
-  return createElement(Slot, null, fills => fills.length === 0 ? createElement("span", {
+  return createElement(Slot, null, fills => fills ? fills : createElement("span", {
     className: "block-editor-block-inspector__no-blocks"
-  }, __('Nothing to display')) : fills);
+  }, __('Nothing to display')));
 };
 export default DocumentSection;
 //# sourceMappingURL=index.js.map

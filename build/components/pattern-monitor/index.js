@@ -54,7 +54,7 @@ function PatternMonitor(props) {
   }, [currentPattern]);
   return null;
 }
-var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
+var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),
     getCurrentPattern = _select.getCurrentPattern;
   return {
@@ -67,5 +67,4 @@ var _default = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
     updateBlocksWithoutUndo: updateBlocksWithoutUndo
   };
 })])(PatternMonitor);
-exports["default"] = _default;
 //# sourceMappingURL=index.js.map

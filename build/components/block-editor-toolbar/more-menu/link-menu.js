@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
-import { createElement } from "@wordpress/element";
+import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -38,6 +38,5 @@ function LinkMenu(_ref) {
     }, title));
   }));
 }
-var _default = LinkMenu;
-exports["default"] = _default;
+var _default = exports["default"] = LinkMenu;
 //# sourceMappingURL=link-menu.js.map

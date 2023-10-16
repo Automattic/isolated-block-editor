@@ -142,7 +142,7 @@ function getNamedPattern(state, patternName) {
 function isInserterOpened(state) {
   return state.editor.isInserterOpened;
 }
-var isEditorSidebarOpened = (0, _data.createRegistrySelector)(function (select) {
+var isEditorSidebarOpened = exports.isEditorSidebarOpened = (0, _data.createRegistrySelector)(function (select) {
   return function () {
     var activeGeneralSidebar = select(_interface.store).getActiveComplementaryArea('isolated/editor');
     return (0, _lodash.includes)(['edit-post/document', 'edit-post/block'], activeGeneralSidebar);
@@ -155,7 +155,6 @@ var isEditorSidebarOpened = (0, _data.createRegistrySelector)(function (select) 
  * @param {{editor: EditorState}} state - Current state
  * @return {boolean}
  */
-exports.isEditorSidebarOpened = isEditorSidebarOpened;
 function isEditing(state) {
   return state.editor.isEditing;
 }

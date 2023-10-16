@@ -10,63 +10,68 @@ var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _classnames = _interopRequireDefault(require("classnames"));
 var _blockEditor = require("@wordpress/block-editor");
-var _editor = require("@wordpress/editor");
-var _data = require("@wordpress/data");
-var _components = require("@wordpress/components");
 var _element = require("@wordpress/element");
+var _components = require("@wordpress/components");
+var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
+var _blocks = require("@wordpress/blocks");
+var _editor = require("@wordpress/editor");
 var _privateApis = require("@wordpress/private-apis");
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
-import { createElement, Fragment } from "@wordpress/element";
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * External dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */ /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */ /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * Internal dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     */
+import { createElement, Fragment } from "react";
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * External dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */ /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                              * WordPress dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                              */ // @ts-ignore
+// @ts-ignore
+// @ts-ignore
+var isGutenbergPlugin = true;
+
+/**
+ * Internal dependencies
+ */
+
 var _dangerousOptInToUns = (0, _privateApis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my plugin or theme will inevitably break on the next WordPress release.', '@wordpress/edit-post'),
-  lock = _dangerousOptInToUns.lock,
-  unlock = _dangerousOptInToUns.unlock;
-exports.unlock = unlock;
-exports.lock = lock;
+  lock = exports.lock = _dangerousOptInToUns.lock,
+  unlock = exports.unlock = _dangerousOptInToUns.unlock;
 var _unlock = unlock(_blockEditor.privateApis),
   LayoutStyle = _unlock.LayoutStyle,
   useLayoutClasses = _unlock.useLayoutClasses,
-  useLayoutStyles = _unlock.useLayoutStyles;
-function MaybeIframe(_ref) {
-  var children = _ref.children,
-    contentRef = _ref.contentRef,
-    shouldIframe = _ref.shouldIframe,
-    styles = _ref.styles,
-    style = _ref.style;
-  var ref = (0, _blockEditor.__unstableUseMouseMoveTypingReset)();
-  if (!shouldIframe) {
-    return createElement(Fragment, null, createElement(_blockEditor.__unstableEditorStyles, {
-      styles: styles
-    }), createElement(_blockEditor.WritingFlow, {
-      ref: contentRef,
-      className: "editor-styles-wrapper",
-      style: _objectSpread({
-        flex: '1'
-      }, style),
-      tabIndex: -1
-    }, children));
+  useLayoutStyles = _unlock.useLayoutStyles,
+  BlockCanvas = _unlock.ExperimentalBlockCanvas;
+
+/**
+ * Given an array of nested blocks, find the first Post Content
+ * block inside it, recursing through any nesting levels,
+ * and return its attributes.
+ *
+ * @param {Array} blocks A list of blocks.
+ *
+ * @return {Object | undefined} The Post Content block.
+ */
+function getPostContentAttributes(blocks) {
+  for (var i = 0; i < blocks.length; i++) {
+    if (blocks[i].name === 'core/post-content') {
+      return blocks[i].attributes;
+    }
+    if (blocks[i].innerBlocks.length) {
+      var nestedPostContent = getPostContentAttributes(blocks[i].innerBlocks);
+      if (nestedPostContent) {
+        return nestedPostContent;
+      }
+    }
   }
-  return createElement(_blockEditor.__unstableIframe, {
-    ref: ref,
-    contentRef: contentRef,
-    style: {
-      width: '100%',
-      height: '100%',
-      display: 'block'
-    },
-    name: "editor-canvas"
-  }, createElement(_blockEditor.__unstableEditorStyles, {
-    styles: styles
-  }), children);
+}
+function checkForPostContentAtRootLevel(blocks) {
+  for (var i = 0; i < blocks.length; i++) {
+    if (blocks[i].name === 'core/post-content') {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -77,19 +82,21 @@ function MaybeIframe(_ref) {
  * @param {Object} args
  * @param args.styles
  */
-function VisualEditor(_ref2) {
-  var styles = _ref2.styles;
+function VisualEditor(_ref) {
+  var styles = _ref.styles;
   var _useSelect = (0, _data.useSelect)(function (select) {
       var _select = select('isolated/editor'),
         isFeatureActive = _select.isFeatureActive;
-      // @ts-ignore
       var _select2 = select(_editor.store),
         getCurrentPostId = _select2.getCurrentPostId,
         getCurrentPostType = _select2.getCurrentPostType,
         getEditorSettings = _select2.getEditorSettings;
+      var _select3 = select(_blocks.store),
+        getBlockTypes = _select3.getBlockTypes;
       var _isTemplateMode = false;
+      var postTypeSlug = getCurrentPostType();
       var _wrapperBlockName;
-      if (getCurrentPostType() === 'wp_block') {
+      if (postTypeSlug === 'wp_block') {
         _wrapperBlockName = 'core/block';
       } else if (!_isTemplateMode) {
         _wrapperBlockName = 'core/post-content';
@@ -106,7 +113,10 @@ function VisualEditor(_ref2) {
         editedPostTemplate: undefined,
         wrapperBlockName: _wrapperBlockName,
         wrapperUniqueId: getCurrentPostId(),
-        isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme
+        isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
+        hasV3BlocksOnly: getBlockTypes().every(function (type) {
+          return type.apiVersion >= 3;
+        })
       };
     }, []),
     deviceType = _useSelect.deviceType,
@@ -116,18 +126,21 @@ function VisualEditor(_ref2) {
     _useSelect$editedPost = _useSelect.editedPostTemplate,
     editedPostTemplate = _useSelect$editedPost === void 0 ? {} : _useSelect$editedPost,
     wrapperBlockName = _useSelect.wrapperBlockName,
-    wrapperUniqueId = _useSelect.wrapperUniqueId;
+    wrapperUniqueId = _useSelect.wrapperUniqueId,
+    isBlockBasedTheme = _useSelect.isBlockBasedTheme,
+    hasV3BlocksOnly = _useSelect.hasV3BlocksOnly;
   // @ts-ignore
   var _useSelect2 = (0, _data.useSelect)(_editor.store),
     isCleanNewPost = _useSelect2.isCleanNewPost;
   var hasMetaBoxes = false;
   var _useSelect3 = (0, _data.useSelect)(function (select) {
-      // @ts-ignore
+      var _settings$__experimen;
       var _settings = select(_blockEditor.store).getSettings();
       return {
         themeHasDisabledLayoutStyles: _settings.disableLayoutStyles,
         themeSupportsLayout: _settings.supportsLayout,
-        isFocusMode: _settings.focusMode
+        isFocusMode: _settings.focusMode,
+        hasRootPaddingAwareAlignments: (_settings$__experimen = _settings.__experimentalFeatures) === null || _settings$__experimen === void 0 ? void 0 : _settings$__experimen.useRootPaddingAwareAlignments
       };
     }, []),
     themeHasDisabledLayoutStyles = _useSelect3.themeHasDisabledLayoutStyles,
@@ -135,7 +148,8 @@ function VisualEditor(_ref2) {
   var desktopCanvasStyles = {
     height: '100%',
     width: '100%',
-    margin: 0,
+    marginLeft: 'auto',
+    marginRight: 'auto',
     display: 'flex',
     flexFlow: 'column',
     // Default background color so that grey
@@ -162,8 +176,7 @@ function VisualEditor(_ref2) {
     paddingBottom = '40vh';
   }
   var ref = (0, _element.useRef)();
-  var contentRef = (0, _compose.useMergeRefs)([ref, (0, _blockEditor.__unstableUseClipboardHandler)(), (0, _blockEditor.__unstableUseTypewriter)(), (0, _blockEditor.__unstableUseTypingObserver)(), (0, _blockEditor.__unstableUseBlockSelectionClearer)()]);
-  var blockSelectionClearerRef = (0, _blockEditor.__unstableUseBlockSelectionClearer)();
+  var contentRef = (0, _compose.useMergeRefs)([ref, (0, _blockEditor.__unstableUseTypewriter)()]);
 
   // fallbackLayout is used if there is no Post Content,
   // and for Post Title.
@@ -199,18 +212,47 @@ function VisualEditor(_ref2) {
     // If there are no blocks, we have to parse the content string.
     // Best double-check it's a string otherwise the parse function gets unhappy.
     // @ts-ignore
-    var parseableContent = typeof (editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content) === 'string' ? editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content : '';
+    var parseableContent =
+    // @ts-ignore
+    typeof (editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content) === 'string'
+    // @ts-ignore
+    ? editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content : '';
 
     // @ts-ignore
-    return getPostContentAttributes(parse(parseableContent)) || {};
+    return getPostContentAttributes((0, _blocks.parse)(parseableContent)) || {};
   }, [// @ts-ignore
   editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content, // @ts-ignore
   editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.blocks, postContentAttributes]);
-  var layout = (newestPostContentAttributes === null || newestPostContentAttributes === void 0 ? void 0 : newestPostContentAttributes.layout) || {};
+  var hasPostContentAtRootLevel = (0, _element.useMemo)(function () {
+    // @ts-ignore
+    if (!(editedPostTemplate !== null && editedPostTemplate !== void 0 && editedPostTemplate.content) && !(editedPostTemplate !== null && editedPostTemplate !== void 0 && editedPostTemplate.blocks)) {
+      return false;
+    }
+    // When in template editing mode, we can access the blocks directly.
+    // @ts-ignore
+    if (editedPostTemplate !== null && editedPostTemplate !== void 0 && editedPostTemplate.blocks) {
+      // @ts-ignore
+      return checkForPostContentAtRootLevel(editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.blocks);
+    }
+    // If there are no blocks, we have to parse the content string.
+    // Best double-check it's a string otherwise the parse function gets unhappy.
+    var parseableContent =
+    // @ts-ignore
+    typeof (editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content) === 'string'
+    // @ts-ignore
+    ? editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content : '';
+    return checkForPostContentAtRootLevel((0, _blocks.parse)(parseableContent)) || false;
+    // @ts-ignore
+  }, [editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.content, editedPostTemplate === null || editedPostTemplate === void 0 ? void 0 : editedPostTemplate.blocks]);
+  var _ref2 = newestPostContentAttributes || {},
+    _ref2$layout = _ref2.layout,
+    layout = _ref2$layout === void 0 ? {} : _ref2$layout,
+    _ref2$align = _ref2.align,
+    align = _ref2$align === void 0 ? '' : _ref2$align;
   var postContentLayoutClasses = useLayoutClasses(newestPostContentAttributes, 'core/post-content');
   var blockListLayoutClass = (0, _classnames["default"])({
     'is-layout-flow': !themeSupportsLayout
-  }, themeSupportsLayout && postContentLayoutClasses);
+  }, themeSupportsLayout && postContentLayoutClasses, align && "align".concat(align));
   var postContentLayoutStyles = useLayoutStyles(newestPostContentAttributes, 'core/post-content', '.block-editor-block-list__layout.is-root-container');
 
   // Update type for blocks using legacy layouts.
@@ -225,6 +267,7 @@ function VisualEditor(_ref2) {
   // If there is a Post Content block we use its layout for the block list;
   // if not, this must be a classic theme, in which case we use the fallback layout.
   var blockListLayout = postContentAttributes ? postContentLayout : fallbackLayout;
+  var postEditorLayout = (blockListLayout === null || blockListLayout === void 0 ? void 0 : blockListLayout.type) === 'default' && !hasPostContentAtRootLevel ? fallbackLayout : blockListLayout;
   var titleRef = (0, _element.useRef)();
   (0, _element.useEffect)(function () {
     var _titleRef$current;
@@ -232,7 +275,7 @@ function VisualEditor(_ref2) {
       return;
     }
     // @ts-ignore
-    titleRef === null || titleRef === void 0 || (_titleRef$current = titleRef.current) === null || _titleRef$current === void 0 ? void 0 : _titleRef$current.focus();
+    titleRef === null || titleRef === void 0 || (_titleRef$current = titleRef.current) === null || _titleRef$current === void 0 || _titleRef$current.focus();
   }, [isWelcomeGuideVisible, isCleanNewPost]);
   styles = (0, _element.useMemo)(function () {
     return [].concat((0, _toConsumableArray2["default"])(styles), [{
@@ -240,34 +283,49 @@ function VisualEditor(_ref2) {
       css: ".edit-post-visual-editor__post-title-wrapper{margin-top:4rem}" + (paddingBottom ? "body{padding-bottom:".concat(paddingBottom, "}") : '')
     }]);
   }, [styles]);
+
+  // Add some styles for alignwide/alignfull Post Content and its children.
+  var alignCSS = ".is-root-container.alignwide { max-width: var(--wp--style--global--wide-size); margin-left: auto; margin-right: auto;}\n\t\t.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}\n\t\t.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}\n\t\t.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}";
+
+  // TODO: Styles not appearing in the iframe mode yet
+  // const isToBeIframed =
+  // 	( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
+  // 		! hasMetaBoxes ) ||
+  // 	isTemplateMode ||
+  // 	deviceType === 'Tablet' ||
+  // 	deviceType === 'Mobile';
+  var isToBeIframed = false;
   return createElement(_blockEditor.BlockTools, {
     __unstableContentRef: ref,
     className: (0, _classnames["default"])('edit-post-visual-editor', {
-      'is-template-mode': isTemplateMode
+      'is-template-mode': isTemplateMode,
+      'has-inline-canvas': !isToBeIframed
     })
-  }, createElement(_editor.VisualEditorGlobalKeyboardShortcuts, null), createElement(_components.__unstableMotion.div, {
+  }, createElement(_components.__unstableMotion.div, {
     className: "edit-post-visual-editor__content-area",
     animate: {
       padding: isTemplateMode ? '48px 48px 0' : 0
-    },
-    ref: blockSelectionClearerRef
+    }
   }, createElement(_components.__unstableMotion.div, {
     animate: animatedStyles,
     initial: desktopCanvasStyles,
     className: previewMode
-  }, createElement(MaybeIframe, {
-    shouldIframe: isTemplateMode || deviceType === 'Tablet' || deviceType === 'Mobile',
+  }, createElement(BlockCanvas, {
+    shouldIframe: isToBeIframed,
     contentRef: contentRef,
     styles: styles,
-    style: {}
+    height: "100%"
   }, themeSupportsLayout && !themeHasDisabledLayoutStyles && !isTemplateMode && createElement(Fragment, null, createElement(LayoutStyle, {
-    selector: ".edit-post-visual-editor__post-title-wrapper, .block-editor-block-list__layout.is-root-container",
-    layout: fallbackLayout,
-    layoutDefinitions: globalLayoutSettings === null || globalLayoutSettings === void 0 ? void 0 : globalLayoutSettings.definitions
+    selector: ".edit-post-visual-editor__post-title-wrapper",
+    layout: fallbackLayout
+  }), createElement(LayoutStyle, {
+    selector: ".block-editor-block-list__layout.is-root-container",
+    layout: postEditorLayout
+  }), align && createElement(LayoutStyle, {
+    css: alignCSS
   }), postContentLayoutStyles && createElement(LayoutStyle, {
     layout: postContentLayout,
-    css: postContentLayoutStyles,
-    layoutDefinitions: globalLayoutSettings === null || globalLayoutSettings === void 0 ? void 0 : globalLayoutSettings.definitions
+    css: postContentLayoutStyles
   })), createElement(_editorHeadingSlot["default"].Slot, {
     mode: "visual"
   }), createElement(_blockEditor.__experimentalRecursionProvider, {
@@ -277,10 +335,9 @@ function VisualEditor(_ref2) {
     className: isTemplateMode ? 'wp-site-blocks' : "".concat(blockListLayoutClass, " wp-block-post-content") // Ensure root level blocks receive default/flow blockGap styling rules.
     ,
 
-    __experimentalLayout: blockListLayout
+    layout: blockListLayout
   })), createElement(_footerSlot["default"].Slot, {
     mode: "visual"
   })))));
 }
-;
 //# sourceMappingURL=visual-editor.js.map

@@ -38,15 +38,16 @@ function getDisallowedBlocks(blockSettings) {
  * @param {EditorSettings} editorSettings - Editor settings
  * @param {IsoSettings} isoSettings
  * @param {object[]} allBlockTypes - All available blocks
- * @param {boolean} hasFixedToolbar - Do we need a fixed toolbar?
+ * @param {boolean} fixedToolbar - Do we need a fixed toolbar?
  * @return {EditorSettings}
  */
-export default function getEditorSettings(editorSettings, isoSettings, allBlockTypes, hasFixedToolbar) {
+export default function getEditorSettings(editorSettings, isoSettings, allBlockTypes, fixedToolbar) {
   // @ts-ignore
   const disallowBlocks = getDisallowedBlocks(isoSettings.blocks);
   return {
     ...editorSettings,
-    hasFixedToolbar,
+    fixedToolbar,
+    hasFixedToolbar: fixedToolbar,
     // @ts-ignore
     allowedBlockTypes: getAllowedBlockTypes(isoSettings.blocks, allBlockTypes).filter(blockName => disallowBlocks.indexOf(blockName) === -1)
   };
