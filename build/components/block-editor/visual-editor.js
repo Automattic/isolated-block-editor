@@ -34,7 +34,7 @@ var isGutenbergPlugin = true;
  * Internal dependencies
  */
 
-var _dangerousOptInToUns = (0, _privateApis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my plugin or theme will inevitably break on the next WordPress release.', '@wordpress/edit-post'),
+var _dangerousOptInToUns = (0, _privateApis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my theme or plugin will inevitably break in the next version of WordPress.', '@wordpress/edit-post'),
   lock = exports.lock = _dangerousOptInToUns.lock,
   unlock = exports.unlock = _dangerousOptInToUns.unlock;
 var _unlock = unlock(_blockEditor.privateApis),

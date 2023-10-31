@@ -1,6 +1,451 @@
+/// <reference types="redux-undo" />
 export default storeConfig;
 declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
-    reducer: (state: {} | undefined, action: any) => {};
+    reducer: import("redux").Reducer<import("redux").CombinedState<{
+        blocks: import("redux-undo").StateWithHistory<{
+            editCount: number;
+            blocks: any;
+            selection: any;
+        }>;
+        editor: {
+            patterns: any;
+            currentPattern: any;
+            ignoredContent: string[];
+            gutenbergTemplate: any;
+            settings: any;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - whether the list view is open.
+             */
+            isListViewOpened: boolean;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            editorMode: any;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - whether the list view is open.
+             */
+            isListViewOpened: boolean;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            isInserterOpened: any;
+            isInspectorOpened: boolean;
+            isListViewOpened: boolean;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            isInspectorOpened: any;
+            isListViewOpened: boolean;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            isInserterOpened: boolean;
+            isInspectorOpened: boolean;
+            isListViewOpened: any;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            isEditing: any;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - whether the list view is open.
+             */
+            isListViewOpened: boolean;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            isReady: any;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - whether the list view is open.
+             */
+            isListViewOpened: boolean;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            deviceType: any;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - whether the list view is open.
+             */
+            isListViewOpened: boolean;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+            /**
+             * - whether the editor canvas is an iframe
+             */
+            isIframePreview: boolean;
+        } | {
+            isIframePreview: any;
+            /**
+             * - whether in visual or code editing mode.
+             */
+            editorMode: import("./editor/reducer").EditorMode;
+            /**
+             * - whether the inserter is open.
+             */
+            isInserterOpened: boolean;
+            /**
+             * - whether the list view is open.
+             */
+            isListViewOpened: boolean;
+            /**
+             * - array of patterns.
+             */
+            patterns: import("./editor/reducer").Pattern[];
+            /**
+             * - current pattern name.
+             */
+            currentPattern: string | null;
+            /**
+             * - content to ignore when saving.
+             */
+            ignoredContent: string[];
+            /**
+             * - the Gutenberg template
+             */
+            gutenbergTemplate: any;
+            /**
+             * - is this editor being used?
+             */
+            isEditing: boolean;
+            /**
+             * - is the editor ready?
+             */
+            isReady: boolean;
+            /**
+             * - editor settings
+             */
+            settings: import("..").IsoSettings;
+            /**
+             * - current device type
+             */
+            deviceType: string;
+            /**
+             * - editor canvas styles
+             */
+            canvasStyles: any;
+        };
+        preferences: any;
+        options: {};
+    }>, any>;
     actions: {
         toggleFeature(feature: string): {
             type: string;
