@@ -30,9 +30,9 @@ The Isolated Block Editor is provided in three forms:
 - CommonJS module
 - Standalone JavaScript file, for inclusion on any browser page
 
-Requires: Gutenberg 16.7.1
+This library only works with the specific versions of Gutenberg listed below.
 
-If using with WordPress then You are advised to use the Gutenberg plugin, although it may work with the default Gutenberg provided by WordPress. You may or may not run into problems when using with different versions (older or newer).
+Requires: Gutenberg 16.9
 
 Examples:
 - [Plain Text Editor](https://github.com/Automattic/isolated-block-editor/blob/trunk/src/browser/README.md) - standalone JS and CSS file that can replace any `textarea` on any page with a full Gutenberg editor

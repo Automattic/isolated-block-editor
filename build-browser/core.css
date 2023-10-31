@@ -441,15 +441,15 @@ p + .components-button.is-tertiary {
   padding-left: 8px;
   gap: 4px;
 }
-.components-button[aria-pressed=true], .components-button[aria-pressed=mixed] {
+.components-button.is-pressed {
   color: var(--wp-components-color-foreground-inverted, #fff);
   background: var(--wp-components-color-foreground, #1e1e1e);
 }
-.components-button[aria-pressed=true]:focus:not(:disabled), .components-button[aria-pressed=mixed]:focus:not(:disabled) {
+.components-button.is-pressed:focus:not(:disabled) {
   box-shadow: inset 0 0 0 1px var(--wp-components-color-background, #fff), 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
   outline: 2px solid transparent;
 }
-.components-button[aria-pressed=true]:hover:not(:disabled), .components-button[aria-pressed=mixed]:hover:not(:disabled) {
+.components-button.is-pressed:hover:not(:disabled) {
   color: var(--wp-components-color-foreground-inverted, #fff);
   background: var(--wp-components-color-foreground, #1e1e1e);
 }
@@ -1979,7 +1979,6 @@ body.is-dragging-components-draggable {
   font-size: 13px;
   background-color: #fff;
   border-left: 4px solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
-  margin: 5px 15px 2px;
   padding: 8px 12px;
   align-items: center;
 }
@@ -2553,6 +2552,13 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 .is-alternate .components-popover__triangle-border {
   stroke: #1e1e1e;
+}
+
+.components-popover-pointer-events-trap {
+  z-index: 1000000;
+  position: fixed;
+  inset: 0;
+  background-color: transparent;
 }
 
 .components-radio-control__input[type=radio] {
@@ -3245,6 +3251,12 @@ body.lockscroll {
 .components-accessible-toolbar > .components-toolbar-group:last-child {
   border-right: none;
 }
+.components-accessible-toolbar.is-unstyled {
+  border: none;
+}
+.components-accessible-toolbar.is-unstyled > .components-toolbar-group {
+  border-right: none;
+}
 
 .components-accessible-toolbar .components-button,
 .components-toolbar .components-button {
@@ -3717,7 +3729,6 @@ div.components-toolbar > div + div.has-left-divider::before {
 }
 .block-editor-block-contextual-toolbar.is-fixed {
   overflow: hidden;
-  border: none;
   border-bottom: 1px solid #e0e0e0;
   border-radius: 0;
 }
@@ -4598,6 +4609,7 @@ div.components-toolbar > div + div.has-left-divider::before {
 
 .block-editor-block-switcher__preview__popover {
   display: none;
+  overflow: hidden;
 }
 .block-editor-block-switcher__preview__popover.components-popover {
   margin-top: 11px;
@@ -4614,12 +4626,16 @@ div.components-toolbar > div + div.has-left-divider::before {
   border-radius: 2px;
   outline: none;
   box-shadow: none;
+  overflow: auto;
 }
 .block-editor-block-switcher__preview__popover .block-editor-block-switcher__preview {
   max-height: calc(500px - 32px);
   margin: 16px 0;
   padding: 0 16px;
   overflow: hidden;
+}
+.block-editor-block-switcher__preview__popover .block-editor-block-switcher__preview.is-pattern-list-preview {
+  overflow: unset;
 }
 
 .block-editor-block-switcher__preview-title {
@@ -4954,13 +4970,13 @@ div.components-toolbar > div + div.has-left-divider::before {
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
-.block-editor-tools-panel-color-gradient-settings__item.first {
+.block-editor-tools-panel-color-gradient-settings__item:nth-child(1 of .block-editor-tools-panel-color-gradient-settings__item) {
   margin-top: 24px;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   border-top: 1px solid #ddd;
 }
-.block-editor-tools-panel-color-gradient-settings__item.last {
+.block-editor-tools-panel-color-gradient-settings__item:nth-last-child(1 of .block-editor-tools-panel-color-gradient-settings__item) {
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
@@ -5555,9 +5571,10 @@ div.components-toolbar > div + div.has-left-divider::before {
 }
 .block-editor-link-control__search-item .block-editor-link-control__search-item-image img {
   display: block;
-  max-width: 100%;
-  height: 140px;
-  max-height: 140px;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .block-editor-link-control__search-item-top {
@@ -9086,6 +9103,54 @@ section.wp-block-cover-image > h2,
   text-decoration: none;
 }
 
+.wp-block-form-input__label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  margin-bottom: 0.5em;
+  /*
+  Small tweak to left-align the checkbox.
+  Even though `:has` is not currently supported in Firefox, this is a small tweak
+  and does not affect the functionality of the block or the user's experience.
+  There will be a minor inconsistency between browsers. However, it's more important to provide
+  a better experience for 80+% of users, until Firefox catches up and supports `:has`.
+  */
+}
+.wp-block-form-input__label.is-label-inline {
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+}
+.wp-block-form-input__label.is-label-inline .wp-block-form-input__label-content {
+  margin-bottom: 0.5em;
+}
+.wp-block-form-input__label:has(input[type=checkbox]) {
+  width: -moz-fit-content;
+  width: fit-content;
+  flex-direction: row-reverse;
+}
+
+.wp-block-form-input__label-content {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.wp-block-form-input__input {
+  padding: 0 0.5em;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+.wp-block-form-input__input[type=text], .wp-block-form-input__input[type=password], .wp-block-form-input__input[type=date], .wp-block-form-input__input[type=datetime], .wp-block-form-input__input[type=datetime-local], .wp-block-form-input__input[type=email], .wp-block-form-input__input[type=month], .wp-block-form-input__input[type=number], .wp-block-form-input__input[type=search], .wp-block-form-input__input[type=tel], .wp-block-form-input__input[type=time], .wp-block-form-input__input[type=url], .wp-block-form-input__input[type=week] {
+  min-height: 2em;
+  line-height: 2;
+  border: 1px solid;
+}
+
+textarea.wp-block-form-input__input {
+  min-height: 10em;
+}
+
 .wp-block-gallery:not(.has-nested-images),
 .blocks-gallery-grid:not(.has-nested-images) {
   display: flex;
@@ -9555,20 +9620,45 @@ h6.has-text-align-left[style*=writing-mode]:where([style*="vertical-lr"]) {
 
 .wp-lightbox-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.wp-lightbox-container img {
+  cursor: zoom-in;
+}
+.wp-lightbox-container img:hover + button {
+  opacity: 1;
 }
 .wp-lightbox-container button {
+  opacity: 0;
   border: none;
-  background: none;
+  background: #000;
   cursor: zoom-in;
-  width: 100%;
-  height: 100%;
+  width: 24px;
+  height: 24px;
   position: absolute;
   z-index: 100;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  padding: 0;
+  border-radius: 10%;
 }
 .wp-lightbox-container button:focus-visible {
   outline: 5px auto #212121;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: 5px;
+}
+.wp-lightbox-container button:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+.wp-lightbox-container button:focus {
+  opacity: 1;
+}
+.wp-lightbox-container button:hover, .wp-lightbox-container button:focus, .wp-lightbox-container button:not(:hover):not(:active):not(.has-background) {
+  background: #000;
+  border: none;
 }
 
 .wp-lightbox-overlay {
@@ -9585,11 +9675,20 @@ h6.has-text-align-left[style*=writing-mode]:where([style*="vertical-lr"]) {
 }
 .wp-lightbox-overlay .close-button {
   position: absolute;
-  top: calc(env(safe-area-inset-top) + 20px);
-  right: calc(env(safe-area-inset-right) + 20px);
+  top: calc(env(safe-area-inset-top) + 16px);
+  right: calc(env(safe-area-inset-right) + 16px);
   padding: 0;
   cursor: pointer;
   z-index: 5000000;
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wp-lightbox-overlay .close-button:hover, .wp-lightbox-overlay .close-button:focus, .wp-lightbox-overlay .close-button:not(:hover):not(:active):not(.has-background) {
+  background: none;
+  border: none;
 }
 .wp-lightbox-overlay .lightbox-image-container {
   position: absolute;
@@ -12733,6 +12832,56 @@ html :where(.wp-block-column) {
 .wp-block-file .wp-block-file__button-richtext-wrapper {
   display: inline-block;
   margin-left: 0.75em;
+}
+
+.wp-block-form-input .is-input-hidden {
+  font-size: 0.85em;
+  opacity: 0.3;
+  border: 1px dashed;
+  padding: 0.5em;
+  box-sizing: border-box;
+  background: repeating-linear-gradient(45deg, transparent, transparent 5px, currentColor 5px, currentColor 6px);
+}
+.wp-block-form-input .is-input-hidden input[type=text] {
+  background: transparent;
+}
+.wp-block-form-input.is-selected .is-input-hidden {
+  opacity: 1;
+  background: none;
+}
+.wp-block-form-input.is-selected .is-input-hidden input[type=text] {
+  background: unset;
+}
+
+.wp-block-form-submission-notification > * {
+  opacity: 0.25;
+  border: 1px dashed;
+  box-sizing: border-box;
+  background: repeating-linear-gradient(45deg, transparent, transparent 5px, currentColor 5px, currentColor 6px);
+}
+.wp-block-form-submission-notification.is-selected > *, .wp-block-form-submission-notification:has(.is-selected) > * {
+  opacity: 1;
+  background: none;
+}
+.wp-block-form-submission-notification.is-selected::after, .wp-block-form-submission-notification:has(.is-selected)::after {
+  display: none !important;
+}
+.wp-block-form-submission-notification::after {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1em;
+}
+.wp-block-form-submission-notification.form-notification-type-success::after {
+  content: attr(data-message-success);
+}
+.wp-block-form-submission-notification.form-notification-type-error::after {
+  content: attr(data-message-error);
 }
 
 .wp-block-freeform.block-library-rich-text__tinymce {
@@ -16510,7 +16659,6 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .edit-post-header-toolbar {
   display: inline-flex;
   align-items: center;
-  border: none;
 }
 .edit-post-header-toolbar .edit-post-header-toolbar__left > .components-button {
   display: none;
