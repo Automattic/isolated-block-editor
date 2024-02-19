@@ -24,12 +24,12 @@ export default function InserterSidebar() {
 			// @ts-ignore
 			ref={ inserterDialogRef }
 			{ ...inserterDialogProps }
-			className="edit-post-editor__inserter-panel"
+			className="edit-widgets-layout__inserter-panel"
 		>
-			<TagName className="edit-post-editor__inserter-panel-header">
+			<TagName className="edit-widgets-layout__inserter-panel-header">
 				<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
 			</TagName>
-			<div className="edit-post-editor__inserter-panel-content">
+			<div className="edit-widgets-layout__inserter-panel-content">
 				<Library showMostUsedBlocks={ false } showInserterHelpPanel shouldFocusBlock={ isMobileViewport } />
 			</div>
 		</div>
