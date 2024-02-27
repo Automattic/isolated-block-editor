@@ -29,7 +29,7 @@ const SettingsHeader = ( { documentInspector } ) => {
 	/* Use a list so screen readers will announce how many tabs there are. */
 	return (
 		<Tabs.TabList>
-			<Tabs.Tab tabId={ sidebars.document }>{ documentLabel }</Tabs.Tab>
+			{ !!documentInspector && <Tabs.Tab tabId={ sidebars.document }>{ documentLabel }</Tabs.Tab>}
 			<Tabs.Tab tabId={ sidebars.block }>
 				{ /* translators: Text label for the Block Settings Sidebar tab. */ }
 				{ __( 'Block' ) }
