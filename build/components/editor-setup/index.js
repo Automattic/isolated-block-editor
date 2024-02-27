@@ -40,7 +40,7 @@ function useEditorSetup(settings) {
     setupEditor = _useDispatch.setupEditor;
   var _useDispatch2 = (0, _data.useDispatch)('core/editor'),
     updateEditorSettings = _useDispatch2.updateEditorSettings,
-    setupCoreEditor = _useDispatch2.setupEditorState;
+    setupCoreEditor = _useDispatch2.setEditedPost;
   var _useDispatch3 = (0, _data.useDispatch)('core/block-editor'),
     updateSettings = _useDispatch3.updateSettings;
   var _useSelect = (0, _data.useSelect)(function (select) {
@@ -100,10 +100,7 @@ function useEditorSetup(settings) {
     updateAllSettings(currentSettings);
 
     // Set up the post entities with some dummy data, ensuring that anything that uses post entities can work
-    setupCoreEditor({
-      id: 0,
-      type: 'post'
-    }, []);
+    setupCoreEditor('post', 0);
   }, []);
 
   // Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change

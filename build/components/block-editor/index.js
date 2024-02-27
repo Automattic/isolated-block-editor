@@ -87,6 +87,7 @@ function BlockEditor(props) {
     renderMoreMenu = props.renderMoreMenu;
   var styles = []; // TODO: do we need hasThemeStyles support here?
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
+  var isLargeViewport = (0, _compose.useViewportMatch)('medium');
   var inspectorInSidebar = (settings === null || settings === void 0 || (_settings$iso = settings.iso) === null || _settings$iso === void 0 || (_settings$iso = _settings$iso.sidebar) === null || _settings$iso === void 0 ? void 0 : _settings$iso.inspector) || false;
   var inserterInSidebar = (settings === null || settings === void 0 || (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 || (_settings$iso2 = _settings$iso2.sidebar) === null || _settings$iso2 === void 0 ? void 0 : _settings$iso2.inserter) || false;
   var showHeader = (_settings$iso$header = settings === null || settings === void 0 || (_settings$iso3 = settings.iso) === null || _settings$iso3 === void 0 ? void 0 : _settings$iso3.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
@@ -173,9 +174,11 @@ function BlockEditor(props) {
     content: createElement(Fragment, null, createElement(_editor.EditorNotices, null), isEditing && createElement(Fragment, null, createElement(_blockEditor.BlockEditorKeyboardShortcuts, null), createElement(_blockEditor.BlockEditorKeyboardShortcuts.Register, null)), createElement(_components.KeyboardShortcuts, {
       bindGlobal: false,
       shortcuts: (_ref = {}, (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primary('z'), undo), (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primaryShift('z'), redo), _ref)
-    }, editorMode === 'visual' && createElement(_visualEditor["default"], {
+    }, editorMode === 'visual' && createElement(Fragment, null, !isLargeViewport && createElement(_blockEditor.BlockToolbar, {
+      hideDragHandle: true
+    }), createElement(_visualEditor["default"], {
       styles: styles
-    }), editorMode === 'text' && createElement(_textEditor["default"], null)), children),
+    })), editorMode === 'text' && createElement(_textEditor["default"], null)), children),
     footer: showFooter && createElement(_footer["default"], {
       editorMode: editorMode
     }),

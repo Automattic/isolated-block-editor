@@ -31,7 +31,7 @@ const SettingsHeader = ({
   }, []);
 
   /* Use a list so screen readers will announce how many tabs there are. */
-  return createElement(Tabs.TabList, null, createElement(Tabs.Tab, {
+  return createElement(Tabs.TabList, null, !!documentInspector && createElement(Tabs.Tab, {
     tabId: sidebars.document
   }, documentLabel), createElement(Tabs.Tab, {
     tabId: sidebars.block

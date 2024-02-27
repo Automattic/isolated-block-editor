@@ -16,6 +16,7 @@ var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
 var _redo = _interopRequireDefault(require("./redo"));
 var _undo = _interopRequireDefault(require("./undo"));
 var _blockNavigation = _interopRequireDefault(require("../block-navigation"));
+require("./style.scss");
 import { createElement } from "react";
 // @ts-nocheck
 /**
@@ -101,14 +102,14 @@ function HeaderToolbar(props) {
     return setIsListViewOpened(!isListViewOpen);
   }, [setIsListViewOpened, isListViewOpen]);
   return createElement(_blockEditor.NavigableToolbar, {
-    className: "edit-post-header-toolbar",
+    className: "editor-document-tools edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel
   }, (inserter || undo || navigation || selectorTool) && createElement("div", {
-    className: "edit-post-header-toolbar__left"
+    className: "editor-document-tools__left edit-post-header-toolbar__left"
   }, inserter && createElement(_components.ToolbarItem, {
     ref: inserterButton,
     as: _components.Button,
-    className: "edit-post-header-toolbar__inserter-toggle",
+    className: "editor-document-tools__inserter-toggle",
     isPressed: isInserterOpened,
     onMouseDown: preventDefault,
     onClick: openInserter,

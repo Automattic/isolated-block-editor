@@ -15,28 +15,32 @@
 .edit-post-header__settings {
 	display: inline-flex;
 	align-items: center;
+
+	button.components-button.has-icon {
+		margin-right: 0;
+	}
 }
-//
-//.edit-post-visual-editor .block-editor-block-contextual-toolbar.is-fixed {
-//	position: static;
-//	margin-left: 0;
-//	min-height: 49px;
-//
-//	&.is-collapsed {
-//		margin-left: 0;
-//	}
-//
-//	.block-editor-block-toolbar .components-toolbar-group::after,
-//	> .block-editor-block-toolbar__group-collapse-fixed-toolbar::after {
-//		height: 49px;
-//		margin-top: 0;
-//		margin-bottom: 0;
-//	}
-//
-//	&.is-collapsed:after {
-//		display: none;
-//	}
-//}
+
+.edit-post-visual-editor .block-editor-block-contextual-toolbar.is-fixed {
+	position: static;
+	margin-left: 0;
+	min-height: 49px;
+
+	&.is-collapsed {
+		margin-left: 0;
+	}
+
+	.block-editor-block-toolbar .components-toolbar-group::after,
+	> .block-editor-block-toolbar__group-collapse-fixed-toolbar::after {
+		height: 49px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	&.is-collapsed:after {
+		display: none;
+	}
+}
 
 .is-fixed ~ .edit-post-visual-editor__content-area {
 	border-top: 1px solid #e0e0e0;

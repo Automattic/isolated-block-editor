@@ -97,10 +97,10 @@ function HeaderToolbar(props) {
   }, [isInserterOpened, setIsInserterOpened]);
   const toggleListView = useCallback(() => setIsListViewOpened(!isListViewOpen), [setIsListViewOpened, isListViewOpen]);
   return createElement(NavigableToolbar, {
-    className: "edit-post-header-toolbar",
+    className: "editor-document-tools edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel
   }, (inserter || undo || navigation || selectorTool) && createElement("div", {
-    className: "edit-post-header-toolbar__left"
+    className: "editor-document-tools__left edit-post-header-toolbar__left"
   }, inserter && createElement(ToolbarItem, {
     ref: inserterButton,
     as: Button,
