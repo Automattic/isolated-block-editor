@@ -124,10 +124,13 @@ const BlockEditorToolbar = ( props ) => {
 							>
 								<BlockToolbar hideDragHandle />
 							</div>
-							<Popover.Slot
-								ref={ blockToolbarRef }
-								name="block-toolbar"
-							/>
+							{
+								// @ts-ignore
+								<Popover.Slot
+									ref={ blockToolbarRef }
+									name="block-toolbar"
+								/>
+							}
 							{ isBlockSelected && (
 								<Button
 									className="edit-post-header__block-tools-toggle"

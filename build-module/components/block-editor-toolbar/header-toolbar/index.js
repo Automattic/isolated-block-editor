@@ -18,6 +18,7 @@ import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
 import BlockNavigationDropdown from '../block-navigation';
+import './style.scss';
 const preventDefault = event => {
   event.preventDefault();
 };
@@ -103,7 +104,7 @@ function HeaderToolbar(props) {
   }, inserter && createElement(ToolbarItem, {
     ref: inserterButton,
     as: Button,
-    className: "edit-post-header-toolbar__inserter-toggle",
+    className: "editor-document-tools__inserter-toggle",
     isPressed: isInserterOpened,
     onMouseDown: preventDefault,
     onClick: openInserter,
