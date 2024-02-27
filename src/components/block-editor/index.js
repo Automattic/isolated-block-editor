@@ -11,7 +11,7 @@ import { withDispatch, useSelect } from '@wordpress/data';
 import { KeyboardShortcuts } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { useViewportMatch } from '@wordpress/compose';
-import { BlockEditorKeyboardShortcuts } from '@wordpress/block-editor';
+import { BlockEditorKeyboardShortcuts, BlockToolbar } from '@wordpress/block-editor';
 import { EditorNotices, EditorSnackbars } from '@wordpress/editor';
 import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfaceStore } from '@wordpress/interface';
 import { __ } from '@wordpress/i18n';
@@ -73,6 +73,7 @@ function BlockEditor( props ) {
 	const { isEditing, editorMode, children, undo, redo, settings, renderMoreMenu } = props;
 	const styles = []; // TODO: do we need hasThemeStyles support here?
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
+	const isLargeViewport = useViewportMatch( 'medium' );
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
 	const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;
 	const showHeader = settings?.iso?.header ?? true;
@@ -183,7 +184,12 @@ function BlockEditor( props ) {
 								[ rawShortcut.primaryShift( 'z' ) ]: redo,
 							} }
 						>
-							{ editorMode === 'visual' && <VisualEditor styles={ styles } /> }
+							{ editorMode === 'visual' && (
+								<>
+									{ ! isLargeViewport && <BlockToolbar hideDragHandle /> }
+									<VisualEditor styles={ styles } />
+								</>
+							) }
 							{ editorMode === 'text' && <TextEditor /> }
 						</KeyboardShortcuts>
 
