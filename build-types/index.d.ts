@@ -249,7 +249,7 @@ export type IsoSettings = {
     /**
      * - List of patterns
      */
-    patterns?: import("./store/editor/reducer").Pattern[] | undefined;
+    patterns?: import("./components/pattern-monitor").Pattern[] | undefined;
     /**
      * - Default preferences if nothing in localStorage
      */

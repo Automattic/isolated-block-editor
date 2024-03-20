@@ -56,12 +56,17 @@ function registerApiHandlers(options) {
       // Reusable blocks
       '/wp/v2/blocks': {
         body: []
+      },
+      '/wp/v2/templates': {
+        body: []
       }
     },
     '/wp/v2/types?context=view': getTypes(),
     '/wp/v2/types?context=edit': getTypes(),
     '/wp/v2/posts/0?context=edit': getPost(),
-    '/wp/v2/posts?context=edit': getPost()
+    '/wp/v2/posts?context=edit': getPost(),
+    '/wp/v2/templates': () => ({}),
+    '/wp/v2/types/post?context=edit': () => ({})
   };
   apiFetch.use(apiFetch.createPreloadingMiddleware(preload));
 }
