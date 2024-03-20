@@ -29,7 +29,7 @@ describe( 'BlockEditorContents', () => {
 
 			expect( content.length ).toEqual( 1 );
 			expect( content[ 0 ].name ).toEqual( 'core/paragraph' );
-			expect( content[ 0 ].attributes.content ).toEqual( 'test' );
+			expect( JSON.stringify( content[0].attributes.content ) ).toEqual( JSON.stringify( 'test' ) );
 		} );
 
 		it( 'returns empty content if unknown pattern', () => {
