@@ -12,7 +12,7 @@ import { withDispatch, useSelect } from '@wordpress/data';
 import { KeyboardShortcuts } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { useViewportMatch } from '@wordpress/compose';
-import { BlockEditorKeyboardShortcuts } from '@wordpress/block-editor';
+import { BlockEditorKeyboardShortcuts, BlockToolbar } from '@wordpress/block-editor';
 import { EditorNotices, EditorSnackbars } from '@wordpress/editor';
 import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfaceStore } from '@wordpress/interface';
 import { __ } from '@wordpress/i18n';
@@ -83,6 +83,7 @@ function BlockEditor(props) {
   } = props;
   const styles = []; // TODO: do we need hasThemeStyles support here?
   const isMobileViewport = useViewportMatch('medium', '<');
+  const isLargeViewport = useViewportMatch('medium');
   const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
   const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;
   const showHeader = (_settings$iso$header = settings?.iso?.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
@@ -174,9 +175,11 @@ function BlockEditor(props) {
         [rawShortcut.primary('z')]: undo,
         [rawShortcut.primaryShift('z')]: redo
       }
-    }, editorMode === 'visual' && createElement(VisualEditor, {
+    }, editorMode === 'visual' && createElement(Fragment, null, !isLargeViewport && createElement(BlockToolbar, {
+      hideDragHandle: true
+    }), createElement(VisualEditor, {
       styles: styles
-    }), editorMode === 'text' && createElement(TextEditor, null)), children),
+    })), editorMode === 'text' && createElement(TextEditor, null)), children),
     footer: showFooter && createElement(Footer, {
       editorMode: editorMode
     }),

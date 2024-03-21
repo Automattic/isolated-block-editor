@@ -2,12 +2,18 @@
  * WordPress dependencies
  */
 
-import { useEffect, useRef } from '@wordpress/element';
-import { Button } from '@wordpress/components';
-import { cog } from '@wordpress/icons';
+import {	BlockToolbar } from '@wordpress/block-editor';
+import { useEffect, useRef, useState } from '@wordpress/element';
+import { Button, Popover } from '@wordpress/components';
+import { cog, next, previous } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useViewportMatch } from '@wordpress/compose';
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames';
 
 /**
  * Internal dependencies
@@ -34,6 +40,8 @@ const BlockEditorToolbar = ( props ) => {
 	const ref = useRef( null );
 	const { settings, editorMode, renderMoreMenu } = props;
 	const isHugeViewport = useViewportMatch( 'huge', '>=' );
+	const blockToolbarRef = useRef();
+	const isLargeViewport = useViewportMatch( 'medium' );
 	const { inspector } = settings.iso?.toolbar || {};
 	const { moreMenu } = settings.iso || {};
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
@@ -53,6 +61,16 @@ const BlockEditorToolbar = ( props ) => {
 		} ),
 		[]
 	);
+
+	const [ isBlockToolsCollapsed, setIsBlockToolsCollapsed ] =
+		useState( true );
+
+	useEffect( () => {
+		// If we have a new block selection, show the block tools
+		if ( isBlockSelected ) {
+			setIsBlockToolsCollapsed( false );
+		}
+	}, [ isBlockSelected ] );
 
 	function toggleSidebar( isOpen ) {
 		if ( ! isOpen ) {
@@ -94,6 +112,43 @@ const BlockEditorToolbar = ( props ) => {
 			<div className="edit-post-header">
 				<div className="edit-post-header__toolbar">
 					<HeaderToolbar settings={ settings } />
+					{ isLargeViewport && (
+						<>
+							<div
+								className={ classnames(
+									'selected-block-tools-wrapper',
+									{
+										'is-collapsed': isBlockToolsCollapsed,
+									}
+								) }
+							>
+								<BlockToolbar hideDragHandle />
+							</div>
+							{
+								// @ts-ignore
+								<Popover.Slot
+									ref={ blockToolbarRef }
+									name="block-toolbar"
+								/>
+							}
+							{ isBlockSelected && (
+								<Button
+									className="edit-post-header__block-tools-toggle"
+									icon={ isBlockToolsCollapsed ? next : previous }
+									onClick={ () => {
+										setIsBlockToolsCollapsed(
+											( collapsed ) => ! collapsed
+										);
+									} }
+									label={
+										isBlockToolsCollapsed
+											? __( 'Show block tools' )
+											: __( 'Hide block tools' )
+									}
+								/>
+							) }
+						</>
+					) }
 				</div>
 
 				<div className="edit-post-header__settings" ref={ ref }>

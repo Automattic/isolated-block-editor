@@ -32,7 +32,7 @@ import getEditorSettings from './editor-settings';
 export default function useEditorSetup( settings ) {
 	// @ts-ignore
 	const { undo, setupEditor } = useDispatch( 'isolated/editor' );
-	const { updateEditorSettings, setupEditorState: setupCoreEditor } = useDispatch( 'core/editor' );
+	const { updateEditorSettings, setEditedPost: setupCoreEditor } = useDispatch( 'core/editor' );
 	const { updateSettings } = useDispatch( 'core/block-editor' );
 	const { isEditing, topToolbar, currentSettings } = useSelect( ( select ) => {
 		const { isEditing: isEditingSelect, isFeatureActive } = select( 'isolated/editor' );
@@ -93,13 +93,7 @@ export default function useEditorSetup( settings ) {
 		updateAllSettings( currentSettings );
 
 		// Set up the post entities with some dummy data, ensuring that anything that uses post entities can work
-		setupCoreEditor(
-			{
-				id: 0,
-				type: 'post',
-			},
-			[]
-		);
+		setupCoreEditor('post', 0);
 	}, [] );
 
 	// Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change

@@ -63,12 +63,21 @@ function registerApiHandlers(options) {
       // Reusable blocks
       '/wp/v2/blocks': {
         body: []
+      },
+      '/wp/v2/templates': {
+        body: []
       }
     },
     '/wp/v2/types?context=view': getTypes(),
     '/wp/v2/types?context=edit': getTypes(),
     '/wp/v2/posts/0?context=edit': getPost(),
-    '/wp/v2/posts?context=edit': getPost()
+    '/wp/v2/posts?context=edit': getPost(),
+    '/wp/v2/templates': function wpV2Templates() {
+      return {};
+    },
+    '/wp/v2/types/post?context=edit': function wpV2TypesPostContextEdit() {
+      return {};
+    }
   };
   _apiFetch["default"].use(_apiFetch["default"].createPreloadingMiddleware(preload));
 }

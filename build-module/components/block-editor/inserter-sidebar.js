@@ -24,14 +24,14 @@ export default function InserterSidebar() {
     // @ts-ignore
     ref: inserterDialogRef,
     ...inserterDialogProps,
-    className: "edit-post-editor__inserter-panel"
+    className: "edit-widgets-layout__inserter-panel"
   }, createElement(TagName, {
-    className: "edit-post-editor__inserter-panel-header"
+    className: "edit-widgets-layout__inserter-panel-header"
   }, createElement(Button, {
     icon: close,
     onClick: () => setIsInserterOpened(false)
   })), createElement("div", {
-    className: "edit-post-editor__inserter-panel-content"
+    className: "edit-widgets-layout__inserter-panel-content"
   }, createElement(Library, {
     showMostUsedBlocks: false,
     showInserterHelpPanel: true,

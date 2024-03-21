@@ -37,7 +37,7 @@ export default function useEditorSetup(settings) {
   } = useDispatch('isolated/editor');
   const {
     updateEditorSettings,
-    setupEditorState: setupCoreEditor
+    setEditedPost: setupCoreEditor
   } = useDispatch('core/editor');
   const {
     updateSettings
@@ -103,10 +103,7 @@ export default function useEditorSetup(settings) {
     updateAllSettings(currentSettings);
 
     // Set up the post entities with some dummy data, ensuring that anything that uses post entities can work
-    setupCoreEditor({
-      id: 0,
-      type: 'post'
-    }, []);
+    setupCoreEditor('post', 0);
   }, []);
 
   // Run whenever the editor is focussed, or the topToolbar setting or reusable blocks change

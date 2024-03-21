@@ -5,20 +5,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+var _blockEditor = require("@wordpress/block-editor");
 var _element = require("@wordpress/element");
 var _components = require("@wordpress/components");
 var _icons = require("@wordpress/icons");
 var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
+var _classnames = _interopRequireDefault(require("classnames"));
 var _moreMenu = _interopRequireDefault(require("./more-menu"));
 var _headerToolbar = _interopRequireDefault(require("./header-toolbar"));
 var _inspector = _interopRequireDefault(require("./inspector"));
 var _slot = _interopRequireDefault(require("./slot"));
 require("./style.scss");
-import { createElement } from "react";
+import { createElement, Fragment } from "react";
 /**
  * WordPress dependencies
+ */
+
+/**
+ * External dependencies
  */
 
 /**
@@ -43,6 +50,8 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     editorMode = props.editorMode,
     renderMoreMenu = props.renderMoreMenu;
   var isHugeViewport = (0, _compose.useViewportMatch)('huge', '>=');
+  var blockToolbarRef = (0, _element.useRef)();
+  var isLargeViewport = (0, _compose.useViewportMatch)('medium');
   var _ref = ((_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.toolbar) || {},
     inspector = _ref.inspector;
   var _ref2 = settings.iso || {},
@@ -71,6 +80,16 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     hasBlockSelected = _useSelect.hasBlockSelected,
     isInserterOpened = _useSelect.isInserterOpened,
     isEditing = _useSelect.isEditing;
+  var _useState = (0, _element.useState)(true),
+    _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
+    isBlockToolsCollapsed = _useState2[0],
+    setIsBlockToolsCollapsed = _useState2[1];
+  (0, _element.useEffect)(function () {
+    // If we have a new block selection, show the block tools
+    if (isBlockSelected) {
+      setIsBlockToolsCollapsed(false);
+    }
+  }, [isBlockSelected]);
   function toggleSidebar(isOpen) {
     if (!isOpen) {
       closeGeneralSidebar();
@@ -114,7 +133,27 @@ var BlockEditorToolbar = function BlockEditorToolbar(props) {
     className: "edit-post-header__toolbar"
   }, createElement(_headerToolbar["default"], {
     settings: settings
-  })), createElement("div", {
+  }), isLargeViewport && createElement(Fragment, null, createElement("div", {
+    className: (0, _classnames["default"])('selected-block-tools-wrapper', {
+      'is-collapsed': isBlockToolsCollapsed
+    })
+  }, createElement(_blockEditor.BlockToolbar, {
+    hideDragHandle: true
+  })),
+  // @ts-ignore
+  createElement(_components.Popover.Slot, {
+    ref: blockToolbarRef,
+    name: "block-toolbar"
+  }), isBlockSelected && createElement(_components.Button, {
+    className: "edit-post-header__block-tools-toggle",
+    icon: isBlockToolsCollapsed ? _icons.next : _icons.previous,
+    onClick: function onClick() {
+      setIsBlockToolsCollapsed(function (collapsed) {
+        return !collapsed;
+      });
+    },
+    label: isBlockToolsCollapsed ? (0, _i18n.__)('Show block tools') : (0, _i18n.__)('Hide block tools')
+  }))), createElement("div", {
     className: "edit-post-header__settings",
     ref: ref
   }, createElement(_slot["default"].Slot, null), inspector && createElement(_components.Button, {

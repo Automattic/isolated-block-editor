@@ -38,16 +38,16 @@ function InserterSidebar() {
     // @ts-ignore
     ref: inserterDialogRef
   }, inserterDialogProps), {}, {
-    className: "edit-post-editor__inserter-panel"
+    className: "edit-widgets-layout__inserter-panel"
   }), createElement(TagName, {
-    className: "edit-post-editor__inserter-panel-header"
+    className: "edit-widgets-layout__inserter-panel-header"
   }, createElement(_components.Button, {
     icon: _icons.close,
     onClick: function onClick() {
       return setIsInserterOpened(false);
     }
   })), createElement("div", {
-    className: "edit-post-editor__inserter-panel-content"
+    className: "edit-widgets-layout__inserter-panel-content"
   }, createElement(_blockEditor.__experimentalLibrary, {
     showMostUsedBlocks: false,
     showInserterHelpPanel: true,

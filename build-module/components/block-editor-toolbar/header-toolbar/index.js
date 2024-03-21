@@ -18,6 +18,7 @@ import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
 import BlockNavigationDropdown from '../block-navigation';
+import './style.scss';
 const preventDefault = event => {
   event.preventDefault();
 };
@@ -96,14 +97,14 @@ function HeaderToolbar(props) {
   }, [isInserterOpened, setIsInserterOpened]);
   const toggleListView = useCallback(() => setIsListViewOpened(!isListViewOpen), [setIsListViewOpened, isListViewOpen]);
   return createElement(NavigableToolbar, {
-    className: "edit-post-header-toolbar",
+    className: "editor-document-tools edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel
   }, (inserter || undo || navigation || selectorTool) && createElement("div", {
-    className: "edit-post-header-toolbar__left"
+    className: "editor-document-tools__left edit-post-header-toolbar__left"
   }, inserter && createElement(ToolbarItem, {
     ref: inserterButton,
     as: Button,
-    className: "edit-post-header-toolbar__inserter-toggle",
+    className: "editor-document-tools__inserter-toggle",
     isPressed: isInserterOpened,
     onMouseDown: preventDefault,
     onClick: openInserter,

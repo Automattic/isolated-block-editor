@@ -568,4 +568,5 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         preferences: any;
     };
 };
+import * as editorSelectors from './editor/selectors';
 //# sourceMappingURL=index.d.ts.map

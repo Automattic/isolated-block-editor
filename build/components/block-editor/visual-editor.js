@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = VisualEditor;
-exports.unlock = exports.lock = void 0;
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _classnames = _interopRequireDefault(require("classnames"));
@@ -16,9 +15,9 @@ var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _blocks = require("@wordpress/blocks");
 var _editor = require("@wordpress/editor");
-var _privateApis = require("@wordpress/private-apis");
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
+var _unlock2 = require("./unlock");
 import { createElement, Fragment } from "react";
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
@@ -34,10 +33,7 @@ var isGutenbergPlugin = true;
  * Internal dependencies
  */
 
-var _dangerousOptInToUns = (0, _privateApis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my theme or plugin will inevitably break in the next version of WordPress.', '@wordpress/edit-post'),
-  lock = exports.lock = _dangerousOptInToUns.lock,
-  unlock = exports.unlock = _dangerousOptInToUns.unlock;
-var _unlock = unlock(_blockEditor.privateApis),
+var _unlock = (0, _unlock2.unlock)(_blockEditor.privateApis),
   LayoutStyle = _unlock.LayoutStyle,
   useLayoutClasses = _unlock.useLayoutClasses,
   useLayoutStyles = _unlock.useLayoutStyles,

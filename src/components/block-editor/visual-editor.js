@@ -25,7 +25,6 @@ import { useMergeRefs } from '@wordpress/compose';
 import { parse, store as blocksStore } from '@wordpress/blocks';
 // @ts-ignore
 import { store as editorStore } from '@wordpress/editor';
-import { __dangerousOptInToUnstableAPIsOnlyForCoreModules } from '@wordpress/private-apis';
 
 // @ts-ignore
 const isGutenbergPlugin = true;
@@ -35,12 +34,8 @@ const isGutenbergPlugin = true;
  */
 import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
+import { unlock } from './unlock';
 
-export const { lock, unlock } =
-	__dangerousOptInToUnstableAPIsOnlyForCoreModules(
-		'I know using unstable features means my theme or plugin will inevitably break in the next version of WordPress.',
-		'@wordpress/edit-post'
-	);
 
 const {
 	LayoutStyle,

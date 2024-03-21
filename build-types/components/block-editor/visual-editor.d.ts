@@ -9,6 +9,4 @@
 export default function VisualEditor({ styles }: {
     styles: any;
 }): JSX.Element;
-export const lock: (object: any, privateData: any) => void;
-export const unlock: (object: any) => any;
 //# sourceMappingURL=visual-editor.d.ts.map

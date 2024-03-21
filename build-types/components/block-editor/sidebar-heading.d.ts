@@ -1,9 +1,9 @@
+export namespace sidebars {
+    let document: string;
+    let block: string;
+}
 export default SettingsHeader;
-/**
- * Internal dependencies
- */
-declare function SettingsHeader({ sidebarName, documentInspector }: {
-    sidebarName: any;
+declare function SettingsHeader({ documentInspector }: {
     documentInspector: any;
 }): JSX.Element;
 //# sourceMappingURL=sidebar-heading.d.ts.map

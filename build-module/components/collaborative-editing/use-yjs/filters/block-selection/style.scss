@@ -1,8 +1,0 @@
-.wp-block.is-iso-editor-collab-peer-selected {
-	// This color is normally overridden by an inline style in the `editor.BlockListBlock` filter.
-	// The fallback color is here in case the override color doesn't take, due to priority issues with other filters.
-	--iso-editor-collab-peer-block-color: currentColor;
-
-	box-shadow: 0 0 0 1.5px var( --iso-editor-collab-peer-block-color );
-	border-radius: 1px;
-}
