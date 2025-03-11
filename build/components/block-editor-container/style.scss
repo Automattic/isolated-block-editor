@@ -139,6 +139,18 @@
 	}
 }
 
+.editor-collapsible-block-toolbar {
+	height: 36px;
+
+	.block-editor-block-toolbar {
+		padding-top: 3px;
+	}
+}
+
+.edit-post-header__toolbar {
+	display: flex;
+}
+
 .edit-post-header__toolbar .components-accessible-toolbar {
 	border: none;
 }

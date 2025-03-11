@@ -135,7 +135,7 @@ var _jsxRuntime = require("react/jsx-runtime");
           settings: settings
         }), isLargeViewport && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
           children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-            className: (0, _classnames["default"])('selected-block-tools-wrapper', {
+            className: (0, _classnames["default"])('editor-collapsible-block-toolbar', 'selected-block-tools-wrapper', {
               'is-collapsed': isBlockToolsCollapsed
             }),
             children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockToolbar, {

@@ -116,6 +116,7 @@ const BlockEditorToolbar = ( props ) => {
 						<>
 							<div
 								className={ classnames(
+									'editor-collapsible-block-toolbar',
 									'selected-block-tools-wrapper',
 									{
 										'is-collapsed': isBlockToolsCollapsed,
