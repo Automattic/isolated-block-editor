@@ -1,6 +1,6 @@
 {
 	"name": "@happyprime/ibe-slim",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"description": "A single-purpose fork of @automattic/isolated-block-editor. Unsupported.",
 	"main": "build/index.js",
 	"homepage": "https://github.com/happyprime/ibe-slim/blob/trunk/README.md",
