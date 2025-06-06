@@ -6,6 +6,9 @@
 	// Restrict the interface skeleton to our container, and not assume it's own a WP admin page
 	.edit-post-layout.interface-interface-skeleton {
 		position: static;
+		// Create a new stacking context so that inner z-index values don't affect visibility of popovers.
+		// In Core this element has `position: fixed` which creates a stacking context automatically.
+		isolation: isolate; 
 		top:auto;
 		left: auto;
 	}
@@ -28,7 +31,7 @@
 		}
 	}
 
-	.is-mode__text .edit-post-text-editor__body {
+	.is-mode__text .editor-text-editor__body {
 		margin-left: 0;
 		margin-right: 0;
 		margin-bottom: 0;

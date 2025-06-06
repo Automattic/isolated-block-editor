@@ -8,7 +8,6 @@ exports["default"] = ComplementaryArea;
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 var _interface = require("@wordpress/interface");
 var _components = require("@wordpress/components");
-var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _complementaryAreaHeader = _interopRequireDefault(require("./complementary-area-header"));
 var _excluded = ["className", "children", "header", "headerClassName", "toggleShortcut", "closeLabel", "title", "identifier"];
@@ -49,13 +48,9 @@ function ComplementaryArea(_ref2) {
         getActiveComplementaryArea = _select.getActiveComplementaryArea;
       var _activeArea = getActiveComplementaryArea('isolated/editor');
       return {
-        postTitle: '',
-        // @ts-ignore
-        showIconLabels: select('isolated/editor').isFeatureActive('showIconLabels'),
         isActive: isActiveArea(_activeArea)
       };
     }, []),
-    postTitle = _useSelect.postTitle,
     isActive = _useSelect.isActive;
   if (!isActive) {
     return null;
@@ -65,7 +60,6 @@ function ComplementaryArea(_ref2) {
     scope: "isolated/editor"
   }, createElement(_complementaryAreaHeader["default"], {
     className: headerClassName,
-    smallScreenTitle: postTitle || (0, _i18n.__)('(no title)'),
     toggleButtonProps: {
       label: closeLabel,
       shortcut: toggleShortcut,

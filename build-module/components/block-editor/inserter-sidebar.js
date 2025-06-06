@@ -35,7 +35,8 @@ export default function InserterSidebar() {
   }, createElement(Library, {
     showMostUsedBlocks: false,
     showInserterHelpPanel: true,
-    shouldFocusBlock: isMobileViewport
+    shouldFocusBlock: isMobileViewport,
+    onClose: () => setIsInserterOpened(false)
   })));
 }
 //# sourceMappingURL=inserter-sidebar.js.map

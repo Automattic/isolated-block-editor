@@ -23,9 +23,9 @@ import { createElement } from "react";
 function TextEditor(_ref) {
   (0, _objectDestructuringEmpty2["default"])(_ref);
   return createElement("div", {
-    className: "edit-post-text-editor"
+    className: "editor-text-editor"
   }, createElement("div", {
-    className: "edit-post-text-editor__body"
+    className: "editor-text-editor__body"
   }, createElement(_editorHeadingSlot["default"].Slot, {
     mode: "text"
   }), createElement(_postTextEditor["default"], null), createElement(_footerSlot["default"].Slot, {

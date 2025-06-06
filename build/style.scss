@@ -16,7 +16,10 @@ html.interface-interface-skeleton__html-container {
 .iso-editor {
 	// Set the font for the rest of the editor
 	&,
-	select {
+	input,
+	select,
+	textarea,
+	button {
 		font-family: $default-font;
 		font-size: $default-font-size;
 		line-height: $default-line-height;

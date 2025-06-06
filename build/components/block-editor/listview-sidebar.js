@@ -134,20 +134,20 @@ function ListViewSidebar(_ref) {
       ,
       initialTabId: "list-view"
     }, createElement("div", {
-      className: "edit-post-editor__document-overview-panel__header"
+      className: "block-editor-tabbed-sidebar__tablist-and-close-button"
     }, canClose && createElement(_components.Button, {
-      className: "editor-list-view-sidebar__close-button",
+      className: "block-editor-tabbed-sidebar__close-button",
       icon: _icons.closeSmall,
       label: (0, _i18n.__)('Close'),
       onClick: closeListView
     }), createElement(Tabs.TabList, {
-      className: "editor-list-view-sidebar__tabs-tablist",
+      className: "block-editor-tabbed-sidebar__tablist",
       ref: tabsRef
     }, createElement(Tabs.Tab, {
-      className: "editor-list-view-sidebar__tabs-tab",
+      className: "block-editor-tabbed-sidebar__tab",
       tabId: "list-view"
     }, (0, _i18n._x)('List View', 'Post overview')), createElement(Tabs.Tab, {
-      className: "editor-list-view-sidebar__tabs-tab",
+      className: "block-editor-tabbed-sidebar__tab",
       tabId: "outline"
     }, (0, _i18n._x)('Outline', 'Post overview')))), createElement(Tabs.TabPanel, {
       ref: listViewContainerRef,

@@ -19,7 +19,7 @@ var _excluded = ["as", "scope", "identifier", "icon", "selectedIcon", "name"];
 /**
  * WordPress dependencies
  */
-import { createElement, Fragment } from "react";
+import { createElement } from "react";
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function ComplementaryAreaToggle(_ref) {
@@ -53,21 +53,15 @@ function ComplementaryAreaToggle(_ref) {
   }, props));
 }
 var ComplementaryAreaHeader = function ComplementaryAreaHeader(_ref2) {
-  var smallScreenTitle = _ref2.smallScreenTitle,
-    children = _ref2.children,
+  var children = _ref2.children,
     className = _ref2.className,
     toggleButtonProps = _ref2.toggleButtonProps;
-  var toggleButton = createElement(ComplementaryAreaToggle, _objectSpread({
-    icon: _icons.closeSmall
-  }, toggleButtonProps));
-  return createElement(Fragment, null, createElement("div", {
-    className: "components-panel__header interface-complementary-area-header__small"
-  }, smallScreenTitle && createElement("span", {
-    className: "interface-complementary-area-header__small-title"
-  }, smallScreenTitle), toggleButton), createElement("div", {
+  return createElement("div", {
     className: (0, _classnames["default"])('components-panel__header', 'interface-complementary-area-header', className),
     tabIndex: -1
-  }, children, toggleButton));
+  }, children, createElement(ComplementaryAreaToggle, _objectSpread({
+    icon: _icons.closeSmall
+  }, toggleButtonProps)));
 };
 var _default = exports["default"] = ComplementaryAreaHeader;
 //# sourceMappingURL=complementary-area-header.js.map

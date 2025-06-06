@@ -13,8 +13,8 @@ import FooterSlot from '../footer-slot';
  */
 function TextEditor( {} ) {
 	return (
-		<div className="edit-post-text-editor">
-			<div className="edit-post-text-editor__body">
+		<div className="editor-text-editor">
+			<div className="editor-text-editor__body">
 				<EditorHeading.Slot mode="text" />
 				<PostTextEditor />
 				<FooterSlot.Slot mode="text" />

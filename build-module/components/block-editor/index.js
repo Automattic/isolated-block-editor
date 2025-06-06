@@ -116,8 +116,6 @@ function BlockEditor(props) {
     };
   }, []);
   const className = classnames('edit-post-layout', 'is-mode-' + editorMode, {
-    'is-sidebar-opened': sidebarIsOpened,
-    'is-inserter-opened': isInserterOpened,
     'has-fixed-toolbar': fixedToolbar,
     'show-icon-labels': showIconLabels
   });

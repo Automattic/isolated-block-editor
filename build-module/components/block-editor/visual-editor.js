@@ -292,20 +292,10 @@ export default function VisualEditor({
 		.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
-
-  // TODO: Styles not appearing in the iframe mode yet
-  // const isToBeIframed =
-  // 	( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
-  // 		! hasMetaBoxes ) ||
-  // 	isTemplateMode ||
-  // 	deviceType === 'Tablet' ||
-  // 	deviceType === 'Mobile';
-  const isToBeIframed = false;
   return createElement(BlockTools, {
     __unstableContentRef: ref,
     className: classnames('edit-post-visual-editor', {
-      'is-template-mode': isTemplateMode,
-      'has-inline-canvas': !isToBeIframed
+      'is-template-mode': isTemplateMode
     })
   }, createElement(motion.div, {
     className: "edit-post-visual-editor__content-area",
@@ -317,7 +307,7 @@ export default function VisualEditor({
     initial: desktopCanvasStyles,
     className: previewMode
   }, createElement(BlockCanvas, {
-    shouldIframe: isToBeIframed,
+    shouldIframe: false,
     contentRef: contentRef,
     styles: styles,
     height: "100%"

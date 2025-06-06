@@ -109,14 +109,14 @@ const BlockEditorToolbar = ( props ) => {
 
 	return (
 		<div className="edit-post-editor-regions__header" role="region" tabIndex={ -1 }>
-			<div className="edit-post-header">
-				<div className="edit-post-header__toolbar">
+			<div className="editor-header edit-post-header">
+				<div className="editor-header__toolbar">
 					<HeaderToolbar settings={ settings } />
 					{ isLargeViewport && (
 						<>
 							<div
 								className={ classnames(
-									'selected-block-tools-wrapper',
+									'editor-collapsible-block-toolbar',
 									{
 										'is-collapsed': isBlockToolsCollapsed,
 									}
@@ -151,7 +151,7 @@ const BlockEditorToolbar = ( props ) => {
 					) }
 				</div>
 
-				<div className="edit-post-header__settings" ref={ ref }>
+				<div className="editor-header__settings" ref={ ref }>
 					<ToolbarSlot.Slot />
 
 					{ inspector && (

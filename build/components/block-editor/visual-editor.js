@@ -282,20 +282,10 @@ function VisualEditor(_ref) {
 
   // Add some styles for alignwide/alignfull Post Content and its children.
   var alignCSS = ".is-root-container.alignwide { max-width: var(--wp--style--global--wide-size); margin-left: auto; margin-right: auto;}\n\t\t.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}\n\t\t.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}\n\t\t.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}";
-
-  // TODO: Styles not appearing in the iframe mode yet
-  // const isToBeIframed =
-  // 	( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
-  // 		! hasMetaBoxes ) ||
-  // 	isTemplateMode ||
-  // 	deviceType === 'Tablet' ||
-  // 	deviceType === 'Mobile';
-  var isToBeIframed = false;
   return createElement(_blockEditor.BlockTools, {
     __unstableContentRef: ref,
     className: (0, _classnames["default"])('edit-post-visual-editor', {
-      'is-template-mode': isTemplateMode,
-      'has-inline-canvas': !isToBeIframed
+      'is-template-mode': isTemplateMode
     })
   }, createElement(_components.__unstableMotion.div, {
     className: "edit-post-visual-editor__content-area",
@@ -307,7 +297,7 @@ function VisualEditor(_ref) {
     initial: desktopCanvasStyles,
     className: previewMode
   }, createElement(BlockCanvas, {
-    shouldIframe: isToBeIframed,
+    shouldIframe: false,
     contentRef: contentRef,
     styles: styles,
     height: "100%"

@@ -123,13 +123,13 @@ const BlockEditorToolbar = props => {
     role: "region",
     tabIndex: -1
   }, createElement("div", {
-    className: "edit-post-header"
+    className: "editor-header edit-post-header"
   }, createElement("div", {
-    className: "edit-post-header__toolbar"
+    className: "editor-header__toolbar"
   }, createElement(HeaderToolbar, {
     settings: settings
   }), isLargeViewport && createElement(Fragment, null, createElement("div", {
-    className: classnames('selected-block-tools-wrapper', {
+    className: classnames('editor-collapsible-block-toolbar', {
       'is-collapsed': isBlockToolsCollapsed
     })
   }, createElement(BlockToolbar, {
@@ -147,7 +147,7 @@ const BlockEditorToolbar = props => {
     },
     label: isBlockToolsCollapsed ? __('Show block tools') : __('Hide block tools')
   }))), createElement("div", {
-    className: "edit-post-header__settings",
+    className: "editor-header__settings",
     ref: ref
   }, createElement(ToolbarSlot.Slot, null), inspector && createElement(Button, {
     icon: cog,

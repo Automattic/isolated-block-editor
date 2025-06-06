@@ -14,9 +14,9 @@ import FooterSlot from '../footer-slot';
  */
 function TextEditor({}) {
   return createElement("div", {
-    className: "edit-post-text-editor"
+    className: "editor-text-editor"
   }, createElement("div", {
-    className: "edit-post-text-editor__body"
+    className: "editor-text-editor__body"
   }, createElement(EditorHeading.Slot, {
     mode: "text"
   }), createElement(PostTextEditor, null), createElement(FooterSlot.Slot, {

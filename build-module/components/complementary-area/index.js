@@ -8,8 +8,6 @@ import { Panel, Fill } from '@wordpress/components';
 /**
  * Internal dependencies
  */
-
-import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import ComplementaryAreaHeader from './complementary-area-header';
 function isActiveArea(area) {
@@ -39,7 +37,6 @@ export default function ComplementaryArea({
 }) {
   const scope = "isolated/editor";
   const {
-    postTitle,
     isActive
   } = useSelect(select => {
     // @ts-ignore
@@ -48,9 +45,6 @@ export default function ComplementaryArea({
     } = select(interfaceStore);
     const _activeArea = getActiveComplementaryArea('isolated/editor');
     return {
-      postTitle: '',
-      // @ts-ignore
-      showIconLabels: select('isolated/editor').isFeatureActive('showIconLabels'),
       isActive: isActiveArea(_activeArea)
     };
   }, []);
@@ -62,7 +56,6 @@ export default function ComplementaryArea({
     scope: "isolated/editor"
   }, createElement(ComplementaryAreaHeader, {
     className: headerClassName,
-    smallScreenTitle: postTitle || __('(no title)'),
     toggleButtonProps: {
       label: closeLabel,
       shortcut: toggleShortcut,

@@ -51,7 +51,10 @@ function InserterSidebar() {
   }, createElement(_blockEditor.__experimentalLibrary, {
     showMostUsedBlocks: false,
     showInserterHelpPanel: true,
-    shouldFocusBlock: isMobileViewport
+    shouldFocusBlock: isMobileViewport,
+    onClose: function onClose() {
+      return setIsInserterOpened(false);
+    }
   })));
 }
 //# sourceMappingURL=inserter-sidebar.js.map

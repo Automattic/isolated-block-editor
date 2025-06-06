@@ -118,8 +118,6 @@ function BlockEditor(props) {
     previousShortcut = _useSelect.previousShortcut,
     nextShortcut = _useSelect.nextShortcut;
   var className = (0, _classnames["default"])('edit-post-layout', 'is-mode-' + editorMode, {
-    'is-sidebar-opened': sidebarIsOpened,
-    'is-inserter-opened': isInserterOpened,
     'has-fixed-toolbar': fixedToolbar,
     'show-icon-labels': showIconLabels
   });

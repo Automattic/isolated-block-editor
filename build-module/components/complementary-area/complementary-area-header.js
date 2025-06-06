@@ -1,4 +1,4 @@
-import { createElement, Fragment } from "react";
+import { createElement } from "react";
 /**
  * External dependencies
  */
@@ -41,23 +41,17 @@ function ComplementaryAreaToggle({
   });
 }
 const ComplementaryAreaHeader = ({
-  smallScreenTitle,
   children,
   className,
   toggleButtonProps
 }) => {
-  const toggleButton = createElement(ComplementaryAreaToggle, {
-    icon: closeSmall,
-    ...toggleButtonProps
-  });
-  return createElement(Fragment, null, createElement("div", {
-    className: "components-panel__header interface-complementary-area-header__small"
-  }, smallScreenTitle && createElement("span", {
-    className: "interface-complementary-area-header__small-title"
-  }, smallScreenTitle), toggleButton), createElement("div", {
+  return createElement("div", {
     className: classnames('components-panel__header', 'interface-complementary-area-header', className),
     tabIndex: -1
-  }, children, toggleButton));
+  }, children, createElement(ComplementaryAreaToggle, {
+    icon: closeSmall,
+    ...toggleButtonProps
+  }));
 };
 export default ComplementaryAreaHeader;
 //# sourceMappingURL=complementary-area-header.js.map

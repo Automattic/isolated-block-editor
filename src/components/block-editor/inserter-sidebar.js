@@ -30,7 +30,7 @@ export default function InserterSidebar() {
 				<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
 			</TagName>
 			<div className="edit-widgets-layout__inserter-panel-content">
-				<Library showMostUsedBlocks={ false } showInserterHelpPanel shouldFocusBlock={ isMobileViewport } />
+				<Library showMostUsedBlocks={ false } showInserterHelpPanel shouldFocusBlock={ isMobileViewport } onClose={ () => setIsInserterOpened( false ) } />
 			</div>
 		</div>
 	);
