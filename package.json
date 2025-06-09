@@ -104,7 +104,7 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@emotion/styled": "^11.11.0",
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "^1.52.0",
     "@shopify/polyfills": "^4.0.3",
     "@storybook/addon-actions": "^7.0.26",
     "@storybook/addon-essentials": "^7.0.26",
