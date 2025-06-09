@@ -22,7 +22,7 @@ jobs:
               run: echo "::set-output name=dir::$(yarn cache dir)"
 
             - name: Cache yarn modules
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
               with:
                   path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -44,7 +44,7 @@ jobs:
             - name: Serve Storybook and run tests
               run: yarn e2e
             - name: Upload results
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               if: always()
               with:
                 name: playwright-report
