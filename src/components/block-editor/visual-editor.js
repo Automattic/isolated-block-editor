@@ -96,17 +96,12 @@ export default function VisualEditor( { styles } ) {
 		editedPostTemplate = {},
 		wrapperBlockName,
 		wrapperUniqueId,
-		// @ts-ignore
-		isBlockBasedTheme,
-		// @ts-ignore
-		hasV3BlocksOnly,
 	} = useSelect( ( select ) => {
 		const {
 			isFeatureActive,
 		} = select( 'isolated/editor' );
 		const { getCurrentPostId, getCurrentPostType, getEditorSettings } =
 			select( editorStore );
-		const { getBlockTypes } = select( blocksStore );
 		const _isTemplateMode = false;
 		const postTypeSlug = getCurrentPostType();
 		let _wrapperBlockName;
@@ -117,23 +112,18 @@ export default function VisualEditor( { styles } ) {
 			_wrapperBlockName = 'core/post-content';
 		}
 
-		const editorSettings = getEditorSettings();
-
 		return {
 			deviceType: 'Desktop',
 			// @ts-ignore
 			isWelcomeGuideVisible: isFeatureActive( 'welcomeGuide' ),
 			isTemplateMode: _isTemplateMode,
+			// @ts-ignore
 			postContentAttributes: getEditorSettings().postContentAttributes,
 			// Post template fetch returns a 404 on classic themes, which
 			// messes with e2e tests, so check it's a block theme first.
 			editedPostTemplate: undefined,
 			wrapperBlockName: _wrapperBlockName,
 			wrapperUniqueId: getCurrentPostId(),
-			isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
-			hasV3BlocksOnly: getBlockTypes().every( ( type ) => {
-				return type.apiVersion >= 3;
-			} ),
 		};
 	}, [] );
 	// @ts-ignore

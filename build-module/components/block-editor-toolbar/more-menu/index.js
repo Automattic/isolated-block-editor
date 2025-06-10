@@ -1,4 +1,3 @@
-import { createElement, Fragment } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -30,7 +29,7 @@ import LinkMenu from './link-menu';
  * @param {BlockEditorSettings} settings - Settings
  * @param {OnClose} onClose - Callback to close the menu
  */
-
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 const POPOVER_PROPS = {
   className: 'edit-post-more-menu__content',
   position: 'bottom left'
@@ -51,7 +50,7 @@ const MoreMenu = ({
   settings,
   onClick,
   renderMoreMenu
-}) => createElement(DropdownMenu, {
+}) => /*#__PURE__*/_jsx(DropdownMenu, {
   className: "edit-post-more-menu",
   icon: moreVertical,
   label: __('More tools & options'),
@@ -59,17 +58,20 @@ const MoreMenu = ({
   toggleProps: {
     ...TOGGLE_PROPS,
     onClick
-  }
-}, ({
-  onClose
-}) => createElement(Fragment, null, renderMoreMenu && renderMoreMenu(settings, onClose), createElement(EditorMenu, {
-  onClose: onClose,
-  settings: settings
-}), createElement(WritingMenu, {
-  onClose: onClose,
-  settings: settings
-}), createElement(LinkMenu, {
-  settings: settings
-})));
+  },
+  children: ({
+    onClose
+  }) => /*#__PURE__*/_jsxs(_Fragment, {
+    children: [renderMoreMenu && renderMoreMenu(settings, onClose), /*#__PURE__*/_jsx(EditorMenu, {
+      onClose: onClose,
+      settings: settings
+    }), /*#__PURE__*/_jsx(WritingMenu, {
+      onClose: onClose,
+      settings: settings
+    }), /*#__PURE__*/_jsx(LinkMenu, {
+      settings: settings
+    })]
+  })
+});
 export default MoreMenu;
 //# sourceMappingURL=index.js.map

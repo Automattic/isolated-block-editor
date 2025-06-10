@@ -1,4 +1,3 @@
-import { createElement, Fragment } from "react";
 /**
  * External dependencies
  */
@@ -12,6 +11,7 @@ import { Component } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { withInstanceId, compose } from '@wordpress/compose';
 import { parse, serialize } from '@wordpress/blocks';
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 export class PostTextEditor extends Component {
   constructor(props) {
     super(props);
@@ -70,21 +70,24 @@ export class PostTextEditor extends Component {
     const {
       instanceId
     } = this.props;
-    return createElement(Fragment, null, createElement("label", {
-      htmlFor: `post-content-${instanceId}`,
-      className: "screen-reader-text"
-    }, __('Type text or HTML')), createElement(Textarea, {
-      autoComplete: "off",
-      dir: "auto",
-      value: value
-      // @ts-ignore */}
-      ,
-      onChange: this.edit,
-      onBlur: this.stopEditing,
-      className: "editor-post-text-editor",
-      id: `post-content-${instanceId}`,
-      placeholder: __('Start writing with text or HTML')
-    }));
+    return /*#__PURE__*/_jsxs(_Fragment, {
+      children: [/*#__PURE__*/_jsx("label", {
+        htmlFor: `post-content-${instanceId}`,
+        className: "screen-reader-text",
+        children: __('Type text or HTML')
+      }), /*#__PURE__*/_jsx(Textarea, {
+        autoComplete: "off",
+        dir: "auto",
+        value: value
+        // @ts-ignore */}
+        ,
+        onChange: this.edit,
+        onBlur: this.stopEditing,
+        className: "editor-post-text-editor",
+        id: `post-content-${instanceId}`,
+        placeholder: __('Start writing with text or HTML')
+      })]
+    });
   }
 }
 

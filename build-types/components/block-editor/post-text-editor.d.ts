@@ -23,7 +23,7 @@ export class PostTextEditor extends Component<any, any, any> {
      */
     stopEditing(): void;
     state: {};
-    render(): JSX.Element;
+    render(): import("react").JSX.Element;
 }
 declare const _default: unknown;
 export default _default;

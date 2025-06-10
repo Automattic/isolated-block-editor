@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -13,6 +12,7 @@ import { store as editorStore } from '@wordpress/editor';
  */
 
 import FooterSection from '../footer-slot';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 const Footer = ({
   editorMode
 }) => {
@@ -34,11 +34,12 @@ const Footer = ({
       documentLabel: postTypeLabel || _x('Document', 'noun')
     };
   }, []);
-  return createElement("div", {
-    className: "edit-post-layout__footer"
-  }, showBlockBreadcrumbs && !isMobileViewport && editorMode === 'visual' && createElement(BlockBreadcrumb, {
-    rootLabelText: documentLabel
-  }), createElement(FooterSection.Slot, null));
+  return /*#__PURE__*/_jsxs("div", {
+    className: "edit-post-layout__footer",
+    children: [showBlockBreadcrumbs && !isMobileViewport && editorMode === 'visual' && /*#__PURE__*/_jsx(BlockBreadcrumb, {
+      rootLabelText: documentLabel
+    }), /*#__PURE__*/_jsx(FooterSection.Slot, {})]
+  });
 };
 export default Footer;
 //# sourceMappingURL=footer.js.map

@@ -8,5 +8,5 @@
  */
 export default function VisualEditor({ styles }: {
     styles: any;
-}): JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=visual-editor.d.ts.map

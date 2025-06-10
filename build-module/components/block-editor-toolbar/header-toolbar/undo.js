@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -8,13 +7,14 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { displayShortcut } from '@wordpress/keycodes';
 import { undo as undoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
+import { jsx as _jsx } from "react/jsx-runtime";
 function EditorHistoryUndo(props, ref) {
   // @ts-ignore
   const hasUndo = useSelect(select => select('isolated/editor').hasEditorUndo(), []);
   const {
     undo
   } = useDispatch('isolated/editor');
-  return createElement(Button, {
+  return /*#__PURE__*/_jsx(Button, {
     ...props,
     ref: ref,
     icon: undoIcon,

@@ -16,7 +16,7 @@ var _blocks = require("@wordpress/blocks");
 var _blockEditor = require("@wordpress/block-editor");
 var _blockEditor2 = _interopRequireDefault(require("../block-editor"));
 var _editorContent = _interopRequireDefault(require("./editor-content"));
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * External dependencies
  */
@@ -123,21 +123,24 @@ function BlockEditorContents(props) {
     }();
     loadData();
   }, []);
-  return createElement(_blockEditor.BlockEditorProvider, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_blockEditor.BlockEditorProvider, {
     value: blocks || [],
     onInput: onInput,
     onChange: onChange,
     useSubRegistry: false,
     selection: selection,
-    settings: settings.editor
-  }, createElement(_blockEditor2["default"], {
-    isEditing: isEditing,
-    editorMode: editorMode,
-    settings: settings,
-    renderMoreMenu: renderMoreMenu
-  }, children),
-  // @ts-ignore
-  createElement(_components.Popover.Slot, null));
+    settings: settings.editor,
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor2["default"], {
+      isEditing: isEditing,
+      editorMode: editorMode,
+      settings: settings,
+      renderMoreMenu: renderMoreMenu,
+      children: children
+    }),
+    /*#__PURE__*/
+    // @ts-ignore
+    (0, _jsxRuntime.jsx)(_components.Popover.Slot, {})]
+  });
 }
 
 // @ts-ignore

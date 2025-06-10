@@ -9,7 +9,7 @@ var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _icons = require("@wordpress/icons");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
  */
@@ -23,6 +23,7 @@ import { createElement } from "react";
  * @callback OnSetMode
  * @param {string} mode
  */
+
 /**
  * The 'more menu' editor section
  *
@@ -32,8 +33,7 @@ import { createElement } from "react";
  * @param {OnClose} props.onClose - Callback to close the menu
  * @param {OnSetMode} props.onSetMode
  * @param {BlockEditorSettings} props.settings - Settings
- */
-function EditorMenu(_ref) {
+ */function EditorMenu(_ref) {
   var _settings$iso, _settings$iso2;
   var onClose = _ref.onClose,
     editorMode = _ref.editorMode,
@@ -53,23 +53,26 @@ function EditorMenu(_ref) {
   if ((settings === null || settings === void 0 || (_settings$iso = settings.iso) === null || _settings$iso === void 0 ? void 0 : _settings$iso.moreMenu) === false || !(settings !== null && settings !== void 0 && (_settings$iso2 = settings.iso) !== null && _settings$iso2 !== void 0 && (_settings$iso2 = _settings$iso2.moreMenu) !== null && _settings$iso2 !== void 0 && _settings$iso2.editor)) {
     return null;
   }
-  return createElement(_components.MenuGroup, {
-    label: (0, _i18n._x)('Editor', 'noun')
-  }, createElement(_components.MenuItem, {
-    icon: editorMode === 'visual' ? _icons.check : null,
-    isSelected: editorMode === 'visual',
-    onClick: function onClick() {
-      return setMode('visual');
-    },
-    role: "menuitemcheckbox"
-  }, (0, _i18n.__)('Visual editor')), createElement(_components.MenuItem, {
-    icon: editorMode === 'text' ? _icons.check : null,
-    isSelected: editorMode === 'text',
-    onClick: function onClick() {
-      return setMode('text');
-    },
-    role: "menuitemcheckbox"
-  }, (0, _i18n.__)('Code editor')));
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_components.MenuGroup, {
+    label: (0, _i18n._x)('Editor', 'noun'),
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_components.MenuItem, {
+      icon: editorMode === 'visual' ? _icons.check : null,
+      isSelected: editorMode === 'visual',
+      onClick: function onClick() {
+        return setMode('visual');
+      },
+      role: "menuitemcheckbox",
+      children: (0, _i18n.__)('Visual editor')
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.MenuItem, {
+      icon: editorMode === 'text' ? _icons.check : null,
+      isSelected: editorMode === 'text',
+      onClick: function onClick() {
+        return setMode('text');
+      },
+      role: "menuitemcheckbox",
+      children: (0, _i18n.__)('Code editor')
+    })]
+  });
 }
 
 // @ts-ignore

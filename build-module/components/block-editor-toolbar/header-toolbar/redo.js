@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -8,13 +7,14 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { displayShortcut } from '@wordpress/keycodes';
 import { redo as redoIcon } from '@wordpress/icons';
 import { forwardRef } from '@wordpress/element';
+import { jsx as _jsx } from "react/jsx-runtime";
 function EditorHistoryRedo(props, ref) {
   // @ts-ignore
   const hasRedo = useSelect(select => select('isolated/editor').hasEditorRedo(), []);
   const {
     redo
   } = useDispatch('isolated/editor');
-  return createElement(Button, {
+  return /*#__PURE__*/_jsx(Button, {
     ...props,
     ref: ref,
     icon: redoIcon,

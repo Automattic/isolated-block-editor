@@ -1,8 +1,7 @@
 export default ComplementaryAreaHeader;
-declare function ComplementaryAreaHeader({ smallScreenTitle, children, className, toggleButtonProps, }: {
-    smallScreenTitle: any;
+declare function ComplementaryAreaHeader({ children, className, toggleButtonProps, }: {
     children: any;
     className: any;
     toggleButtonProps: any;
-}): JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=complementary-area-header.d.ts.map

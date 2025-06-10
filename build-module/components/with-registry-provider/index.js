@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -18,6 +17,7 @@ import decoratedEditor from '../../store/core-editor';
 import interfaceStore from './interface-store';
 
 // Keep track of the registries we create so we can release them after the editor instance is removed
+import { jsx as _jsx } from "react/jsx-runtime";
 let registries = [];
 const STORE_NAME = 'isolated/editor';
 
@@ -100,12 +100,13 @@ WrappedComponent => withRegistry(props => {
   if (!subRegistry) {
     return null;
   }
-  return createElement(RegistryProvider, {
-    value: subRegistry
-  }, createElement(WrappedComponent, {
-    ...additionalProps,
-    settings: defaultSettings
-  }));
+  return /*#__PURE__*/_jsx(RegistryProvider, {
+    value: subRegistry,
+    children: /*#__PURE__*/_jsx(WrappedComponent, {
+      ...additionalProps,
+      settings: defaultSettings
+    })
+  });
 }), 'withRegistryProvider');
 export default withRegistryProvider;
 //# sourceMappingURL=index.js.map

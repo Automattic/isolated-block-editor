@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -14,6 +13,7 @@ import { MenuItem, ExternalLink } from '@wordpress/components';
  * @param {Object} props - Component props
  * @param {BlockEditorSettings} props.settings - Settings
  */
+import { jsx as _jsx } from "react/jsx-runtime";
 function LinkMenu({
   settings
 }) {
@@ -23,16 +23,18 @@ function LinkMenu({
   if (linkMenu.length === 0) {
     return null;
   }
-  return createElement(MenuGroup, {
-    label: __('Links')
-  }, linkMenu.map(({
-    title,
-    url
-  }) => createElement(MenuItem, {
-    key: title
-  }, createElement(ExternalLink, {
-    href: url
-  }, title))));
+  return /*#__PURE__*/_jsx(MenuGroup, {
+    label: __('Links'),
+    children: linkMenu.map(({
+      title,
+      url
+    }) => /*#__PURE__*/_jsx(MenuItem, {
+      children: /*#__PURE__*/_jsx(ExternalLink, {
+        href: url,
+        children: title
+      })
+    }, title))
+  });
 }
 export default LinkMenu;
 //# sourceMappingURL=link-menu.js.map

@@ -1,9 +1,9 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
 import { createSlotFill } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { jsx as _jsx } from "react/jsx-runtime";
 const {
   Fill,
   Slot
@@ -19,10 +19,14 @@ const {
 const ToolbarSlot = ({
   children
 }) => {
-  return createElement(Fill, null, children);
+  return /*#__PURE__*/_jsx(Fill, {
+    children: children
+  });
 };
 ToolbarSlot.Slot = function (props) {
-  return createElement(Slot, null, fills => fills);
+  return /*#__PURE__*/_jsx(Slot, {
+    children: fills => fills
+  });
 };
 export default ToolbarSlot;
 //# sourceMappingURL=slot.js.map

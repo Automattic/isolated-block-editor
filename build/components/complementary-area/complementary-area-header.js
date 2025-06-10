@@ -12,6 +12,7 @@ var _components = require("@wordpress/components");
 var _data = require("@wordpress/data");
 var _interface = require("@wordpress/interface");
 var _icons = require("@wordpress/icons");
+var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["as", "scope", "identifier", "icon", "selectedIcon", "name"];
 /**
  * External dependencies
@@ -19,7 +20,6 @@ var _excluded = ["as", "scope", "identifier", "icon", "selectedIcon", "name"];
 /**
  * WordPress dependencies
  */
-import { createElement } from "react";
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function ComplementaryAreaToggle(_ref) {
@@ -41,7 +41,7 @@ function ComplementaryAreaToggle(_ref) {
   var _useDispatch = (0, _data.useDispatch)(_interface.store),
     enableComplementaryArea = _useDispatch.enableComplementaryArea,
     disableComplementaryArea = _useDispatch.disableComplementaryArea;
-  return createElement(ComponentToUse, _objectSpread({
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(ComponentToUse, _objectSpread({
     icon: selectedIcon && isSelected ? selectedIcon : icon,
     onClick: function onClick() {
       if (isSelected) {
@@ -56,12 +56,13 @@ var ComplementaryAreaHeader = function ComplementaryAreaHeader(_ref2) {
   var children = _ref2.children,
     className = _ref2.className,
     toggleButtonProps = _ref2.toggleButtonProps;
-  return createElement("div", {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
     className: (0, _classnames["default"])('components-panel__header', 'interface-complementary-area-header', className),
-    tabIndex: -1
-  }, children, createElement(ComplementaryAreaToggle, _objectSpread({
-    icon: _icons.closeSmall
-  }, toggleButtonProps)));
+    tabIndex: -1,
+    children: [children, /*#__PURE__*/(0, _jsxRuntime.jsx)(ComplementaryAreaToggle, _objectSpread({
+      icon: _icons.closeSmall
+    }, toggleButtonProps))]
+  });
 };
 var _default = exports["default"] = ComplementaryAreaHeader;
 //# sourceMappingURL=complementary-area-header.js.map

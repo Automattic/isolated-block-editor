@@ -1,4 +1,3 @@
-import { createElement } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -138,6 +137,7 @@ import './style.scss';
 /**
  * Initialize Gutenberg
  */
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 export function initializeEditor() {
   if (window.isoInitialised) {
     return;
@@ -251,16 +251,21 @@ function IsolatedBlockEditor(props) {
   useEffect(() => {
     __experimentalOnSelection?.(editorSelection);
   }, [editorSelection]);
-  return createElement(StrictMode, null, createElement(ContentSaver, {
-    onSaveBlocks: onSaveBlocks,
-    onSaveContent: onSaveContent
-  }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(BlockEditorContainer, {
-    ...params,
-    onInput: __experimentalOnInput,
-    onChange: __experimentalOnChange,
-    blocks: __experimentalValue,
-    settings: settings
-  }, children)));
+  return /*#__PURE__*/_jsxs(StrictMode, {
+    children: [/*#__PURE__*/_jsx(ContentSaver, {
+      onSaveBlocks: onSaveBlocks,
+      onSaveContent: onSaveContent
+    }), /*#__PURE__*/_jsx(PatternMonitor, {}), /*#__PURE__*/_jsx(SlotFillProvider, {
+      children: /*#__PURE__*/_jsx(BlockEditorContainer, {
+        ...params,
+        onInput: __experimentalOnInput,
+        onChange: __experimentalOnChange,
+        blocks: __experimentalValue,
+        settings: settings,
+        children: children
+      })
+    })]
+  });
 }
 export default withRegistryProvider(IsolatedBlockEditor);
 export { EditorLoaded, DocumentSection, ToolbarSlot, FooterSlot, EditorHeadingSlot, ActionArea };

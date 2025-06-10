@@ -1,4 +1,3 @@
-import { createElement } from "react";
 // @ts-nocheck
 /**
  * External dependencies
@@ -34,7 +33,7 @@ import './style.scss';
  * @callback OnSetEditing
  * @param {boolean} isEditing
  */
-
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 const SIZE_LARGE = 720;
 const SIZE_MEDIUM = 480;
 
@@ -95,21 +94,25 @@ function BlockEditorContainer(props) {
     ['is-mode-' + editorMode]: true,
     'is-preview-mode': isPreview
   });
-  return createElement("div", {
-    className: classes
-  }, createElement(ErrorBoundary, {
-    onError: onError
-  }, createElement(HotSwapper, null), resizeListener, createElement(ClickOutsideWrapper, {
-    onOutside: () => setEditing(false),
-    onFocus: () => !isEditing && setEditing(true)
-  }, createElement(BlockEditorContents, {
-    blocks: blocks,
-    settings: settings,
-    renderMoreMenu: renderMoreMenu,
-    onLoad: onLoad,
-    onInput: onInput,
-    onChange: onChange
-  }, children))));
+  return /*#__PURE__*/_jsx("div", {
+    className: classes,
+    children: /*#__PURE__*/_jsxs(ErrorBoundary, {
+      onError: onError,
+      children: [/*#__PURE__*/_jsx(HotSwapper, {}), resizeListener, /*#__PURE__*/_jsx(ClickOutsideWrapper, {
+        onOutside: () => setEditing(false),
+        onFocus: () => !isEditing && setEditing(true),
+        children: /*#__PURE__*/_jsx(BlockEditorContents, {
+          blocks: blocks,
+          settings: settings,
+          renderMoreMenu: renderMoreMenu,
+          onLoad: onLoad,
+          onInput: onInput,
+          onChange: onChange,
+          children: children
+        })
+      })]
+    })
+  });
 }
 export default compose([withSelect((select, {
   settings

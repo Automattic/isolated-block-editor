@@ -18,7 +18,7 @@ var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
 var _keycodes = require("@wordpress/keycodes");
 var _listViewOutline = _interopRequireDefault(require("./list-view-outline"));
 var _unlock2 = require("./unlock");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
  */
@@ -115,58 +115,70 @@ function ListViewSidebar(_ref) {
   // This only fires when the sidebar is open because of the conditional rendering. It is the same shortcut to open but that is defined as a global shortcut and only fires when the sidebar is closed.
   (0, _keyboardShortcuts.useShortcut)('core/edit-post/toggle-list-view', handleToggleListViewShortcut);
   return (
+    /*#__PURE__*/
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    createElement("div", {
+    (0, _jsxRuntime.jsx)("div", {
       className: "editor-list-view-sidebar",
       onKeyDown: closeOnEscape
       // @ts-ignore
       ,
-      ref: sidebarRef
-    }, createElement(Tabs, {
-      onSelect: function onSelect(tabName) {
-        return setTab(tabName);
-      },
-      selectOnMove: false
-      // The initial tab value is set explicitly to avoid an initial
-      // render where no tab is selected. This ensures that the
-      // tabpanel height is correct so the relevant scroll container
-      // can be rendered internally.
-      ,
-      initialTabId: "list-view"
-    }, createElement("div", {
-      className: "block-editor-tabbed-sidebar__tablist-and-close-button"
-    }, canClose && createElement(_components.Button, {
-      className: "block-editor-tabbed-sidebar__close-button",
-      icon: _icons.closeSmall,
-      label: (0, _i18n.__)('Close'),
-      onClick: closeListView
-    }), createElement(Tabs.TabList, {
-      className: "block-editor-tabbed-sidebar__tablist",
-      ref: tabsRef
-    }, createElement(Tabs.Tab, {
-      className: "block-editor-tabbed-sidebar__tab",
-      tabId: "list-view"
-    }, (0, _i18n._x)('List View', 'Post overview')), createElement(Tabs.Tab, {
-      className: "block-editor-tabbed-sidebar__tab",
-      tabId: "outline"
-    }, (0, _i18n._x)('Outline', 'Post overview')))), createElement(Tabs.TabPanel, {
-      ref: listViewContainerRef,
-      className: "editor-list-view-sidebar__tabs-tabpanel",
-      tabId: "list-view",
-      focusable: false
-    }, createElement("div", {
-      className: "editor-list-view-sidebar__list-view-container"
-    }, createElement("div", {
-      className: "editor-list-view-sidebar__list-view-panel-content"
-    }, createElement(_blockEditor.__experimentalListView, {
-      dropZoneElement: dropZoneElement
-    })))), createElement(Tabs.TabPanel, {
-      className: "editor-list-view-sidebar__tabs-tabpanel",
-      tabId: "outline",
-      focusable: false
-    }, createElement("div", {
-      className: "editor-list-view-sidebar__list-view-container"
-    }, createElement(_listViewOutline["default"], null)))))
+      ref: sidebarRef,
+      children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(Tabs, {
+        onSelect: function onSelect(tabName) {
+          return setTab(tabName);
+        },
+        selectOnMove: false
+        // The initial tab value is set explicitly to avoid an initial
+        // render where no tab is selected. This ensures that the
+        // tabpanel height is correct so the relevant scroll container
+        // can be rendered internally.
+        ,
+        initialTabId: "list-view",
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+          className: "block-editor-tabbed-sidebar__tablist-and-close-button",
+          children: [canClose && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Button, {
+            className: "block-editor-tabbed-sidebar__close-button",
+            icon: _icons.closeSmall,
+            label: (0, _i18n.__)('Close'),
+            onClick: closeListView
+          }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(Tabs.TabList, {
+            className: "block-editor-tabbed-sidebar__tablist",
+            ref: tabsRef,
+            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(Tabs.Tab, {
+              className: "block-editor-tabbed-sidebar__tab",
+              tabId: "list-view",
+              children: (0, _i18n._x)('List View', 'Post overview')
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(Tabs.Tab, {
+              className: "block-editor-tabbed-sidebar__tab",
+              tabId: "outline",
+              children: (0, _i18n._x)('Outline', 'Post overview')
+            })]
+          })]
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(Tabs.TabPanel, {
+          ref: listViewContainerRef,
+          className: "editor-list-view-sidebar__tabs-tabpanel",
+          tabId: "list-view",
+          focusable: false,
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+            className: "editor-list-view-sidebar__list-view-container",
+            children: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+              className: "editor-list-view-sidebar__list-view-panel-content",
+              children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.__experimentalListView, {
+                dropZoneElement: dropZoneElement
+              })
+            })
+          })
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(Tabs.TabPanel, {
+          className: "editor-list-view-sidebar__tabs-tabpanel",
+          tabId: "outline",
+          focusable: false,
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+            className: "editor-list-view-sidebar__list-view-container",
+            children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_listViewOutline["default"], {})
+          })
+        })]
+      })
+    })
   );
 }
 //# sourceMappingURL=listview-sidebar.js.map

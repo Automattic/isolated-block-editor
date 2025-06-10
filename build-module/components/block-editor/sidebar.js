@@ -1,4 +1,3 @@
-import { createElement } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -20,6 +19,7 @@ import { default as SettingsHeader, sidebars } from './sidebar-heading';
 import Document from '../document';
 import ComplementaryArea from '../complementary-area';
 import { unlock } from './unlock';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 const {
   Tabs
 } = unlock(componentsPrivateApis);
@@ -35,30 +35,35 @@ const SettingsSidebarInternal = ({
   // need to forward the `Tabs` context so it can be passed through the
   // underlying slot/fill.
   const tabsContextValue = useContext(Tabs.Context);
-  return createElement(ComplementaryArea, {
+  return /*#__PURE__*/_jsx(ComplementaryArea, {
     className: "iso-sidebar",
     identifier: sidebarName,
-    header: createElement(Tabs.Context.Provider, {
-      value: tabsContextValue
-    }, createElement(SettingsHeader, {
-      documentInspector: documentInspector
-    })),
+    header: /*#__PURE__*/_jsx(Tabs.Context.Provider, {
+      value: tabsContextValue,
+      children: /*#__PURE__*/_jsx(SettingsHeader, {
+        documentInspector: documentInspector
+      })
+    }),
     closeLabel: __('Close settings'),
     headerClassName: "edit-post-sidebar__panel-tabs"
     /* translators: button label text should, if possible, be under 16 characters. */,
     title: __('Settings'),
     toggleShortcut: keyboardShortcut,
     icon: cog,
-    isActiveByDefault: false
-  }, createElement(Tabs.Context.Provider, {
-    value: tabsContextValue
-  }, createElement(Tabs.TabPanel, {
-    tabId: sidebars.document,
-    focusable: false
-  }, createElement(Document.Slot, null)), createElement(Tabs.TabPanel, {
-    tabId: sidebars.block,
-    focusable: false
-  }, createElement(BlockInspector, null))));
+    isActiveByDefault: false,
+    children: /*#__PURE__*/_jsxs(Tabs.Context.Provider, {
+      value: tabsContextValue,
+      children: [/*#__PURE__*/_jsx(Tabs.TabPanel, {
+        tabId: sidebars.document,
+        focusable: false,
+        children: /*#__PURE__*/_jsx(Document.Slot, {})
+      }), /*#__PURE__*/_jsx(Tabs.TabPanel, {
+        tabId: sidebars.block,
+        focusable: false,
+        children: /*#__PURE__*/_jsx(BlockInspector, {})
+      })]
+    })
+  });
 };
 const SettingsSidebar = ({
   documentInspector
@@ -87,7 +92,7 @@ const SettingsSidebar = ({
   const {
     openGeneralSidebar: onTabSelect
   } = useDispatch('isolated/editor');
-  return createElement(Tabs
+  return /*#__PURE__*/_jsx(Tabs
   // Due to how this component is controlled (via a value from the
   // `interfaceStore`), when the sidebar closes the currently selected
   // tab can't be found. This causes the component to continuously reset
@@ -95,12 +100,13 @@ const SettingsSidebar = ({
   // the selected tab to `null` avoids that.
   , {
     selectedTabId: isSettingsSidebarActive ? sidebarName : null,
-    onSelect: onTabSelect
-  }, createElement(SettingsSidebarInternal, {
-    documentInspector: documentInspector,
-    keyboardShortcut: keyboardShortcut,
-    sidebarName: sidebarName
-  }));
+    onSelect: onTabSelect,
+    children: /*#__PURE__*/_jsx(SettingsSidebarInternal, {
+      documentInspector: documentInspector,
+      keyboardShortcut: keyboardShortcut,
+      sidebarName: sidebarName
+    })
+  });
 };
 export default SettingsSidebar;
 //# sourceMappingURL=sidebar.js.map

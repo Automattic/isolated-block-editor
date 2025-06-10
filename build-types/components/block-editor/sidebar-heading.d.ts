@@ -5,5 +5,5 @@ export namespace sidebars {
 export default SettingsHeader;
 declare function SettingsHeader({ documentInspector }: {
     documentInspector: any;
-}): JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=sidebar-heading.d.ts.map

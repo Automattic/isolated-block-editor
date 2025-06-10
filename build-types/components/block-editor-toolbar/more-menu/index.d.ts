@@ -20,5 +20,5 @@ declare function MoreMenu({ settings, onClick, renderMoreMenu }: {
     settings: BlockEditorSettings;
     onClick: OnClose;
     renderMoreMenu: OnMore;
-}): JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=index.d.ts.map

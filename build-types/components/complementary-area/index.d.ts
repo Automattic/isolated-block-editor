@@ -8,5 +8,5 @@ export default function ComplementaryArea({ className, children, header, headerC
     closeLabel: any;
     title: any;
     identifier: any;
-}): JSX.Element | null;
+}): import("react").JSX.Element | null;
 //# sourceMappingURL=index.d.ts.map

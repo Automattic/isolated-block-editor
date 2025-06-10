@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -10,6 +9,7 @@ import { Popover } from '@wordpress/components';
  * Internal dependencies
  */
 import './style.scss';
+import { jsx as _jsx } from "react/jsx-runtime";
 function Inspector({
   button,
   onToggle
@@ -21,14 +21,15 @@ function Inspector({
       ev.stopPropagation();
     }
   }
-  return createElement(Popover, {
+  return /*#__PURE__*/_jsx(Popover, {
     position: "bottom left",
     className: "iso-inspector",
     anchor: button?.current,
-    onFocusOutside: onOutside
-  }, createElement(ComplementaryArea.Slot, {
-    scope: "isolated/editor"
-  }));
+    onFocusOutside: onOutside,
+    children: /*#__PURE__*/_jsx(ComplementaryArea.Slot, {
+      scope: "isolated/editor"
+    })
+  });
 }
 export default Inspector;
 //# sourceMappingURL=index.js.map

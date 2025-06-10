@@ -40,7 +40,7 @@ const BlockEditorToolbar = ( props ) => {
 	const ref = useRef( null );
 	const { settings, editorMode, renderMoreMenu } = props;
 	const isHugeViewport = useViewportMatch( 'huge', '>=' );
-	const blockToolbarRef = useRef();
+	const blockToolbarRef = useRef( null );
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const { inspector } = settings.iso?.toolbar || {};
 	const { moreMenu } = settings.iso || {};

@@ -1,4 +1,3 @@
-import { createElement } from "react";
 // @ts-nocheck
 /**
  * External dependencies
@@ -17,6 +16,7 @@ import { createHigherOrderComponent } from '@wordpress/compose';
  *
  * @type {string[]}
  */
+import { jsx as _jsx } from "react/jsx-runtime";
 const INPUT_BUTTON_TYPES = ['button', 'submit'];
 
 /**
@@ -117,17 +117,18 @@ export default createHigherOrderComponent(WrappedComponent => {
       // focus event normalization.
 
       /* eslint-disable jsx-a11y/no-static-element-interactions */
-      return createElement("div", {
+      return /*#__PURE__*/_jsx("div", {
         onFocus: this.cancelBlurCheck,
         onMouseDown: this.normalizeButtonFocus,
         onMouseUp: this.normalizeButtonFocus,
         onTouchStart: this.normalizeButtonFocus,
         onTouchEnd: this.normalizeButtonFocus,
-        onBlur: this.queueBlurCheck
-      }, createElement(WrappedComponent, {
-        ref: this.bindNode,
-        ...this.props
-      }));
+        onBlur: this.queueBlurCheck,
+        children: /*#__PURE__*/_jsx(WrappedComponent, {
+          ref: this.bindNode,
+          ...this.props
+        })
+      });
       /* eslint-enable jsx-a11y/no-static-element-interactions */
     }
   };

@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * External dependencies
  */
@@ -11,6 +10,7 @@ import { store as interfaceStore } from '@wordpress/interface';
  * WordPress dependencies
  */
 import { closeSmall } from '@wordpress/icons';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 function ComplementaryAreaToggle({
   as = Button,
   scope,
@@ -28,7 +28,7 @@ function ComplementaryAreaToggle({
     enableComplementaryArea,
     disableComplementaryArea
   } = useDispatch(interfaceStore);
-  return createElement(ComponentToUse, {
+  return /*#__PURE__*/_jsx(ComponentToUse, {
     icon: selectedIcon && isSelected ? selectedIcon : icon,
     onClick: () => {
       if (isSelected) {
@@ -45,13 +45,14 @@ const ComplementaryAreaHeader = ({
   className,
   toggleButtonProps
 }) => {
-  return createElement("div", {
+  return /*#__PURE__*/_jsxs("div", {
     className: classnames('components-panel__header', 'interface-complementary-area-header', className),
-    tabIndex: -1
-  }, children, createElement(ComplementaryAreaToggle, {
-    icon: closeSmall,
-    ...toggleButtonProps
-  }));
+    tabIndex: -1,
+    children: [children, /*#__PURE__*/_jsx(ComplementaryAreaToggle, {
+      icon: closeSmall,
+      ...toggleButtonProps
+    })]
+  });
 };
 export default ComplementaryAreaHeader;
 //# sourceMappingURL=complementary-area-header.js.map

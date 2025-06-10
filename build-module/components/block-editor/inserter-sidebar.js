@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -7,6 +6,7 @@ import { Button, VisuallyHidden } from '@wordpress/components';
 import { __experimentalLibrary as Library } from '@wordpress/block-editor';
 import { close } from '@wordpress/icons';
 import { useViewportMatch, __experimentalUseDialog as useDialog } from '@wordpress/compose';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 export default function InserterSidebar() {
   const {
     setIsInserterOpened
@@ -20,23 +20,26 @@ export default function InserterSidebar() {
     // @ts-ignore copied from Gutenberg
     focusOnMount: null
   });
-  return createElement("div", {
+  return /*#__PURE__*/_jsxs("div", {
     // @ts-ignore
     ref: inserterDialogRef,
     ...inserterDialogProps,
-    className: "edit-widgets-layout__inserter-panel"
-  }, createElement(TagName, {
-    className: "edit-widgets-layout__inserter-panel-header"
-  }, createElement(Button, {
-    icon: close,
-    onClick: () => setIsInserterOpened(false)
-  })), createElement("div", {
-    className: "edit-widgets-layout__inserter-panel-content"
-  }, createElement(Library, {
-    showMostUsedBlocks: false,
-    showInserterHelpPanel: true,
-    shouldFocusBlock: isMobileViewport,
-    onClose: () => setIsInserterOpened(false)
-  })));
+    className: "edit-widgets-layout__inserter-panel",
+    children: [/*#__PURE__*/_jsx(TagName, {
+      className: "edit-widgets-layout__inserter-panel-header",
+      children: /*#__PURE__*/_jsx(Button, {
+        icon: close,
+        onClick: () => setIsInserterOpened(false)
+      })
+    }), /*#__PURE__*/_jsx("div", {
+      className: "edit-widgets-layout__inserter-panel-content",
+      children: /*#__PURE__*/_jsx(Library, {
+        showMostUsedBlocks: false,
+        showInserterHelpPanel: true,
+        shouldFocusBlock: isMobileViewport,
+        onClose: () => setIsInserterOpened(false)
+      })
+    })]
+  });
 }
 //# sourceMappingURL=inserter-sidebar.js.map

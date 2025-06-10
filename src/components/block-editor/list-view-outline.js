@@ -31,6 +31,7 @@ export default function ListViewOutline() {
 					<TimeToRead />
 				</div>
 			</div>
+			{ /* @ts-ignore */ }
 			<DocumentOutline />
 		</>
 	);

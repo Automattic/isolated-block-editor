@@ -17,5 +17,5 @@ declare function BlockEditorToolbar(props: {
     settings: BlockEditorSettings;
     editorMode: EditorMode;
     renderMoreMenu: OnMore;
-}): JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=index.d.ts.map

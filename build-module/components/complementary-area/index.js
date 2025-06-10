@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -10,6 +9,7 @@ import { Panel, Fill } from '@wordpress/components';
  */
 import { useSelect } from '@wordpress/data';
 import ComplementaryAreaHeader from './complementary-area-header';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
 }
@@ -18,11 +18,13 @@ function ComplementaryAreaFill({
   children,
   className
 }) {
-  return createElement(Fill, {
-    name: `ComplementaryArea/${scope}`
-  }, createElement("div", {
-    className: className
-  }, children));
+  return /*#__PURE__*/_jsx(Fill, {
+    name: `ComplementaryArea/${scope}`,
+    children: /*#__PURE__*/_jsx("div", {
+      className: className,
+      children: children
+    })
+  });
 }
 export default function ComplementaryArea({
   className,
@@ -51,19 +53,22 @@ export default function ComplementaryArea({
   if (!isActive) {
     return null;
   }
-  return createElement(ComplementaryAreaFill, {
+  return /*#__PURE__*/_jsxs(ComplementaryAreaFill, {
     className: "interface-complementary-area",
-    scope: "isolated/editor"
-  }, createElement(ComplementaryAreaHeader, {
-    className: headerClassName,
-    toggleButtonProps: {
-      label: closeLabel,
-      shortcut: toggleShortcut,
-      scope,
-      identifier
-    }
-  }, header), createElement(Panel, {
-    className: "edit-post-sidebar"
-  }, children));
+    scope: "isolated/editor",
+    children: [/*#__PURE__*/_jsx(ComplementaryAreaHeader, {
+      className: headerClassName,
+      toggleButtonProps: {
+        label: closeLabel,
+        shortcut: toggleShortcut,
+        scope,
+        identifier
+      },
+      children: header
+    }), /*#__PURE__*/_jsx(Panel, {
+      className: "edit-post-sidebar",
+      children: children
+    })]
+  });
 }
 //# sourceMappingURL=index.js.map

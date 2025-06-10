@@ -15,7 +15,7 @@ var _clickOutside = _interopRequireDefault(require("./click-outside"));
 var _blockEditorContents = _interopRequireDefault(require("../block-editor-contents"));
 var _hotSwapper = _interopRequireDefault(require("./hot-swapper"));
 require("./style.scss");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 // @ts-nocheck
 /**
  * External dependencies
@@ -35,13 +35,13 @@ import { createElement } from "react";
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').OnLoad} OnLoad */
 /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
+
 /**
  * Set editing callback
  *
  * @callback OnSetEditing
  * @param {boolean} isEditing
- */
-var SIZE_LARGE = 720;
+ */var SIZE_LARGE = 720;
 var SIZE_MEDIUM = 480;
 
 /**
@@ -97,25 +97,29 @@ function BlockEditorContainer(props) {
     'edit-post-layout': true,
     'has-fixed-toolbar': fixedToolbar
   }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
-  return createElement("div", {
-    className: classes
-  }, createElement(_editor.ErrorBoundary, {
-    onError: onError
-  }, createElement(_hotSwapper["default"], null), resizeListener, createElement(_clickOutside["default"], {
-    onOutside: function onOutside() {
-      return setEditing(false);
-    },
-    onFocus: function onFocus() {
-      return !isEditing && setEditing(true);
-    }
-  }, createElement(_blockEditorContents["default"], {
-    blocks: blocks,
-    settings: settings,
-    renderMoreMenu: renderMoreMenu,
-    onLoad: onLoad,
-    onInput: onInput,
-    onChange: onChange
-  }, children))));
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+    className: classes,
+    children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_editor.ErrorBoundary, {
+      onError: onError,
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_hotSwapper["default"], {}), resizeListener, /*#__PURE__*/(0, _jsxRuntime.jsx)(_clickOutside["default"], {
+        onOutside: function onOutside() {
+          return setEditing(false);
+        },
+        onFocus: function onFocus() {
+          return !isEditing && setEditing(true);
+        },
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditorContents["default"], {
+          blocks: blocks,
+          settings: settings,
+          renderMoreMenu: renderMoreMenu,
+          onLoad: onLoad,
+          onInput: onInput,
+          onChange: onChange,
+          children: children
+        })
+      })]
+    })
+  });
 }
 var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref) {
   var settings = _ref.settings;

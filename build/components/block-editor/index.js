@@ -26,7 +26,7 @@ var _inserterSidebar = _interopRequireDefault(require("./inserter-sidebar"));
 var _listviewSidebar = _interopRequireDefault(require("./listview-sidebar"));
 var _footer = _interopRequireDefault(require("./footer"));
 var _actionArea = _interopRequireDefault(require("../action-area"));
-import { createElement, Fragment } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 // @ts-nocheck
 /**
  * External dependencies
@@ -43,12 +43,12 @@ import { createElement, Fragment } from "react";
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../index').OnMore} OnMore */
+
 /**
  * Undo/redo
  *
  * @callback OnHistory
- */
-var interfaceLabels = {
+ */var interfaceLabels = {
   secondarySidebar: (0, _i18n.__)('Block library'),
   /* translators: accessibility text for the editor top bar landmark region. */
   header: (0, _i18n.__)('Editor top bar'),
@@ -126,10 +126,10 @@ function BlockEditor(props) {
       return null;
     }
     if (editorMode === 'visual' && isInserterOpened) {
-      return createElement(_inserterSidebar["default"], null);
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {});
     }
     if (editorMode === 'visual' && isListViewOpened) {
-      return createElement(_listviewSidebar["default"], null);
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_listviewSidebar["default"], {});
     }
     return null;
   };
@@ -150,42 +150,51 @@ function BlockEditor(props) {
       }
     };
   }, [isFullscreenActive]);
-  var header = showHeader ? createElement(_blockEditorToolbar["default"], {
+  var header = showHeader ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditorToolbar["default"], {
     editorMode: editorMode,
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }) : null;
   var CustomSettingsSidebar = (_settings$iso$sidebar = settings === null || settings === void 0 || (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 || (_settings$iso5 = _settings$iso5.sidebar) === null || _settings$iso5 === void 0 ? void 0 : _settings$iso5.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : _sidebar["default"];
-  return createElement(Fragment, null, createElement(CustomSettingsSidebar, {
-    documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 || (_settings$iso6 = _settings$iso6.toolbar) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
-  }), createElement(_interface.FullscreenMode, {
-    isActive: isFullscreenActive
-  }), createElement(_interface.InterfaceSkeleton, {
-    className: className,
-    labels: interfaceLabels,
-    header: header,
-    secondarySidebar: secondarySidebar(),
-    sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && createElement(_interface.ComplementaryArea.Slot, {
-      scope: "isolated/editor"
-    }),
-    notices: createElement(_editor.EditorSnackbars, null),
-    content: createElement(Fragment, null, createElement(_editor.EditorNotices, null), isEditing && createElement(Fragment, null, createElement(_blockEditor.BlockEditorKeyboardShortcuts, null), createElement(_blockEditor.BlockEditorKeyboardShortcuts.Register, null)), createElement(_components.KeyboardShortcuts, {
-      bindGlobal: false,
-      shortcuts: (_ref = {}, (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primary('z'), undo), (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primaryShift('z'), redo), _ref)
-    }, editorMode === 'visual' && createElement(Fragment, null, !isLargeViewport && createElement(_blockEditor.BlockToolbar, {
-      hideDragHandle: true
-    }), createElement(_visualEditor["default"], {
-      styles: styles
-    })), editorMode === 'text' && createElement(_textEditor["default"], null)), children),
-    footer: showFooter && createElement(_footer["default"], {
-      editorMode: editorMode
-    }),
-    actions: createElement(_actionArea["default"].Slot, null),
-    shortcuts: {
-      previous: previousShortcut,
-      next: nextShortcut
-    }
-  }));
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(CustomSettingsSidebar, {
+      documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 || (_settings$iso6 = _settings$iso6.toolbar) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.FullscreenMode, {
+      isActive: isFullscreenActive
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.InterfaceSkeleton, {
+      className: className,
+      labels: interfaceLabels,
+      header: header,
+      secondarySidebar: secondarySidebar(),
+      sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.ComplementaryArea.Slot, {
+        scope: "isolated/editor"
+      }),
+      notices: /*#__PURE__*/(0, _jsxRuntime.jsx)(_editor.EditorSnackbars, {}),
+      content: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_editor.EditorNotices, {}), isEditing && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+          children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockEditorKeyboardShortcuts, {}), /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockEditorKeyboardShortcuts.Register, {})]
+        }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_components.KeyboardShortcuts, {
+          bindGlobal: false,
+          shortcuts: (_ref = {}, (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primary('z'), undo), (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primaryShift('z'), redo), _ref),
+          children: [editorMode === 'visual' && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+            children: [!isLargeViewport && /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockToolbar, {
+              hideDragHandle: true
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_visualEditor["default"], {
+              styles: styles
+            })]
+          }), editorMode === 'text' && /*#__PURE__*/(0, _jsxRuntime.jsx)(_textEditor["default"], {})]
+        }), children]
+      }),
+      footer: showFooter && /*#__PURE__*/(0, _jsxRuntime.jsx)(_footer["default"], {
+        editorMode: editorMode
+      }),
+      actions: /*#__PURE__*/(0, _jsxRuntime.jsx)(_actionArea["default"].Slot, {}),
+      shortcuts: {
+        previous: previousShortcut,
+        next: nextShortcut
+      }
+    })]
+  });
 }
 var _default = exports["default"] = (0, _data.withDispatch)(function (dispatch) {
   var _dispatch = dispatch('isolated/editor'),

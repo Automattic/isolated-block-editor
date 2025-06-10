@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * External dependencies
  */
@@ -12,6 +11,7 @@ import { compose } from '@wordpress/compose';
 import { MenuItem, withSpokenMessages } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { check } from '@wordpress/icons';
+import { jsx as _jsx } from "react/jsx-runtime";
 function FeatureToggle({
   onToggle,
   isActive,
@@ -28,13 +28,14 @@ function FeatureToggle({
       speak(messageActivated || __('Feature activated'));
     }
   };
-  return createElement(MenuItem, {
+  return /*#__PURE__*/_jsx(MenuItem, {
     icon: isActive && check,
     isSelected: isActive,
     onClick: flow(onToggle, speakMessage),
     role: "menuitemcheckbox",
-    info: info
-  }, label);
+    info: info,
+    children: label
+  });
 }
 
 // @ts-ignore

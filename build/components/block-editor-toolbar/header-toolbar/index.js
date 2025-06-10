@@ -17,7 +17,7 @@ var _redo = _interopRequireDefault(require("./redo"));
 var _undo = _interopRequireDefault(require("./undo"));
 var _blockNavigation = _interopRequireDefault(require("../block-navigation"));
 require("./style.scss");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -101,62 +101,65 @@ function HeaderToolbar(props) {
   var toggleListView = (0, _element.useCallback)(function () {
     return setIsListViewOpened(!isListViewOpen);
   }, [setIsListViewOpened, isListViewOpen]);
-  return createElement(_blockEditor.NavigableToolbar, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.NavigableToolbar, {
     className: "editor-document-tools edit-post-header-toolbar",
-    "aria-label": toolbarAriaLabel
-  }, (inserter || undo || navigation || selectorTool) && createElement("div", {
-    className: "editor-document-tools__left edit-post-header-toolbar__left"
-  }, inserter && createElement(_components.ToolbarItem, {
-    ref: inserterButton,
-    as: _components.Button,
-    className: "editor-document-tools__inserter-toggle",
-    isPressed: isInserterOpened,
-    onMouseDown: preventDefault,
-    onClick: openInserter,
-    disabled: !isInserterEnabled,
-    isPrimary: true,
-    icon: _icons.plus
-    /* translators: button label text should, if possible, be under 16
-    characters. */,
-    label: (0, _i18n._x)('Toggle block inserter', 'Generic label for block inserter button'),
-    showTooltip: !showIconLabels
-  }), isInserterOpened && !inserterInSidebar && createElement(_components.Popover, {
-    position: "bottom right",
-    onClose: function onClose() {
-      return setIsInserterOpened(false);
-    },
-    anchor: inserterButton.current
-  }, createElement(_blockEditor.__experimentalLibrary, {
-    showMostUsedBlocks: false,
-    showInserterHelpPanel: true,
-    onSelect: function onSelect() {
-      if (isMobileViewport) {
-        setIsInserterOpened(false);
-      }
-    }
-  })), selectorTool && createElement(_blockEditor.ToolSelector, null), undo && createElement(_components.ToolbarItem, {
-    as: _undo["default"],
-    showTooltip: !showIconLabels,
-    variant: showIconLabels ? 'tertiary' : undefined
-  }), undo && createElement(_components.ToolbarItem, {
-    as: _redo["default"],
-    showTooltip: !showIconLabels,
-    variant: showIconLabels ? 'tertiary' : undefined
-  }), navigation && !inserterInSidebar && createElement(_components.ToolbarItem, {
-    as: _blockNavigation["default"],
-    isDisabled: isTextModeEnabled
-  }), navigation && inserterInSidebar && createElement(_components.ToolbarItem, {
-    as: _components.Button,
-    className: "edit-post-header-toolbar__list-view-toggle",
-    icon: _icons.listView,
-    disabled: isTextModeEnabled,
-    isPressed: isListViewOpen
-    /* translators: button label text should, if possible, be under 16 characters. */,
-    label: (0, _i18n.__)('List View'),
-    onClick: toggleListView,
-    shortcut: listViewShortcut,
-    showTooltip: !showIconLabels
-  })));
+    "aria-label": toolbarAriaLabel,
+    children: (inserter || undo || navigation || selectorTool) && /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+      className: "editor-document-tools__left edit-post-header-toolbar__left",
+      children: [inserter && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+        ref: inserterButton,
+        as: _components.Button,
+        className: "editor-document-tools__inserter-toggle",
+        isPressed: isInserterOpened,
+        onMouseDown: preventDefault,
+        onClick: openInserter,
+        disabled: !isInserterEnabled,
+        isPrimary: true,
+        icon: _icons.plus
+        /* translators: button label text should, if possible, be under 16
+        characters. */,
+        label: (0, _i18n._x)('Toggle block inserter', 'Generic label for block inserter button'),
+        showTooltip: !showIconLabels
+      }), isInserterOpened && !inserterInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Popover, {
+        position: "bottom right",
+        onClose: function onClose() {
+          return setIsInserterOpened(false);
+        },
+        anchor: inserterButton.current,
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.__experimentalLibrary, {
+          showMostUsedBlocks: false,
+          showInserterHelpPanel: true,
+          onSelect: function onSelect() {
+            if (isMobileViewport) {
+              setIsInserterOpened(false);
+            }
+          }
+        })
+      }), selectorTool && /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.ToolSelector, {}), undo && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+        as: _undo["default"],
+        showTooltip: !showIconLabels,
+        variant: showIconLabels ? 'tertiary' : undefined
+      }), undo && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+        as: _redo["default"],
+        showTooltip: !showIconLabels,
+        variant: showIconLabels ? 'tertiary' : undefined
+      }), navigation && !inserterInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+        as: _blockNavigation["default"],
+        isDisabled: isTextModeEnabled
+      }), navigation && inserterInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+        as: _components.Button,
+        className: "edit-post-header-toolbar__list-view-toggle",
+        icon: _icons.listView,
+        disabled: isTextModeEnabled,
+        isPressed: isListViewOpen
+        /* translators: button label text should, if possible, be under 16 characters. */,
+        label: (0, _i18n.__)('List View'),
+        onClick: toggleListView,
+        shortcut: listViewShortcut,
+        showTooltip: !showIconLabels
+      })]
+    })
+  });
 }
 var _default = exports["default"] = HeaderToolbar;
 //# sourceMappingURL=index.js.map

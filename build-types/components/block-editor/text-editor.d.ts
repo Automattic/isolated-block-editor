@@ -4,5 +4,5 @@ export default TextEditor;
  *
  * The original is not exported, and contains code for post titles
  */
-declare function TextEditor({}: {}): JSX.Element;
+declare function TextEditor({}: {}): import("react").JSX.Element;
 //# sourceMappingURL=text-editor.d.ts.map

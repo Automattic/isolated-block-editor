@@ -1,8 +1,8 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
 import { createSlotFill } from '@wordpress/components';
+import { jsx as _jsx } from "react/jsx-runtime";
 const {
   Fill,
   Slot
@@ -10,10 +10,14 @@ const {
 const FooterSection = ({
   children
 }) => {
-  return createElement(Fill, null, children);
+  return /*#__PURE__*/_jsx(Fill, {
+    children: children
+  });
 };
 FooterSection.Slot = function (props) {
-  return createElement(Slot, null, fills => fills);
+  return /*#__PURE__*/_jsx(Slot, {
+    children: fills => fills
+  });
 };
 export default FooterSection;
 //# sourceMappingURL=index.js.map

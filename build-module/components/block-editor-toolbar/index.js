@@ -1,4 +1,3 @@
-import { createElement, Fragment } from "react";
 /**
  * WordPress dependencies
  */
@@ -37,6 +36,7 @@ import './style.scss';
  * @param {EditorMode} props.editorMode - Visual or code?
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 const BlockEditorToolbar = props => {
   const ref = useRef(null);
   const {
@@ -45,7 +45,7 @@ const BlockEditorToolbar = props => {
     renderMoreMenu
   } = props;
   const isHugeViewport = useViewportMatch('huge', '>=');
-  const blockToolbarRef = useRef();
+  const blockToolbarRef = useRef(null);
   const isLargeViewport = useViewportMatch('medium');
   const {
     inspector
@@ -118,52 +118,60 @@ const BlockEditorToolbar = props => {
       closeGeneralSidebar();
     }
   }, [isInserterOpened, isHugeViewport]);
-  return createElement("div", {
+  return /*#__PURE__*/_jsx("div", {
     className: "edit-post-editor-regions__header",
     role: "region",
-    tabIndex: -1
-  }, createElement("div", {
-    className: "editor-header edit-post-header"
-  }, createElement("div", {
-    className: "editor-header__toolbar"
-  }, createElement(HeaderToolbar, {
-    settings: settings
-  }), isLargeViewport && createElement(Fragment, null, createElement("div", {
-    className: classnames('editor-collapsible-block-toolbar', {
-      'is-collapsed': isBlockToolsCollapsed
+    tabIndex: -1,
+    children: /*#__PURE__*/_jsxs("div", {
+      className: "editor-header edit-post-header",
+      children: [/*#__PURE__*/_jsxs("div", {
+        className: "editor-header__toolbar",
+        children: [/*#__PURE__*/_jsx(HeaderToolbar, {
+          settings: settings
+        }), isLargeViewport && /*#__PURE__*/_jsxs(_Fragment, {
+          children: [/*#__PURE__*/_jsx("div", {
+            className: classnames('editor-collapsible-block-toolbar', {
+              'is-collapsed': isBlockToolsCollapsed
+            }),
+            children: /*#__PURE__*/_jsx(BlockToolbar, {
+              hideDragHandle: true
+            })
+          }),
+          /*#__PURE__*/
+          // @ts-ignore
+          _jsx(Popover.Slot, {
+            ref: blockToolbarRef,
+            name: "block-toolbar"
+          }), isBlockSelected && /*#__PURE__*/_jsx(Button, {
+            className: "edit-post-header__block-tools-toggle",
+            icon: isBlockToolsCollapsed ? next : previous,
+            onClick: () => {
+              setIsBlockToolsCollapsed(collapsed => !collapsed);
+            },
+            label: isBlockToolsCollapsed ? __('Show block tools') : __('Hide block tools')
+          })]
+        })]
+      }), /*#__PURE__*/_jsxs("div", {
+        className: "editor-header__settings",
+        ref: ref,
+        children: [/*#__PURE__*/_jsx(ToolbarSlot.Slot, {}), inspector && /*#__PURE__*/_jsx(Button, {
+          icon: cog,
+          label: __('Settings'),
+          onClick: () => toggleSidebar(!isEditorSidebarOpened),
+          isPressed: isEditorSidebarOpened,
+          "aria-expanded": isEditorSidebarOpened,
+          disabled: editorMode === 'text'
+        }), isEditorSidebarOpened && !inspectorInSidebar && /*#__PURE__*/_jsx(Inspector, {
+          button: ref,
+          onToggle: toggleSidebar
+        }), moreMenu && /*#__PURE__*/_jsx(MoreMenu, {
+          settings: settings,
+          onClick: () => closeGeneralSidebar(),
+          renderMoreMenu: renderMoreMenu
+        })]
+      })]
     })
-  }, createElement(BlockToolbar, {
-    hideDragHandle: true
-  })),
-  // @ts-ignore
-  createElement(Popover.Slot, {
-    ref: blockToolbarRef,
-    name: "block-toolbar"
-  }), isBlockSelected && createElement(Button, {
-    className: "edit-post-header__block-tools-toggle",
-    icon: isBlockToolsCollapsed ? next : previous,
-    onClick: () => {
-      setIsBlockToolsCollapsed(collapsed => !collapsed);
-    },
-    label: isBlockToolsCollapsed ? __('Show block tools') : __('Hide block tools')
-  }))), createElement("div", {
-    className: "editor-header__settings",
-    ref: ref
-  }, createElement(ToolbarSlot.Slot, null), inspector && createElement(Button, {
-    icon: cog,
-    label: __('Settings'),
-    onClick: () => toggleSidebar(!isEditorSidebarOpened),
-    isPressed: isEditorSidebarOpened,
-    "aria-expanded": isEditorSidebarOpened,
-    disabled: editorMode === 'text'
-  }), isEditorSidebarOpened && !inspectorInSidebar && createElement(Inspector, {
-    button: ref,
-    onToggle: toggleSidebar
-  }), moreMenu && createElement(MoreMenu, {
-    settings: settings,
-    onClick: () => closeGeneralSidebar(),
-    renderMoreMenu: renderMoreMenu
-  }))));
+  });
 };
 export default BlockEditorToolbar;
 //# sourceMappingURL=index.js.map

@@ -6,7 +6,11 @@
  *
  * @return {string | null | undefined} The complementary area that is active in the given scope.
  */
-export const getActiveComplementaryArea: Function;
+export const getActiveComplementaryArea: {
+    (state?: any, scope?: any): any;
+    isRegistrySelector?: boolean | undefined;
+    registry?: any;
+};
 /**
  * Returns a boolean indicating if an item is pinned or not.
  *
@@ -16,7 +20,11 @@ export const getActiveComplementaryArea: Function;
  *
  * @return {boolean} True if the item is pinned and false otherwise.
  */
-export const isItemPinned: Function;
+export const isItemPinned: {
+    (state?: any, scope?: any, item?: any): any;
+    isRegistrySelector?: boolean | undefined;
+    registry?: any;
+};
 /**
  * Returns a boolean indicating whether a feature is active for a particular
  * scope.
@@ -27,5 +35,9 @@ export const isItemPinned: Function;
  *
  * @return {boolean} Is the feature enabled?
  */
-export const isFeatureActive: Function;
+export const isFeatureActive: {
+    (state?: any, scope?: any, featureName?: any): boolean;
+    isRegistrySelector?: boolean | undefined;
+    registry?: any;
+};
 //# sourceMappingURL=selectors.d.ts.map
