@@ -1,7 +1,11 @@
-const path = require( 'path' );
 module.exports = {
   stories: [ '../src/**/*.stories.*', '../stories/**/*.stories.*' ],
-  addons: [ '@storybook/addon-links', '@storybook/addon-essentials', '@storybook/preset-scss', '@storybook/addon-mdx-gfm', '@storybook/preset-typescript'
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-webpack5-compiler-babel',
+    '@storybook/preset-scss',
+    '@storybook/addon-mdx-gfm'
   ],
   typescript: {
     check: false,
