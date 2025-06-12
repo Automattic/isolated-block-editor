@@ -10,7 +10,7 @@ var _i18n = require("@wordpress/i18n");
 var _data = require("@wordpress/data");
 var _toggleFeature = _interopRequireDefault(require("../toggle-feature"));
 var _toggleOption = _interopRequireDefault(require("../toggle-option"));
-import { createElement, Fragment } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -22,14 +22,14 @@ import { createElement, Fragment } from "react";
 
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('./index').OnClose} OnClose */
+
 /**
  * Writing menu
  *
  * @param {Object} props - Component props
  * @param {OnClose} props.onClose - Close the menu
  * @param {BlockEditorSettings} props.settings - Settings
- */
-function WritingMenu(_ref) {
+ */function WritingMenu(_ref) {
   var _settings$iso;
   var onClose = _ref.onClose,
     settings = _ref.settings;
@@ -48,26 +48,29 @@ function WritingMenu(_ref) {
   if (!fullscreen && !preview && !topToolbar) {
     return null;
   }
-  return createElement(_components.MenuGroup, {
-    label: (0, _i18n._x)('View', 'noun')
-  }, topToolbar && createElement(Fragment, null, createElement(_toggleFeature["default"], {
-    feature: "fixedToolbar",
-    label: (0, _i18n.__)('Top toolbar'),
-    info: (0, _i18n.__)('Access all block and document tools in a single place.'),
-    messageActivated: (0, _i18n.__)('Top toolbar activated'),
-    messageDeactivated: (0, _i18n.__)('Top toolbar deactivated'),
-    onClose: onClose
-  })), fullscreen && createElement(_toggleOption["default"], {
-    option: "fullscreenMode",
-    label: (0, _i18n.__)('Fullscreen'),
-    info: (0, _i18n.__)('Show editor fullscreen.'),
-    onClose: onClose
-  }), preview && !isFullscreen && createElement(_toggleOption["default"], {
-    option: "preview",
-    label: (0, _i18n.__)('Preview'),
-    info: (0, _i18n.__)('Preview the content before posting.'),
-    onClose: onClose
-  }));
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_components.MenuGroup, {
+    label: (0, _i18n._x)('View', 'noun'),
+    children: [topToolbar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_toggleFeature["default"], {
+        feature: "fixedToolbar",
+        label: (0, _i18n.__)('Top toolbar'),
+        info: (0, _i18n.__)('Access all block and document tools in a single place.'),
+        messageActivated: (0, _i18n.__)('Top toolbar activated'),
+        messageDeactivated: (0, _i18n.__)('Top toolbar deactivated'),
+        onClose: onClose
+      })
+    }), fullscreen && /*#__PURE__*/(0, _jsxRuntime.jsx)(_toggleOption["default"], {
+      option: "fullscreenMode",
+      label: (0, _i18n.__)('Fullscreen'),
+      info: (0, _i18n.__)('Show editor fullscreen.'),
+      onClose: onClose
+    }), preview && !isFullscreen && /*#__PURE__*/(0, _jsxRuntime.jsx)(_toggleOption["default"], {
+      option: "preview",
+      label: (0, _i18n.__)('Preview'),
+      info: (0, _i18n.__)('Preview the content before posting.'),
+      onClose: onClose
+    })]
+  });
 }
 var _default = exports["default"] = WritingMenu;
 //# sourceMappingURL=writing-menu.js.map

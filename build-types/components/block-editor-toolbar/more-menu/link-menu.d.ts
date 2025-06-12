@@ -9,5 +9,5 @@ export type BlockEditorSettings = import('../../../index').BlockEditorSettings;
  */
 declare function LinkMenu({ settings }: {
     settings: BlockEditorSettings;
-}): JSX.Element | null;
+}): import("react").JSX.Element | null;
 //# sourceMappingURL=link-menu.d.ts.map

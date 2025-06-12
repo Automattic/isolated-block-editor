@@ -66,11 +66,11 @@
 		}
 	}
 
-	.edit-post-text-editor {
+	.editor-text-editor {
 		padding-top: 0;
 	}
 
-	.edit-post-text-editor__body {
+	.editor-text-editor__body {
 		max-width: none;
 		margin-top: 32px;
 		margin-bottom: 32px;
@@ -127,10 +127,6 @@
 		background: unset;
 	}
 
-	.components-popover__content .block-editor-inserter__menu .components-tab-panel__tab-content button {
-		font-size: $editor-font-size;
-	}
-
 	// Prevents any theme CSS interfering with the textarea. e.g TwentyTwelve
 	.block-editor-default-block-appender textarea {
 		border: none !important;
@@ -139,6 +135,6 @@
 	}
 }
 
-.edit-post-header__toolbar .components-accessible-toolbar {
+.editor-header__toolbar .components-accessible-toolbar {
 	border: none;
 }

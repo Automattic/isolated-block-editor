@@ -1,7 +1,7 @@
 /// <reference types="redux-undo" />
 export default storeConfig;
 declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
-    reducer: import("redux").Reducer<import("redux").CombinedState<{
+    reducer: import("redux").Reducer<{
         blocks: import("redux-undo").StateWithHistory<{
             editCount: number;
             blocks: any;
@@ -445,7 +445,16 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         };
         preferences: any;
         options: {};
-    }>, any>;
+    }, any, Partial<{
+        blocks: import("redux-undo").StateWithHistory<{
+            editCount: number;
+            blocks: any;
+            selection: any;
+        }> | undefined;
+        editor: import("./editor/reducer").EditorState | undefined;
+        preferences: any;
+        options: {} | undefined;
+    }>>;
     actions: {
         toggleFeature(feature: string): {
             type: string;
@@ -497,8 +506,8 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             isOpen: boolean;
         };
-        undo(): Generator<import("redux").Action<any>, any, unknown>;
-        redo(): Generator<import("redux").Action<any>, any, unknown>;
+        undo(): Generator<import("redux").Action, any, unknown>;
+        redo(): Generator<import("redux").Action, any, unknown>;
         updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
         updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     };
@@ -553,7 +562,11 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         isIframePreview(state: {
             editor: import("./editor/reducer").EditorState;
         }): boolean;
-        isEditorSidebarOpened: Function;
+        isEditorSidebarOpened: {
+            (): boolean;
+            isRegistrySelector?: boolean | undefined;
+            registry?: any;
+        };
         /**
          * Internal dependencies
          */

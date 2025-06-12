@@ -7,8 +7,6 @@ import { Panel, Fill } from '@wordpress/components';
 /**
  * Internal dependencies
  */
-
-import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 
 import ComplementaryAreaHeader from './complementary-area-header';
@@ -27,15 +25,12 @@ function ComplementaryAreaFill( { scope, children, className } ) {
 
 export default function ComplementaryArea( { className, children, header, headerClassName, toggleShortcut, closeLabel, title, identifier, ...props } ) {
 	const scope = "isolated/editor";
-	const { postTitle, isActive } = useSelect( ( select ) => {
+	const { isActive } = useSelect( ( select ) => {
 		// @ts-ignore
 		const { getActiveComplementaryArea } = select( interfaceStore );
 		const _activeArea = getActiveComplementaryArea( 'isolated/editor' );
 
 		return {
-			postTitle: '',
-			// @ts-ignore
-			showIconLabels: select( 'isolated/editor' ).isFeatureActive( 'showIconLabels' ),
 			isActive: isActiveArea( _activeArea ),
 		};
 	}, [] );
@@ -51,7 +46,6 @@ export default function ComplementaryArea( { className, children, header, header
 		>
 			<ComplementaryAreaHeader
 				className={ headerClassName }
-				smallScreenTitle={ postTitle || __( '(no title)' ) }
 				toggleButtonProps={ {
 					label: closeLabel,
 					shortcut: toggleShortcut,

@@ -67,6 +67,7 @@ var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded")
 var _editorHeadingSlot = _interopRequireDefault(require("./components/editor-heading-slot"));
 require("./store/edit-post");
 require("./style.scss");
+var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"]; // @ts-nocheck
 /**
  * WordPress dependencies
@@ -76,13 +77,9 @@ var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUnd
  */
 // Export library components
 // A fake edit-post store is needed
-import { createElement } from "react";
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
-
 /**
  * Undo Manager
  *
@@ -92,7 +89,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {Array} undoStack - Undo stack
  * @property {Array} redoStack - Redo stack
  */
-
 /**
  * Toolbar settings
  *
@@ -104,7 +100,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {boolean} [selectorTool] - Enable or disable the selector tool
  * @property {boolean|string} [documentInspector] - Enable or disable the document inspector or enable with custom label
  */
-
 /**
  * More menu settings
  *
@@ -114,7 +109,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {boolean} [preview] - Enable or disable the preview option
  * @property {boolean} [topToolbar] - Enable or disable the 'top toolbar' option
  */
-
 /**
  * Sidebar settings
  *
@@ -123,7 +117,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
  * @property {function|null} [customComponent] - Function returning a custom sidebar component, or will default to the block inspector
  */
-
 /**
  * Isolated Editor Settings
  *
@@ -145,7 +138,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {boolean} [disableCanvasAnimations] - Disable editor canvas animations
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
  */
-
 /**
  * Block Editor Settings
  *
@@ -153,7 +145,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {IsoSettings} [iso] - Isolated editor settings
  * @property {EditorSettings} [editor] - Gutenberg editor settings
  */
-
 /**
  * Gutenberg Editor Settings - this isn't the complete object, but just enough for linting here
  *
@@ -170,17 +161,17 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @property {object[]} defaultEditorStyles
  * @property {string} bodyPlaceholder
  */
-
 /**
  * OnSelect callback
  *
  * @callback OnSelect
  * @param {Object} selection - Editor content to save
  */
-
 /**
  * Initialize Gutenberg
  */
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function initializeEditor() {
   if (window.isoInitialised) {
     return;
@@ -294,15 +285,20 @@ function IsolatedBlockEditor(props) {
   (0, _element.useEffect)(function () {
     __experimentalOnSelection === null || __experimentalOnSelection === void 0 || __experimentalOnSelection(editorSelection);
   }, [editorSelection]);
-  return createElement(_element.StrictMode, null, createElement(_contentSaver["default"], {
-    onSaveBlocks: onSaveBlocks,
-    onSaveContent: onSaveContent
-  }), createElement(_patternMonitor["default"], null), createElement(_components.SlotFillProvider, null, createElement(_blockEditorContainer["default"], _objectSpread(_objectSpread({}, params), {}, {
-    onInput: __experimentalOnInput,
-    onChange: __experimentalOnChange,
-    blocks: __experimentalValue,
-    settings: settings
-  }), children)));
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_element.StrictMode, {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_contentSaver["default"], {
+      onSaveBlocks: onSaveBlocks,
+      onSaveContent: onSaveContent
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_patternMonitor["default"], {}), /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.SlotFillProvider, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditorContainer["default"], _objectSpread(_objectSpread({}, params), {}, {
+        onInput: __experimentalOnInput,
+        onChange: __experimentalOnChange,
+        blocks: __experimentalValue,
+        settings: settings,
+        children: children
+      }))
+    })]
+  });
 }
 var _default = exports["default"] = (0, _withRegistryProvider["default"])(IsolatedBlockEditor);
 //# sourceMappingURL=index.js.map

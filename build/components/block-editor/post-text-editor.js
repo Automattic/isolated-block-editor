@@ -17,7 +17,7 @@ var _element = require("@wordpress/element");
 var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _blocks = require("@wordpress/blocks");
-import { createElement, Fragment } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } } /**
                                                                                                                                                                                                                                                                                                                                            * External dependencies
@@ -80,21 +80,24 @@ var PostTextEditor = exports.PostTextEditor = /*#__PURE__*/function (_Component)
     value: function render() {
       var value = this.state.value;
       var instanceId = this.props.instanceId;
-      return createElement(Fragment, null, createElement("label", {
-        htmlFor: "post-content-".concat(instanceId),
-        className: "screen-reader-text"
-      }, (0, _i18n.__)('Type text or HTML')), createElement(_reactAutosizeTextarea["default"], {
-        autoComplete: "off",
-        dir: "auto",
-        value: value
-        // @ts-ignore */}
-        ,
-        onChange: this.edit,
-        onBlur: this.stopEditing,
-        className: "editor-post-text-editor",
-        id: "post-content-".concat(instanceId),
-        placeholder: (0, _i18n.__)('Start writing with text or HTML')
-      }));
+      return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("label", {
+          htmlFor: "post-content-".concat(instanceId),
+          className: "screen-reader-text",
+          children: (0, _i18n.__)('Type text or HTML')
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactAutosizeTextarea["default"], {
+          autoComplete: "off",
+          dir: "auto",
+          value: value
+          // @ts-ignore */}
+          ,
+          onChange: this.edit,
+          onBlur: this.stopEditing,
+          className: "editor-post-text-editor",
+          id: "post-content-".concat(instanceId),
+          placeholder: (0, _i18n.__)('Start writing with text or HTML')
+        })]
+      });
     }
   }], [{
     key: "getDerivedStateFromProps",

@@ -96,17 +96,12 @@ export default function VisualEditor( { styles } ) {
 		editedPostTemplate = {},
 		wrapperBlockName,
 		wrapperUniqueId,
-		// @ts-ignore
-		isBlockBasedTheme,
-		// @ts-ignore
-		hasV3BlocksOnly,
 	} = useSelect( ( select ) => {
 		const {
 			isFeatureActive,
 		} = select( 'isolated/editor' );
 		const { getCurrentPostId, getCurrentPostType, getEditorSettings } =
 			select( editorStore );
-		const { getBlockTypes } = select( blocksStore );
 		const _isTemplateMode = false;
 		const postTypeSlug = getCurrentPostType();
 		let _wrapperBlockName;
@@ -117,23 +112,18 @@ export default function VisualEditor( { styles } ) {
 			_wrapperBlockName = 'core/post-content';
 		}
 
-		const editorSettings = getEditorSettings();
-
 		return {
 			deviceType: 'Desktop',
 			// @ts-ignore
 			isWelcomeGuideVisible: isFeatureActive( 'welcomeGuide' ),
 			isTemplateMode: _isTemplateMode,
+			// @ts-ignore
 			postContentAttributes: getEditorSettings().postContentAttributes,
 			// Post template fetch returns a 404 on classic themes, which
 			// messes with e2e tests, so check it's a block theme first.
 			editedPostTemplate: undefined,
 			wrapperBlockName: _wrapperBlockName,
 			wrapperUniqueId: getCurrentPostId(),
-			isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
-			hasV3BlocksOnly: getBlockTypes().every( ( type ) => {
-				return type.apiVersion >= 3;
-			} ),
 		};
 	}, [] );
 	// @ts-ignore
@@ -343,21 +333,11 @@ export default function VisualEditor( { styles } ) {
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
 
-	// TODO: Styles not appearing in the iframe mode yet
-	// const isToBeIframed =
-	// 	( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
-	// 		! hasMetaBoxes ) ||
-	// 	isTemplateMode ||
-	// 	deviceType === 'Tablet' ||
-	// 	deviceType === 'Mobile';
-	const isToBeIframed = false;
-
 	return (
 		<BlockTools
 			__unstableContentRef={ ref }
 			className={ classnames( 'edit-post-visual-editor', {
 				'is-template-mode': isTemplateMode,
-				'has-inline-canvas': ! isToBeIframed,
 			} ) }
 		>
 			<motion.div
@@ -372,7 +352,7 @@ export default function VisualEditor( { styles } ) {
 					className={ previewMode }
 				>
 					<BlockCanvas
-						shouldIframe={ isToBeIframed }
+						shouldIframe={ false }
 						contentRef={ contentRef }
 						styles={ styles }
 						height="100%"

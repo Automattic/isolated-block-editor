@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
  */
@@ -24,11 +24,15 @@ var _createSlotFill = (0, _components.createSlotFill)('IsolatedToolbar'),
  */
 var ToolbarSlot = function ToolbarSlot(_ref) {
   var children = _ref.children;
-  return createElement(Fill, null, children);
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(Fill, {
+    children: children
+  });
 };
 ToolbarSlot.Slot = function (props) {
-  return createElement(Slot, null, function (fills) {
-    return fills;
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(Slot, {
+    children: function children(fills) {
+      return fills;
+    }
   });
 };
 var _default = exports["default"] = ToolbarSlot;

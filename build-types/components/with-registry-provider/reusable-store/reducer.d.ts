@@ -1,6 +1,8 @@
 export function isEditingReusableBlock(state: {} | undefined, action: any): {};
-declare const _default: import("redux").Reducer<import("redux").CombinedState<{
+declare const _default: import("redux").Reducer<{
     isEditingReusableBlock: {};
-}>, import("redux").AnyAction>;
+}, any, Partial<{
+    isEditingReusableBlock: {} | undefined;
+}>>;
 export default _default;
 //# sourceMappingURL=reducer.d.ts.map

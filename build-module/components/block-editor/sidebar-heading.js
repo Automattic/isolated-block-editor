@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -10,6 +9,7 @@ import { useSelect } from '@wordpress/data';
  * Internal dependencies
  */
 import { unlock } from './unlock';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 export const sidebars = {
   document: 'edit-post/document',
   block: 'edit-post/block'
@@ -31,11 +31,15 @@ const SettingsHeader = ({
   }, []);
 
   /* Use a list so screen readers will announce how many tabs there are. */
-  return createElement(Tabs.TabList, null, !!documentInspector && createElement(Tabs.Tab, {
-    tabId: sidebars.document
-  }, documentLabel), createElement(Tabs.Tab, {
-    tabId: sidebars.block
-  }, __('Block')));
+  return /*#__PURE__*/_jsxs(Tabs.TabList, {
+    children: [!!documentInspector && /*#__PURE__*/_jsx(Tabs.Tab, {
+      tabId: sidebars.document,
+      children: documentLabel
+    }), /*#__PURE__*/_jsx(Tabs.Tab, {
+      tabId: sidebars.block,
+      children: __('Block')
+    })]
+  });
 };
 export default SettingsHeader;
 //# sourceMappingURL=sidebar-heading.js.map

@@ -21,8 +21,20 @@ export function convertBlocksToReusable(clientIds: any[]): any;
 export function deleteReusableBlock(id: string): any;
 export default controls;
 declare namespace controls {
-    let CONVERT_BLOCK_TO_STATIC: Function;
-    let CONVERT_BLOCKS_TO_REUSABLE: Function;
-    let DELETE_REUSABLE_BLOCK: Function;
+    let CONVERT_BLOCK_TO_STATIC: ((registry: any) => ({ clientId }: {
+        clientId: any;
+    }) => void) & {
+        isRegistryControl?: boolean | undefined;
+    };
+    let CONVERT_BLOCKS_TO_REUSABLE: ((registry: any) => ({ clientIds }: {
+        clientIds: any;
+    }) => Promise<void>) & {
+        isRegistryControl?: boolean | undefined;
+    };
+    let DELETE_REUSABLE_BLOCK: ((registry: any) => ({ id }: {
+        id: any;
+    }) => Promise<void>) & {
+        isRegistryControl?: boolean | undefined;
+    };
 }
 //# sourceMappingURL=controls.d.ts.map

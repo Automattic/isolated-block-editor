@@ -1,12 +1,6 @@
 module.exports = ( api ) => {
 	api.cache( true );
 
-	if ( process.env.BUILD_ENV === 'es6' ) {
-		return {
-			presets: [ '@wordpress/babel-preset-default' ],
-		};
-	}
-
 	if ( process.env.BUILD_ENV === 'cjs' ) {
 		return {
 			presets: [ '@wordpress/babel-preset-default', [ '@babel/preset-env', { modules: 'commonjs' } ] ],
@@ -14,5 +8,7 @@ module.exports = ( api ) => {
 		};
 	}
 
-	return {};
+	return {
+		presets: [ '@wordpress/babel-preset-default' ],
+	};
 };

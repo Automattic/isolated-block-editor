@@ -8,8 +8,8 @@ export default ToolbarSlot;
  */
 declare function ToolbarSlot({ children }: {
     children: any;
-}): JSX.Element;
+}): import("react").JSX.Element;
 declare namespace ToolbarSlot {
-    function Slot(props: any): JSX.Element;
+    function Slot(props: any): import("react").JSX.Element;
 }
 //# sourceMappingURL=slot.d.ts.map

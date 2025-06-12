@@ -11,7 +11,7 @@ var _blockEditor = require("@wordpress/block-editor");
 var _i18n = require("@wordpress/i18n");
 var _editor = require("@wordpress/editor");
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
  */
@@ -38,11 +38,12 @@ var Footer = function Footer(_ref) {
     }, []),
     showBlockBreadcrumbs = _useSelect.showBlockBreadcrumbs,
     documentLabel = _useSelect.documentLabel;
-  return createElement("div", {
-    className: "edit-post-layout__footer"
-  }, showBlockBreadcrumbs && !isMobileViewport && editorMode === 'visual' && createElement(_blockEditor.BlockBreadcrumb, {
-    rootLabelText: documentLabel
-  }), createElement(_footerSlot["default"].Slot, null));
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+    className: "edit-post-layout__footer",
+    children: [showBlockBreadcrumbs && !isMobileViewport && editorMode === 'visual' && /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockBreadcrumb, {
+      rootLabelText: documentLabel
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_footerSlot["default"].Slot, {})]
+  });
 };
 var _default = exports["default"] = Footer;
 //# sourceMappingURL=footer.js.map

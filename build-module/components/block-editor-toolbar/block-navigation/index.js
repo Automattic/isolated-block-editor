@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -14,21 +13,22 @@ import { forwardRef } from '@wordpress/element';
  */
 import ListViewSidebar from '../../block-editor/listview-sidebar';
 import './style.scss';
-function BlockNavigationDropdown({
-  isDisabled,
-  ...props
-}, ref) {
-  // @ts-ignore
+import { jsx as _jsx } from "react/jsx-runtime";
+function BlockNavigationDropdown(props, ref) {
+  const {
+    isDisabled,
+    ...rest
+  } = props;
   const hasBlocks = useSelect(select => !!select(blockEditorStore).getBlockCount(), []);
   const isEnabled = hasBlocks && !isDisabled;
-  return createElement(Dropdown, {
+  return /*#__PURE__*/_jsx(Dropdown, {
     contentClassName: "block-editor-block-navigation__popover",
     position: "bottom right",
     renderToggle: ({
       isOpen,
       onToggle
-    }) => createElement(Button, {
-      ...props,
+    }) => /*#__PURE__*/_jsx(Button, {
+      ...rest,
       ref: ref,
       icon: listView,
       "aria-expanded": isOpen,
@@ -39,7 +39,7 @@ function BlockNavigationDropdown({
       className: "block-editor-block-navigation",
       "aria-disabled": !isEnabled
     }),
-    renderContent: () => createElement(ListViewSidebar, {
+    renderContent: () => /*#__PURE__*/_jsx(ListViewSidebar, {
       canClose: false
     })
   });

@@ -14,10 +14,10 @@ import { forwardRef } from '@wordpress/element';
 import ListViewSidebar from '../../block-editor/listview-sidebar';
 import './style.scss';
 
-function BlockNavigationDropdown( { isDisabled, ...props }, ref ) {
-	// @ts-ignore
+function BlockNavigationDropdown( props, ref ) {
+	const { isDisabled, ...rest } = props;
 	const hasBlocks = useSelect( ( select ) => !!select( blockEditorStore ).getBlockCount(), [] );
-	const isEnabled = hasBlocks && !isDisabled;
+	const isEnabled = hasBlocks && ! isDisabled;
 
 	return (
 		<Dropdown
@@ -25,7 +25,7 @@ function BlockNavigationDropdown( { isDisabled, ...props }, ref ) {
 			position="bottom right"
 			renderToggle={ ( { isOpen, onToggle } ) => (
 				<Button
-					{ ...props }
+					{ ...rest }
 					ref={ ref }
 					icon={ listView }
 					aria-expanded={ isOpen }

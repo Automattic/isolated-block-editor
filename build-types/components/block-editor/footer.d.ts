@@ -1,5 +1,5 @@
 export default Footer;
 declare function Footer({ editorMode }: {
     editorMode: any;
-}): JSX.Element;
+}): import("react").JSX.Element;
 //# sourceMappingURL=footer.d.ts.map

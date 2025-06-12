@@ -1,9 +1,9 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
 import { createSlotFill } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { jsx as _jsx } from "react/jsx-runtime";
 const {
   Fill,
   Slot
@@ -11,12 +11,17 @@ const {
 const DocumentSection = ({
   children
 }) => {
-  return createElement(Fill, null, children);
+  return /*#__PURE__*/_jsx(Fill, {
+    children: children
+  });
 };
 DocumentSection.Slot = function (props) {
-  return createElement(Slot, null, fills => fills ? fills : createElement("span", {
-    className: "block-editor-block-inspector__no-blocks"
-  }, __('Nothing to display')));
+  return /*#__PURE__*/_jsx(Slot, {
+    children: fills => fills ? fills : /*#__PURE__*/_jsx("span", {
+      className: "block-editor-block-inspector__no-blocks",
+      children: __('Nothing to display')
+    })
+  });
 };
 export default DocumentSection;
 //# sourceMappingURL=index.js.map

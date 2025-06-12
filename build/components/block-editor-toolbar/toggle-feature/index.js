@@ -10,7 +10,7 @@ var _compose = require("@wordpress/compose");
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
 var _icons = require("@wordpress/icons");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * External dependencies
  */
@@ -34,13 +34,14 @@ function FeatureToggle(_ref) {
       speak(messageActivated || (0, _i18n.__)('Feature activated'));
     }
   };
-  return createElement(_components.MenuItem, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.MenuItem, {
     icon: isActive && _icons.check,
     isSelected: isActive,
     onClick: (0, _lodash.flow)(onToggle, speakMessage),
     role: "menuitemcheckbox",
-    info: info
-  }, label);
+    info: info,
+    children: label
+  });
 }
 
 // @ts-ignore

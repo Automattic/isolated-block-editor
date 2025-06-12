@@ -1,4 +1,3 @@
-import { createElement, Fragment } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -23,6 +22,7 @@ import OptionToggle from '../toggle-option';
  * @param {OnClose} props.onClose - Close the menu
  * @param {BlockEditorSettings} props.settings - Settings
  */
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 function WritingMenu({
   onClose,
   settings
@@ -42,26 +42,29 @@ function WritingMenu({
   if (!fullscreen && !preview && !topToolbar) {
     return null;
   }
-  return createElement(MenuGroup, {
-    label: _x('View', 'noun')
-  }, topToolbar && createElement(Fragment, null, createElement(FeatureToggle, {
-    feature: "fixedToolbar",
-    label: __('Top toolbar'),
-    info: __('Access all block and document tools in a single place.'),
-    messageActivated: __('Top toolbar activated'),
-    messageDeactivated: __('Top toolbar deactivated'),
-    onClose: onClose
-  })), fullscreen && createElement(OptionToggle, {
-    option: "fullscreenMode",
-    label: __('Fullscreen'),
-    info: __('Show editor fullscreen.'),
-    onClose: onClose
-  }), preview && !isFullscreen && createElement(OptionToggle, {
-    option: "preview",
-    label: __('Preview'),
-    info: __('Preview the content before posting.'),
-    onClose: onClose
-  }));
+  return /*#__PURE__*/_jsxs(MenuGroup, {
+    label: _x('View', 'noun'),
+    children: [topToolbar && /*#__PURE__*/_jsx(_Fragment, {
+      children: /*#__PURE__*/_jsx(FeatureToggle, {
+        feature: "fixedToolbar",
+        label: __('Top toolbar'),
+        info: __('Access all block and document tools in a single place.'),
+        messageActivated: __('Top toolbar activated'),
+        messageDeactivated: __('Top toolbar deactivated'),
+        onClose: onClose
+      })
+    }), fullscreen && /*#__PURE__*/_jsx(OptionToggle, {
+      option: "fullscreenMode",
+      label: __('Fullscreen'),
+      info: __('Show editor fullscreen.'),
+      onClose: onClose
+    }), preview && !isFullscreen && /*#__PURE__*/_jsx(OptionToggle, {
+      option: "preview",
+      label: __('Preview'),
+      info: __('Preview the content before posting.'),
+      onClose: onClose
+    })]
+  });
 }
 export default WritingMenu;
 //# sourceMappingURL=writing-menu.js.map

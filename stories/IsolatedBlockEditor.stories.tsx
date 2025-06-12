@@ -18,7 +18,9 @@ export const Default = () => {
 };
 
 export const Controlled = ( { onInput, onChange, onUndo, onRedo, onSelection } ) => {
+	console.log('useState about to be called just fine');
 	const [ blocks, setBlocks ] = useState( [] );
+	console.log('useState called just fine');
 
 	const handleOnInput = ( newBlocks ) => {
 		onInput( newBlocks );

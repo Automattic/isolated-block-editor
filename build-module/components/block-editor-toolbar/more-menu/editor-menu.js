@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * WordPress dependencies
  */
@@ -28,6 +27,7 @@ import { check } from '@wordpress/icons';
  * @param {OnSetMode} props.onSetMode
  * @param {BlockEditorSettings} props.settings - Settings
  */
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 function EditorMenu({
   onClose,
   editorMode,
@@ -48,19 +48,22 @@ function EditorMenu({
   if (settings?.iso?.moreMenu === false || !settings?.iso?.moreMenu?.editor) {
     return null;
   }
-  return createElement(MenuGroup, {
-    label: _x('Editor', 'noun')
-  }, createElement(MenuItem, {
-    icon: editorMode === 'visual' ? check : null,
-    isSelected: editorMode === 'visual',
-    onClick: () => setMode('visual'),
-    role: "menuitemcheckbox"
-  }, __('Visual editor')), createElement(MenuItem, {
-    icon: editorMode === 'text' ? check : null,
-    isSelected: editorMode === 'text',
-    onClick: () => setMode('text'),
-    role: "menuitemcheckbox"
-  }, __('Code editor')));
+  return /*#__PURE__*/_jsxs(MenuGroup, {
+    label: _x('Editor', 'noun'),
+    children: [/*#__PURE__*/_jsx(MenuItem, {
+      icon: editorMode === 'visual' ? check : null,
+      isSelected: editorMode === 'visual',
+      onClick: () => setMode('visual'),
+      role: "menuitemcheckbox",
+      children: __('Visual editor')
+    }), /*#__PURE__*/_jsx(MenuItem, {
+      icon: editorMode === 'text' ? check : null,
+      isSelected: editorMode === 'text',
+      onClick: () => setMode('text'),
+      role: "menuitemcheckbox",
+      children: __('Code editor')
+    })]
+  });
 }
 
 // @ts-ignore

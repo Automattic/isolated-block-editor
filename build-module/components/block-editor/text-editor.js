@@ -1,4 +1,3 @@
-import { createElement } from "react";
 // @ts-nocheck
 /**
  * Internal dependencies
@@ -12,16 +11,19 @@ import FooterSlot from '../footer-slot';
  *
  * The original is not exported, and contains code for post titles
  */
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 function TextEditor({}) {
-  return createElement("div", {
-    className: "edit-post-text-editor"
-  }, createElement("div", {
-    className: "edit-post-text-editor__body"
-  }, createElement(EditorHeading.Slot, {
-    mode: "text"
-  }), createElement(PostTextEditor, null), createElement(FooterSlot.Slot, {
-    mode: "text"
-  })));
+  return /*#__PURE__*/_jsx("div", {
+    className: "editor-text-editor",
+    children: /*#__PURE__*/_jsxs("div", {
+      className: "editor-text-editor__body",
+      children: [/*#__PURE__*/_jsx(EditorHeading.Slot, {
+        mode: "text"
+      }), /*#__PURE__*/_jsx(PostTextEditor, {}), /*#__PURE__*/_jsx(FooterSlot.Slot, {
+        mode: "text"
+      })]
+    })
+  });
 }
 export default TextEditor;
 //# sourceMappingURL=text-editor.js.map

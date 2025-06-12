@@ -1,2 +1,2 @@
-export const unlock: (object: any) => any;
+export const unlock: <T = any>(object: unknown) => T;
 //# sourceMappingURL=unlock.d.ts.map

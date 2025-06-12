@@ -8,7 +8,7 @@ var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _components = require("@wordpress/components");
 var _icons = require("@wordpress/icons");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
  */
@@ -18,13 +18,14 @@ function OptionToggle(_ref) {
     isActive = _ref.isActive,
     label = _ref.label,
     info = _ref.info;
-  return createElement(_components.MenuItem, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.MenuItem, {
     icon: isActive && _icons.check,
     isSelected: isActive,
     onClick: onToggle,
     role: "menuitemcheckbox",
-    info: info
-  }, label);
+    info: info,
+    children: label
+  });
 }
 
 // @ts-ignore

@@ -1,4 +1,3 @@
-import { createElement, Fragment } from "react";
 /**
  * External dependencies
  */
@@ -28,6 +27,7 @@ const isGutenbergPlugin = true;
 import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
 import { unlock } from './unlock';
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 const {
   LayoutStyle,
   useLayoutClasses,
@@ -84,11 +84,7 @@ export default function VisualEditor({
     postContentAttributes,
     editedPostTemplate = {},
     wrapperBlockName,
-    wrapperUniqueId,
-    // @ts-ignore
-    isBlockBasedTheme,
-    // @ts-ignore
-    hasV3BlocksOnly
+    wrapperUniqueId
   } = useSelect(select => {
     const {
       isFeatureActive
@@ -98,9 +94,6 @@ export default function VisualEditor({
       getCurrentPostType,
       getEditorSettings
     } = select(editorStore);
-    const {
-      getBlockTypes
-    } = select(blocksStore);
     const _isTemplateMode = false;
     const postTypeSlug = getCurrentPostType();
     let _wrapperBlockName;
@@ -109,22 +102,18 @@ export default function VisualEditor({
     } else if (!_isTemplateMode) {
       _wrapperBlockName = 'core/post-content';
     }
-    const editorSettings = getEditorSettings();
     return {
       deviceType: 'Desktop',
       // @ts-ignore
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       isTemplateMode: _isTemplateMode,
+      // @ts-ignore
       postContentAttributes: getEditorSettings().postContentAttributes,
       // Post template fetch returns a 404 on classic themes, which
       // messes with e2e tests, so check it's a block theme first.
       editedPostTemplate: undefined,
       wrapperBlockName: _wrapperBlockName,
-      wrapperUniqueId: getCurrentPostId(),
-      isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
-      hasV3BlocksOnly: getBlockTypes().every(type => {
-        return type.apiVersion >= 3;
-      })
+      wrapperUniqueId: getCurrentPostId()
     };
   }, []);
   // @ts-ignore
@@ -292,58 +281,55 @@ export default function VisualEditor({
 		.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
-
-  // TODO: Styles not appearing in the iframe mode yet
-  // const isToBeIframed =
-  // 	( ( hasV3BlocksOnly || ( isGutenbergPlugin && isBlockBasedTheme ) ) &&
-  // 		! hasMetaBoxes ) ||
-  // 	isTemplateMode ||
-  // 	deviceType === 'Tablet' ||
-  // 	deviceType === 'Mobile';
-  const isToBeIframed = false;
-  return createElement(BlockTools, {
+  return /*#__PURE__*/_jsx(BlockTools, {
     __unstableContentRef: ref,
     className: classnames('edit-post-visual-editor', {
-      'is-template-mode': isTemplateMode,
-      'has-inline-canvas': !isToBeIframed
-    })
-  }, createElement(motion.div, {
-    className: "edit-post-visual-editor__content-area",
-    animate: {
-      padding: isTemplateMode ? '48px 48px 0' : 0
-    }
-  }, createElement(motion.div, {
-    animate: animatedStyles,
-    initial: desktopCanvasStyles,
-    className: previewMode
-  }, createElement(BlockCanvas, {
-    shouldIframe: isToBeIframed,
-    contentRef: contentRef,
-    styles: styles,
-    height: "100%"
-  }, themeSupportsLayout && !themeHasDisabledLayoutStyles && !isTemplateMode && createElement(Fragment, null, createElement(LayoutStyle, {
-    selector: ".edit-post-visual-editor__post-title-wrapper",
-    layout: fallbackLayout
-  }), createElement(LayoutStyle, {
-    selector: ".block-editor-block-list__layout.is-root-container",
-    layout: postEditorLayout
-  }), align && createElement(LayoutStyle, {
-    css: alignCSS
-  }), postContentLayoutStyles && createElement(LayoutStyle, {
-    layout: postContentLayout,
-    css: postContentLayoutStyles
-  })), createElement(EditorHeading.Slot, {
-    mode: "visual"
-  }), createElement(RecursionProvider, {
-    blockName: wrapperBlockName,
-    uniqueId: wrapperUniqueId
-  }, createElement(BlockList, {
-    className: isTemplateMode ? 'wp-site-blocks' : `${blockListLayoutClass} wp-block-post-content` // Ensure root level blocks receive default/flow blockGap styling rules.
-    ,
+      'is-template-mode': isTemplateMode
+    }),
+    children: /*#__PURE__*/_jsx(motion.div, {
+      className: "edit-post-visual-editor__content-area",
+      animate: {
+        padding: isTemplateMode ? '48px 48px 0' : 0
+      },
+      children: /*#__PURE__*/_jsx(motion.div, {
+        animate: animatedStyles,
+        initial: desktopCanvasStyles,
+        className: previewMode,
+        children: /*#__PURE__*/_jsxs(BlockCanvas, {
+          shouldIframe: false,
+          contentRef: contentRef,
+          styles: styles,
+          height: "100%",
+          children: [themeSupportsLayout && !themeHasDisabledLayoutStyles && !isTemplateMode && /*#__PURE__*/_jsxs(_Fragment, {
+            children: [/*#__PURE__*/_jsx(LayoutStyle, {
+              selector: ".edit-post-visual-editor__post-title-wrapper",
+              layout: fallbackLayout
+            }), /*#__PURE__*/_jsx(LayoutStyle, {
+              selector: ".block-editor-block-list__layout.is-root-container",
+              layout: postEditorLayout
+            }), align && /*#__PURE__*/_jsx(LayoutStyle, {
+              css: alignCSS
+            }), postContentLayoutStyles && /*#__PURE__*/_jsx(LayoutStyle, {
+              layout: postContentLayout,
+              css: postContentLayoutStyles
+            })]
+          }), /*#__PURE__*/_jsx(EditorHeading.Slot, {
+            mode: "visual"
+          }), /*#__PURE__*/_jsx(RecursionProvider, {
+            blockName: wrapperBlockName,
+            uniqueId: wrapperUniqueId,
+            children: /*#__PURE__*/_jsx(BlockList, {
+              className: isTemplateMode ? 'wp-site-blocks' : `${blockListLayoutClass} wp-block-post-content` // Ensure root level blocks receive default/flow blockGap styling rules.
+              ,
 
-    layout: blockListLayout
-  })), createElement(FooterSlot.Slot, {
-    mode: "visual"
-  })))));
+              layout: blockListLayout
+            })
+          }), /*#__PURE__*/_jsx(FooterSlot.Slot, {
+            mode: "visual"
+          })]
+        })
+      })
+    })
+  });
 }
 //# sourceMappingURL=visual-editor.js.map

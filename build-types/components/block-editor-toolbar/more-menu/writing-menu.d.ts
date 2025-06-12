@@ -13,5 +13,5 @@ export type OnClose = import('./index').OnClose;
 declare function WritingMenu({ onClose, settings }: {
     onClose: OnClose;
     settings: BlockEditorSettings;
-}): JSX.Element | null;
+}): import("react").JSX.Element | null;
 //# sourceMappingURL=writing-menu.d.ts.map

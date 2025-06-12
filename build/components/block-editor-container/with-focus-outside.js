@@ -15,7 +15,7 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 var _lodash = require("lodash");
 var _element = require("@wordpress/element");
 var _compose = require("@wordpress/compose");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
@@ -24,13 +24,12 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
  * External dependencies
  */ /**
      * WordPress dependencies
-     */
-/**
- * Input types which are classified as button types, for use in considering
- * whether element is a (focus-normalized) button.
- *
- * @type {string[]}
- */
+     */ /**
+         * Input types which are classified as button types, for use in considering
+         * whether element is a (focus-normalized) button.
+         *
+         * @type {string[]}
+         */
 var INPUT_BUTTON_TYPES = ['button', 'submit'];
 
 /**
@@ -147,16 +146,17 @@ var _default = exports["default"] = (0, _compose.createHigherOrderComponent)(fun
         // focus event normalization.
 
         /* eslint-disable jsx-a11y/no-static-element-interactions */
-        return createElement("div", {
+        return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
           onFocus: this.cancelBlurCheck,
           onMouseDown: this.normalizeButtonFocus,
           onMouseUp: this.normalizeButtonFocus,
           onTouchStart: this.normalizeButtonFocus,
           onTouchEnd: this.normalizeButtonFocus,
-          onBlur: this.queueBlurCheck
-        }, createElement(WrappedComponent, _objectSpread({
-          ref: this.bindNode
-        }, this.props)));
+          onBlur: this.queueBlurCheck,
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(WrappedComponent, _objectSpread({
+            ref: this.bindNode
+          }, this.props))
+        });
         /* eslint-enable jsx-a11y/no-static-element-interactions */
       }
     }]);

@@ -1,8 +1,8 @@
 export default ActionArea;
 declare function ActionArea({ children }: {
     children: any;
-}): JSX.Element;
+}): import("react").JSX.Element;
 declare namespace ActionArea {
-    function Slot(): JSX.Element;
+    function Slot(): import("react").JSX.Element;
 }
 //# sourceMappingURL=index.d.ts.map

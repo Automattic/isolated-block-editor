@@ -7,7 +7,7 @@ exports["default"] = void 0;
 var _interface = require("@wordpress/interface");
 var _components = require("@wordpress/components");
 require("./style.scss");
-import { createElement } from "react";
+var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
  */
@@ -26,14 +26,15 @@ function Inspector(_ref) {
       ev.stopPropagation();
     }
   }
-  return createElement(_components.Popover, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Popover, {
     position: "bottom left",
     className: "iso-inspector",
     anchor: button === null || button === void 0 ? void 0 : button.current,
-    onFocusOutside: onOutside
-  }, createElement(_interface.ComplementaryArea.Slot, {
-    scope: "isolated/editor"
-  }));
+    onFocusOutside: onOutside,
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.ComplementaryArea.Slot, {
+      scope: "isolated/editor"
+    })
+  });
 }
 var _default = exports["default"] = Inspector;
 //# sourceMappingURL=index.js.map

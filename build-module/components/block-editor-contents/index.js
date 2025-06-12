@@ -1,4 +1,3 @@
-import { createElement } from "react";
 /**
  * External dependencies
  */
@@ -40,6 +39,7 @@ import getInitialEditorContent from './editor-content';
  * @param [loader]
  * @param {Object} [options]
  */
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 async function getInitialContent(settings, loader) {
   const contentLoader = isPromise(loader) ? loader : new Promise(resolve => {
     resolve(loader ? loader(parse, rawHandler) : []);
@@ -93,21 +93,24 @@ function BlockEditorContents(props) {
     };
     loadData();
   }, []);
-  return createElement(BlockEditorProvider, {
+  return /*#__PURE__*/_jsxs(BlockEditorProvider, {
     value: blocks || [],
     onInput: onInput,
     onChange: onChange,
     useSubRegistry: false,
     selection: selection,
-    settings: settings.editor
-  }, createElement(BlockEditor, {
-    isEditing: isEditing,
-    editorMode: editorMode,
-    settings: settings,
-    renderMoreMenu: renderMoreMenu
-  }, children),
-  // @ts-ignore
-  createElement(Popover.Slot, null));
+    settings: settings.editor,
+    children: [/*#__PURE__*/_jsx(BlockEditor, {
+      isEditing: isEditing,
+      editorMode: editorMode,
+      settings: settings,
+      renderMoreMenu: renderMoreMenu,
+      children: children
+    }),
+    /*#__PURE__*/
+    // @ts-ignore
+    _jsx(Popover.Slot, {})]
+  });
 }
 
 // @ts-ignore

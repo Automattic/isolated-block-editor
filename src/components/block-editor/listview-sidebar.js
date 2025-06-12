@@ -135,21 +135,21 @@ export default function ListViewSidebar( { canClose = true } ) {
 				// can be rendered internally.
 				initialTabId="list-view"
 			>
-				<div className="edit-post-editor__document-overview-panel__header">
+				<div className="block-editor-tabbed-sidebar__tablist-and-close-button">
 					{canClose && <Button
-						className="editor-list-view-sidebar__close-button"
+						className="block-editor-tabbed-sidebar__close-button"
 						icon={ closeSmall }
 						label={ __( 'Close' ) }
 						onClick={ closeListView }
 					/>}
 					<Tabs.TabList
-						className="editor-list-view-sidebar__tabs-tablist"
+						className="block-editor-tabbed-sidebar__tablist"
 						ref={ tabsRef }
 					>
-						<Tabs.Tab className="editor-list-view-sidebar__tabs-tab" tabId='list-view'>
+						<Tabs.Tab className="block-editor-tabbed-sidebar__tab" tabId='list-view'>
 							{_x('List View', 'Post overview')}
 						</Tabs.Tab>
-						<Tabs.Tab className="editor-list-view-sidebar__tabs-tab" tabId='outline'>
+						<Tabs.Tab className="block-editor-tabbed-sidebar__tab" tabId='outline'>
 							{_x('Outline', 'Post overview')}
 						</Tabs.Tab>
 					</Tabs.TabList>

@@ -1,4 +1,3 @@
-import { createElement } from "react";
 // @ts-nocheck
 /**
  * WordPress dependencies
@@ -19,6 +18,7 @@ import EditorHistoryRedo from './redo';
 import EditorHistoryUndo from './undo';
 import BlockNavigationDropdown from '../block-navigation';
 import './style.scss';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 const preventDefault = event => {
   event.preventDefault();
 };
@@ -96,60 +96,63 @@ function HeaderToolbar(props) {
     }
   }, [isInserterOpened, setIsInserterOpened]);
   const toggleListView = useCallback(() => setIsListViewOpened(!isListViewOpen), [setIsListViewOpened, isListViewOpen]);
-  return createElement(NavigableToolbar, {
+  return /*#__PURE__*/_jsx(NavigableToolbar, {
     className: "editor-document-tools edit-post-header-toolbar",
-    "aria-label": toolbarAriaLabel
-  }, (inserter || undo || navigation || selectorTool) && createElement("div", {
-    className: "editor-document-tools__left edit-post-header-toolbar__left"
-  }, inserter && createElement(ToolbarItem, {
-    ref: inserterButton,
-    as: Button,
-    className: "editor-document-tools__inserter-toggle",
-    isPressed: isInserterOpened,
-    onMouseDown: preventDefault,
-    onClick: openInserter,
-    disabled: !isInserterEnabled,
-    isPrimary: true,
-    icon: plus
-    /* translators: button label text should, if possible, be under 16
-    characters. */,
-    label: _x('Toggle block inserter', 'Generic label for block inserter button'),
-    showTooltip: !showIconLabels
-  }), isInserterOpened && !inserterInSidebar && createElement(Popover, {
-    position: "bottom right",
-    onClose: () => setIsInserterOpened(false),
-    anchor: inserterButton.current
-  }, createElement(Library, {
-    showMostUsedBlocks: false,
-    showInserterHelpPanel: true,
-    onSelect: () => {
-      if (isMobileViewport) {
-        setIsInserterOpened(false);
-      }
-    }
-  })), selectorTool && createElement(ToolSelector, null), undo && createElement(ToolbarItem, {
-    as: EditorHistoryUndo,
-    showTooltip: !showIconLabels,
-    variant: showIconLabels ? 'tertiary' : undefined
-  }), undo && createElement(ToolbarItem, {
-    as: EditorHistoryRedo,
-    showTooltip: !showIconLabels,
-    variant: showIconLabels ? 'tertiary' : undefined
-  }), navigation && !inserterInSidebar && createElement(ToolbarItem, {
-    as: BlockNavigationDropdown,
-    isDisabled: isTextModeEnabled
-  }), navigation && inserterInSidebar && createElement(ToolbarItem, {
-    as: Button,
-    className: "edit-post-header-toolbar__list-view-toggle",
-    icon: listView,
-    disabled: isTextModeEnabled,
-    isPressed: isListViewOpen
-    /* translators: button label text should, if possible, be under 16 characters. */,
-    label: __('List View'),
-    onClick: toggleListView,
-    shortcut: listViewShortcut,
-    showTooltip: !showIconLabels
-  })));
+    "aria-label": toolbarAriaLabel,
+    children: (inserter || undo || navigation || selectorTool) && /*#__PURE__*/_jsxs("div", {
+      className: "editor-document-tools__left edit-post-header-toolbar__left",
+      children: [inserter && /*#__PURE__*/_jsx(ToolbarItem, {
+        ref: inserterButton,
+        as: Button,
+        className: "editor-document-tools__inserter-toggle",
+        isPressed: isInserterOpened,
+        onMouseDown: preventDefault,
+        onClick: openInserter,
+        disabled: !isInserterEnabled,
+        isPrimary: true,
+        icon: plus
+        /* translators: button label text should, if possible, be under 16
+        characters. */,
+        label: _x('Toggle block inserter', 'Generic label for block inserter button'),
+        showTooltip: !showIconLabels
+      }), isInserterOpened && !inserterInSidebar && /*#__PURE__*/_jsx(Popover, {
+        position: "bottom right",
+        onClose: () => setIsInserterOpened(false),
+        anchor: inserterButton.current,
+        children: /*#__PURE__*/_jsx(Library, {
+          showMostUsedBlocks: false,
+          showInserterHelpPanel: true,
+          onSelect: () => {
+            if (isMobileViewport) {
+              setIsInserterOpened(false);
+            }
+          }
+        })
+      }), selectorTool && /*#__PURE__*/_jsx(ToolSelector, {}), undo && /*#__PURE__*/_jsx(ToolbarItem, {
+        as: EditorHistoryUndo,
+        showTooltip: !showIconLabels,
+        variant: showIconLabels ? 'tertiary' : undefined
+      }), undo && /*#__PURE__*/_jsx(ToolbarItem, {
+        as: EditorHistoryRedo,
+        showTooltip: !showIconLabels,
+        variant: showIconLabels ? 'tertiary' : undefined
+      }), navigation && !inserterInSidebar && /*#__PURE__*/_jsx(ToolbarItem, {
+        as: BlockNavigationDropdown,
+        isDisabled: isTextModeEnabled
+      }), navigation && inserterInSidebar && /*#__PURE__*/_jsx(ToolbarItem, {
+        as: Button,
+        className: "edit-post-header-toolbar__list-view-toggle",
+        icon: listView,
+        disabled: isTextModeEnabled,
+        isPressed: isListViewOpen
+        /* translators: button label text should, if possible, be under 16 characters. */,
+        label: __('List View'),
+        onClick: toggleListView,
+        shortcut: listViewShortcut,
+        showTooltip: !showIconLabels
+      })]
+    })
+  });
 }
 export default HeaderToolbar;
 //# sourceMappingURL=index.js.map
