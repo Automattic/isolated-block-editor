@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = VisualEditor;
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _classnames = _interopRequireDefault(require("classnames"));
 var _blockEditor = require("@wordpress/block-editor");
@@ -18,6 +19,7 @@ var _editor = require("@wordpress/editor");
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
 var _unlock2 = require("./unlock");
+var _usePaddingAppender3 = require("./use-padding-appender");
 var _jsxRuntime = require("react/jsx-runtime");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
@@ -164,7 +166,12 @@ function VisualEditor(_ref) {
     paddingBottom = '40vh';
   }
   var ref = (0, _element.useRef)();
-  var contentRef = (0, _compose.useMergeRefs)([ref, (0, _blockEditor.__unstableUseTypewriter)()]);
+  var typewriterRef = (0, _blockEditor.__unstableUseTypewriter)();
+  var _usePaddingAppender = (0, _usePaddingAppender3.usePaddingAppender)(true),
+    _usePaddingAppender2 = (0, _slicedToArray2["default"])(_usePaddingAppender, 2),
+    paddingAppenderRef = _usePaddingAppender2[0],
+    paddingStyle = _usePaddingAppender2[1];
+  var contentRef = (0, _compose.useMergeRefs)([ref, typewriterRef, paddingAppenderRef]);
 
   // fallbackLayout is used if there is no Post Content,
   // and for Post Title.
@@ -269,8 +276,10 @@ function VisualEditor(_ref) {
     return [].concat((0, _toConsumableArray2["default"])(styles), [{
       // We should move this in to future to the body.
       css: ".edit-post-visual-editor__post-title-wrapper{margin-top:4rem}" + (paddingBottom ? "body{padding-bottom:".concat(paddingBottom, "}") : '')
+    }, {
+      css: paddingStyle
     }]);
-  }, [styles]);
+  }, [styles, paddingStyle]);
 
   // Add some styles for alignwide/alignfull Post Content and its children.
   var alignCSS = ".is-root-container.alignwide { max-width: var(--wp--style--global--wide-size); margin-left: auto; margin-right: auto;}\n\t\t.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}\n\t\t.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}\n\t\t.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}";

@@ -130,7 +130,7 @@ export function isIframePreview(state: {
     editor: EditorState;
 }): boolean;
 export const isEditorSidebarOpened: {
-    (): boolean;
+    (): any;
     isRegistrySelector?: boolean | undefined;
     registry?: any;
 };

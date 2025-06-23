@@ -27,6 +27,7 @@ const isGutenbergPlugin = true;
 import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
 import { unlock } from './unlock';
+import { usePaddingAppender } from './use-padding-appender';
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 const {
   LayoutStyle,
@@ -165,7 +166,9 @@ export default function VisualEditor({
     paddingBottom = '40vh';
   }
   const ref = useRef();
-  const contentRef = useMergeRefs([ref, useTypewriter()]);
+  const typewriterRef = useTypewriter();
+  const [paddingAppenderRef, paddingStyle] = usePaddingAppender(true);
+  const contentRef = useMergeRefs([ref, typewriterRef, paddingAppenderRef]);
 
   // fallbackLayout is used if there is no Post Content,
   // and for Post Title.
@@ -274,7 +277,9 @@ export default function VisualEditor({
   styles = useMemo(() => [...styles, {
     // We should move this in to future to the body.
     css: `.edit-post-visual-editor__post-title-wrapper{margin-top:4rem}` + (paddingBottom ? `body{padding-bottom:${paddingBottom}}` : '')
-  }], [styles]);
+  }, {
+    css: paddingStyle
+  }], [styles, paddingStyle]);
 
   // Add some styles for alignwide/alignfull Post Content and its children.
   const alignCSS = `.is-root-container.alignwide { max-width: var(--wp--style--global--wide-size); margin-left: auto; margin-right: auto;}
