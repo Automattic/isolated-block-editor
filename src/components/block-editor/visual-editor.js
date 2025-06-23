@@ -35,7 +35,7 @@ const isGutenbergPlugin = true;
 import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
 import { unlock } from './unlock';
-
+import { usePaddingAppender } from './use-padding-appender';
 
 const {
 	LayoutStyle,
@@ -179,7 +179,9 @@ export default function VisualEditor( { styles } ) {
 	}
 
 	const ref = useRef();
-	const contentRef = useMergeRefs( [ ref, useTypewriter() ] );
+	const typewriterRef = useTypewriter();
+	const [ paddingAppenderRef, paddingStyle ] = usePaddingAppender( true );
+	const contentRef = useMergeRefs( [ ref, typewriterRef, paddingAppenderRef ] );
 
 	// fallbackLayout is used if there is no Post Content,
 	// and for Post Title.
@@ -323,8 +325,9 @@ export default function VisualEditor( { styles } ) {
 						? `body{padding-bottom:${ paddingBottom }}`
 						: '' ),
 			},
+			{ css: paddingStyle },
 		],
-		[ styles ]
+		[ styles, paddingStyle ]
 	);
 
 	// Add some styles for alignwide/alignfull Post Content and its children.

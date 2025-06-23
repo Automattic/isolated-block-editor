@@ -563,7 +563,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             editor: import("./editor/reducer").EditorState;
         }): boolean;
         isEditorSidebarOpened: {
-            (): boolean;
+            (): any;
             isRegistrySelector?: boolean | undefined;
             registry?: any;
         };
