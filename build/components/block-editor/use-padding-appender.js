@@ -21,7 +21,7 @@ var _blocks = require("@wordpress/blocks");
 
 // Ruleset to add space for the typewriter effect. When typing in the last
 // block, there needs to be room to scroll up.
-var CSS = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
+var CSS = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40px;}';
 function usePaddingAppender(enabled) {
   var registry = (0, _data.useRegistry)();
   var effect = (0, _compose.useRefEffect)(function (node) {
