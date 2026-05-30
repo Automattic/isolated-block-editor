@@ -165,5 +165,12 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "resolutions": {
+    "@babel/traverse": "^7.27.4",
+    "basic-ftp": "^5.2.0",
+    "form-data": "^4.0.4",
+    "loader-utils": "^2.0.4",
+    "minimist": "^1.2.8"
   }
 }
