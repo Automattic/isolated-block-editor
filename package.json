@@ -95,7 +95,7 @@
     "memize": "^2.1.0",
     "react-autosize-textarea": "^7.1.0",
     "redux-undo": "^1.1.0",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.0",
