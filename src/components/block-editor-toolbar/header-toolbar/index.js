@@ -124,6 +124,7 @@ function HeaderToolbar( props ) {
 										setIsInserterOpened( false );
 									}
 								} }
+								onClose={ () => setIsInserterOpened( false ) }
 							/>
 						</Popover>
 					) }
