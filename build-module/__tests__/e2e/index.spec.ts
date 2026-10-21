@@ -43,3 +43,19 @@ test.describe( 'Editor content', () => {
 		await expect( bob.locator( 'role=document' ) ).toHaveText( 'World' );
 	} );
 } );
+
+test.describe( 'Inserter', () => {
+	test( 'should close the inserter with its close button', async ( { page } ) => {
+		await page.goto( '?path=/story/isolated-block-editor--default' );
+		const iframe = page.frameLocator( '#storybook-preview-iframe' );
+		const toggle = iframe.getByRole( 'button', { name: 'Toggle block inserter' } );
+		const inserter = iframe.locator( '.block-editor-inserter__menu' );
+
+		await toggle.click();
+		await expect( inserter ).toBeVisible();
+
+		await iframe.getByRole( 'button', { name: 'Close Block Inserter' } ).click();
+		await expect( inserter ).toBeHidden();
+		await expect( toggle ).toHaveAttribute( 'aria-pressed', 'false' );
+	} );
+} );

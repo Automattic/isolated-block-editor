@@ -133,6 +133,9 @@ function HeaderToolbar(props) {
             if (isMobileViewport) {
               setIsInserterOpened(false);
             }
+          },
+          onClose: function onClose() {
+            return setIsInserterOpened(false);
           }
         })
       }), selectorTool && /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.ToolSelector, {}), undo && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {

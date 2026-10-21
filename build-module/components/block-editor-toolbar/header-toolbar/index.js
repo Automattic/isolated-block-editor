@@ -126,7 +126,8 @@ function HeaderToolbar(props) {
             if (isMobileViewport) {
               setIsInserterOpened(false);
             }
-          }
+          },
+          onClose: () => setIsInserterOpened(false)
         })
       }), selectorTool && /*#__PURE__*/_jsx(ToolSelector, {}), undo && /*#__PURE__*/_jsx(ToolbarItem, {
         as: EditorHistoryUndo,
