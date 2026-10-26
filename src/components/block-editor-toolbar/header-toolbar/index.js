@@ -25,6 +25,7 @@ const preventDefault = ( event ) => {
 
 function HeaderToolbar( props ) {
 	const inserterButton = useRef();
+	const libraryRef = useRef();
 	const { setIsInserterOpened, setIsListViewOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const {
@@ -117,6 +118,7 @@ function HeaderToolbar( props ) {
 							anchor={ inserterButton.current }
 						>
 							<Library
+								ref={ libraryRef }
 								showMostUsedBlocks={ false }
 								showInserterHelpPanel
 								onSelect={ () => {

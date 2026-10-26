@@ -6,8 +6,10 @@ import { Button, VisuallyHidden } from '@wordpress/components';
 import { __experimentalLibrary as Library } from '@wordpress/block-editor';
 import { close } from '@wordpress/icons';
 import { useViewportMatch, __experimentalUseDialog as useDialog } from '@wordpress/compose';
+import { useRef } from '@wordpress/element';
 
 export default function InserterSidebar() {
+	const libraryRef = useRef();
 	const { setIsInserterOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const TagName = ! isMobileViewport ? VisuallyHidden : 'div';
@@ -30,7 +32,13 @@ export default function InserterSidebar() {
 				<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
 			</TagName>
 			<div className="edit-widgets-layout__inserter-panel-content">
-				<Library showMostUsedBlocks={ false } showInserterHelpPanel shouldFocusBlock={ isMobileViewport } onClose={ () => setIsInserterOpened( false ) } />
+				<Library
+					ref={ libraryRef }
+					showMostUsedBlocks={ false }
+					showInserterHelpPanel
+					shouldFocusBlock={ isMobileViewport }
+					onClose={ () => setIsInserterOpened( false ) }
+				/>
 			</div>
 		</div>
 	);
