@@ -10,7 +10,8 @@
 		padding: 0;
 	}
 
-	.edit-post-editor__list-view-container {
-		max-height: 600px;
+	.editor-list-view-sidebar__list-view-container {
+		max-height: min(600px, 70vh);
+		overflow-y: auto;
 	}
 }
